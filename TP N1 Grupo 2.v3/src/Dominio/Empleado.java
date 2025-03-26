@@ -2,6 +2,8 @@ package Dominio;
 
 public class Empleado {
 	
+	private static int cont = 1000;  
+	
 	///Atributos
 	
 	private int Id;
@@ -10,18 +12,19 @@ public class Empleado {
 	
 	///Constructores
 	
-	public Empleado()
-	{
-		Id = 0;
+	public Empleado(){
+		cont++; 
+		Id = cont;
 		Nombre  = "Sin Nombre";
-		Edad = 0;
+		Edad = 99;
 	}
-	public Empleado(int Id, String Nombre, int Edad)
-	{
-		this.Id = Id;
+	public Empleado(String Nombre, int Edad){
+		cont++; 
+		this.Id = cont;
 		this.Nombre  = Nombre;
 		this.Edad = Edad;
 	}
+	
 	
 	///Getters y Setters
 	
@@ -42,6 +45,13 @@ public class Empleado {
 	}
 	public void setEdad(int edad) {
 		Edad = edad;
-	} 
+	}
+	
+	///Metodos
+	
+	public static int devuelveProximoID() {
+		return cont+1;
+	}
+	
 	
 }
