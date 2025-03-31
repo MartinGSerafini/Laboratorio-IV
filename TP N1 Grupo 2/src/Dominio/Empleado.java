@@ -2,46 +2,56 @@ package Dominio;
 
 public class Empleado {
 	
+	private static int cont = 1000;  
+	
 	///Atributos
 	
-	private int Id;
-	private String Nombre;
-	private int Edad;  
+	private int id;
+	private String nombre;
+	private int edad;  
 	
 	///Constructores
 	
-	public Empleado()
-	{
-		Id = 0;
-		Nombre  = "Sin Nombre";
-		Edad = 0;
+	public Empleado(){
+		this.id = cont++;
+		nombre  = "Sin Nombre";
+		edad = 99;
 	}
-	public Empleado(int Id, String Nombre, int Edad)
-	{
-		this.Id = Id;
-		this.Nombre  = Nombre;
-		this.Edad = Edad;
+	public Empleado(String nombre, int edad){
+		this.id = cont++;
+		this.nombre  = nombre;
+		this.edad = edad;
 	}
+	
 	
 	///Getters y Setters
 	
 	public int getId() {
-		return Id;
-	}
-	public void setId(int id) {
-		Id = id;
+		return id;
 	}
 	public String getNombre() {
-		return Nombre;
+		return nombre;
 	}
 	public void setNombre(String nombre) {
-		Nombre = nombre;
+		this.nombre = nombre;
 	}
 	public int getEdad() {
-		return Edad;
+		return edad;
 	}
 	public void setEdad(int edad) {
-		Edad = edad;
-	} 
+		this.edad = edad;
+	}
+	
+	///Metodos
+	
+	public static int devuelveProximoID() {
+        return cont;
+    }
+	
+	///metodo toString()
+	@Override
+	public String toString() {
+		 return "Empleado: " + nombre + ", Edad: " + edad + ", Legajo: " + id;
+    }
 	
 }
