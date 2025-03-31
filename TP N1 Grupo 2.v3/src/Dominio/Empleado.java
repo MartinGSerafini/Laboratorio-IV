@@ -13,6 +13,7 @@ public class Empleado {
 	///Constructores
 	
 	public Empleado(){
+<<<<<<< HEAD:TP N1 Grupo 2/src/Dominio/Empleado.java
 		this.id = cont++;
 		nombre  = "Sin Nombre";
 		edad = 99;
@@ -21,6 +22,18 @@ public class Empleado {
 		this.id = cont++;
 		this.nombre  = nombre;
 		this.edad = edad;
+=======
+		cont++; 
+		Id = cont;
+		Nombre  = "Sin Nombre";
+		Edad = 99;
+	}
+	public Empleado(String Nombre, int Edad){
+		cont++; 
+		this.Id = cont;
+		this.Nombre  = Nombre;
+		this.Edad = Edad;
+>>>>>>> 18589bbfb234be0b0a6da89d58a51d4f022da919:TP N1 Grupo 2.v3/src/Dominio/Empleado.java
 	}
 	
 	
@@ -39,12 +52,17 @@ public class Empleado {
 		return edad;
 	}
 	public void setEdad(int edad) {
+<<<<<<< HEAD:TP N1 Grupo 2/src/Dominio/Empleado.java
 		this.edad = edad;
+=======
+		Edad = edad;
+>>>>>>> 18589bbfb234be0b0a6da89d58a51d4f022da919:TP N1 Grupo 2.v3/src/Dominio/Empleado.java
 	}
 	
 	///Metodos
 	
 	public static int devuelveProximoID() {
+<<<<<<< HEAD:TP N1 Grupo 2/src/Dominio/Empleado.java
         return cont;
     }
 	
@@ -53,5 +71,10 @@ public class Empleado {
 	public String toString() {
 		 return "Empleado: " + nombre + ", Edad: " + edad + ", Legajo: " + id;
     }
+=======
+		return cont+1;
+	}
+	
+>>>>>>> 18589bbfb234be0b0a6da89d58a51d4f022da919:TP N1 Grupo 2.v3/src/Dominio/Empleado.java
 	
 }
