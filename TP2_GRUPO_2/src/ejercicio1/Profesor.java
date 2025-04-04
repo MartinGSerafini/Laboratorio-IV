@@ -14,7 +14,7 @@ public class Profesor extends Empleado {
 		this.cargo = "Sin cargo";
 		this.antiguedadDocente = 0;
 	}
-    //	Con parámetros
+    //	Con parametros
 	public Profesor(String nombre, int edad, String cargo, int antiguedadDocente) {
 		super(nombre, edad);
 		this.cargo = cargo;
