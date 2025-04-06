@@ -13,11 +13,11 @@ public class mainEjercicio1_b {
 	            }
 	        });
 
-	        profesoresSet.add(new Profesor("Gustavo Sanchez", 43, "Profesor de Historia", 10));
+	        profesoresSet.add(new Profesor("Gustavo Sanches", 43, "Profesor de Historia", 10));
 	        profesoresSet.add(new Profesor("Silvia Nuñez", 56, "Profesora de Literatura", 6));
 	        profesoresSet.add(new Profesor("Cristina Villanueva", 48, "Profesora de Matemáticas", 11));
 	        profesoresSet.add(new Profesor("Hernán Luna", 28, "Profesor de Educación Física", 3));
-	        profesoresSet.add(new Profesor("Gustavo Sanchez", 43, "Profesor de Historia", 10));
+	        profesoresSet.add(new Profesor("Gustavo Sanches", 43, "Profesor de Historia", 10));
 
 	        Iterator<Profesor> it = profesoresSet.iterator();
 	        while (it.hasNext()) {
