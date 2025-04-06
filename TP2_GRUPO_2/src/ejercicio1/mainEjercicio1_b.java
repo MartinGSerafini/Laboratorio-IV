@@ -14,15 +14,24 @@ public class mainEjercicio1_b {
 	        });
 
 	        profesoresSet.add(new Profesor("Gustavo Sanches", 43, "Profesor de Historia", 10));
-	        profesoresSet.add(new Profesor("Silvia Nuñez", 56, "Profesora de Literatura", 6));
-	        profesoresSet.add(new Profesor("Cristina Villanueva", 48, "Profesora de Matemáticas", 11));
-	        profesoresSet.add(new Profesor("Hernán Luna", 28, "Profesor de Educación Física", 3));
-	        profesoresSet.add(new Profesor("Gustavo Sanches", 43, "Profesor de Historia", 10));
+	        profesoresSet.add(new Profesor("Silvia Nuï¿½ez", 56, "Profesora de Literatura", 6));
+	        profesoresSet.add(new Profesor("Cristina Villanueva", 48, "Profesora de Matemï¿½ticas", 11));
+	        profesoresSet.add(new Profesor("Hernan Luna", 28, "Profesor de Educaciï¿½n Fï¿½sica", 3));
+	        profesoresSet.add(new Profesor("Miriam Pereira", 60, "Profesora de Ingles", 35));
 
 	        Iterator<Profesor> it = profesoresSet.iterator();
 	        while (it.hasNext()) {
 	            System.out.println(it.next());
 	        }
+	        
+	        
+	        Profesor profesor1 = new Profesor("Karina Viamonte", 54, "Profesora de Biologia", 15);
+	        Profesor profesor2 = new Profesor("Karina Viamonte", 54, "Profesora de Biologia", 15);
+	        
+	        if(profesor1.equals(profesor2)) {
+	        	System.out.println("Es el mismo profesor");
+	        }
+	        
 	}
 
 }

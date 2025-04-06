@@ -1,5 +1,7 @@
 package ejercicio1;
 
+import java.util.Objects;
+
 public class Empleado {
 
     private static int cont = 1000;  
@@ -43,14 +45,27 @@ public class Empleado {
         this.edad = edad;
     }
 
-    // Métodos
+    // Mï¿½todos
     public static int devuelveProximoID() {
-        return cont;  // Devuelve el próximo ID disponible
+        return cont;  // Devuelve el prï¿½ximo ID disponible
     }
 
-    // Método toString()
+    // Mï¿½todo toString()
     @Override
     public String toString() {
         return "Empleado: " + nombre + ", Edad: " + edad + ", Legajo: " + id;
     }
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Empleado other = (Empleado) obj;
+		return edad == other.edad && id == other.id && Objects.equals(nombre, other.nombre);
+	}
+    
 }

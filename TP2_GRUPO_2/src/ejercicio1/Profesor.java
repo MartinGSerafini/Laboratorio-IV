@@ -1,5 +1,7 @@
 package ejercicio1;
 
+import java.util.Objects;
+
 public class Profesor extends Empleado {
      
 	//Atributos
@@ -40,8 +42,17 @@ public class Profesor extends Empleado {
 		return super.toString()+" Cargo: " + cargo + ", Antiguedad docente: " + antiguedadDocente;
 	}
 	
-	
-	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Profesor other = (Profesor) obj;
+		return antiguedadDocente == other.antiguedadDocente && Objects.equals(cargo, other.cargo);
+	}
 	
 	
 	
