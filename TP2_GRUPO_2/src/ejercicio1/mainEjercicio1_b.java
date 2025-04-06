@@ -8,7 +8,6 @@ public class mainEjercicio1_b {
 
 	public static void main(String[] args) {
 		 TreeSet<Profesor> profesoresSet = new TreeSet<>(new Comparator<Profesor>() {
-	            @Override
 	            public int compare(Profesor p1, Profesor p2) {
 	                return p1.getNombre().compareTo(p2.getNombre());
 	            }
