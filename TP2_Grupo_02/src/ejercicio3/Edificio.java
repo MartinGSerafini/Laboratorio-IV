@@ -1,5 +1,13 @@
 package ejercicio3;
 
-public interface Edificio {
-	double getSuperficieEdificio();
+public class Edificio {
+    protected double superficie;
+
+    public Edificio(double superficie) {
+        this.superficie = superficie;
+    }
+
+    public double getSuperficieEdificio() {
+        return superficie;
+    }
 }

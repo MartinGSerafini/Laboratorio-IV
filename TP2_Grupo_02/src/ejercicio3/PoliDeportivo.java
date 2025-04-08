@@ -1,15 +1,14 @@
 package ejercicio3;
 
-public class PoliDeportivo implements Edificio, InstalacionDeportiva {
+public class PoliDeportivo extends Edificio implements InstalacionDeportiva {
 
-	@Override
-	public int getTipoInstalacion() {
-		// TODO Auto-generated method stub
-		return 0;
+	public PoliDeportivo(double superficie) {
+		super(superficie);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public double getSuperficieEdificio() {
+	public int getTipoDeInstalacion() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

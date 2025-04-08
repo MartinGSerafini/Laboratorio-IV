@@ -1,11 +1,11 @@
 package ejercicio3;
 
-public class EdificioDeOficinas implements Edificio{
+public class EdificioDeOficinas extends  Edificio{
 
-	@Override
-	public double getSuperficieEdificio() {
-		// TODO Auto-generated method stub
-		return 0;
+	public EdificioDeOficinas(double superficie) {
+		super(superficie);
+		// TODO Auto-generated constructor stub
 	}
+
 
 }
