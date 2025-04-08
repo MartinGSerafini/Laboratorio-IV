@@ -1,17 +1,22 @@
 package ejercicio3;
 
 public class PoliDeportivo extends Edificio implements InstalacionDeportiva {
+	
+	private String nombre;
+	private int tipoInstalacion;
 
-	public PoliDeportivo(double superficie) {
+	public PoliDeportivo(double superficie, String nombre, int tipoInstalacion) {
 		super(superficie);
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public int getTipoDeInstalacion() {
-		// TODO Auto-generated method stub
-		return 0;
+		this.nombre = nombre;
+		this.tipoInstalacion = tipoInstalacion;
 	}
 	
-
+	@Override
+	public int getTipoDeInstalacion() {
+		return tipoInstalacion;
+	}
+	
+	public String getNombre() {
+		return nombre;
+	}
 }
