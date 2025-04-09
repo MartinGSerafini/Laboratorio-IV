@@ -12,8 +12,13 @@ public class mainEjercicio3 {
 		 Lista.add(new PoliDeportivo("Polideportivo Tigre", 1500.6, 1));
 		 Lista.add(new PoliDeportivo("Polideportivo Pacheco", 1100.7, 2));
 		 Lista.add(new PoliDeportivo("Polideportivo El Talar", 1300.8, 3));
-		 Lista.add(new EdificioDeOficinas(50, 30));
-		 Lista.add(new EdificioDeOficinas(65, 40));
+		 Lista.add(new EdificioDeOficinas(50, 30, 1));
+		 Lista.add(new EdificioDeOficinas(65, 40, 2));
 		 
+		 ListIterator<Edificio> iterator = Lista.listIterator();
+		 while (iterator.hasNext()) {
+			Edificio edificio = (Edificio) iterator.next();
+			System.out.println(edificio.toString());
+		}
 	}
 }

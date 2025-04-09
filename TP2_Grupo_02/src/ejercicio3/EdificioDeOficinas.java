@@ -3,10 +3,12 @@ package ejercicio3;
 public class EdificioDeOficinas extends  Edificio{
 
 	private int numOficinas;
+	private int blocEdificio;
 	
-	public EdificioDeOficinas(double superficie, int numOficinas) {
+	public EdificioDeOficinas(double superficie, int numOficinas, int blocEdificio) {
 		super(superficie);
 		this.numOficinas = numOficinas;
+		this.blocEdificio = blocEdificio;
 	}
 	//gets y sets
 	public int getNumOficinas() {
@@ -16,9 +18,8 @@ public class EdificioDeOficinas extends  Edificio{
 		this.numOficinas = numOficinas;
 		return numOficinas;
 	}
-	//to string
 	@Override
 	public String toString() {
-		return "EdificioDeOficinas [numero de oficinas =" + numOficinas +  "]";
+		return "Edificio de oficinas. Bloque: "+ blocEdificio + ", Numero de oficinas: "+ numOficinas;
 	}
 }
