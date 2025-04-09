@@ -19,6 +19,6 @@ public class EdificioDeOficinas extends  Edificio{
 	//to string
 	@Override
 	public String toString() {
-		return "EdificioDeOficinas [numero de oficinas =" + numOficinas + ", superficie =" + superficie + "]";
+		return "EdificioDeOficinas [numero de oficinas =" + numOficinas +  "]";
 	}
 }
