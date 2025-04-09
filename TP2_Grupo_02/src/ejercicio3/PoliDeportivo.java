@@ -5,7 +5,7 @@ public class PoliDeportivo extends Edificio implements InstalacionDeportiva {
 	private String nombre;
 	private int tipoInstalacion;
 
-	public PoliDeportivo(double superficie, String nombre, int tipoInstalacion) {
+	public PoliDeportivo(String nombre, double superficie, int tipoInstalacion) {
 		super(superficie);
 		this.nombre = nombre;
 		this.tipoInstalacion = tipoInstalacion;
