@@ -9,7 +9,7 @@ public class Main {
 		
 		try {
 			VerificadorDni.verificarDniInvalido(DNI1);
-			System.out.println("DNI válido.");
+			System.out.println("DNI valido.");
 		
 		} catch(DniInvalidoException e){
 			System.out.println("Error: " + e.getMessage());
