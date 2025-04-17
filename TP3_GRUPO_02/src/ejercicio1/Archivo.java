@@ -4,7 +4,8 @@ import java.io.File;
 
 public class Archivo {
 
-	String ruta = "\\TP3_GRUPO_02\\src\\Personas.txt";
+	//String ruta = "\\TP3_GRUPO_02\\src\\Personas.txt";
+	String ruta = "src\\Personas.txt";
 	
 	public boolean existe()
 	{
@@ -13,4 +14,10 @@ public class Archivo {
 		      return true;
 		return false;
 	}
+
+	public String getRuta() {
+		return ruta;
+	}
+	
+	
 }

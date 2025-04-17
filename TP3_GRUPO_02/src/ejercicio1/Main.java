@@ -12,7 +12,6 @@ public class Main {
 
 	public static void main(String[] args) {
 		Archivo archivo = new Archivo();
-		String ruta = "\\TP3_GRUPO_02\\src\\Personas.txt";
 		
 		if (!archivo.existe()) {
             System.out.println("El archivo no existe: ");
@@ -22,7 +21,7 @@ public class Main {
 		Set<Persona> personasSet = new HashSet<>();
         try {
             // Abrir el archivo
-            BufferedReader reader = new BufferedReader(new FileReader(ruta));
+            BufferedReader reader = new BufferedReader(new FileReader(archivo.getRuta()));
             String linea;
             
             while ((linea = reader.readLine()) != null) {
