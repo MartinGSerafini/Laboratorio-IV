@@ -4,7 +4,7 @@ import java.io.File;
 
 public class Archivo {
 
-	String ruta;
+	String ruta = "\\TP3_GRUPO_02\\src\\Personas.txt";
 	
 	public boolean existe()
 	{
