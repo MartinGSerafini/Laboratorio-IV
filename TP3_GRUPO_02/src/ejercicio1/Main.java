@@ -27,6 +27,7 @@ public class Main {
             while ((linea = reader.readLine()) != null) {
                 // Separar los datos por el guion
                 String[] partes = linea.split("-");
+                
                 if (partes.length == 3) {
                     String nombre = partes[0].trim();
                     String apellido = partes[1].trim();
