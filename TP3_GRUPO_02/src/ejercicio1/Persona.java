@@ -47,13 +47,20 @@ public class Persona {
         return Objects.hash(dni);
     }
     
-    public static Comparator<Persona> ordenarPorNombreApellido = new Comparator<Persona>() {
+    public static Comparator<Persona> ordenarPorApellido = new Comparator<Persona>() {
+        @Override
         public int compare(Persona p1, Persona p2) {
-            int apellidoComp = p1.getApellido().compareTo(p2.getApellido());
-            if (apellidoComp != 0) {
-                return apellidoComp;
-            }
-            return p1.getNombre().compareTo(p2.getNombre());
+            // Normalizar y comparar apellidos
+            String a1 = normalizar(p1.getApellido());
+            String a2 = normalizar(p2.getApellido());
+            return a1.compareTo(a2);
+        }
+
+        private String normalizar(String texto) {
+            // trim, pasar a minúsculas y quitar tildes/diacríticos
+            return java.text.Normalizer
+                    .normalize(texto.trim().toLowerCase(), java.text.Normalizer.Form.NFD)
+                    .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
         }
     };
 
