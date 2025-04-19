@@ -56,4 +56,5 @@ public class Persona {
             return p1.getNombre().compareTo(p2.getNombre());
         }
     };
+
 }
