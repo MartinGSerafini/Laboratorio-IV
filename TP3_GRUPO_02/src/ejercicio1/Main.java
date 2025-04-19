@@ -45,7 +45,7 @@ public class Main {
 
             // Convertir el set en una lista para ordenarla
             List<Persona> listaOrdenada = new ArrayList<>(personasSet);
-            listaOrdenada.sort(Persona.ordenarPorApellido);
+            listaOrdenada.sort(Persona.ordenarPorNombreApellido);
 
             // Mostrar la lista ordenada sin duplicados
             for (Persona persona : listaOrdenada) {
