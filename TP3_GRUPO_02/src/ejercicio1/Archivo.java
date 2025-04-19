@@ -7,7 +7,7 @@ public class Archivo {
 	//String ruta = "\\TP3_GRUPO_02\\src\\Personas.txt";
 	private String ruta; 
 	
-	//constructores
+	//CONSTRUCTORES
 	public Archivo() {
 		ruta = "src\\Personas.txt";		
 	}
