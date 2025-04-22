@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.io.FileWriter;
 
 public class Main {
 
@@ -51,6 +52,13 @@ public class Main {
             for (Persona persona : listaOrdenada) {
                 System.out.println(persona);
             }
+            
+            FileWriter writer = new FileWriter("src\\Resultado.txt");
+            for (Persona persona : listaOrdenada) {
+                writer.write(persona.toString() + "\n");
+            }
+            writer.close();
+            System.out.println("Archivo Resultado.txt generado de forma exitosa.");
 
         } catch (IOException e) {
             e.printStackTrace();
