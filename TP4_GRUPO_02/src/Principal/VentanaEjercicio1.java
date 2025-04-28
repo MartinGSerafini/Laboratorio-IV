@@ -1,6 +1,7 @@
 package Principal;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.JButton;
@@ -46,7 +47,7 @@ public class VentanaEjercicio1 extends JFrame {
 		nombreField.setBounds(150, 20, 200, 25);
 		panel_1.add(nombreField);
 
-		JLabel lblTelefono = new JLabel("Teléfono:");
+		JLabel lblTelefono = new JLabel("Telefono:");
 		lblTelefono.setBounds(50, 60, 100, 25);
 		panel_1.add(lblTelefono);
 
@@ -69,5 +70,62 @@ public class VentanaEjercicio1 extends JFrame {
 		fechaField = new JTextField();
 		fechaField.setBounds(150, 140, 200, 25);
 		panel_1.add(fechaField);
+		
+		JButton btnMostrar = new JButton("Mostrar");
+		btnMostrar.addActionListener(new eventoBotonMostrar(nombreField, telefonoField, emailField, fechaField));
+		btnMostrar.setBounds(265, 186, 85, 21);
+		panel_1.add(btnMostrar);
+		
+		JLabel lblDatos = new JLabel("Los datos ingresados fueron:");
+		lblDatos.setBounds(50, 230, 312, 13);
+		panel_1.add(lblDatos);
 	}
 }
+
+class eventoBotonMostrar implements ActionListener{
+
+	private JTextField jtNombre;
+	private JTextField jtTelefono;
+	private JTextField jtEmail;
+	private JTextField jtFecha;
+	private boolean vacio = false;
+	
+	
+	eventoBotonMostrar(JTextField nombre, JTextField telefono, JTextField email, JTextField fecha){
+		jtNombre = nombre;
+		jtTelefono = telefono;
+		jtEmail = email;
+		jtFecha = fecha;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		if(jtNombre.getText().equals("")){
+			vacio = true;
+			jtNombre.setBackground(Color.RED);
+		}
+		
+		if(jtTelefono.getText().equals("")){
+			vacio = true;
+			jtTelefono.setBackground(Color.RED);
+		}
+		
+		if(jtEmail.getText().equals("")){
+			vacio = true;
+			jtEmail.setBackground(Color.RED);
+		}
+		
+		if(jtFecha.getText().equals("")){
+			vacio = true;
+			jtFecha.setBackground(Color.RED);
+		}
+		
+		
+		
+		
+		
+	}
+	
+}
+
