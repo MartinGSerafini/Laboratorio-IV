@@ -71,14 +71,14 @@ public class VentanaEjercicio1 extends JFrame {
 		fechaField.setBounds(150, 140, 200, 25);
 		panel_1.add(fechaField);
 		
+		JLabel lblDatos = new JLabel("Los datos ingresados fueron: ");
+		lblDatos.setBounds(50, 218, 312, 25);
+		panel_1.add(lblDatos);
+		
 		JButton btnMostrar = new JButton("Mostrar");
-		btnMostrar.addActionListener(new eventoBotonMostrar(nombreField, telefonoField, emailField, fechaField));
+		btnMostrar.addActionListener(new eventoBotonMostrar(nombreField, telefonoField, emailField, fechaField, lblDatos));
 		btnMostrar.setBounds(265, 186, 85, 21);
 		panel_1.add(btnMostrar);
-		
-		JLabel lblDatos = new JLabel("Los datos ingresados fueron:");
-		lblDatos.setBounds(50, 230, 312, 13);
-		panel_1.add(lblDatos);
 	}
 }
 
@@ -88,43 +88,44 @@ class eventoBotonMostrar implements ActionListener{
 	private JTextField jtTelefono;
 	private JTextField jtEmail;
 	private JTextField jtFecha;
-	private boolean vacio = false;
+	private JLabel lblDatos;
 	
 	
-	eventoBotonMostrar(JTextField nombre, JTextField telefono, JTextField email, JTextField fecha){
+	eventoBotonMostrar(JTextField nombre, JTextField telefono, JTextField email, JTextField fecha, JLabel datos){
 		jtNombre = nombre;
 		jtTelefono = telefono;
 		jtEmail = email;
 		jtFecha = fecha;
+		lblDatos= datos;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		int vacio = 0;
 		
-		if(jtNombre.getText().equals("")){
-			vacio = true;
-			jtNombre.setBackground(Color.RED);
+		if(TxtVacio(jtNombre))
+			vacio ++;
+		if(TxtVacio(jtTelefono))
+			vacio ++;
+		if(TxtVacio(jtEmail))
+			vacio ++;
+		if(TxtVacio(jtFecha))
+			vacio++;
+		
+		if(vacio == 0) {
+			lblDatos.setText("Los datos ingresados fueron: " + jtNombre.getText() + ", " + jtTelefono.getText() + ", " + jtEmail.getText()+ ", " + jtFecha.getText());
 		}
-		
-		if(jtTelefono.getText().equals("")){
-			vacio = true;
-			jtTelefono.setBackground(Color.RED);
+	}
+	
+	private boolean TxtVacio(JTextField txt){
+		if(txt.getText().isBlank()) {
+			txt.setBackground(Color.RED);
+			txt.setText(null);
+			return true;
+		} else {
+			txt.setBackground(Color.WHITE);
+			return false;
 		}
-		
-		if(jtEmail.getText().equals("")){
-			vacio = true;
-			jtEmail.setBackground(Color.RED);
-		}
-		
-		if(jtFecha.getText().equals("")){
-			vacio = true;
-			jtFecha.setBackground(Color.RED);
-		}
-		
-		
-		
-		
-		
 	}
 	
 }
