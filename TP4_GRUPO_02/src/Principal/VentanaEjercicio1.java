@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 public class VentanaEjercicio1 extends JFrame {
 	
 	private JPanel contentPane;
-	private JTextField nombreField, telefonoField, emailField, fechaField;
+	private JTextField nombreField, apellidoField, telefonoField, fechaField;
 	private JLabel resultadoLabel;
 	
 	public VentanaEjercicio1() {
@@ -37,7 +37,7 @@ public class VentanaEjercicio1 extends JFrame {
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(null);
 		
-		setTitle("Contactos"); //Cambia el titolo de la ventana
+		setTitle("Contactos");
 		
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setBounds(50, 20, 100, 25);
@@ -47,21 +47,21 @@ public class VentanaEjercicio1 extends JFrame {
 		nombreField.setBounds(150, 20, 200, 25);
 		panel_1.add(nombreField);
 
+		JLabel lblApellido = new JLabel("Apellido:");
+		lblApellido.setBounds(50, 60, 100, 25);
+		panel_1.add(lblApellido);
+
+		apellidoField = new JTextField();
+		apellidoField.setBounds(150, 60, 200, 25);
+		panel_1.add(apellidoField);
+		
 		JLabel lblTelefono = new JLabel("Telefono:");
-		lblTelefono.setBounds(50, 60, 100, 25);
+		lblTelefono.setBounds(50, 100, 100, 25);
 		panel_1.add(lblTelefono);
 
 		telefonoField = new JTextField();
-		telefonoField.setBounds(150, 60, 200, 25);
+		telefonoField.setBounds(150, 100, 200, 25);
 		panel_1.add(telefonoField);
-
-		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setBounds(50, 100, 100, 25);
-		panel_1.add(lblEmail);
-
-		emailField = new JTextField();
-		emailField.setBounds(150, 100, 200, 25);
-		panel_1.add(emailField);
 		
 		JLabel lblFecha = new JLabel("Fecha Nac:");
 		lblFecha.setBounds(50, 140, 100, 25);
@@ -76,7 +76,7 @@ public class VentanaEjercicio1 extends JFrame {
 		panel_1.add(lblDatos);
 		
 		JButton btnMostrar = new JButton("Mostrar");
-		btnMostrar.addActionListener(new eventoBotonMostrar(nombreField, telefonoField, emailField, fechaField, lblDatos));
+		btnMostrar.addActionListener(new eventoBotonMostrar(nombreField, apellidoField, telefonoField, fechaField, lblDatos));
 		btnMostrar.setBounds(265, 186, 85, 21);
 		panel_1.add(btnMostrar);
 	}
@@ -85,16 +85,16 @@ public class VentanaEjercicio1 extends JFrame {
 class eventoBotonMostrar implements ActionListener{
 
 	private JTextField jtNombre;
+	private JTextField jtApellido;
 	private JTextField jtTelefono;
-	private JTextField jtEmail;
 	private JTextField jtFecha;
 	private JLabel lblDatos;
 	
 	
-	eventoBotonMostrar(JTextField nombre, JTextField telefono, JTextField email, JTextField fecha, JLabel datos){
+	eventoBotonMostrar(JTextField nombre, JTextField apellido, JTextField telefono, JTextField fecha, JLabel datos){
 		jtNombre = nombre;
+		jtApellido = apellido;
 		jtTelefono = telefono;
-		jtEmail = email;
 		jtFecha = fecha;
 		lblDatos= datos;
 	}
@@ -105,27 +105,30 @@ class eventoBotonMostrar implements ActionListener{
 		
 		if(TxtVacio(jtNombre))
 			vacio ++;
-		if(TxtVacio(jtTelefono))
+		if(TxtVacio(jtApellido))
 			vacio ++;
-		if(TxtVacio(jtEmail))
+		if(TxtVacio(jtTelefono))
 			vacio ++;
 		if(TxtVacio(jtFecha))
 			vacio++;
 		
 		if(vacio == 0) {
-			lblDatos.setText("Los datos ingresados fueron: " + jtNombre.getText() + ", " + jtTelefono.getText() + ", " + jtEmail.getText()+ ", " + jtFecha.getText());
+			lblDatos.setText("Los datos ingresados fueron: " + jtNombre.getText() + ", " + jtApellido.getText() + ", " + jtTelefono.getText()+ ", " + jtFecha.getText());
+			jtNombre.setText("");
+			jtApellido.setText("");
+			jtTelefono.setText("");
+			jtFecha.setText("");
 		}
 	}
 	
-	private boolean TxtVacio(JTextField txt){
-		if(txt.getText().isBlank()) {
-			txt.setBackground(Color.RED);
-			txt.setText(null);
-			return true;
-		} else {
-			txt.setBackground(Color.WHITE);
-			return false;
-		}
+	private boolean TxtVacio(JTextField txt) {
+	    if (txt.getText().trim().isEmpty()) {
+	        txt.setBackground(Color.RED);
+	        return true;
+	    } else {
+	        txt.setBackground(Color.WHITE);
+	        return false;
+	    }
 	}
 	
 }
