@@ -3,6 +3,8 @@ package Principal;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -24,52 +26,61 @@ public class VentanaEjercicio2 extends JFrame {
 	
 	public VentanaEjercicio2() {
 		
-		
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
-		
 		setTitle("Promedio");
-		
-		JLabel lblNota1 = new JLabel("Nota 1:");
-        lblNota1.setBounds(30, 20, 80, 25);
-        panel.add(lblNota1);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setBounds(100, 100, 450, 300);
 
-        textField1 = new JTextField();
-        textField1.setBounds(100, 20, 150, 25);
+        JPanel contentPane = new JPanel(new BorderLayout(10, 10));
+        contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+        setContentPane(contentPane);
+
+        //Panel de ingreso de datos
+        JPanel panel = new JPanel(new GridLayout(4, 2, 5, 5));
+        panel.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createLineBorder(Color.BLUE),
+            "Notas del estudiante",
+            TitledBorder.LEFT,
+            TitledBorder.TOP
+        ));
+
+        // Fila 1
+        panel.add(new JLabel("Nota 1:"));
+        textField1 = new JTextField(12);
         panel.add(textField1);
 
-        JLabel lblNota2 = new JLabel("Nota 2:");
-        lblNota2.setBounds(30, 60, 80, 25);
-        panel.add(lblNota2);
-
-        textField2 = new JTextField();
-        textField2.setBounds(100, 60, 150, 25);
+        // Fila 2
+        panel.add(new JLabel("Nota 2:"));
+        textField2 = new JTextField(12);
         panel.add(textField2);
 
-        JLabel lblNota3 = new JLabel("Nota 3:");
-        lblNota3.setBounds(30, 100, 80, 25);
-        panel.add(lblNota3);
-
-        textField3 = new JTextField();
-        textField3.setBounds(100, 100, 150, 25);
+        // Fila 3
+        panel.add(new JLabel("Nota 3:"));
+        textField3 = new JTextField(12);
         panel.add(textField3);
-        
-        JLabel lblTP = new JLabel("TPS");
-        lblTP.setBounds(30, 140, 100, 25);
-        panel.add(lblTP);
 
+        // Fila 4
+        panel.add(new JLabel("TPS:"));
         comboTP = new JComboBox<>(new String[]{"Aprobado", "Desaprobado"});
-        comboTP.setBounds(100, 140, 150, 25);
         panel.add(comboTP);
+
+        contentPane.add(panel, BorderLayout.CENTER);
+
+        //panel con los botones
+        JPanel panelBotones = new JPanel(new GridLayout(3, 1, 0, 10));
+        panelBotones.setBorder(new EmptyBorder(10, 0, 10, 0));
+
+        JButton btnCalcular = new JButton("Calcular");
+        JButton btnNuevo = new JButton("Nuevo");
+        JButton btnSalir = new JButton("Salir");
+        panelBotones.add(btnCalcular);
+        panelBotones.add(btnNuevo);
+        panelBotones.add(btnSalir);
+
+        contentPane.add(panelBotones, BorderLayout.EAST);
+
+        // Ajustamos al tamaño óptimo
+        pack();
 		
 	}
 }
