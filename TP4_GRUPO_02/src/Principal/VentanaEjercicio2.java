@@ -6,8 +6,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -16,13 +14,9 @@ import javax.swing.JButton;
 import javax.swing.BorderFactory;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.LayoutManager;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import java.awt.Component;
-
-
-
 
 public class VentanaEjercicio2 extends JFrame {
     private JTextField textField1;
@@ -98,7 +92,7 @@ public class VentanaEjercicio2 extends JFrame {
         panelResultado.setMaximumSize(new Dimension(Integer.MAX_VALUE, panelResultado.getPreferredSize().height));
 
         panelCentral.add(panelNotas);
-        panelCentral.add(Box.createVerticalStrut(10)); // Espacio entre paneles
+        panelCentral.add(Box.createVerticalStrut(10));
         panelCentral.add(panelResultado);
 
         contentPane.add(panelCentral, BorderLayout.CENTER);
