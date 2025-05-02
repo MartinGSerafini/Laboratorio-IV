@@ -108,7 +108,22 @@ public class VentanaEjercicio2 extends JFrame {
         JButton btnCalcular = new JButton("Calcular");
         btnCalcular.addActionListener(new eventoBotonCalcular(txtNota1, txtNota2, txtNota3, textPromedio, textCondicion));
         JButton btnNuevo = new JButton("Nuevo");
+        btnNuevo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { //limpiar los campos al clickear "nuevo"
+                txtNota1.setText("");
+                txtNota2.setText("");
+                txtNota3.setText("");
+                textPromedio.setText("");
+                textCondicion.setText("");
+                comboTP.setSelectedIndex(0); 
+            }
+        });
         JButton btnSalir = new JButton("Salir");
+        btnSalir.addActionListener(new ActionListener() { //dispose para cerrar la ventana
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
         panelBotones.add(btnCalcular);
         panelBotones.add(btnNuevo);
         panelBotones.add(btnSalir);
@@ -129,8 +144,7 @@ public class VentanaEjercicio2 extends JFrame {
 }
 
 
-
-
+//botón Calcular para calcular el promedio
 class eventoBotonCalcular implements ActionListener{
 	private JTextField jtNota1;
 	private JTextField jtNota2;
@@ -176,5 +190,4 @@ class eventoBotonCalcular implements ActionListener{
 		}
 		return false;
 	}
-	
 }
