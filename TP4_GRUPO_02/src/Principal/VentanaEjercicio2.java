@@ -6,68 +6,105 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import java.awt.SystemColor;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.JComboBox;
+import javax.swing.JButton;
+import javax.swing.BorderFactory;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.LayoutManager;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import java.awt.Component;
+
+
+
 
 public class VentanaEjercicio2 extends JFrame {
-	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField1;
-	private JTextField textField2;
-	private JTextField textField3;
-	private JComboBox<String> comboTP;
-	
-	public VentanaEjercicio2() {
-		
-		setTitle("Promedio");
+    private JTextField textField1;
+    private JTextField textField2;
+    private JTextField textField3;
+    private JTextField textPromedio;
+    private JTextField textCondicion;
+    private JComboBox<String> comboTP;
+
+    public VentanaEjercicio2() {
+
+        setTitle("Promedio");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
-        setBounds(100, 100, 450, 300);
+        setBounds(100, 100, 450, 280);
 
         JPanel contentPane = new JPanel(new BorderLayout(10, 10));
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
         setContentPane(contentPane);
 
-        //Panel de ingreso de datos
-        JPanel panel = new JPanel(new GridLayout(4, 2, 5, 5));
-        panel.setBorder(BorderFactory.createTitledBorder(
+        // Primer panel de ingreso de datos
+        JPanel panelNotas = new JPanel(new GridLayout(4, 2, 5, 5));
+        panelNotas.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(Color.BLUE),
             "Notas del estudiante",
             TitledBorder.LEFT,
             TitledBorder.TOP
         ));
 
-        // Fila 1
-        panel.add(new JLabel("Nota 1:"));
+        panelNotas.add(new JLabel("Nota 1:"));
         textField1 = new JTextField(12);
-        panel.add(textField1);
+        panelNotas.add(textField1);
 
-        // Fila 2
-        panel.add(new JLabel("Nota 2:"));
+        panelNotas.add(new JLabel("Nota 2:"));
         textField2 = new JTextField(12);
-        panel.add(textField2);
+        panelNotas.add(textField2);
 
-        // Fila 3
-        panel.add(new JLabel("Nota 3:"));
+        panelNotas.add(new JLabel("Nota 3:"));
         textField3 = new JTextField(12);
-        panel.add(textField3);
+        panelNotas.add(textField3);
 
-        // Fila 4
-        panel.add(new JLabel("TPS:"));
+        panelNotas.add(new JLabel("TPS:"));
         comboTP = new JComboBox<>(new String[]{"Aprobado", "Desaprobado"});
-        panel.add(comboTP);
+        panelNotas.add(comboTP);
 
-        contentPane.add(panel, BorderLayout.CENTER);
+        // Segundo panel Promedio y Condición
+        JPanel panelResultado = new JPanel(new GridLayout(2, 2, 5, 2));
+        panelResultado.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createLineBorder(Color.BLUE),
+            "Resultado",
+            TitledBorder.LEFT,
+            TitledBorder.TOP
+        ));
 
-        //panel con los botones
-        JPanel panelBotones = new JPanel(new GridLayout(3, 1, 0, 10));
+        panelResultado.add(new JLabel("Promedio:"));
+        textPromedio = new JTextField(12);
+        textPromedio.setPreferredSize(new Dimension(150, 25));
+        panelResultado.add(textPromedio);
+
+        panelResultado.add(new JLabel("Condición:"));
+        textCondicion = new JTextField(12);
+        textCondicion.setPreferredSize(new Dimension(150, 25));
+        panelResultado.add(textCondicion);
+
+        // Panel que agrupa los dos paneles con BoxLayout
+        JPanel panelCentral = new JPanel();
+        panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
+
+        panelNotas.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panelNotas.setMaximumSize(new Dimension(Integer.MAX_VALUE, panelNotas.getPreferredSize().height));
+
+        panelResultado.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panelResultado.setMaximumSize(new Dimension(Integer.MAX_VALUE, panelResultado.getPreferredSize().height));
+
+        panelCentral.add(panelNotas);
+        panelCentral.add(Box.createVerticalStrut(10)); // Espacio entre paneles
+        panelCentral.add(panelResultado);
+
+        contentPane.add(panelCentral, BorderLayout.CENTER);
+
+        // Panel con los botones
+        JPanel panelBotones = new JPanel(new GridLayout(6, 1, 0, 10));
         panelBotones.setBorder(new EmptyBorder(10, 0, 10, 0));
 
         JButton btnCalcular = new JButton("Calcular");
@@ -78,9 +115,16 @@ public class VentanaEjercicio2 extends JFrame {
         panelBotones.add(btnSalir);
 
         contentPane.add(panelBotones, BorderLayout.EAST);
+    }
 
-        // Ajustamos al tamaÃ±o Ã³ptimo
-        pack();
-		
-	}
+    public static void main(String[] args) {
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
+                VentanaEjercicio2 frame = new VentanaEjercicio2();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 }
