@@ -17,11 +17,15 @@ import java.awt.Dimension;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import java.awt.Component;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaEjercicio2 extends JFrame {
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JTextField txtNota1;
+    private JTextField txtNota2;
+    private JTextField txtNota3;
     private JTextField textPromedio;
     private JTextField textCondicion;
     private JComboBox<String> comboTP;
@@ -47,22 +51,22 @@ public class VentanaEjercicio2 extends JFrame {
         ));
 
         panelNotas.add(new JLabel("Nota 1:"));
-        textField1 = new JTextField(12);
-        panelNotas.add(textField1);
+        txtNota1 = new JTextField(12);
+        panelNotas.add(txtNota1);
 
         panelNotas.add(new JLabel("Nota 2:"));
-        textField2 = new JTextField(12);
-        panelNotas.add(textField2);
+        txtNota2 = new JTextField(12);
+        panelNotas.add(txtNota2);
 
         panelNotas.add(new JLabel("Nota 3:"));
-        textField3 = new JTextField(12);
-        panelNotas.add(textField3);
+        txtNota3 = new JTextField(12);
+        panelNotas.add(txtNota3);
 
         panelNotas.add(new JLabel("TPS:"));
         comboTP = new JComboBox<>(new String[]{"Aprobado", "Desaprobado"});
         panelNotas.add(comboTP);
 
-        // Segundo panel Promedio y Condición
+        // Segundo panel Promedio y Condiciï¿½n
         JPanel panelResultado = new JPanel(new GridLayout(2, 2, 5, 2));
         panelResultado.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(Color.BLUE),
@@ -76,7 +80,7 @@ public class VentanaEjercicio2 extends JFrame {
         textPromedio.setPreferredSize(new Dimension(150, 25));
         panelResultado.add(textPromedio);
 
-        panelResultado.add(new JLabel("Condición:"));
+        panelResultado.add(new JLabel("Condiciï¿½n:"));
         textCondicion = new JTextField(12);
         textCondicion.setPreferredSize(new Dimension(150, 25));
         panelResultado.add(textCondicion);
@@ -102,6 +106,7 @@ public class VentanaEjercicio2 extends JFrame {
         panelBotones.setBorder(new EmptyBorder(10, 0, 10, 0));
 
         JButton btnCalcular = new JButton("Calcular");
+        btnCalcular.addActionListener(new eventoBotonCalcular(txtNota1, txtNota2, txtNota3, textPromedio, textCondicion));
         JButton btnNuevo = new JButton("Nuevo");
         JButton btnSalir = new JButton("Salir");
         panelBotones.add(btnCalcular);
@@ -121,4 +126,55 @@ public class VentanaEjercicio2 extends JFrame {
             }
         });
     }
+}
+
+
+
+
+class eventoBotonCalcular implements ActionListener{
+	private JTextField jtNota1;
+	private JTextField jtNota2;
+	private JTextField jtNota3;
+	private JTextField jtPromedio;
+	private JTextField jtCondicion;
+
+	eventoBotonCalcular(JTextField nota1, JTextField nota2, JTextField nota3, JTextField promedio, JTextField condicion){
+		jtNota1 = nota1;
+		jtNota2 = nota2;
+		jtNota3 = nota3;
+		jtPromedio = promedio;
+		jtCondicion = condicion;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		double promedio = 0;
+		String prom;
+		
+		if(verificarJTxt(jtNota1) && verificarJTxt(jtNota2) && verificarJTxt(jtNota3)) {
+			double n1 = Double.parseDouble(jtNota1.getText());
+			double n2 = Double.parseDouble(jtNota2.getText());
+			double n3 = Double.parseDouble(jtNota3.getText());
+			if(verificarNota(n1) && verificarNota(n2) && verificarNota(n3)) {
+				promedio = (n1 + n2 + n3) / 3;
+			}
+		}
+		prom = String.format("%.2f", promedio);
+		jtPromedio.setText(prom);
+	}
+	
+	public boolean verificarJTxt(JTextField txt) {
+		if(!txt.getText().trim().isEmpty() && txt.getText().matches("\\d+(\\.\\d+)?")) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean verificarNota(double nota) {
+		if(nota >= 1 && nota <= 10) {
+			return true;
+		}
+		return false;
+	}
+	
 }
