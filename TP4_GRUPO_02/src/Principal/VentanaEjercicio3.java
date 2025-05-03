@@ -16,6 +16,7 @@ import java.awt.GridBagLayout;
 
 public class VentanaEjercicio3 extends JFrame {
 	private JPanel contentPane;
+	private JTextField txtHoras;
 	
 	public VentanaEjercicio3() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -68,16 +69,33 @@ public class VentanaEjercicio3 extends JFrame {
         checkBoxPanel.add(new JCheckBox("Programación"));
         checkBoxPanel.add(new JCheckBox("Administración"));
         checkBoxPanel.add(new JCheckBox("Diseño Gráfico"));
+        GridBagConstraints gbc1 = new GridBagConstraints();
 
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.WEST; // Alinear al lado izquierdo dentro de su celda
-        panelEsp.add(checkBoxPanel, gbc);
+        gbc1.gridx = 1;
+        gbc1.gridy = 0;
+        gbc1.anchor = GridBagConstraints.WEST; // Alinear al lado izquierdo dentro de su celda
+        panelEsp.add(checkBoxPanel, gbc1);
         
         panelGeneral.add(panelEsp);
         panelGeneral.add(Box.createVerticalStrut(10)); //agrego un espacio para el siguiente panel
         
+        // TERCER PANEL CANTIDAD HORAS
+        JPanel panelHoras = new JPanel();
+        panelHoras.setBorder(BorderFactory.createTitledBorder("")); // Borde vac�o, como en la imagen
+		panelHoras.setLayout(new FlowLayout(FlowLayout.CENTER));
+        
+        JLabel lblCantHoras = new JLabel("Cantidad de horas en el computador: ");
+        panelHoras.add(lblCantHoras);
+        
+        txtHoras = new JTextField();
+        txtHoras.setColumns(10);
+        panelHoras.add(txtHoras);
+        
+        panelGeneral.add(panelHoras);
+        panelGeneral.add(Box.createVerticalStrut(10)); //ESPACIO PARA EL SIGUIENTE PANEL
 	}
+	
+	
 	public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
             try {
