@@ -106,7 +106,7 @@ public class VentanaEjercicio2 extends JFrame {
         panelBotones.setBorder(new EmptyBorder(10, 0, 10, 0));
 
         JButton btnCalcular = new JButton("Calcular");
-        btnCalcular.addActionListener(new eventoBotonCalcular(txtNota1, txtNota2, txtNota3, textPromedio, textCondicion));
+        btnCalcular.addActionListener(new eventoBotonCalcular(txtNota1, txtNota2, txtNota3, comboTP, textPromedio, textCondicion));
         JButton btnNuevo = new JButton("Nuevo");
         btnNuevo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { //limpiar los campos al clickear "nuevo"
@@ -144,18 +144,20 @@ public class VentanaEjercicio2 extends JFrame {
 }
 
 
-//botón Calcular para calcular el promedio
+//botón Calcular para calcular el promedio y condición
 class eventoBotonCalcular implements ActionListener{
 	private JTextField jtNota1;
 	private JTextField jtNota2;
 	private JTextField jtNota3;
+	private JComboBox<String> JCtps;
 	private JTextField jtPromedio;
 	private JTextField jtCondicion;
 
-	eventoBotonCalcular(JTextField nota1, JTextField nota2, JTextField nota3, JTextField promedio, JTextField condicion){
+	eventoBotonCalcular(JTextField nota1, JTextField nota2, JTextField nota3, JComboBox<String> tps, JTextField promedio, JTextField condicion){
 		jtNota1 = nota1;
 		jtNota2 = nota2;
 		jtNota3 = nota3;
+		JCtps = tps;
 		jtPromedio = promedio;
 		jtCondicion = condicion;
 	}
@@ -165,16 +167,32 @@ class eventoBotonCalcular implements ActionListener{
 		double promedio = 0;
 		String prom;
 		
+		double n1 = Double.parseDouble(jtNota1.getText());
+		double n2 = Double.parseDouble(jtNota2.getText());
+		double n3 = Double.parseDouble(jtNota3.getText());
+		
+		//Promedio
 		if(verificarJTxt(jtNota1) && verificarJTxt(jtNota2) && verificarJTxt(jtNota3)) {
-			double n1 = Double.parseDouble(jtNota1.getText());
-			double n2 = Double.parseDouble(jtNota2.getText());
-			double n3 = Double.parseDouble(jtNota3.getText());
 			if(verificarNota(n1) && verificarNota(n2) && verificarNota(n3)) {
 				promedio = (n1 + n2 + n3) / 3;
 			}
 		}
 		prom = String.format("%.2f", promedio);
 		jtPromedio.setText(prom);
+		
+		//Condición
+		if(JCtps.getSelectedItem().toString() == "Desaprobado") {
+			jtCondicion.setText("Libre");
+		}
+		else if(n1 < 6 || n2 < 6 || n3 < 6) {
+			jtCondicion.setText("Libre");
+		}
+		else if(n1 >= 8 && n2 >= 8 && n3 >= 8 && JCtps.getSelectedItem().toString() == "Aprobado") {
+			jtCondicion.setText("Promociona");
+		}
+		else if(n1 <= 8 && n1 >= 6 && n2 <= 8 && n2 >= 6 && n3 <= 8 && n3 >= 6 &&JCtps.getSelectedItem().toString() == "Aprobado") {
+			jtCondicion.setText("Regular");
+		}
 	}
 	
 	public boolean verificarJTxt(JTextField txt) {
