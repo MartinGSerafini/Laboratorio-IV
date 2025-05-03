@@ -20,7 +20,7 @@ public class VentanaEjercicio3 extends JFrame {
 	
 	public VentanaEjercicio3() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 330);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -92,7 +92,12 @@ public class VentanaEjercicio3 extends JFrame {
         panelHoras.add(txtHoras);
         
         panelGeneral.add(panelHoras);
-        panelGeneral.add(Box.createVerticalStrut(10)); //ESPACIO PARA EL SIGUIENTE PANEL
+        
+        JPanel panelBoton = new JPanel();
+        contentPane.add(panelBoton, BorderLayout.SOUTH);
+        
+        JButton btnAceptar = new JButton("Aceptar\r\n");
+        panelBoton.add(btnAceptar);
 	}
 	
 	

@@ -44,6 +44,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		VentanaEjercicio1 ventanaEj1 = new VentanaEjercicio1();
 		VentanaEjercicio2 ventanaEj2 = new VentanaEjercicio2();
+		VentanaEjercicio3 ventanaEj3 = new VentanaEjercicio3();
 		
 		JButton btnEj1 = new JButton("Ejercicio 1");
 		btnEj1.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -60,6 +61,7 @@ public class VentanaPrincipal extends JFrame {
 		JButton btnEj3 = new JButton("Ejercicio 3");
 		btnEj3.setFont(new Font("Arial", Font.PLAIN, 14));
 		btnEj3.setBounds(140, 111, 146, 32);
+		btnEj3.addActionListener(new EventoBoton(ventanaEj3));
 		panel_1.add(btnEj3);
 		
 	}
