@@ -13,6 +13,8 @@ import javax.swing.*;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaEjercicio3 extends JFrame {
 	private JPanel contentPane;
@@ -53,7 +55,8 @@ public class VentanaEjercicio3 extends JFrame {
         panelSO.add(rbLinux);
         panelGeneral.add(panelSO);
         panelGeneral.add(Box.createVerticalStrut(10)); //agrego un espacio para el siguiente panel
-		
+        
+        
         //segundo panel especialidad
         JPanel panelEsp = new JPanel();
         panelEsp.setBorder(BorderFactory.createTitledBorder("")); // Borde vac�o, como en la imagen
@@ -68,9 +71,9 @@ public class VentanaEjercicio3 extends JFrame {
         
         JPanel checkBoxPanel = new JPanel();
         checkBoxPanel.setLayout(new GridLayout(3, 1, 5, 5));
-        cbProgramacion = new JCheckBox("Programaci�n");
-        cbAdministracion = new JCheckBox("Administraci�n");
-        cbDisenio = new JCheckBox("Dise�o Gr�fico");
+        cbProgramacion = new JCheckBox("Programación");
+        cbAdministracion = new JCheckBox("Administración");
+        cbDisenio = new JCheckBox("Diseño Gráfico");
         checkBoxPanel.add(cbProgramacion);
         checkBoxPanel.add(cbAdministracion);
         checkBoxPanel.add(cbDisenio);
@@ -84,9 +87,10 @@ public class VentanaEjercicio3 extends JFrame {
         panelGeneral.add(panelEsp);
         panelGeneral.add(Box.createVerticalStrut(10)); //agrego un espacio para el siguiente panel
         
+        
         // TERCER PANEL CANTIDAD HORAS
         JPanel panelHoras = new JPanel();
-        panelHoras.setBorder(BorderFactory.createTitledBorder("")); // Borde vac�o, como en la imagen
+        panelHoras.setBorder(BorderFactory.createTitledBorder("")); // Borde vacio, como en la imagen
 		panelHoras.setLayout(new FlowLayout(FlowLayout.CENTER));
         
         JLabel lblCantHoras = new JLabel("Cantidad de horas en el computador: ");
@@ -102,8 +106,33 @@ public class VentanaEjercicio3 extends JFrame {
         contentPane.add(panelBoton, BorderLayout.SOUTH);
         
         JButton btnAceptar = new JButton("Aceptar\r\n");
+        btnAceptar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+            	String sistemaOperativo = "";
+                if (rbWindows.isSelected()) {
+                    sistemaOperativo = "Windows";
+                } else if (rbMac.isSelected()) {
+                    sistemaOperativo = "Mac";
+                } else if (rbLinux.isSelected()) {
+                    sistemaOperativo = "Linux";
+                }
+                
+                String especialidad = "";
+                if (cbProgramacion.isSelected()) {
+                    especialidad = "Programación";
+                } else if (cbAdministracion.isSelected()) {
+                    especialidad = "Administración";
+                } else if (cbDisenio.isSelected()) {
+                    especialidad = "Diseño Gráfico";
+                }
+                
+                eventoBotonAceptar evento = new eventoBotonAceptar(sistemaOperativo, especialidad, txtHoras);
+                evento.actionPerformed(e);  // Llama al método del evento con la información actualizada
+            }
+        });
         panelBoton.add(btnAceptar);
-	}
+    }
 	
 	
 	public static void main(String[] args) {
@@ -117,3 +146,37 @@ public class VentanaEjercicio3 extends JFrame {
         });
     }
 }
+
+
+class eventoBotonAceptar implements ActionListener{
+
+	private String sistemaOp;
+	private String especialidad;
+	private JTextField cantHoras;
+	
+	eventoBotonAceptar(String sistema, String espec, JTextField cantHor){
+		sistemaOp = sistema;
+		especialidad = espec;
+		cantHoras = cantHor;
+	}
+	
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+	    String horas = cantHoras.getText();
+	    String mensaje = sistemaOp + " - " + especialidad + " - " + horas + " Hs";
+
+	    JOptionPane.showOptionDialog(
+	            null,
+	            mensaje,
+	            "Mensaje",
+	            JOptionPane.DEFAULT_OPTION,
+	            JOptionPane.INFORMATION_MESSAGE,
+	            null,
+	            new Object[] { "Aceptar" }, 
+	            "Aceptar"
+	        );
+	}
+}
+
