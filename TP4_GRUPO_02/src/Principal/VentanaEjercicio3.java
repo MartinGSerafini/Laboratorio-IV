@@ -17,6 +17,8 @@ import java.awt.GridBagLayout;
 public class VentanaEjercicio3 extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtHoras;
+	private JRadioButton rbWindows, rbMac, rbLinux;
+	private JCheckBox cbProgramacion, cbAdministracion, cbDisenio;
 	
 	public VentanaEjercicio3() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -39,9 +41,9 @@ public class VentanaEjercicio3 extends JFrame {
 		panelSO.setBorder(BorderFactory.createTitledBorder("")); // Borde vacï¿½o, como en la imagen
 		panelSO.setLayout(new FlowLayout(FlowLayout.LEFT));
 		panelSO.add(new JLabel("Elije un sistema operativo"));
-        JRadioButton rbWindows = new JRadioButton("Windows");
-        JRadioButton rbMac = new JRadioButton("Mac");
-        JRadioButton rbLinux = new JRadioButton("Linux");
+		rbWindows = new JRadioButton("Windows");
+		rbMac = new JRadioButton("Mac");
+		rbLinux = new JRadioButton("Linux");
         ButtonGroup bgSO = new ButtonGroup();
         bgSO.add(rbWindows);
         bgSO.add(rbMac);
@@ -66,9 +68,12 @@ public class VentanaEjercicio3 extends JFrame {
         
         JPanel checkBoxPanel = new JPanel();
         checkBoxPanel.setLayout(new GridLayout(3, 1, 5, 5));
-        checkBoxPanel.add(new JCheckBox("ProgramaciÃ³n"));
-        checkBoxPanel.add(new JCheckBox("AdministraciÃ³n"));
-        checkBoxPanel.add(new JCheckBox("DiseÃ±o GrÃ¡fico"));
+        cbProgramacion = new JCheckBox("Programación");
+        cbAdministracion = new JCheckBox("Administración");
+        cbDisenio = new JCheckBox("Diseño Gráfico");
+        checkBoxPanel.add(cbProgramacion);
+        checkBoxPanel.add(cbAdministracion);
+        checkBoxPanel.add(cbDisenio);
         GridBagConstraints gbc1 = new GridBagConstraints();
 
         gbc1.gridx = 1;
