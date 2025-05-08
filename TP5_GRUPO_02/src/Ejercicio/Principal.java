@@ -46,6 +46,10 @@ public class Principal extends JFrame {
 		
 		JMenuItem menuItemAgregar = new JMenuItem("Agregar");
 		menuPeliculas.add(menuItemAgregar);
+		menuItemAgregar.addActionListener(e -> {
+			ventanaAgregar ventana = new ventanaAgregar();
+			ventana.setVisible(true);
+		});
 		
 		JMenuItem menuItemListar = new JMenuItem("Listar");
 		menuPeliculas.add(menuItemListar);
