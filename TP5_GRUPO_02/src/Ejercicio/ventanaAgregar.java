@@ -15,6 +15,8 @@ import java.awt.event.ActionListener;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+
 import java.awt.CardLayout;
 import javax.swing.SpringLayout;
 import java.awt.Font;
@@ -27,6 +29,7 @@ public class ventanaAgregar extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
+	private DefaultListModel<Peliculas> listModel;
 	
 	
 	public ventanaAgregar() {
@@ -103,5 +106,9 @@ public class ventanaAgregar extends JFrame {
 		});
 		
 		setVisible(true);
+	}
+	
+	public void setListModel(DefaultListModel<Peliculas>listaPeliculas) {
+		this.listModel = listaPeliculas;
 	}
 }
