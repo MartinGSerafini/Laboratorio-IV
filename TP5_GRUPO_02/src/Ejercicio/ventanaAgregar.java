@@ -24,18 +24,6 @@ public class ventanaAgregar extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ventanaAgregar frame = new ventanaAgregar();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	
 	public ventanaAgregar() {
 		setTitle("Peliculas");
@@ -65,15 +53,20 @@ public class ventanaAgregar extends JFrame {
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		textField.setBounds(185, 85, 109, 20);
 		contentPane.add(textField);
-		textField.setColumns(10);
+		textField.setColumns(10);	
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox<Generos> comboBox = new JComboBox<Generos>();
 		comboBox.setBounds(185, 117, 109, 22);
 		contentPane.add(comboBox);
+		comboBox.addItem(new Generos(1, "Terror"));
+		comboBox.addItem(new Generos(2, "Acción"));
+		comboBox.addItem(new Generos(3, "Suspenso"));
+		comboBox.addItem(new Generos(4, "Romántica"));
 		
 		JLabel lblMostrarID = new JLabel("");
 		lblMostrarID.setBounds(185, 50, 46, 14);
 		contentPane.add(lblMostrarID);
+		lblMostrarID.setText(gestorPeliculas.getIdActual()+"");
 		
 		JButton btnAcceptar = new JButton("Acceptar");
 		btnAcceptar.setBounds(88, 165, 123, 23);

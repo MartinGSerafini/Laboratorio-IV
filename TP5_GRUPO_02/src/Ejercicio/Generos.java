@@ -17,4 +17,6 @@ public class Generos {
     public String toString() {
         return nombre;
     }
+    
 }
+
