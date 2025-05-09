@@ -7,7 +7,11 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.BoxLayout;
@@ -49,15 +53,16 @@ public class ventanaAgregar extends JFrame {
 		lblGenero.setBounds(88, 120, 46, 14);
 		contentPane.add(lblGenero);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField.setBounds(185, 85, 109, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);	
+		JTextField nombre = new JTextField();
+		nombre.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		nombre.setBounds(185, 85, 109, 20);
+		contentPane.add(nombre);
+		nombre.setColumns(10);	
 		
 		JComboBox<Generos> comboBox = new JComboBox<Generos>();
 		comboBox.setBounds(185, 117, 109, 22);
 		contentPane.add(comboBox);
+		comboBox.addItem(new Generos(0, "Género"));
 		comboBox.addItem(new Generos(1, "Terror"));
 		comboBox.addItem(new Generos(2, "Acción"));
 		comboBox.addItem(new Generos(3, "Suspenso"));
@@ -68,10 +73,34 @@ public class ventanaAgregar extends JFrame {
 		contentPane.add(lblMostrarID);
 		lblMostrarID.setText(gestorPeliculas.getIdActual()+"");
 		
-		JButton btnAcceptar = new JButton("Acceptar");
-		btnAcceptar.setBounds(88, 165, 123, 23);
-		contentPane.add(btnAcceptar);
+		JButton btnAceptar = new JButton("Acceptar");
+		btnAceptar.setBounds(88, 165, 123, 23);
+		contentPane.add(btnAceptar);
 		
+		Generos g = new Generos(1, "genero");
+		Peliculas x = new Peliculas(0, "a", g);
+		
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (nombre.getText().isEmpty() && ((Generos) comboBox.getSelectedItem()).getId() == 0) {
+					JOptionPane.showMessageDialog(null, "Debe completar el nombre y seleccionar el género");
+				}
+				else if(nombre.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Ingrese el nombre de la pelicula");
+					return;
+				}
+				else if (((Generos) comboBox.getSelectedItem()).getId() == 0) {
+					JOptionPane.showMessageDialog(null, "Seleccione un Género");
+					return;
+				}
+				else {
+					x.setId(Integer.parseInt(lblMostrarID.getText()));
+					x.setNombre(nombre.getText());
+					x.setGenero((Generos)comboBox.getSelectedItem());
+				}
+			}
+		});
 		
 		setVisible(true);
 	}

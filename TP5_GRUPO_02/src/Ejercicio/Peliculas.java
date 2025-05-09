@@ -15,6 +15,10 @@ public class Peliculas {
     public int getId() { return id; }
     public String getNombre() { return nombre; }
     public Generos getGenero() { return genero; }
+    
+    public void setId(int ID) {id = ID;}
+    public void setNombre(String n) {nombre = n;}
+    public void setGenero(Generos g) {genero = g;}
 
     @Override
     public String toString() {
