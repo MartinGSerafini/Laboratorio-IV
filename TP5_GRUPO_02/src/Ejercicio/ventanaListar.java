@@ -15,7 +15,7 @@ public class ventanaListar extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lblPeliculas;
-	private JList list;
+	private JList<Peliculas> list;
 	private DefaultListModel<Peliculas> listModel;
 
 	public ventanaListar() {
@@ -38,6 +38,7 @@ public class ventanaListar extends JFrame {
 	
 	public void setListModel(DefaultListModel<Peliculas>listaPeliculas) {
 		this.listModel = listaPeliculas;
+		list.setModel(this.listModel);
 	}
 
 }
