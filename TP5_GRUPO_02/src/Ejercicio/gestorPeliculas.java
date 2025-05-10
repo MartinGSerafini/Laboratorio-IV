@@ -45,7 +45,6 @@ public class gestorPeliculas {
 	}
 	
 	public static boolean verificarRepetidos(String pelicula) {
-		//pelicula.toLowerCase();
 		for (int i = 0; i < dlModel.size(); i++) {
 			Peliculas peliculas = dlModel.getElementAt(i);
 			if(peliculas.getNombre().toLowerCase().equals(pelicula.toLowerCase())) {
