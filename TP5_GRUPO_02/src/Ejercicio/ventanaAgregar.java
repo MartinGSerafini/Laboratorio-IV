@@ -65,11 +65,11 @@ public class ventanaAgregar extends JFrame {
 		JComboBox<Generos> comboBox = new JComboBox<Generos>();
 		comboBox.setBounds(185, 117, 109, 22);
 		contentPane.add(comboBox);
-		comboBox.addItem(new Generos(0, "GÃ©nero"));
+		comboBox.addItem(new Generos(0, "Genero"));
 		comboBox.addItem(new Generos(1, "Terror"));
-		comboBox.addItem(new Generos(2, "AcciÃ³n"));
+		comboBox.addItem(new Generos(2, "Accion"));
 		comboBox.addItem(new Generos(3, "Suspenso"));
-		comboBox.addItem(new Generos(4, "RomÃ¡ntica"));
+		comboBox.addItem(new Generos(4, "Romantica"));
 		
 		JLabel lblMostrarID = new JLabel("");
 		lblMostrarID.setBounds(185, 50, 46, 14);
@@ -85,30 +85,43 @@ public class ventanaAgregar extends JFrame {
 		
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String nombrePelicula = nombre.getText().trim();
+				Generos generoSeleccionado = (Generos) comboBox.getSelectedItem();
 				
-				if (nombre.getText().isEmpty() && ((Generos) comboBox.getSelectedItem()).getId() == 0) {
-					JOptionPane.showMessageDialog(null, "Debe completar el nombre y seleccionar el gÃ©nero");
-				}
-				else if(nombre.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Ingrese el nombre de la pelicula");
+				if (nombrePelicula.isEmpty() && generoSeleccionado.getId() == 0) {
+					JOptionPane.showMessageDialog(null, "Debe completar el nombre y seleccionar el género");
 					return;
 				}
-				else if (((Generos) comboBox.getSelectedItem()).getId() == 0) {
-					JOptionPane.showMessageDialog(null, "Seleccione un GÃ©nero");
+				if (nombrePelicula.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Ingrese el nombre de la película");
 					return;
 				}
-				else {
-					x.setId(Integer.parseInt(lblMostrarID.getText()));
-					x.setNombre(nombre.getText());
-					x.setGenero((Generos)comboBox.getSelectedItem());
+				if (generoSeleccionado.getId() == 0) {
+					JOptionPane.showMessageDialog(null, "Seleccione un género");
+					return;
 				}
+				
+				Peliculas nueva = new Peliculas(
+					gestorPeliculas.getIdActual(),
+					nombrePelicula,
+					generoSeleccionado
+				);
+				
+				if (listModel != null) {
+					listModel.addElement(nueva);
+				}
+				
+				gestorPeliculas.incrementarID();
+				lblMostrarID.setText(String.valueOf(gestorPeliculas.getIdActual()));
+				nombre.setText("");
+				comboBox.setSelectedIndex(0);
 			}
 		});
 		
 		setVisible(true);
 	}
 	
-	public void setListModel(DefaultListModel<Peliculas>listaPeliculas) {
+	public void setListModel(DefaultListModel<Peliculas> listaPeliculas) {
 		this.listModel = listaPeliculas;
 	}
 }

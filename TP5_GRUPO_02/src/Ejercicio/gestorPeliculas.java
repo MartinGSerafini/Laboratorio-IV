@@ -13,7 +13,13 @@ public class gestorPeliculas {
 	public static int getIdActual() {
 	    return idActual;
 	}
+	public static void incrementarID() {
+	    idActual++;
+	}
 
+	public static void agregarPelicula(Peliculas p) {
+	    listaPeliculas.add(p);
+	}
 }
 
 
