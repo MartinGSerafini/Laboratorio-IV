@@ -32,12 +32,9 @@ public class ventanaListar extends JFrame {
 		contentPane.add(lblPeliculas);
 		
 		list = new JList();
+		list = gestorPeliculas.ListadoPeliculas();
 		list.setBounds(99, 11, 268, 239);
 		contentPane.add(list);
-	}
-	
-	public void setListModel(DefaultListModel<Peliculas>listaPeliculas) {
-		this.listModel = listaPeliculas;
-	}
 
+	}
 }

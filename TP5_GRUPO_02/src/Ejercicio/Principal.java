@@ -55,7 +55,6 @@ public class Principal extends JFrame {
 		menuPeliculas.add(menuItemAgregar);
 		menuItemAgregar.addActionListener(e -> {
 			ventanaAgregar ventana = new ventanaAgregar();
-			ventana.setListModel(listModel);
 			ventana.setVisible(true);
 		});
 		
@@ -63,7 +62,6 @@ public class Principal extends JFrame {
 		menuItemListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ventanaListar listado = new ventanaListar();
-				listado.setListModel(listModel);
 				listado.setVisible(true);
 			}
 		});

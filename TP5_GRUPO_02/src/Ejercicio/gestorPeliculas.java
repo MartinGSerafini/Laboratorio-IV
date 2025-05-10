@@ -7,8 +7,15 @@ import javax.swing.JList;
 
 public class gestorPeliculas {
 	
-	private static ArrayList<Peliculas> listaPeliculas = new ArrayList<>();
+	private static JList listaPeliculas;
+	private static DefaultListModel<Peliculas> dlModel;
 	private static int idActual = 1;
+	
+	static {
+	    dlModel = new DefaultListModel<Peliculas>();
+	    listaPeliculas = new JList();
+	    listaPeliculas.setModel(dlModel);
+	}
 	
 	public static int getIdActual() {
 	    return idActual;
@@ -18,7 +25,11 @@ public class gestorPeliculas {
 	}
 
 	public static void agregarPelicula(Peliculas p) {
-	    listaPeliculas.add(p);
+	    dlModel.addElement(p);
+	}
+	
+	public static JList ListadoPeliculas() {
+		return listaPeliculas;
 	}
 }
 

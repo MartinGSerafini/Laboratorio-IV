@@ -29,7 +29,7 @@ public class ventanaAgregar extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
-	private DefaultListModel<Peliculas> listModel;
+	//private DefaultListModel<Peliculas> listModel;
 	
 	
 	public ventanaAgregar() {
@@ -80,8 +80,6 @@ public class ventanaAgregar extends JFrame {
 		btnAceptar.setBounds(88, 165, 123, 23);
 		contentPane.add(btnAceptar);
 		
-		Generos g = new Generos(1, "genero");
-		Peliculas x = new Peliculas(0, "a", g);
 		
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -89,27 +87,25 @@ public class ventanaAgregar extends JFrame {
 				Generos generoSeleccionado = (Generos) comboBox.getSelectedItem();
 				
 				if (nombrePelicula.isEmpty() && generoSeleccionado.getId() == 0) {
-					JOptionPane.showMessageDialog(null, "Debe completar el nombre y seleccionar el género");
+					JOptionPane.showMessageDialog(null, "Debe completar el nombre y seleccionar el gï¿½nero");
 					return;
 				}
 				if (nombrePelicula.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Ingrese el nombre de la película");
+					JOptionPane.showMessageDialog(null, "Ingrese el nombre de la pelï¿½cula");
 					return;
 				}
 				if (generoSeleccionado.getId() == 0) {
-					JOptionPane.showMessageDialog(null, "Seleccione un género");
+					JOptionPane.showMessageDialog(null, "Seleccione un gï¿½nero");
 					return;
 				}
 				
-				Peliculas nueva = new Peliculas(
-					gestorPeliculas.getIdActual(),
-					nombrePelicula,
-					generoSeleccionado
-				);
+				Peliculas x = new Peliculas(gestorPeliculas.getIdActual(), nombrePelicula, generoSeleccionado);
 				
-				if (listModel != null) {
+				gestorPeliculas.agregarPelicula(x);
+				
+				/*if (listModel != null) {
 					listModel.addElement(nueva);
-				}
+				}*/
 				
 				gestorPeliculas.incrementarID();
 				lblMostrarID.setText(String.valueOf(gestorPeliculas.getIdActual()));
@@ -119,9 +115,5 @@ public class ventanaAgregar extends JFrame {
 		});
 		
 		setVisible(true);
-	}
-	
-	public void setListModel(DefaultListModel<Peliculas> listaPeliculas) {
-		this.listModel = listaPeliculas;
 	}
 }
