@@ -32,6 +32,7 @@ public class ventanaListar extends JFrame {
 		contentPane.add(lblPeliculas);
 		
 		list = new JList();
+		gestorPeliculas.ordenarListaAlfabeticamente();
 		list = gestorPeliculas.ListadoPeliculas();
 		list.setBounds(99, 11, 268, 239);
 		contentPane.add(list);

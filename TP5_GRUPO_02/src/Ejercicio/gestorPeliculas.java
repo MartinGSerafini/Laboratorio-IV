@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 public class gestorPeliculas {
 	
@@ -32,7 +33,7 @@ public class gestorPeliculas {
 		//Copia los elementos del modelo a una lista temporal
 		ArrayList<Peliculas> copia = new ArrayList<>();
 		for (int i = 0; i < dlModel.size(); i++) {
-		copia.add(dlModel.getElementAt(i));
+			copia.add(dlModel.getElementAt(i));
 		}
 		//Ordena la lista temporal alfabéticamente
 		copia.sort((p1, p2) -> p1.getNombre().compareToIgnoreCase(p2.getNombre()));
@@ -42,6 +43,17 @@ public class gestorPeliculas {
 		for (Peliculas p : copia) {
 		    dlModel.addElement(p);
 		}
+	}
+	
+	public static boolean verificarRepetidos(String pelicula) {
+		//pelicula.toLowerCase();
+		for (int i = 0; i < dlModel.size(); i++) {
+			Peliculas peliculas = dlModel.getElementAt(i);
+			if(peliculas.getNombre().toLowerCase().equals(pelicula.toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public static JList ListadoPeliculas() {

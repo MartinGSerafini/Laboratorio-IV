@@ -58,14 +58,14 @@ public class ventanaAgregar extends JFrame {
 		
 		JTextField nombre = new JTextField();
 		nombre.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		nombre.setBounds(185, 85, 109, 20);
+		nombre.setBounds(159, 84, 151, 20);
 		contentPane.add(nombre);
 		nombre.setColumns(10);	
 		
 		JComboBox<Generos> comboBox = new JComboBox<Generos>();
-		comboBox.setBounds(185, 117, 109, 22);
+		comboBox.setBounds(159, 117, 151, 22);
 		contentPane.add(comboBox);
-		comboBox.addItem(new Generos(0, "Genero"));
+		comboBox.addItem(new Generos(0, "Seleccione un género"));
 		comboBox.addItem(new Generos(1, "Terror"));
 		comboBox.addItem(new Generos(2, "Accion"));
 		comboBox.addItem(new Generos(3, "Suspenso"));
@@ -76,7 +76,7 @@ public class ventanaAgregar extends JFrame {
 		contentPane.add(lblMostrarID);
 		lblMostrarID.setText(gestorPeliculas.getIdActual()+"");
 		
-		JButton btnAceptar = new JButton("Acceptar");
+		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(88, 165, 123, 23);
 		contentPane.add(btnAceptar);
 		
@@ -87,15 +87,22 @@ public class ventanaAgregar extends JFrame {
 				Generos generoSeleccionado = (Generos) comboBox.getSelectedItem();
 				
 				if (nombrePelicula.isEmpty() && generoSeleccionado.getId() == 0) {
-					JOptionPane.showMessageDialog(null, "Debe completar el nombre y seleccionar el g�nero");
+					JOptionPane.showMessageDialog(null, "Debe completar el nombre y seleccionar el género");
+					nombre.setText("");
 					return;
 				}
 				if (nombrePelicula.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Ingrese el nombre de la pel�cula");
+					JOptionPane.showMessageDialog(null, "Ingrese el nombre de la película");
+					nombre.setText("");
 					return;
 				}
 				if (generoSeleccionado.getId() == 0) {
-					JOptionPane.showMessageDialog(null, "Seleccione un g�nero");
+					JOptionPane.showMessageDialog(null, "Seleccione un género");
+					return;
+				}
+				
+				if(gestorPeliculas.verificarRepetidos(nombrePelicula)) {
+					JOptionPane.showMessageDialog(null, "Nombre repetido. Ingrese nuevamente");
 					return;
 				}
 				
