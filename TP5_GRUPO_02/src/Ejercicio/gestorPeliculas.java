@@ -29,15 +29,15 @@ public class gestorPeliculas {
 	}
 	
 	public static void ordenarListaAlfabeticamente() {
-		// Paso 1: Copiar los elementos del modelo original a una lista temporal
+		//Copia los elementos del modelo a una lista temporal
 		ArrayList<Peliculas> copia = new ArrayList<>();
 		for (int i = 0; i < dlModel.size(); i++) {
 		copia.add(dlModel.getElementAt(i));
 		}
-		// Paso 2: Ordenar la lista temporal por nombre
+		//Ordena la lista temporal alfabéticamente
 		copia.sort((p1, p2) -> p1.getNombre().compareToIgnoreCase(p2.getNombre()));
 
-		// Paso 3: Limpiar el modelo original y volver a agregar los elementos ordenados
+		// Limpia el modelo de la lista y lo reemplaza con la lista ordenada
 		dlModel.clear();
 		for (Peliculas p : copia) {
 		    dlModel.addElement(p);
