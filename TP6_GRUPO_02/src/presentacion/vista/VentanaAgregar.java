@@ -6,12 +6,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaAgregar extends JFrame {
 
@@ -47,16 +50,43 @@ public class VentanaAgregar extends JFrame {
 		panel.add(lblDni);
 		
 		tfNombre = new JTextField();
+		tfNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (!Character.isLetter(c) && c != ' ') {
+					e.consume(); 
+				}
+			}
+		});
 		tfNombre.setBounds(202, 45, 113, 19);
 		panel.add(tfNombre);
 		tfNombre.setColumns(10);
 		
 		tfApellido = new JTextField();
+		tfApellido.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (!Character.isLetter(c) && c != ' ') {
+					e.consume(); 
+				}
+			}
+		});
 		tfApellido.setColumns(10);
 		tfApellido.setBounds(202, 84, 113, 19);
 		panel.add(tfApellido);
 		
 		tfDni = new JTextField();
+		tfDni.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (!Character.isDigit(c)) {
+					e.consume(); 
+				}
+			}
+		});
 		tfDni.setColumns(10);
 		tfDni.setBounds(202, 120, 113, 19);
 		panel.add(tfDni);
@@ -65,6 +95,13 @@ public class VentanaAgregar extends JFrame {
 		btnAceptar.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String nombre = tfNombre.getText();
+				String apellido = tfApellido.getText();
+				String dni = tfDni.getText();
+				
+				if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Es necesario completar todos los campos");
+				} 
 			}
 		});
 		btnAceptar.setBounds(99, 156, 92, 21);
