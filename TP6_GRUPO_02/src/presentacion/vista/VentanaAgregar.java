@@ -23,6 +23,8 @@ public class VentanaAgregar extends JFrame {
 	private JTextField tfNombre;
 	private JTextField tfApellido;
 	private JTextField tfDni;
+	
+	private JButton btnAceptar; 
 
 	public VentanaAgregar() {
 		setTitle("Programa");
@@ -93,18 +95,24 @@ public class VentanaAgregar extends JFrame {
 		
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnAceptar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String nombre = tfNombre.getText();
-				String apellido = tfApellido.getText();
-				String dni = tfDni.getText();
-				
-				if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Es necesario completar todos los campos");
-				} 
-			}
-		});
+		
 		btnAceptar.setBounds(99, 156, 92, 21);
 		panel.add(btnAceptar);
+	}
+	
+	public JButton getBtnAceptar() {
+		return btnAceptar;
+	}
+	
+	public JTextField getTfNombre(){
+		return tfNombre;
+	}
+	
+	public JTextField getTfApellido(){
+		return tfApellido;
+	}
+	
+	public JTextField getTfDni(){
+		return tfDni;
 	}
 }
