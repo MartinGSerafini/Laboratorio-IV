@@ -11,11 +11,14 @@ import javax.swing.JOptionPane;
 import negocio.PersonaNegocio;
 import presentacion.vista.MenuPrincipal;
 import presentacion.vista.VentanaAgregar;
+import presentacion.vista.VentanaListar;
 
 public class Controlador implements ActionListener{
 	
 	private MenuPrincipal menu;
 	private VentanaAgregar menuAgregar;
+	private VentanaListar ventanaListar;
+
 	
 	public Controlador(MenuPrincipal menu, PersonaNegocio negocio) {
 		
@@ -24,6 +27,7 @@ public class Controlador implements ActionListener{
 		
 		//Instancio los paneles
 		this.menuAgregar = new VentanaAgregar();
+
 		
 		//Enlazo todos los eventos
 		
@@ -33,6 +37,8 @@ public class Controlador implements ActionListener{
 		//Eventos menu del Frame principal llamado MenuPrincipal
 		
 		this.menu.getMenuAgregar().addActionListener(e -> mostrarVentanaAgregarPersona());
+		this.menu.getMenuListar().addActionListener(e -> mostrarVentanaListar());
+
 	}
 	
 	private void mostrarVentanaAgregarPersona() {
@@ -41,6 +47,13 @@ public class Controlador implements ActionListener{
             menuAgregar.setVisible(true);
         }
     }
+	
+	private void mostrarVentanaListar() {
+	    if (ventanaListar == null || !ventanaListar.isDisplayable()) {
+	        ventanaListar = new VentanaListar();
+	    }
+	    ventanaListar.setVisible(true);
+	}
 	
 	private void ventanaAgregarPersonaValidaciones() {
 		

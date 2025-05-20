@@ -1,7 +1,9 @@
 package Dao;
 
-//Utiliza los métodos desarrollados en PersonaDaoImpl
+import java.util.List;
+import entidad.Persona;
 
 public interface PersonaDao {
-
+	
+    List<Persona> obtenerTodas();
 }

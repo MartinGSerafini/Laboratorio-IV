@@ -1,9 +1,16 @@
 package negocioImpl;
 
+import Dao.PersonaDao;
+import DaoImpl.PersonaDaoImpl;
 import negocio.PersonaNegocio;
+import entidad.Persona;
+import java.util.List;
 
-//Desarrolla los métodos utilizados en PersonaNegocio
+public class PersonaNegocioImpl implements PersonaNegocio {
 
-public class PersonaNegocioImpl implements PersonaNegocio{
+    private PersonaDao personaDao = new PersonaDaoImpl();
 
+    public List<Persona> obtenerTodas() {
+        return personaDao.obtenerTodas();
+    }
 }

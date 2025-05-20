@@ -13,6 +13,8 @@ public class Persona {
 		this.apellido = apellido;
 		this.dni = dni;
 	}
+	 public Persona() {
+	    }
 
 	//getters and setters
 	public String getNombre() {
