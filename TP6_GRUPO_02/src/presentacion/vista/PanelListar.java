@@ -3,6 +3,7 @@ package presentacion.vista;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import javax.swing.JPanel;
 import entidad.Persona;
 import negocio.PersonaNegocio;
 import negocioImpl.PersonaNegocioImpl;
@@ -10,18 +11,15 @@ import negocioImpl.PersonaNegocioImpl;
 import java.awt.*;
 import java.util.List;
 
-public class VentanaListar extends JFrame {
-    private JTable tabla;
+public class PanelListar extends JPanel {
+	private static final long serialVersionUID = 1L;
+	private JTable tabla;
     private DefaultTableModel modeloTabla;
 
     private PersonaNegocio personaNegocio;
 
-    public VentanaListar() {
-        super("Listado de Personas");
-
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setSize(500, 300);
-        this.setLayout(new BorderLayout());
+    public PanelListar() {
+        setLayout(new BorderLayout());
 
         personaNegocio = new PersonaNegocioImpl();
 
@@ -37,8 +35,7 @@ public class VentanaListar extends JFrame {
 
         cargarDatos();
 
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
+        //this.setLocationRelativeTo(null);
     }
 
     private void cargarDatos() {

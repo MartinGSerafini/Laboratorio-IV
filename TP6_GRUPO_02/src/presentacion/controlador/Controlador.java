@@ -10,14 +10,14 @@ import javax.swing.JOptionPane;
 
 import negocio.PersonaNegocio;
 import presentacion.vista.MenuPrincipal;
-import presentacion.vista.VentanaAgregar;
-import presentacion.vista.VentanaListar;
+import presentacion.vista.PanelAgregar;
+import presentacion.vista.PanelListar;
 
 public class Controlador implements ActionListener{
 	
 	private MenuPrincipal menu;
-	private VentanaAgregar menuAgregar;
-	private VentanaListar ventanaListar;
+	private PanelAgregar menuAgregar;
+	private PanelListar menuListar;
 
 	
 	public Controlador(MenuPrincipal menu, PersonaNegocio negocio) {
@@ -26,8 +26,8 @@ public class Controlador implements ActionListener{
 		this.menu = menu;
 		
 		//Instancio los paneles
-		this.menuAgregar = new VentanaAgregar();
-
+		this.menuAgregar = new PanelAgregar();
+		this.menuListar = new PanelListar();
 		
 		//Enlazo todos los eventos
 		
@@ -42,17 +42,17 @@ public class Controlador implements ActionListener{
 	}
 	
 	private void mostrarVentanaAgregarPersona() {
-		if (!menuAgregar.isVisible()) {
-            ventanaAgregarPersonaValidaciones();
-            menuAgregar.setVisible(true);
-        }
+		this.menu.getContentPane().removeAll();
+		this.menu.getContentPane().add(menuAgregar);
+		this.menu.getContentPane().repaint();
+		this.menu.getContentPane().revalidate();
     }
 	
 	private void mostrarVentanaListar() {
-	    if (ventanaListar == null || !ventanaListar.isDisplayable()) {
-	        ventanaListar = new VentanaListar();
-	    }
-	    ventanaListar.setVisible(true);
+		this.menu.getContentPane().removeAll();
+		this.menu.getContentPane().add(menuListar);
+		this.menu.getContentPane().repaint();
+		this.menu.getContentPane().revalidate();
 	}
 	
 	private void ventanaAgregarPersonaValidaciones() {

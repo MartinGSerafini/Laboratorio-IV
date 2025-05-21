@@ -1,5 +1,6 @@
 package presentacion.vista;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -50,6 +51,10 @@ public class MenuPrincipal extends JFrame {
 		menuListar = new JMenuItem("Listar");
 		mnPersonas.add(menuListar);
         
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout());
+		setContentPane(contentPane);
 	}
 
 	public JMenu getMnPersonas() {
