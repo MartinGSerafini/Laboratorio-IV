@@ -34,43 +34,16 @@ public class PanelAgregar extends JPanel {
 		add(lblDni);
 		
 		tfNombre = new JTextField();
-		tfNombre.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-				if (!Character.isLetter(c) && c != ' ') {
-					e.consume(); 
-				}
-			}
-		});
 		tfNombre.setBounds(201, 25, 117, 20);
 		add(tfNombre);
 		tfNombre.setColumns(10);
 		
 		tfApellido = new JTextField();
-		tfApellido.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-				if (!Character.isLetter(c) && c != ' ') {
-					e.consume(); 
-				}
-			}
-		});
 		tfApellido.setColumns(10);
 		tfApellido.setBounds(201, 68, 117, 20);
 		add(tfApellido);
 		
 		tfDni = new JTextField();
-		tfDni.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-				if (!Character.isDigit(c)) {
-					e.consume(); 
-				}
-			}
-		});
 		tfDni.setColumns(10);
 		tfDni.setBounds(201, 111, 117, 20);
 		add(tfDni);
@@ -80,18 +53,7 @@ public class PanelAgregar extends JPanel {
 		lblApellido.setBounds(111, 70, 57, 20);
 		add(lblApellido);
 		
-		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String nombre = tfNombre.getText();
-				String apellido = tfApellido.getText();
-				String dni = tfDni.getText();
-				
-				if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Es necesario completar todos los campos");
-				}	
-			}
-		});
+		btnAceptar = new JButton("Aceptar");
 		btnAceptar.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		btnAceptar.setBounds(111, 157, 117, 27);

@@ -25,12 +25,14 @@ public class Controlador implements ActionListener{
 	private PanelListar menuListar;
 	private PanelModificar menuModificar;
 	private PanelEliminar menuEliminar;
+	private PersonaNegocio negocio;
 
 	
 	public Controlador(MenuPrincipal menu, PersonaNegocio negocio) {
 		
 		//Guardo todas las instancias que recibo en el constructor
 		this.menu = menu;
+		this.negocio = negocio;
 		
 		//Instancio los paneles
 		this.menuAgregar = new PanelAgregar();
@@ -46,6 +48,10 @@ public class Controlador implements ActionListener{
 		this.menu.getMenuListar().addActionListener(e -> mostrarPanelListar());
 		this.menu.getMenuModificar().addActionListener(e -> mostrarPanelModificar(negocio));
 		this.menu.getMenuEliminar().addActionListener(e -> mostrarPanelEliminar());
+		
+		//EVENTOS DE menuAgregar
+		this.menuAgregar.getBtnAceptar().addActionListener(e -> agregarPersona());
+		panelAgregarPersonaEventos();
 	}
 
 	private void mostrarPanelAgregarPersona() {
@@ -79,22 +85,8 @@ public class Controlador implements ActionListener{
 		this.menu.getContentPane().revalidate();
 	}
 	
-	private void ventanaAgregarPersonaValidaciones() {
-		
+	private void panelAgregarPersonaEventos() {
 		if (menuAgregar.getTfNombre().getKeyListeners().length == 0) {
-			
-			menuAgregar.getBtnAceptar().addActionListener(new ActionListener(){
-				
-				public void actionPerformed(ActionEvent e) {
-					
-					String nombre = menuAgregar.getTfNombre().getText();
-					String apellido = menuAgregar.getTfApellido().getText();
-					String dni = menuAgregar.getTfDni().getText();
-					if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Es necesario completar todos los campos");
-					} 
-				}
-			});
 		
 		this.menuAgregar.getTfNombre().addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
@@ -126,6 +118,41 @@ public class Controlador implements ActionListener{
             }
 		});
 		
+		}
+	}
+	
+	private boolean validacionesAgregarPersona() {
+		if(menuAgregar.getTfNombre().getText().trim().isEmpty() || menuAgregar.getTfApellido().getText().trim().isEmpty() || menuAgregar.getTfDni().getText().trim().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Es necesario completar todos los campos");
+			menuAgregar.getTfNombre().setText("");
+			menuAgregar.getTfApellido().setText("");
+			menuAgregar.getTfDni().setText("");
+			return false;
+		}
+		
+		if(menuAgregar.getTfDni().getText().length() != 8) {
+			JOptionPane.showMessageDialog(null, "Ingrese un DNI válido");
+			menuAgregar.getTfDni().setText("");
+			return false;
+		}
+		return true;
+	}
+	
+	private void agregarPersona() {
+		 if(validacionesAgregarPersona()){
+			String nombre = menuAgregar.getTfNombre().getText().trim();
+			String apellido = menuAgregar.getTfApellido().getText().trim();
+			String dni = menuAgregar.getTfDni().getText().trim();
+			
+			if(negocio.agregarPersona(nombre, apellido, dni)) {
+				JOptionPane.showMessageDialog(null, "Se agregó con éxito");
+				menuAgregar.getTfNombre().setText("");
+				menuAgregar.getTfApellido().setText("");
+				menuAgregar.getTfDni().setText("");
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Error al agregar persona");
+			}
 		}
 	}
 	

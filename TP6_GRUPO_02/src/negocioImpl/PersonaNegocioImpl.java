@@ -1,7 +1,7 @@
 package negocioImpl;
 
-import dao.PersonaDao;
-import daoImpl.PersonaDaoImpl;
+import Dao.PersonaDao;
+import DaoImpl.PersonaDaoImpl;
 import negocio.PersonaNegocio;
 import entidad.Persona;
 import java.util.List;
@@ -13,4 +13,13 @@ public class PersonaNegocioImpl implements PersonaNegocio {
     public List<Persona> obtenerTodas() {
         return personaDao.obtenerTodas();
     }
+    
+    @Override
+	public boolean agregarPersona(String nombre, String apellido, String dni) {
+		String query = "INSERT INTO personas(Dni, Nombre, Apellido) VALUES ('"+dni+"','"+nombre+"','"+apellido+"')";
+		if(personaDao.agregarPersona(query) == 1) {
+			return true;
+		}
+		return false;
+	}
 }

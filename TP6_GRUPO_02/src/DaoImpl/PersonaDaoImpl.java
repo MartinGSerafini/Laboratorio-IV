@@ -1,16 +1,17 @@
-package daoImpl;
+package DaoImpl;
 
 import java.sql.Connection;
-import dao.PersonaDao;
+import Dao.PersonaDao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.PersonaDao;
+import com.mysql.jdbc.Statement;
+
 import entidad.Persona;
-import dao.Conexion;
+import Dao.Conexion;
 
 public class PersonaDaoImpl implements PersonaDao {
 
@@ -37,4 +38,16 @@ public class PersonaDaoImpl implements PersonaDao {
 
         return lista;
     }
+    
+    @Override
+	public int agregarPersona(String query) {
+		int filas = 0;
+		try (Connection cn = Conexion.getConexion()) {
+			Statement st = (Statement) cn.createStatement();
+			filas = st.executeUpdate(query);
+	    } catch (SQLException e) {
+	    	e.printStackTrace();
+	    }
+		return filas;
+	}
 }

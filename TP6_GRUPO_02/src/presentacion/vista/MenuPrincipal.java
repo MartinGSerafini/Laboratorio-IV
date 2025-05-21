@@ -28,7 +28,7 @@ public class MenuPrincipal extends JFrame {
 	public MenuPrincipal() {
 		setTitle("TP6 - Registro de Personas");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 200);
+        setSize(500, 350);
         setLocationRelativeTo(null);
         
         setLayout(new FlowLayout(FlowLayout.LEFT));

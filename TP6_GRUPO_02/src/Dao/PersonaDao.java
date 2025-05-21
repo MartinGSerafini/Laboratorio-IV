@@ -1,4 +1,4 @@
-package dao;
+package Dao;
 
 import java.util.List;
 import entidad.Persona;
@@ -6,4 +6,5 @@ import entidad.Persona;
 public interface PersonaDao {
 	
     List<Persona> obtenerTodas();
+    int agregarPersona(String query);
 }
