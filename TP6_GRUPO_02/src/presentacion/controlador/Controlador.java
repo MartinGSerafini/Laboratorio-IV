@@ -5,10 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import entidad.Persona;
 import negocio.PersonaNegocio;
+import negocioImpl.PersonaNegocioImpl;
 import presentacion.vista.MenuPrincipal;
 import presentacion.vista.PanelAgregar;
 import presentacion.vista.PanelEliminar;
@@ -37,14 +40,11 @@ public class Controlador implements ActionListener{
 		
 		//Enlazo todos los eventos
 		
-		
-		
-		
 		//Eventos menu del Frame principal llamado MenuPrincipal
 		
 		this.menu.getMenuAgregar().addActionListener(e -> mostrarPanelAgregarPersona());
 		this.menu.getMenuListar().addActionListener(e -> mostrarPanelListar());
-		this.menu.getMenuModificar().addActionListener(e -> mostrarPanelModificar());
+		this.menu.getMenuModificar().addActionListener(e -> mostrarPanelModificar(negocio));
 		this.menu.getMenuEliminar().addActionListener(e -> mostrarPanelEliminar());
 	}
 
@@ -62,7 +62,10 @@ public class Controlador implements ActionListener{
 		this.menu.getContentPane().revalidate();
 	}
 	
-	private void mostrarPanelModificar() {
+	private void mostrarPanelModificar(PersonaNegocio negocio) {
+		this.menuModificar.setBounds(0, 0, 500, 300);
+		List<Persona> listaPersonas = negocio.obtenerTodas();
+		
 		this.menu.getContentPane().removeAll();
 		this.menu.getContentPane().add(menuModificar);
 		this.menu.getContentPane().repaint();

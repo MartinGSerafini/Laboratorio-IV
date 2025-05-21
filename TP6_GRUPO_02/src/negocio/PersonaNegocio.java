@@ -1,7 +1,7 @@
 package negocio;
 
-import Dao.PersonaDao;
-import DaoImpl.PersonaDaoImpl;
+import dao.PersonaDao;
+import daoImpl.PersonaDaoImpl;
 import entidad.Persona;
 import java.util.List;
 

@@ -29,6 +29,7 @@ public class PanelModificar extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelModificar() {
+		
 		setLayout(null);
 		
 		JLabel lblSeleccionarPersona = new JLabel("Seleccione la persona que desea modificar");
@@ -40,6 +41,7 @@ public class PanelModificar extends JPanel {
 		add(JListPersonas);
 		
 		tfNombre = new JTextField();
+		tfNombre.setBounds(27, 209, 86, 20);
 		tfNombre.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -49,11 +51,11 @@ public class PanelModificar extends JPanel {
 				}
 			}
 		});
-		tfNombre.setBounds(27, 209, 86, 20);
 		add(tfNombre);
 		tfNombre.setColumns(10);
 		
 		tfApellido = new JTextField();
+		tfApellido.setBounds(123, 209, 86, 20);
 		tfApellido.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -63,7 +65,6 @@ public class PanelModificar extends JPanel {
 				}
 			}
 		});
-		tfApellido.setBounds(123, 209, 86, 20);
 		add(tfApellido);
 		tfApellido.setColumns(10);
 		

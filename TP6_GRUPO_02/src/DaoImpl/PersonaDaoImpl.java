@@ -1,15 +1,16 @@
-package DaoImpl;
+package daoImpl;
 
 import java.sql.Connection;
+import dao.PersonaDao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Dao.PersonaDao;
+import dao.PersonaDao;
 import entidad.Persona;
-import Dao.Conexion;
+import dao.Conexion;
 
 public class PersonaDaoImpl implements PersonaDao {
 
