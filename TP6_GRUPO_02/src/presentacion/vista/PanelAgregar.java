@@ -14,7 +14,6 @@ import java.awt.event.KeyEvent;
 public class PanelAgregar extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel panel;
 	private JTextField tfNombre;
 	private JTextField tfApellido;
 	private JTextField tfDni;
@@ -22,20 +21,16 @@ public class PanelAgregar extends JPanel {
 	private JButton btnAceptar; 
 
 	public PanelAgregar() {
+		setLayout(null);
 		
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setFont(new Font("Calibri", Font.BOLD, 16));
-		lblNombre.setBounds(99, 42, 129, 29);
+		lblNombre.setBounds(111, 27, 56, 20);
 		add(lblNombre);
-		
-		JLabel lblApellido = new JLabel("Apellido");
-		lblApellido.setFont(new Font("Calibri", Font.BOLD, 16));
-		lblApellido.setBounds(99, 81, 129, 29);
-		add(lblApellido);
 		
 		JLabel lblDni = new JLabel("Dni");
 		lblDni.setFont(new Font("Calibri", Font.BOLD, 16));
-		lblDni.setBounds(99, 117, 129, 29);
+		lblDni.setBounds(111, 113, 23, 20);
 		add(lblDni);
 		
 		tfNombre = new JTextField();
@@ -48,7 +43,7 @@ public class PanelAgregar extends JPanel {
 				}
 			}
 		});
-		tfNombre.setBounds(202, 45, 113, 19);
+		tfNombre.setBounds(201, 25, 117, 20);
 		add(tfNombre);
 		tfNombre.setColumns(10);
 		
@@ -63,7 +58,7 @@ public class PanelAgregar extends JPanel {
 			}
 		});
 		tfApellido.setColumns(10);
-		tfApellido.setBounds(202, 84, 113, 19);
+		tfApellido.setBounds(201, 68, 117, 20);
 		add(tfApellido);
 		
 		tfDni = new JTextField();
@@ -77,13 +72,18 @@ public class PanelAgregar extends JPanel {
 			}
 		});
 		tfDni.setColumns(10);
-		tfDni.setBounds(202, 120, 113, 19);
+		tfDni.setBounds(201, 111, 117, 20);
 		add(tfDni);
+		
+		JLabel lblApellido = new JLabel("Apellido");
+		lblApellido.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblApellido.setBounds(111, 70, 57, 20);
+		add(lblApellido);
 		
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		btnAceptar.setBounds(99, 156, 92, 21);
+		btnAceptar.setBounds(111, 157, 117, 27);
 		add(btnAceptar);
 	}
 	

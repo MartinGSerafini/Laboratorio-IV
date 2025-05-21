@@ -11,13 +11,17 @@ import javax.swing.JOptionPane;
 import negocio.PersonaNegocio;
 import presentacion.vista.MenuPrincipal;
 import presentacion.vista.PanelAgregar;
+import presentacion.vista.PanelEliminar;
 import presentacion.vista.PanelListar;
+import presentacion.vista.PanelModificar;
 
 public class Controlador implements ActionListener{
 	
 	private MenuPrincipal menu;
 	private PanelAgregar menuAgregar;
 	private PanelListar menuListar;
+	private PanelModificar menuModificar;
+	private PanelEliminar menuEliminar;
 
 	
 	public Controlador(MenuPrincipal menu, PersonaNegocio negocio) {
@@ -28,6 +32,8 @@ public class Controlador implements ActionListener{
 		//Instancio los paneles
 		this.menuAgregar = new PanelAgregar();
 		this.menuListar = new PanelListar();
+		this.menuModificar = new PanelModificar();
+		this.menuEliminar = new PanelEliminar();
 		
 		//Enlazo todos los eventos
 		
@@ -36,21 +42,36 @@ public class Controlador implements ActionListener{
 		
 		//Eventos menu del Frame principal llamado MenuPrincipal
 		
-		this.menu.getMenuAgregar().addActionListener(e -> mostrarVentanaAgregarPersona());
-		this.menu.getMenuListar().addActionListener(e -> mostrarVentanaListar());
-
+		this.menu.getMenuAgregar().addActionListener(e -> mostrarPanelAgregarPersona());
+		this.menu.getMenuListar().addActionListener(e -> mostrarPanelListar());
+		this.menu.getMenuModificar().addActionListener(e -> mostrarPanelModificar());
+		this.menu.getMenuEliminar().addActionListener(e -> mostrarPanelEliminar());
 	}
-	
-	private void mostrarVentanaAgregarPersona() {
+
+	private void mostrarPanelAgregarPersona() {
 		this.menu.getContentPane().removeAll();
 		this.menu.getContentPane().add(menuAgregar);
 		this.menu.getContentPane().repaint();
 		this.menu.getContentPane().revalidate();
     }
 	
-	private void mostrarVentanaListar() {
+	private void mostrarPanelListar() {
 		this.menu.getContentPane().removeAll();
 		this.menu.getContentPane().add(menuListar);
+		this.menu.getContentPane().repaint();
+		this.menu.getContentPane().revalidate();
+	}
+	
+	private void mostrarPanelModificar() {
+		this.menu.getContentPane().removeAll();
+		this.menu.getContentPane().add(menuModificar);
+		this.menu.getContentPane().repaint();
+		this.menu.getContentPane().revalidate();
+	}
+	
+	private void mostrarPanelEliminar() {
+		this.menu.getContentPane().removeAll();
+		this.menu.getContentPane().add(menuEliminar);
 		this.menu.getContentPane().repaint();
 		this.menu.getContentPane().revalidate();
 	}
