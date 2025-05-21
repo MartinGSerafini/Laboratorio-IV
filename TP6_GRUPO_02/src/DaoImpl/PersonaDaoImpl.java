@@ -1,17 +1,15 @@
-package DaoImpl;
-
+package daoImpl;
 import java.sql.Connection;
-import Dao.PersonaDao;
+import java.sql.Statement;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.mysql.jdbc.Statement;
-
+import dao.Conexion;
+import dao.PersonaDao;
 import entidad.Persona;
-import Dao.Conexion;
 
 public class PersonaDaoImpl implements PersonaDao {
 
@@ -49,5 +47,25 @@ public class PersonaDaoImpl implements PersonaDao {
 	    	e.printStackTrace();
 	    }
 		return filas;
+	}
+
+	@Override
+	public boolean actualizarPersona(Persona persona) {
+		String sql = "UPDATE Personas SET Nombre = ?, Apellido = ? WHERE Dni = ?";
+
+	    try (Connection cn = Conexion.getConexion();
+	         PreparedStatement ps = cn.prepareStatement(sql)) {
+
+	        ps.setString(1, persona.getNombre());
+	        ps.setString(2, persona.getApellido());
+	        ps.setString(3, persona.getDni());
+
+	        int filas = ps.executeUpdate();
+	        return filas > 0;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 }

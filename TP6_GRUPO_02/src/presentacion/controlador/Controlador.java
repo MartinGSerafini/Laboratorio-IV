@@ -7,6 +7,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 import entidad.Persona;
@@ -52,6 +53,29 @@ public class Controlador implements ActionListener{
 		//EVENTOS DE menuAgregar
 		this.menuAgregar.getBtnAceptar().addActionListener(e -> agregarPersona());
 		panelAgregarPersonaEventos();
+		
+		//EVENTOS DE menuModificar
+		List<Persona> personas = negocio.obtenerTodas();
+		this.menuModificar.setJListPersonas(personas);
+		
+		this.menuModificar.getJListPersonas().addListSelectionListener(e -> {
+		    if (!e.getValueIsAdjusting()) {
+		        Persona seleccionada = this.menuModificar.getJListPersonas().getSelectedValue();
+		        if (seleccionada != null) {
+		            this.menuModificar.setTfNombre(seleccionada.getNombre());
+		            this.menuModificar.setTfApellido(seleccionada.getApellido());
+		            this.menuModificar.setTfDni(seleccionada.getDni());
+		        }
+		    }
+		});
+		
+		this.menuModificar.getBtnModificar().addActionListener(e -> {
+			String nuevoNombre = menuModificar.getTfNombre().getText();
+		    String nuevoApellido = menuModificar.getTfApellido().getText();
+		    String dni = menuModificar.getTfDni().getText();
+			
+			modificarPersona(nuevoNombre, nuevoApellido, dni);
+		});
 	}
 
 	private void mostrarPanelAgregarPersona() {
@@ -69,9 +93,6 @@ public class Controlador implements ActionListener{
 	}
 	
 	private void mostrarPanelModificar(PersonaNegocio negocio) {
-		this.menuModificar.setBounds(0, 0, 500, 300);
-		List<Persona> listaPersonas = negocio.obtenerTodas();
-		
 		this.menu.getContentPane().removeAll();
 		this.menu.getContentPane().add(menuModificar);
 		this.menu.getContentPane().repaint();
@@ -85,6 +106,8 @@ public class Controlador implements ActionListener{
 		this.menu.getContentPane().revalidate();
 	}
 	
+	
+	//Metodos panel agregar persona
 	private void panelAgregarPersonaEventos() {
 		if (menuAgregar.getTfNombre().getKeyListeners().length == 0) {
 		
@@ -155,6 +178,28 @@ public class Controlador implements ActionListener{
 			}
 		}
 	}
+	
+	//Metodos modificar persona
+	
+	private void modificarPersona(String nombre, String apellido, String dni) {
+		 Persona p = new Persona();
+		    p.setNombre(nombre);
+		    p.setApellido(apellido);
+		    p.setDni(dni);
+
+		    boolean exito = negocio.actualizarPersona(p);
+
+		    if (exito) {
+		        JOptionPane.showMessageDialog(null, "Persona modificada con éxito.");
+		    } else {
+		        JOptionPane.showMessageDialog(null, "Error al modificar la persona.");
+		    }
+
+		    //Refresco la lista
+		    List<Persona> personasActualizadas = negocio.obtenerTodas();
+		    menuModificar.setJListPersonas(personasActualizadas);
+		}
+	
 	
 	public void inicializar()
 	{

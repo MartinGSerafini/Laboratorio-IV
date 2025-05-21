@@ -1,10 +1,11 @@
 package negocioImpl;
 
-import Dao.PersonaDao;
-import DaoImpl.PersonaDaoImpl;
 import negocio.PersonaNegocio;
 import entidad.Persona;
 import java.util.List;
+
+import dao.PersonaDao;
+import daoImpl.PersonaDaoImpl;
 
 public class PersonaNegocioImpl implements PersonaNegocio {
 
@@ -21,5 +22,10 @@ public class PersonaNegocioImpl implements PersonaNegocio {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public boolean actualizarPersona(Persona persona) {
+		return personaDao.actualizarPersona(persona);
 	}
 }

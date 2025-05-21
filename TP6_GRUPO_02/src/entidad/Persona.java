@@ -43,7 +43,7 @@ public class Persona {
 
 	//Método ToString
 	public String toString() {
-		return "Persona [nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + "]";
+		return nombre + " " + apellido + " " + dni;
 	}
 	
 }

@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PanelModificar extends JPanel {
 
@@ -24,6 +25,8 @@ public class PanelModificar extends JPanel {
 	private DefaultListModel<Persona> modeloLista;
 	private JList<Persona> JListPersonas;
 	private ArrayList<Persona> personas;
+	DefaultListModel<Persona> modelo = new DefaultListModel<>();
+	JButton btnModificar;
 
 	/**
 	 * Create the panel.
@@ -36,7 +39,8 @@ public class PanelModificar extends JPanel {
 		lblSeleccionarPersona.setBounds(27, 11, 304, 14);
 		add(lblSeleccionarPersona);
 		
-		JList JListPersonas = new JList();
+		
+		JListPersonas = new JList<>(modelo);
 		JListPersonas.setBounds(27, 36, 397, 162);
 		add(JListPersonas);
 		
@@ -74,10 +78,69 @@ public class PanelModificar extends JPanel {
 		add(tfDni);
 		tfDni.setColumns(10);
 		
-		JButton btnModificar = new JButton("Modificar");
+		btnModificar = new JButton("Modificar");
 		btnModificar.setBounds(332, 205, 92, 29);
 		add(btnModificar);
 		
 
 	}
+
+	//Getters y setters
+	
+	public JTextField getTfNombre() {
+		return tfNombre;
+	}
+
+	public JTextField getTfApellido() {
+		return tfApellido;
+	}
+
+	public JTextField getTfDni() {
+		return tfDni;
+	}
+
+	public DefaultListModel<Persona> getModeloLista() {
+		return modeloLista;
+	}
+
+	public JList<Persona> getJListPersonas() {
+		return JListPersonas;
+	}
+
+	public ArrayList<Persona> getPersonas() {
+		return personas;
+	}
+
+	public JButton getBtnModificar() {
+		return btnModificar;
+	}
+	
+	public void setTfNombre(String tfNombre) {
+		this.tfNombre.setText(tfNombre);;
+	}
+
+	public void setTfApellido(String tfApellido) {
+		this.tfApellido.setText(tfApellido);
+	}
+
+	public void setTfDni(String tfDni) {
+		this.tfDni.setText(tfDni);
+	}
+
+	public void setModeloLista(DefaultListModel<Persona> modeloLista) {
+		this.modeloLista = modeloLista;
+	}
+
+	public void setJListPersonas(List<Persona> personas) {
+		modelo.clear();
+	    for (Persona p : personas) {
+	        modelo.addElement(p);
+	    }
+	}
+
+	public void setPersonas(ArrayList<Persona> personas) {
+		this.personas = personas;
+	}
+	
+	
 }
