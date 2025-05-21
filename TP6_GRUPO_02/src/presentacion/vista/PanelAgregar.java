@@ -81,6 +81,17 @@ public class PanelAgregar extends JPanel {
 		add(lblApellido);
 		
 		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nombre = tfNombre.getText();
+				String apellido = tfApellido.getText();
+				String dni = tfDni.getText();
+				
+				if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Es necesario completar todos los campos");
+				}	
+			}
+		});
 		btnAceptar.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		btnAceptar.setBounds(111, 157, 117, 27);
