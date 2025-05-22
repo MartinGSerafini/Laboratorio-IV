@@ -1,5 +1,6 @@
 package daoImpl;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.Statement;
 
 import java.sql.PreparedStatement;
@@ -68,4 +69,22 @@ public class PersonaDaoImpl implements PersonaDao {
 	        return false;
 	    }
 	}
+
+	public Persona validarDni(String query) {
+        Persona persona = new Persona();
+        try (Connection cn = Conexion.getConexion()) {
+            Statement st = (Statement) cn.createStatement();
+             ResultSet rs = st.executeQuery(query);
+                rs.next(); // LEE LAS FILAS
+                persona.setNombre(rs.getString("Nombre"));
+                persona.setApellido(rs.getString("Apellido"));
+                persona.setDni(rs.getString("Dni"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return persona;
+    }
+
+
+
 }

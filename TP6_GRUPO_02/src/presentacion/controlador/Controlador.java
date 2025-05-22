@@ -201,6 +201,7 @@ public class Controlador implements ActionListener{
 		}
 	
 	
+	
 	public void inicializar()
 	{
 		this.menu.setVisible(true);;

@@ -10,4 +10,5 @@ public interface PersonaNegocio {
     List<Persona> obtenerTodas();
     boolean agregarPersona(String nombre, String apellido, String dni);
     public boolean actualizarPersona(Persona persona);
+    public boolean validarDni(String dni);
 }    
