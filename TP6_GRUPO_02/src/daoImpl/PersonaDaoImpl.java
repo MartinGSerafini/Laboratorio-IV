@@ -84,7 +84,18 @@ public class PersonaDaoImpl implements PersonaDao {
         }
         return persona;
     }
+	
+	
+	public boolean eliminarPersona(Persona persona) {
+		String query = "DELETE FROM Personas WHERE dni = " + persona.getDni();
+		 try (Connection cn = Conexion.getConexion();
+		         PreparedStatement ps = cn.prepareStatement(query)) {
+		        int filas = ps.executeUpdate();
+		        return filas > 0;
 
-
-
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        return false;
+		    }
+	}
 }

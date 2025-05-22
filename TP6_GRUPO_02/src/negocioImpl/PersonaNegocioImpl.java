@@ -44,4 +44,9 @@ public class PersonaNegocioImpl implements PersonaNegocio {
 		} 
 		return false;
 	}
+	
+	public boolean eliminarPersona(Persona persona) {
+		return personaDao.eliminarPersona(persona);
+	}
+	
 }

@@ -11,4 +11,6 @@ public interface PersonaNegocio {
     boolean agregarPersona(String nombre, String apellido, String dni);
     public boolean actualizarPersona(Persona persona);
     public boolean validarDni(String dni);
+    public boolean eliminarPersona(Persona persona);
+    
 }    

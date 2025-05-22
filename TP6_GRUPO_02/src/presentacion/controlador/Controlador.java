@@ -76,8 +76,25 @@ public class Controlador implements ActionListener{
 			
 			modificarPersona(nuevoNombre, nuevoApellido, dni);
 		});
+		
+		//eventos de menuEliminar
+		this.menuEliminar.setJListPersonas(personas);
+		this.menuEliminar.getJListPersonas().addListSelectionListener(e -> {
+		    if (!e.getValueIsAdjusting()) {
+		        Persona seleccionada = this.menuEliminar.getJListPersonas().getSelectedValue();
+		        if (seleccionada != null) {
+		        	this.menuEliminar.getJbtnEliminar().addActionListener(a -> {
+		    			
+		        		eliminarPersona(seleccionada);
+		    		});
+		        }
+		    }
+		});
+		
 	}
 
+	
+	//mostrar paneles
 	private void mostrarPanelAgregarPersona() {
 		this.menu.getContentPane().removeAll();
 		this.menu.getContentPane().add(menuAgregar);
@@ -200,8 +217,21 @@ public class Controlador implements ActionListener{
 		    menuModificar.setJListPersonas(personasActualizadas);
 		}
 	
+	//Métodos Eliminar persona
 	
+	private void eliminarPersona(Persona seleccionada) {
+		if(negocio.eliminarPersona(seleccionada) == true) {
+			JOptionPane.showMessageDialog(null, "Persona eliminada con éxito.");
+			
+    	}
+		else{
+			JOptionPane.showMessageDialog(null, "No se pudo eliminar a la persona.");
+		}
+		List<Persona> personasActualizadas = negocio.obtenerTodas();
+	    menuEliminar.setJListPersonas(personasActualizadas);
+	}
 	
+	//________________________________________
 	public void inicializar()
 	{
 		this.menu.setVisible(true);;
