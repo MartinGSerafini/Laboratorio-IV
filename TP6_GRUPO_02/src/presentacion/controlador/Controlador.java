@@ -103,6 +103,7 @@ public class Controlador implements ActionListener{
     }
 	
 	private void mostrarPanelListar() {
+		 menuListar.cargarDatos();
 		this.menu.getContentPane().removeAll();
 		this.menu.getContentPane().add(menuListar);
 		this.menu.getContentPane().repaint();
@@ -133,7 +134,7 @@ public class Controlador implements ActionListener{
                 char c = e.getKeyChar();
                 if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE) {
                     e.consume(); // Ignora la tecla si no es letra ni espacio
-                    JOptionPane.showMessageDialog(null, "Sólo se deban ingresar letras");
+                    JOptionPane.showMessageDialog(null, "Solo se deban ingresar letras");
                 }
 			}
 		});
@@ -143,7 +144,7 @@ public class Controlador implements ActionListener{
                 char c = e.getKeyChar();
                 if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE) {
                     e.consume(); // Ignora la tecla si no es letra ni espacio
-                    JOptionPane.showMessageDialog(null, "Sólo se deban ingresar letras");
+                    JOptionPane.showMessageDialog(null, "Solo se deban ingresar letras");
                 }
 			}
 		});
@@ -151,9 +152,9 @@ public class Controlador implements ActionListener{
 		this.menuAgregar.getTfDni().addKeyListener(new KeyAdapter(){
 			public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (!Character.isDigit(c)) {
-                    e.consume(); // Cancela el carácter
-                    JOptionPane.showMessageDialog(null, "Solo se permiten números (sin espacios)");
+                if (!Character.isDigit(c) && !Character.isISOControl(c)) {
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Solo se permiten n�meros sin espacios.");
                 }
             }
 		});
@@ -171,7 +172,7 @@ public class Controlador implements ActionListener{
 		}
 		
 		if(menuAgregar.getTfDni().getText().length() != 8) {
-			JOptionPane.showMessageDialog(null, "Ingrese un DNI válido");
+			JOptionPane.showMessageDialog(null, "Ingrese un DNI valido");
 			menuAgregar.getTfDni().setText("");
 			return false;
 		}
@@ -185,7 +186,7 @@ public class Controlador implements ActionListener{
 			String dni = menuAgregar.getTfDni().getText().trim();
 			
 			if(negocio.agregarPersona(nombre, apellido, dni)) {
-				JOptionPane.showMessageDialog(null, "Se agregó con éxito");
+				JOptionPane.showMessageDialog(null, "Se agrego con exito");
 				menuAgregar.getTfNombre().setText("");
 				menuAgregar.getTfApellido().setText("");
 				menuAgregar.getTfDni().setText("");
@@ -207,7 +208,7 @@ public class Controlador implements ActionListener{
 		    boolean exito = negocio.actualizarPersona(p);
 
 		    if (exito) {
-		        JOptionPane.showMessageDialog(null, "Persona modificada con éxito.");
+		        JOptionPane.showMessageDialog(null, "Persona modificada con exito.");
 		    } else {
 		        JOptionPane.showMessageDialog(null, "Error al modificar la persona.");
 		    }
@@ -221,7 +222,7 @@ public class Controlador implements ActionListener{
 	
 	private void eliminarPersona(Persona seleccionada) {
 		if(negocio.eliminarPersona(seleccionada) == true) {
-			JOptionPane.showMessageDialog(null, "Persona eliminada con éxito.");
+			JOptionPane.showMessageDialog(null, "Persona eliminada con exito.");
 			
     	}
 		else{

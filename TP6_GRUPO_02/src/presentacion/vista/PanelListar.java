@@ -38,12 +38,10 @@ public class PanelListar extends JPanel {
         //this.setLocationRelativeTo(null);
     }
 
-    private void cargarDatos() {
+    public void cargarDatos() {
         List<Persona> lista = personaNegocio.obtenerTodas();
 
         modeloTabla.setRowCount(0);
-
-        // Agrego cada persona a la tabla
         for (Persona p : lista) {
             Object[] fila = { p.getDni(), p.getNombre(), p.getApellido() };
             modeloTabla.addRow(fila);

@@ -70,20 +70,29 @@ public class PersonaDaoImpl implements PersonaDao {
 	    }
 	}
 
-	public Persona validarDni(String query) {
-        Persona persona = new Persona();
-        try (Connection cn = Conexion.getConexion()) {
-            Statement st = (Statement) cn.createStatement();
-             ResultSet rs = st.executeQuery(query);
-                rs.next(); // LEE LAS FILAS
-                persona.setNombre(rs.getString("Nombre"));
-                persona.setApellido(rs.getString("Apellido"));
-                persona.setDni(rs.getString("Dni"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return persona;
-    }
+	public Persona validarDni(String dni) {
+	    Persona persona = new Persona();
+	    String sql = "SELECT Nombre, Apellido, Dni FROM Personas WHERE Dni = ?";
+
+	    try (Connection cn = Conexion.getConexion();
+	         PreparedStatement ps = cn.prepareStatement(sql)) {
+
+	        ps.setString(1, dni);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next()) {
+	                persona = new Persona();
+	                persona.setNombre(rs.getString("Nombre"));
+	                persona.setApellido(rs.getString("Apellido"));
+	                persona.setDni(rs.getString("Dni"));
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return persona;
+	}
+
 	
 	
 	public boolean eliminarPersona(Persona persona) {
