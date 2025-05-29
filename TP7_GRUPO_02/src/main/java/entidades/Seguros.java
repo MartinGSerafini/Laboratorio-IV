@@ -1,10 +1,10 @@
-package dominio;
+package entidades;
 
 public class Seguros {
 	
 	private int idSeguro;
 	private String descripcion;
-	private int idTipo;
+	private TipoSeguro tipoSeguro;
 	private int costoContratacion;
 	private int costoAsegurado;
 	
@@ -12,10 +12,10 @@ public class Seguros {
 		
 	}
 	
-	public Seguros(int idSeguro, String descripcion, int idTipo, int costoContratacion, int costoAsegurado) {
+	public Seguros(int idSeguro, String descripcion, int idTipo, int costoContratacion, int costoAsegurado, TipoSeguro tipoSeguro) {
 		this.idSeguro = idSeguro;
 		this.descripcion = descripcion;
-		this.idTipo = idTipo;
+		this.tipoSeguro = tipoSeguro;
 		this.costoContratacion = costoContratacion;
 		this.costoAsegurado = costoAsegurado;
 	}
@@ -30,9 +30,9 @@ public class Seguros {
 		return descripcion;
 	}
 
-	public int getIdTipo() {
-		return idTipo;
-	}
+	public TipoSeguro getTipoSeguro() {
+        return tipoSeguro;
+    }
 
 	public int getCostoContratacion() {
 		return costoContratacion;
@@ -52,9 +52,9 @@ public class Seguros {
 		this.descripcion = descripcion;
 	}
 
-	public void setIdTipo(int idTipo) {
-		this.idTipo = idTipo;
-	}
+	public void setTipoSeguro(TipoSeguro tipoSeguro) {
+        this.tipoSeguro = tipoSeguro;
+    }
 
 	public void setCostoContratacion(int costoContratacion) {
 		this.costoContratacion = costoContratacion;
@@ -66,7 +66,7 @@ public class Seguros {
 
 	@Override
 	public String toString() {
-		return "Seguro [idSeguro=" + idSeguro + ", descripcion=" + descripcion + ", idTipo=" + idTipo
+		return "Seguro [idSeguro=" + idSeguro + ", descripcion=" + descripcion + ", idTipo=" + tipoSeguro
 				+ ", costoContratacion=" + costoContratacion + ", costoAsegurado=" + costoAsegurado + "]";
 	}
 	

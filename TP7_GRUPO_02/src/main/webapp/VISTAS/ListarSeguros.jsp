@@ -10,5 +10,6 @@
 	
 	<a href="Inicio.jsp">Inicio</a><a href="AgregarSeguros.jsp"> Agregar Seguros</a><a href="ListarSeguros.jsp"> Listar Seguros</a>
 	
+	<h1>Listar Seguros</h1>
 </body>
 </html>
