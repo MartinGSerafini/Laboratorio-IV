@@ -10,7 +10,7 @@
 </head>
 <body>
 	
-	<a href="Inicio.jsp">Inicio</a><a href="AgregarSeguros.jsp"> Agregar Seguros</a><a href="ListarSeguros.jsp"> Listar Seguros</a>
+	<a href="Inicio.jsp">Inicio</a><a href="AgregarSeguros.jsp"> Agregar Seguros</a><a href="/TP7_GRUPO_02/ListarSegurosServlet"> Listar Seguros</a>
 	
 	<h2>"Tipo de seguros en la base de datos"</h2>
 	
@@ -18,19 +18,14 @@
 		 Busqueda por tipo de seguros: <select name="idTipo"> 
 		 
 		 <%
-		    TiposeguroDao tipoDao = new TiposeguroDao();
-		    List<TipoSeguro> listaTipo = tipoDao.obtenerTodos();
+		 	List<TipoSeguro> listaTipo = (List<TipoSeguro>) request.getAttribute("listaTipo");
 		
-		    if (listaTipo != null && !listaTipo.isEmpty()) {
+		    if (listaTipo != null) {
 		        for (TipoSeguro tipo : listaTipo) {
 		%>
 		            <option value="<%= tipo.getIdTipo() %>"><%= tipo.getDescripcion() %></option>
 		<%
 		        }
-		    } else {
-		%>
-		        <option value="vacio" disabled selected>No hay tipos disponibles</option>
-		<%
 		    }
 		%>
 		 </select>

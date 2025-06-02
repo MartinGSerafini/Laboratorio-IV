@@ -9,7 +9,7 @@
 </head>
 <body>
 	
-	<a href="Inicio.jsp">Inicio</a> <a href="AgregarSeguros.jsp"> Agregar Seguros</a> <a href="ListarSeguros.jsp"> Listar Seguros</a>
+	<a href="Inicio.jsp">Inicio</a><a href="AgregarSeguros.jsp"> Agregar Seguros</a><a href="/TP7_GRUPO_02/ListarSegurosServlet"> Listar Seguros</a>
 	
 	<form action="servletAgregarSeguros" method="get">
 	<h1>Agregar Seguros</h1>
