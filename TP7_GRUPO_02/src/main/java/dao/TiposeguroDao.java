@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.Statement;
+
 public class TiposeguroDao {
 
     public List<TipoSeguro> obtenerTodos() {
@@ -35,5 +37,22 @@ public class TiposeguroDao {
         }
 
         return lista;
+    }
+    
+    public TipoSeguro obtenerTipoSeguro(int id) {
+    	TipoSeguro tipo = new TipoSeguro();
+    	String sql = "SELECT idTipo, descripcion FROM tipoSeguros where idTipo="+id;
+    	
+    	try (Connection con = Conexion.getConexion();
+                Statement st = (Statement) con.createStatement();
+                ResultSet rs = st.executeQuery(sql)) {
+    		
+    			rs.next();
+                tipo.setIdTipo(rs.getInt("idTipo"));
+                tipo.setDescripcion(rs.getString("descripcion"));
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
+    	return tipo;
     }
 }
