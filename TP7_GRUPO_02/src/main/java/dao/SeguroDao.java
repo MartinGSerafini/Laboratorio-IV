@@ -22,10 +22,9 @@ public class SeguroDao {
 		
 		Connection cn = null;
 		
-		try {
-			cn = Conexion.getConexion();
-			Statement st = cn.createStatement();
-			ResultSet rs = st.executeQuery(sql);
+		try (Connection con = Conexion.getConexion();
+	             PreparedStatement ps = con.prepareStatement(sql);
+	             ResultSet rs = ps.executeQuery()) {
 			rs.next();
 			id=rs.getInt("maxId");
 			

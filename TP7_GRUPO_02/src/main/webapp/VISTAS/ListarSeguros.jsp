@@ -10,7 +10,7 @@
 </head>
 <body>
 	
-	<a href="Inicio.jsp">Inicio</a><a href="AgregarSeguros.jsp"> Agregar Seguros</a><a href="/TP7_GRUPO_02/ListarSegurosServlet"> Listar Seguros</a>
+	<a href="Inicio.jsp">Inicio</a><a href="TP7_GRUPO_02/servletAgregarSeguros.jsp"> Agregar Seguros</a><a href="/TP7_GRUPO_02/ListarSegurosServlet"> Listar Seguros</a>
 	
 	<h2>"Tipo de seguros en la base de datos"</h2>
 	

@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.SeguroDao;
+import dao.TiposeguroDao;
+import entidades.TipoSeguro;
 
 @WebServlet("/servletAgregarSeguros")
 public class servletAgregarSeguros extends HttpServlet {
@@ -22,13 +25,20 @@ public class servletAgregarSeguros extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
+		//------------ID seguro---------------
 		SeguroDao segu = new SeguroDao();
-		int id = segu.obtenerUltimoID();
-		
+		int id = segu.obtenerUltimoID() + 1;
 		request.setAttribute("IDsiguiente", id);
-		RequestDispatcher rd = request.getRequestDispatcher("AgregarSeguros.jsp");
+		
+		//-------------Tipo Seguro-----------------
+		TiposeguroDao tipoDao = new TiposeguroDao();
+		 List<TipoSeguro> listaTipo = tipoDao.obtenerTodos();
+		request.setAttribute("listaTipo", listaTipo);
+				
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/VISTAS/AgregarSeguros.jsp");
 		rd.forward(request, response);
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

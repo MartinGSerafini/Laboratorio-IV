@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<a href="Inicio.jsp">Inicio</a><a href="AgregarSeguros.jsp"> Agregar Seguros</a><a href="/TP7_GRUPO_02/ListarSegurosServlet"> Listar Seguros</a>
+	<a href="Inicio.jsp">Inicio</a><a href="/TP7_GRUPO_02/servletAgregarSeguros"> Agregar Seguros</a><a href="/TP7_GRUPO_02/ListarSegurosServlet"> Listar Seguros</a>
 	
 	<h1>Soy la página inicio</h1>
 
