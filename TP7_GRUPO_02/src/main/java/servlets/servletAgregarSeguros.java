@@ -36,32 +36,6 @@ public class servletAgregarSeguros extends HttpServlet {
 		 List<TipoSeguro> listaTipo = tipoDao.obtenerTodos();
 		request.setAttribute("listaTipo", listaTipo);
 		
-		//-------------Agregar Seguro----------------
-		/*// obtener datos del jsp
-		String descripcion = request.getParameter("txtDescripcion"); 
-		int idTipo = Integer.parseInt(request.getParameter("idTipo"));
-		double costoContratacion = Double.parseDouble(request.getParameter("txtCostoContratacion")); 
-		double costoAsegurado = Double.parseDouble(request.getParameter("txtCostoMaximo"));
-
-        // asignar los valores en un obj seguros
-        Seguros s = new Seguros();
-        s.setDescripcion(descripcion);
-        s.setCostoContratacion(costoContratacion);
-        s.setCostoAsegurado(costoAsegurado);
-
-        TipoSeguro tipo = new TipoSeguro();
-        tipo.setIdTipo(idTipo);
-        s.setTipoSeguro(tipo);
-
-        SeguroDao dao = new SeguroDao();
-        int filas = dao.agregarSeguro(s);
-
-        if (filas > 0) {
-            response.getWriter().println("Seguro agregado con éxto");
-        } else {
-            response.getWriter().println("Error al agregar seguro");
-        }*/
-		
 		RequestDispatcher rd = request.getRequestDispatcher("/VISTAS/AgregarSeguros.jsp");
 		rd.forward(request, response);
 		
@@ -69,75 +43,106 @@ public class servletAgregarSeguros extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//-------------Agregar Seguro----------------
-		// Recopilar datos del formulario
-		String descripcion = request.getParameter("txtDescripcion");
-		        
-		// Validar y parsear idTipo para evitar NumberFormatException
+		String descripcion = "";
 		int idTipo = 0;
-		String idTipoStr = request.getParameter("idTipo");
-		if (idTipoStr != null && !idTipoStr.isEmpty()) {
-		    	  
-			try { idTipo = Integer.parseInt(idTipoStr); } 
-		    catch (NumberFormatException e) { //maneja el error si idTipo es invalido
-		        doGet(request, response);
-		        return;
-		    }
-		} 
-		else { // Maneja el error si idTipo es null
-		    doGet(request, response);
-		    return;
-		}
-
-		// Validar y parsear costos para evitar NumberFormatException
+		String idTipoStr;
+		String costoContratacionStr;
 		double costoContratacion = 0.0;
-		String costoContratacionStr = request.getParameter("txtCostoContratacion"); 
-		if (costoContratacionStr != null && !costoContratacionStr.isEmpty()) {
-			try { costoContratacion = Double.parseDouble(costoContratacionStr); } 
-			catch (NumberFormatException e) {
-				doGet(request, response);
-				return;
-		    }
-		} 
-		else {
-			doGet(request, response);
-		    return;
-		}
-
 		double costoAsegurado = 0.0;
-		String costoAseguradoStr = request.getParameter("txtCostoMaximo");
-		if (costoAseguradoStr != null && !costoAseguradoStr.isEmpty()) {
-			try { costoAsegurado = Double.parseDouble(costoAseguradoStr); } 
-			catch (NumberFormatException e) {
-				doGet(request, response);
-				return;
-		    }
-		} 
-		else {
-			doGet(request, response);
-		    return;
+		String costoAseguradoStr;
+		boolean todoValido = false;
+		String btnAceptar1 = request.getParameter("btnAceptar1");
+		
+		//-------------Agregar Seguro----------------
+	  
+	  if(btnAceptar1 != null) {
+
+		// Validación de descripción
+		descripcion = request.getParameter("txtDescripcion");
+		if (descripcion == null || descripcion.trim().isEmpty()) {
+		    request.setAttribute("descrVacia", false);
+		    todoValido = false;
+		} else {
+		    request.setAttribute("descrVacia", true);
+		    todoValido = true;
 		}
 
-		// Asignar los valores a un objeto Seguros
-		Seguros s = new Seguros();
-		s.setDescripcion(descripcion);
-		s.setCostoContratacion(costoContratacion);
-		s.setCostoAsegurado(costoAsegurado);
+		// idTipo
+		idTipoStr = request.getParameter("idTipo");
+		if (idTipoStr != null && !idTipoStr.isEmpty()) {
+		    try {
+		        idTipo = Integer.parseInt(idTipoStr);
+		        request.setAttribute("idTipoFalso", true);
+		        todoValido = true;
+		    } catch (NumberFormatException e) {
+		        request.setAttribute("idTipoFalso", false);
+		        todoValido = false;
+		    }
+		} else {
+		    request.setAttribute("idTipoFalso", false);
+		    todoValido = false;
+		}
 
-		TipoSeguro tipo = new TipoSeguro();
-		tipo.setIdTipo(idTipo);
-		s.setTipoSeguro(tipo);
+		// Costo de contratación
+		costoContratacionStr = request.getParameter("txtCostoContratacion");
+		if (costoContratacionStr != null && !costoContratacionStr.isEmpty()) {
+		    try {
+		        costoContratacion = Double.parseDouble(costoContratacionStr);
+		        request.setAttribute("txtCostoContratacionFalso", true);
+		        todoValido = true;
+		    } catch (NumberFormatException e) {
+		        request.setAttribute("txtCostoContratacionFalso", false);
+		        todoValido = false;
+		    }
+		} else {
+		    request.setAttribute("txtCostoContratacionFalso", false);
+		    todoValido = false;
+		}
 
-		SeguroDao dao = new SeguroDao();
-		int filas = dao.agregarSeguro(s);
+		// Costo máximo
+		costoAseguradoStr = request.getParameter("txtCostoMaximo");
+		if (costoAseguradoStr != null && !costoAseguradoStr.isEmpty()) {
+		    try {
+		        costoAsegurado = Double.parseDouble(costoAseguradoStr);
+		        request.setAttribute("txtCostoMaximoFalso", true);
+		        todoValido = true;
+		    } catch (NumberFormatException e) {
+		        request.setAttribute("txtCostoMaximoFalso", false);
+		        todoValido = false;
+		    }
+		} else {
+		    request.setAttribute("txtCostoMaximoFalso", false);
+		    todoValido = false;
+		}
+	  }
+	  
+	  if(todoValido) {
 
-		        if (filas > 0) {
-		            response.getWriter().println("Seguro agregado con éxto");
-		        } else {
-		            response.getWriter().println("Error al agregar seguro");
-		        }
-		   
-		doGet(request, response); 
+		    Seguros s = new Seguros();
+		    s.setDescripcion(descripcion);
+		    s.setCostoContratacion(costoContratacion);
+		    s.setCostoAsegurado(costoAsegurado);
+
+		    TipoSeguro tipo = new TipoSeguro();
+		    tipo.setIdTipo(idTipo);
+		    s.setTipoSeguro(tipo);
+
+		    SeguroDao dao = new SeguroDao();
+		    int filas = dao.agregarSeguro(s);
+
+		    if (filas > 0) {
+		        request.setAttribute("Agregado", true);
+		    } else {
+		        request.setAttribute("Agregado", false);
+		    }
+
+		    doGet(request, response);
+	  }
+	  else {
+		  doGet(request, response);
+		    return;
+
+	  }
 	}
 }
 

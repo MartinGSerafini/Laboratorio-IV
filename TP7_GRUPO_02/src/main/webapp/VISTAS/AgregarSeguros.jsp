@@ -18,8 +18,8 @@
 	
 	
 	<table>
-	<tr><td>Id Seguro:</td> <td> <%= request.getAttribute("IDsiguiente") %> </td></tr>
-	<tr><td>Descripcion:</td> <td><input type="text" name="txtDescripcion"></td></tr>
+	<tr><td>Id Seguro:</td> <td> <%= request.getAttribute("IDsiguiente") %> </td></tr> 
+	<tr><td>Descripcion:</td> <td><input type="text" name="txtDescripcion" ></td></tr>
 	<tr><td>Tipo de seguro:</td> <td> <select name="idTipo"> 
 		 
 		 <%
@@ -39,6 +39,50 @@
 	</table>
 	<input type="submit" name="btnAceptar2" value="Aceptar">
 	</form>
+	
+	<!-- Validaciónes -->
+	
+	<%
+   Boolean descriVacia = (Boolean) request.getAttribute("descrVacia");
+   if (Boolean.FALSE.equals(descriVacia)) {
+%>
+   <p style="color:red;">Debe ingresar una descripción válida</p>
+<%
+   }
+
+   Boolean idTipoFalso = (Boolean) request.getAttribute("idTipoFalso");
+   if (Boolean.FALSE.equals(idTipoFalso)) {
+%>
+   <p style="color:red;">Debe ingresar un tipo válido</p>
+<%
+   }
+
+   Boolean txtCCFalso = (Boolean) request.getAttribute("txtCostoContratacionFalso");
+   if (Boolean.FALSE.equals(txtCCFalso)) {
+%>
+   <p style="color:red;">Debe ingresar un costo de contratación válido</p>
+<%
+   }
+
+   Boolean txtCM = (Boolean) request.getAttribute("txtCostoMaximoFalso");
+   if (Boolean.FALSE.equals(txtCM)) {
+%>
+   <p style="color:red;">Debe ingresar un costo máximo válido</p>
+<%
+   }
+   
+   Boolean agregado = (Boolean) request.getAttribute("Agregado");
+   if (Boolean.TRUE.equals(agregado)) {
+%>
+   <p style="color:green;">Seguro agregado</p>
+<%
+   }
+   else if (Boolean.FALSE.equals(agregado)){
+%>
+   <p style="color:red;">Seguro no agregado</p>
+<%
+   }
+%>
 	
 	
 </body>
