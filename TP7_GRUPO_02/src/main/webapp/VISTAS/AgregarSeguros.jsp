@@ -10,7 +10,9 @@
 </head>
 <body>
 	
-	<a href="Inicio.jsp">Inicio</a><a href="/TP7_GRUPO_02/servletAgregarSeguros.jsp"> Agregar Seguros</a><a href="/TP7_GRUPO_02/ListarSegurosServlet"> Listar Seguros</a>
+	<a href="<%= request.getContextPath() %>/Inicio">Inicio</a>
+	<a href="<%= request.getContextPath() %>/servletAgregarSeguros">Agregar Seguros</a>
+	<a href="<%= request.getContextPath() %>/ListarSegurosServlet">Listar Seguros</a>
 	
  	<!-- <form action="/TP7_GRUPO_02/servletAgregarSeguros" method="get"> -->
 	<form action="/TP7_GRUPO_02/servletAgregarSeguros" method="post"> 

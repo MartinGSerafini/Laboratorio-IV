@@ -67,6 +67,34 @@ public class SeguroDao {
 		return lista;
 	}
 	
+	public ArrayList<Seguros> obtenerPorTipo(int idTipo){
+	    ArrayList<Seguros> lista = new ArrayList<Seguros>();
+	    TiposeguroDao ts = new TiposeguroDao();
+	    
+	    String sql = "SELECT * FROM seguros WHERE idTipo = ?";
+	    conectar();
+	    
+	    try (Connection con = Conexion.getConexion();
+	         PreparedStatement ps = con.prepareStatement(sql)) {
+	        
+	        ps.setInt(1, idTipo);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            while (rs.next()) {
+	                Seguros s = new Seguros();
+	                s.setIdSeguro(rs.getInt("idSeguro"));
+	                s.setDescripcion(rs.getString("descripcion"));
+	                s.setTipoSeguro(ts.obtenerTipoSeguro(rs.getInt("idTipo")));
+	                s.setCostoContratacion(rs.getDouble("costoContratacion"));
+	                s.setCostoAsegurado(rs.getDouble("costoAsegurado"));
+	                lista.add(s);
+	            }
+	        }
+	    } catch (Exception e){
+	        e.printStackTrace();
+	    }
+	    return lista;
+	}
+	
 	public int agregarSeguro(Seguros seguro) {
 	    String sql = "INSERT INTO seguros (descripcion, idTipo, costoContratacion, costoAsegurado) "
 	            + "VALUES (?, ?, ?, ?)";

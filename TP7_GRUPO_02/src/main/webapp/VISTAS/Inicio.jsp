@@ -8,7 +8,9 @@
 </head>
 <body>
 
-	<a href="Inicio.jsp">Inicio</a><a href="/TP7_GRUPO_02/servletAgregarSeguros"> Agregar Seguros</a><a href="/TP7_GRUPO_02/ListarSegurosServlet"> Listar Seguros</a>
+	<a href="<%= request.getContextPath() %>/Inicio">Inicio</a>
+	<a href="<%= request.getContextPath() %>/servletAgregarSeguros">Agregar Seguros</a>
+	<a href="<%= request.getContextPath() %>/ListarSegurosServlet">Listar Seguros</a>
 	
 	<h1>Soy la página inicio</h1>
 
