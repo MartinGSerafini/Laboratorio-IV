@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -65,5 +66,29 @@ public class SeguroDao {
 		}
 		return lista;
 	}
+	
+	public int agregarSeguro(Seguros seguro) {
+	    String sql = "INSERT INTO seguros (descripcion, idTipo, costoContratacion, costoAsegurado) "
+	            + "VALUES (?, ?, ?, ?)";
+	    conectar(); 
+	    int filas = 0;
+	    try (Connection con = Conexion.getConexion(); 
+	         PreparedStatement ps = con.prepareStatement(sql)) { 
+	            
+	            ps.setString(1, seguro.getDescripcion());
+	            ps.setInt(2, seguro.getTipoSeguro().getIdTipo());
+	            ps.setDouble(3, seguro.getCostoContratacion());
+	            ps.setDouble(4, seguro.getCostoAsegurado());
+
+	            filas = ps.executeUpdate(); 
+	        
+	    }catch (Exception e){
+	        e.printStackTrace();
+	    }
+	    return filas;	
+	}
+	
+	
+	
 	
 }
