@@ -10,9 +10,7 @@
 </head>
 <body>
 	
-	<a href="<%= request.getContextPath() %>/Inicio">Inicio</a>
-	<a href="<%= request.getContextPath() %>/servletAgregarSeguros">Agregar Seguros</a>
-	<a href="<%= request.getContextPath() %>/ListarSegurosServlet">Listar Seguros</a>	
+	<a href="Inicio.jsp">Inicio</a><a href="AgregarSeguros.jsp"> Agregar Seguros</a><a href="/TP7_GRUPO_02/ListarSegurosServlet"> Listar Seguros</a>
 	
 	<h2>"Tipo de seguros en la base de datos"</h2>
 	
@@ -34,29 +32,10 @@
 		 		 
 		
 		 <input type="submit" value= "Filtrar" name="Filtrar">
-	<%  ArrayList<Seguros> listaSeguros = (ArrayList<Seguros>) request.getAttribute("listaSeguros");;
-		%>
-				
-			
-	
-	 <table border="1">
-	<tr><th>ID Seguro</th> <th>Descripcion Seguro</th> <th>Descripcion Tipo Seguro</th> <th>Costo Contratacion</th> <th>Costo Maximo Asegurado</th></tr>
-	<% if(listaSeguros != null){
-			for(Seguros s : listaSeguros){%>
-	<tr>
-	<td><%=s.getIdSeguro() %></td>
-	<td><%=s.getDescripcion() %></td>
-	<td><%=s.getTipoSeguro().getDescripcion() %></td>
-	<td><%=s.getCostoContratacion() %></td>
-	<td><%=s.getCostoAsegurado() %></td>
-	</tr>
-	<%}
-		}
-	%>
-	</table>
 	</form>
 	
 	<form action="/TP7_GRUPO_02/ListarSegurosServlet" method ="get">
+	 
 	</form>
 	
 </body>
