@@ -16,7 +16,7 @@ public class Cliente {
     private String correoCliente;
     private String telefonoCliente;
     private String usuarioCliente;
-    private String contraseñaCliente;
+    private String contrasenaCliente;
 
     // Constructor vacío
     public Cliente() {}
@@ -25,7 +25,7 @@ public class Cliente {
     public Cliente(String idCliente, int dniCliente, String cuilCliente, String nombreCliente, String apellidoCliente,
                    String sexoCliente, String nacionalidadCliente, java.sql.Date fechaNacCliente,
                    String direccionCliente, String localidadCliente, String provinciaCliente,
-                   String correoCliente, String telefonoCliente, String usuarioCliente, String contraseñaCliente) {
+                   String correoCliente, String telefonoCliente, String usuarioCliente, String contrasenaCliente) {
         this.idCliente = idCliente;
         this.dniCliente = dniCliente;
         this.cuilCliente = cuilCliente;
@@ -40,7 +40,7 @@ public class Cliente {
         this.correoCliente = correoCliente;
         this.telefonoCliente = telefonoCliente;
         this.usuarioCliente = usuarioCliente;
-        this.contraseñaCliente = contraseñaCliente;
+        this.contrasenaCliente = contrasenaCliente;
     }
 
     // Getters y Setters
@@ -157,12 +157,12 @@ public class Cliente {
         this.usuarioCliente = usuarioCliente;
     }
 
-    public String getContraseñaCliente() {
-        return contraseñaCliente;
+    public String getcontrasenaCliente() {
+        return contrasenaCliente;
     }
 
-    public void setContraseñaCliente(String contraseñaCliente) {
-        this.contraseñaCliente = contraseñaCliente;
+    public void setcontrasenaaCliente(String contrasenaCliente) {
+        this.contrasenaCliente = contrasenaCliente;
     }
 	
 	

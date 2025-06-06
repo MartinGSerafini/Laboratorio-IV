@@ -4,16 +4,16 @@ public class Administrador {
 	
 	private String idAdmin;
     private String usuarioAdmin;
-    private String contraseñaAdmin;
+    private String contrasenaAdmin;
 
     // Constructor vacío
     public Administrador() {}
 
     // Constructor completo
-    public Administrador(String idAdmin, String usuarioAdmin, String contraseñaAdmin) {
+    public Administrador(String idAdmin, String usuarioAdmin, String contrasenaAdmin) {
         this.idAdmin = idAdmin;
         this.usuarioAdmin = usuarioAdmin;
-        this.contraseñaAdmin = contraseñaAdmin;
+        this.contrasenaAdmin = contrasenaAdmin;
     }
 
     // Getters y Setters
@@ -34,12 +34,12 @@ public class Administrador {
         this.usuarioAdmin = usuarioAdmin;
     }
 
-    public String getContraseñaAdmin() {
-        return contraseñaAdmin;
+    public String getcontrasenaAdmin() {
+        return contrasenaAdmin;
     }
 
-    public void setContraseñaAdmin(String contraseñaAdmin) {
-        this.contraseñaAdmin = contraseñaAdmin;
+    public void setcontrasenaAdmin(String contrasenaAdmin) {
+        this.contrasenaAdmin = contrasenaAdmin;
     }
 	
 }
