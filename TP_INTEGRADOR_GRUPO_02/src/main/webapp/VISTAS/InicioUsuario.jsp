@@ -17,7 +17,7 @@
       <h4 class="mb-3">Seleccionar Usuario</h4>
 
       <div class="d-grid gap-3">
-		  <a href="cliente.jsp" class="btn btn-primary btn-lg">Cliente</a>
+		  <a href="IngresoCliente.jsp" class="btn btn-primary btn-lg">Cliente</a>
 		  <a href="admin.jsp" class="btn btn-secondary btn-lg">Administrador</a>
 	  </div>
     </div>
