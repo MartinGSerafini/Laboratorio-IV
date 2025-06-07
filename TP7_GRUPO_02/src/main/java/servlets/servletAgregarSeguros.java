@@ -52,109 +52,59 @@ public class servletAgregarSeguros extends HttpServlet {
 		double costoContratacion = 0.0;
 		double costoAsegurado = 0.0;
 		String costoAseguradoStr;
-		boolean todoValido = false;
 		String btnAceptar1 = request.getParameter("btnAceptar1");
 		
 		//-------------Agregar Seguro----------------
 	  
 	  if(btnAceptar1 != null) {
 		  
-		  /*descripcion = request.getParameter("txtDescripcion");
+		  descripcion = request.getParameter("txtDescripcion");
 		  idTipoStr = request.getParameter("idTipo");
 		  costoContratacionStr = request.getParameter("txtCostoContratacion");
 		  costoAseguradoStr = request.getParameter("txtCostoMaximo");
 		  
 		  NegocioSeguro ns = new NegocioSeguro();
 		  
-		  ns.agregarSeguro(descripcion, idTipoStr, costoContratacionStr, costoAseguradoStr);*/
+		  /// Validaciones en NegocioSeguro
+		  boolean valido = ns.validarSeguro(descripcion, idTipoStr, costoContratacionStr, costoAseguradoStr);
 		  
-
-		// Validación de descripción
-		descripcion = request.getParameter("txtDescripcion");
-		if (descripcion == null || descripcion.trim().isEmpty()) {
-		    request.setAttribute("descrVacia", false);
-		    todoValido = false;
-		} else {
-		    request.setAttribute("descrVacia", true);
-		    todoValido = true;
-		}
-
-		// idTipo
-		idTipoStr = request.getParameter("idTipo");
-		if (idTipoStr != null && !idTipoStr.isEmpty()) {
-		    try {
-		        idTipo = Integer.parseInt(idTipoStr);
-		        request.setAttribute("idTipoFalso", true);
-		        todoValido = true;
-		    } catch (NumberFormatException e) {
-		        request.setAttribute("idTipoFalso", false);
-		        todoValido = false;
-		    }
-		} else {
-		    request.setAttribute("idTipoFalso", false);
-		    todoValido = false;
-		}
-
-		// Costo de contratación
-		costoContratacionStr = request.getParameter("txtCostoContratacion");
-		if (costoContratacionStr != null && !costoContratacionStr.isEmpty()) {
-		    try {
-		        costoContratacion = Double.parseDouble(costoContratacionStr);
-		        request.setAttribute("txtCostoContratacionFalso", true);
-		        todoValido = true;
-		    } catch (NumberFormatException e) {
-		        request.setAttribute("txtCostoContratacionFalso", false);
-		        todoValido = false;
-		    }
-		} else {
-		    request.setAttribute("txtCostoContratacionFalso", false);
-		    todoValido = false;
-		}
-
-		// Costo máximo
-		costoAseguradoStr = request.getParameter("txtCostoMaximo");
-		if (costoAseguradoStr != null && !costoAseguradoStr.isEmpty()) {
-		    try {
-		        costoAsegurado = Double.parseDouble(costoAseguradoStr);
-		        request.setAttribute("txtCostoMaximoFalso", true);
-		        todoValido = true;
-		    } catch (NumberFormatException e) {
-		        request.setAttribute("txtCostoMaximoFalso", false);
-		        todoValido = false;
-		    }
-		} else {
-		    request.setAttribute("txtCostoMaximoFalso", false);
-		    todoValido = false;
-		}
-	  }
-	  
-	  if(todoValido) {
-
-		    Seguros s = new Seguros();
-		    s.setDescripcion(descripcion);
-		    s.setCostoContratacion(costoContratacion);
-		    s.setCostoAsegurado(costoAsegurado);
-
-		    TipoSeguro tipo = new TipoSeguro();
-		    tipo.setIdTipo(idTipo);
-		    s.setTipoSeguro(tipo);
-
-		    SeguroDao dao = new SeguroDao();
-		    int filas = dao.agregarSeguro(s);
-
-		    if (filas > 0) {
-		        request.setAttribute("Agregado", true);
-		    } else {
-		        request.setAttribute("Agregado", false);
-		    }
-
-		    doGet(request, response);
-	  }
-	  else {
-		  doGet(request, response);
-		    return;
-
-	  }
+		  if(valido) {
+			  idTipo = Integer.parseInt(idTipoStr);
+			  costoContratacion = Double.parseDouble(costoAseguradoStr);
+			  costoAsegurado = Double.parseDouble(costoAseguradoStr);
+			  
+			  /// Intentar agregar el seguro
+			  boolean agregado = ns.agregarSeguro(descripcion, idTipo, costoContratacion, costoAsegurado);
+			  
+			  request.setAttribute("Agregado", agregado);
+			  
+		  } else {		///configuracion de los atributos para mostrar en el jsp
+				// Validación de descripción
+				if (descripcion == null || descripcion.trim().isEmpty()) { request.setAttribute("descrVacia", false); } 
+				else { request.setAttribute("descrVacia", true); }
+				
+				// idTipo
+				if (idTipoStr != null && !idTipoStr.isEmpty()) {
+				    try { request.setAttribute("idTipoFalso", true); } 
+				    catch (NumberFormatException e) { request.setAttribute("idTipoFalso", false); }
+				} else { request.setAttribute("idTipoFalso", false); }
+				
+				// Costo de contratación
+				if (costoContratacionStr != null && !costoContratacionStr.isEmpty()) {
+				    try { request.setAttribute("txtCostoContratacionFalso", true); } 
+				    catch (NumberFormatException e) { request.setAttribute("txtCostoContratacionFalso", false); }
+				} else { request.setAttribute("txtCostoContratacionFalso", false); }
+		
+				// Costo máximo
+				if (costoAseguradoStr != null && !costoAseguradoStr.isEmpty()) {
+				    try { request.setAttribute("txtCostoMaximoFalso", true); } 
+				    catch (NumberFormatException e) { request.setAttribute("txtCostoMaximoFalso", false); }
+				} else { request.setAttribute("txtCostoMaximoFalso", false); }
+				
+			    request.setAttribute("Agregado",  false);
+		  	}
+	  	}
+	  	doGet(request, response); 
 	}
 }
 
