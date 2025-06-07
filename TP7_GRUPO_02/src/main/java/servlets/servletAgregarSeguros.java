@@ -14,6 +14,8 @@ import dao.SeguroDao;
 import dao.TiposeguroDao;
 import entidades.Seguros;
 import entidades.TipoSeguro;
+import negocio.NegocioSeguro;
+import negocio.NegocioTipoSeguro;
 
 @WebServlet("/servletAgregarSeguros")
 public class servletAgregarSeguros extends HttpServlet {
@@ -27,13 +29,13 @@ public class servletAgregarSeguros extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//------------ID seguro---------------
-		SeguroDao segu = new SeguroDao();
+		NegocioSeguro segu = new NegocioSeguro();
 		int id = segu.obtenerUltimoID() + 1;
 		request.setAttribute("IDsiguiente", id);
 		
 		//-------------Tipo Seguro-----------------
-		TiposeguroDao tipoDao = new TiposeguroDao();
-		 List<TipoSeguro> listaTipo = tipoDao.obtenerTodos();
+		NegocioTipoSeguro tipoNegocio = new NegocioTipoSeguro();
+		 List<TipoSeguro> listaTipo = tipoNegocio.obtenerTodos();
 		request.setAttribute("listaTipo", listaTipo);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/VISTAS/AgregarSeguros.jsp");
@@ -56,6 +58,16 @@ public class servletAgregarSeguros extends HttpServlet {
 		//-------------Agregar Seguro----------------
 	  
 	  if(btnAceptar1 != null) {
+		  
+		  /*descripcion = request.getParameter("txtDescripcion");
+		  idTipoStr = request.getParameter("idTipo");
+		  costoContratacionStr = request.getParameter("txtCostoContratacion");
+		  costoAseguradoStr = request.getParameter("txtCostoMaximo");
+		  
+		  NegocioSeguro ns = new NegocioSeguro();
+		  
+		  ns.agregarSeguro(descripcion, idTipoStr, costoContratacionStr, costoAseguradoStr);*/
+		  
 
 		// Validación de descripción
 		descripcion = request.getParameter("txtDescripcion");

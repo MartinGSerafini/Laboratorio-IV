@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.SeguroDao;
-import dao.TiposeguroDao;
+import negocio.NegocioSeguro;
+import negocio.NegocioTipoSeguro;
 import entidades.Seguros;
 import entidades.TipoSeguro;
 
@@ -26,23 +26,23 @@ public class servletListarSeguros extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
 
-	    TiposeguroDao tipoDao = new TiposeguroDao();
-	    List<TipoSeguro> listaTipo = tipoDao.obtenerTodos();
+	    NegocioTipoSeguro tipoNegocio = new NegocioTipoSeguro();
+	    List<TipoSeguro> listaTipo = tipoNegocio.obtenerTodos();
 	    request.setAttribute("listaTipo", listaTipo);
 
 	    String idTipoStr = request.getParameter("idTipo");
-	    SeguroDao seguroDao = new SeguroDao();
+	    NegocioSeguro seguroNegocio = new NegocioSeguro();
 	    List<Seguros> listaSeguros;
 
 	    if (idTipoStr != null && !idTipoStr.isEmpty()) {
 	        try {
 	            int idTipo = Integer.parseInt(idTipoStr);
-	            listaSeguros = seguroDao.obtenerPorTipo(idTipo);
+	            listaSeguros = seguroNegocio.obtenerPorTipo(idTipo);
 	        } catch (NumberFormatException e) {
-	            listaSeguros = seguroDao.obtenerTodos();
+	            listaSeguros = seguroNegocio.obtenerTodos();
 	        }
 	    } else {
-	        listaSeguros = seguroDao.obtenerTodos(); 
+	        listaSeguros = seguroNegocio.obtenerTodos(); 
 	    }
 
 	    request.setAttribute("listaSeguros", listaSeguros);
