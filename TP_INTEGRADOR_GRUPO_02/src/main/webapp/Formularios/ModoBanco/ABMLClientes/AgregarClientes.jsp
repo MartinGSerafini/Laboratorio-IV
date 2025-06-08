@@ -1,0 +1,157 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Cliente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #ffe6eb 100%);
+            margin: 0;
+            padding: 0;
+        }
+        .navbar-custom {
+            background-color: #ec0000;
+        }
+        .navbar-custom .nav-link, 
+        .navbar-custom .navbar-brand, 
+        .navbar-custom .dropdown-toggle {
+            color: white;
+            font-weight: bold;
+        }
+        .navbar-custom .nav-link:hover, 
+        .navbar-custom .dropdown-menu a:hover {
+            color: #ec0000;
+            background-color: white;
+        }
+        .btn-custom {
+            background-color: white;
+            color: #ec0000;
+            border: 2px solid #ec0000;
+            font-weight: bold;
+        }
+        .btn-custom:hover {
+            background-color: #ec0000;
+            color: white;
+        }
+        .dropdown-toggle::after {
+            display: none;
+        }
+        .dropdown-toggle {
+            font-size: 1.2rem;
+            padding: 0.375rem 0.75rem;
+            color: #ec0000 !important;
+            background-color: white !important;
+            border: 2px solid #ec0000;
+            font-weight: bold;
+        }
+        .form-label {
+            font-weight: 600;
+        }
+        .btn.dropdown-toggle {
+		    color: #ec0000 !important;
+		}
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom px-4">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center">
+            <div class="dropdown me-3">
+                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    ☰
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">CLIENTES</a></li>
+                    <li><a class="dropdown-item" href="#">CUENTAS</a></li>
+                    <li><a class="dropdown-item" href="#">PRÉSTAMOS</a></li>
+                    <li><a class="dropdown-item" href="#">INFORMES</a></li>
+                    <li><a class="dropdown-item" href="#">CERRAR SESIÓN</a></li>
+                </ul>
+            </div>
+            <a href="#" class="btn btn-custom me-2">Agregar Cliente</a>
+            <a href="#" class="btn btn-custom">Listar Clientes</a>
+        </div>
+        <span class="navbar-text text-white">
+            <%= session.getAttribute("nombreUsuario") != null ? session.getAttribute("nombreUsuario") : "INVITADO" %>
+        </span>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4 text-danger">Formulario de Alta de Cliente</h2>
+    <form class="row g-4">
+        <div class="col-md-6">
+            <label for="dni" class="form-label">DNI</label>
+            <input type="number" class="form-control" id="dni" name="dni">
+        </div>
+        <div class="col-md-6">
+            <label for="cuil" class="form-label">CUIL</label>
+            <input type="text" class="form-control" id="cuil" name="cuil">
+        </div>
+        <div class="col-md-6">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre">
+        </div>
+        <div class="col-md-6">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="apellido" name="apellido">
+        </div>
+        <div class="col-md-6">
+            <label for="sexo" class="form-label">Sexo</label>
+            <select class="form-select" id="sexo" name="sexo">
+                <option value="">Seleccione</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Otro">Otro</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="nacionalidad" class="form-label">Nacionalidad</label>
+            <input type="text" class="form-control" id="nacionalidad" name="nacionalidad">
+        </div>
+        <div class="col-md-6">
+            <label for="fechaNac" class="form-label">Fecha de Nacimiento</label>
+            <input type="date" class="form-control" id="fechaNac" name="fechaNac">
+        </div>
+        <div class="col-md-6">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="direccion" name="direccion">
+        </div>
+        <div class="col-md-6">
+            <label for="localidad" class="form-label">Localidad</label>
+            <input type="text" class="form-control" id="localidad" name="localidad">
+        </div>
+        <div class="col-md-6">
+            <label for="provincia" class="form-label">Provincia</label>
+            <input type="text" class="form-control" id="provincia" name="provincia">
+        </div>
+        <div class="col-md-6">
+            <label for="correo" class="form-label">Correo</label>
+            <input type="email" class="form-control" id="correo" name="correo">
+        </div>
+        <div class="col-md-6">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="text" class="form-control" id="telefono" name="telefono">
+        </div>
+        <div class="col-md-6">
+            <label for="usuario" class="form-label">Usuario</label>
+            <input type="text" class="form-control" id="usuario" name="usuario">
+        </div>
+        <div class="col-md-6">
+            <label for="contrasena" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="contrasena" name="contrasena">
+        </div>
+        <div class="col-12 text-center mt-4">
+            <button type="submit" class="btn btn-custom px-5 py-2">Agregar Cliente</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
