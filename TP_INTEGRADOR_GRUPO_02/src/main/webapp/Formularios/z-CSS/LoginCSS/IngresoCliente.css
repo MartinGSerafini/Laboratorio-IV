@@ -1,0 +1,86 @@
+body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #ffffff 0%, #ffe6eb 100%);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-card {
+      background-color: white;
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      max-width: 420px;
+      width: 100%;
+    }
+
+    .form-label {
+      font-weight: 600;
+    }
+
+    .btn-custom {
+      background-color: white;
+      color: #ec0000;
+      border: 2px solid #ec0000;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn-custom:hover {
+      background-color: #ec0000;
+      color: white;
+    }
+
+    .login-title {
+      color: #ec0000;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+    }
+
+    .link-custom {
+      color: #ec0000;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .link-custom:hover {
+      text-decoration: underline;
+    }
+
+    .error-message {
+      color: #dc3545;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+    
+    .admin-box {
+	  position: absolute;
+	  top: 8px;             
+	  left: 50%;                
+	  transform: translateX(-50%);
+	  font-size: 0.65rem;
+	  font-weight: 700;
+	  color: black;
+	  background-color: #ffffff;
+	  border: 1px solid #ccc;
+	  border-radius: 12px;
+	  padding: 4px 12px;
+	}
+    
+    .back-arrow {
+	  position: absolute;
+	  top: 12px;
+	  left: 16px;
+	  color: #ec0000;
+	  text-decoration: none;
+	  font-weight: 600;
+	  font-size: 0.9rem;
+	  transition: color 0.2s;
+	}
+
+	.back-arrow:hover {
+	  color: black;
+	}

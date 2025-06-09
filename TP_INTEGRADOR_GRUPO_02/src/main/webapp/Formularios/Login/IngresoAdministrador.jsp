@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inicio de Sesión</title>
+  <title>Administrador - Inicio de Sesión</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="../z-CSS/LoginCSS/IngresoCliente.css">
+  <link rel="stylesheet" href="../z-CSS/LoginCSS/IngresoAdministrador.css">
 </head>
 
 <body>
@@ -17,7 +17,7 @@
   <a href="InicioUsuario.jsp" class="back-arrow">
   	<i class="bi bi-arrow-left"></i> Volver
   </a>
-  <div class="admin-box">Cliente</div>
+  <div class="admin-box">Administrador</div>
   <br><h4 class="login-title">Inicio de Sesión</h4>
 
   <form method="post" class="text-start">
@@ -38,11 +38,6 @@
       <button type="submit" class="btn btn-custom btn-lg">Aceptar</button>
     </div>
 
-    <div class="text-center mt-4">
-      <a href="registro.jsp" class="link-custom d-block mb-2">¿No tienes cuenta? Crear una aquí</a>
-      <a href="registro.jsp" class="link-custom d-block mb-2">¿No recuerdas tu contraseña?</a>
-      <a href="registro.jsp" class="link-custom d-block">¿Necesitas ayuda?</a>
-    </div>
   </form>
 </div>
 

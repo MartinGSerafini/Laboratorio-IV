@@ -6,55 +6,8 @@
     <title>Agregar Cuenta</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #ffffff 0%, #ffe6eb 100%);
-            margin: 0;
-            padding: 0;
-        }
-        .navbar-custom {
-            background-color: #ec0000;
-        }
-        .navbar-custom .nav-link, 
-        .navbar-custom .navbar-brand, 
-        .navbar-custom .dropdown-toggle {
-            color: white;
-            font-weight: bold;
-        }
-        .navbar-custom .nav-link:hover, 
-        .navbar-custom .dropdown-menu a:hover {
-            color: #ec0000;
-            background-color: white;
-        }
-        .btn-custom {
-            background-color: white;
-            color: #ec0000;
-            border: 2px solid #ec0000;
-            font-weight: bold;
-        }
-        .btn-custom:hover {
-            background-color: #ec0000;
-            color: white;
-        }
-        .dropdown-toggle::after {
-            display: none;
-        }
-        .dropdown-toggle {
-            font-size: 1.2rem;
-            padding: 0.375rem 0.75rem;
-            color: #ec0000 !important;
-            background-color: white !important;
-            border: 2px solid #ec0000;
-            font-weight: bold;
-        }
-        .form-label {
-            font-weight: 600;
-        }
-        .btn.dropdown-toggle {
-		    color: #ec0000 !important;
-		}
-    </style>
+    <link rel="stylesheet" href="../../z-CSS/ABMLCuentasCSS/AgregarCuentas.css">
+   
 </head>
 <body>
 
@@ -66,7 +19,7 @@
                     ☰
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">CLIENTES</a></li>
+                    <li><a class="dropdown-item" href="../ABMLClientes/AgregarClientes.jsp">CLIENTES</a></li>
                     <li><a class="dropdown-item" href="#">CUENTAS</a></li>
                     <li><a class="dropdown-item" href="#">PRÉSTAMOS</a></li>
                     <li><a class="dropdown-item" href="#">INFORMES</a></li>

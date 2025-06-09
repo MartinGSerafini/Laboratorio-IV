@@ -1,0 +1,57 @@
+ body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #ffffff 0%, #ffe6eb 100%);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-custom {
+      background-color: white;
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1, h2 {
+      color: #ec0000;
+      font-weight: bold;
+    }
+
+    h4 {
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-custom {
+      font-weight: bold;
+      font-size: 1.1rem;
+      padding: 0.75rem;
+      border: 2px solid #ec0000;
+      transition: 0.3s;
+    }
+
+    .btn-cliente {
+      background-color: white;
+      color: #ec0000;
+    }
+
+    .btn-cliente:hover {
+      background-color: #ec0000;
+      color: white;
+    }
+
+    .btn-admin {
+      background-color: #ec0000;
+      color: white;
+    }
+
+    .btn-admin:hover {
+      background-color: white;
+      color: #ec0000;
+    }
