@@ -3,7 +3,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Agregar Cliente</title>
+    <title>Agregar Cuenta</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -73,8 +73,8 @@
                     <li><a class="dropdown-item" href="#">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
-            <a href="AgregarClientes.jsp" class="btn btn-custom me-2">Agregar Cliente</a>
-            <a href="ListadoClientes.jsp" class="btn btn-custom">Listar Clientes</a>
+            <a href="AgregarCuentas.jsp" class="btn btn-custom me-2">Agregar Cuenta</a>
+            <a href="ListarCuentas.jsp" class="btn btn-custom">Listar Cuentas</a>
         </div>
         <span class="navbar-text text-white">
             <%= session.getAttribute("nombreUsuario") != null ? session.getAttribute("nombreUsuario") : "INVITADO" %>
@@ -83,70 +83,30 @@
 </nav>
 
 <div class="container mt-5">
-    <h2 class="text-center mb-4 text-danger">Agregar Clientes</h2>
+    <h2 class="text-center mb-4 text-danger">Agregar Cuentas</h2>
     <form class="row g-4">
         <div class="col-md-6">
-            <label for="dni" class="form-label">DNI</label>
+            <label for="numero_Cuenta" class="form-label">Numero de Cuenta</label>
             <input type="number" class="form-control" id="dni" name="dni">
         </div>
         <div class="col-md-6">
-            <label for="cuil" class="form-label">CUIL</label>
-            <input type="text" class="form-control" id="cuil" name="cuil">
-        </div>
-        <div class="col-md-6">
-            <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombre" name="nombre">
-        </div>
-        <div class="col-md-6">
-            <label for="apellido" class="form-label">Apellido</label>
-            <input type="text" class="form-control" id="apellido" name="apellido">
-        </div>
-        <div class="col-md-6">
-            <label for="sexo" class="form-label">Sexo</label>
-            <select class="form-select" id="sexo" name="sexo">
+            <label for="tipo_Cuenta" class="form-label">Tipo de Cuenta</label>
+            <select class="form-select" id="tipo_Cuenta" name="tipo_Cuenta">
                 <option value="">Seleccione</option>
-                <option value="Masculino">Masculino</option>
-                <option value="Femenino">Femenino</option>
+                <option value="Masculino">Caja de ahorro</option>
+                <option value="Femenino">Cuenta corriente</option>
             </select>
         </div>
         <div class="col-md-6">
-            <label for="nacionalidad" class="form-label">Nacionalidad</label>
-            <input type="text" class="form-control" id="nacionalidad" name="nacionalidad">
+            <label for="CBU" class="form-label">CBU</label>
+            <input type="text" class="form-control" id="cuil" name="cuil">
         </div>
         <div class="col-md-6">
-            <label for="fechaNac" class="form-label">Fecha de Nacimiento</label>
-            <input type="date" class="form-control" id="fechaNac" name="fechaNac">
-        </div>
-        <div class="col-md-6">
-            <label for="direccion" class="form-label">Dirección</label>
-            <input type="text" class="form-control" id="direccion" name="direccion">
-        </div>
-        <div class="col-md-6">
-            <label for="localidad" class="form-label">Localidad</label>
-            <input type="text" class="form-control" id="localidad" name="localidad">
-        </div>
-        <div class="col-md-6">
-            <label for="provincia" class="form-label">Provincia</label>
-            <input type="text" class="form-control" id="provincia" name="provincia">
-        </div>
-        <div class="col-md-6">
-            <label for="correo" class="form-label">Correo</label>
-            <input type="email" class="form-control" id="correo" name="correo">
-        </div>
-        <div class="col-md-6">
-            <label for="telefono" class="form-label">Teléfono</label>
-            <input type="text" class="form-control" id="telefono" name="telefono">
-        </div>
-        <div class="col-md-6">
-            <label for="usuario" class="form-label">Usuario</label>
-            <input type="text" class="form-control" id="usuario" name="usuario">
-        </div>
-        <div class="col-md-6">
-            <label for="contrasena" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" id="contrasena" name="contrasena">
+            <label for="saldo" class="form-label">Saldo de Cuenta</label>
+            <input type="text" class="form-control" id="nombre" name="nombre">
         </div>
         <div class="col-12 text-center mt-4">
-            <button type="submit" class="btn btn-custom px-5 py-2">Agregar Cliente</button>
+            <button type="submit" class="btn btn-custom px-5 py-2">Agregar Cuenta</button>
         </div>
     </form>
 </div>
