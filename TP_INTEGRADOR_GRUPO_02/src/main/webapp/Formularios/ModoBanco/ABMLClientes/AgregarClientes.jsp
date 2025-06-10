@@ -37,6 +37,14 @@
 <div class="container mt-5">
     <h2 class="text-center mb-4 text-danger">Agregar Clientes</h2>
     <form class="row g-4">
+    	<div class="col-md-6">
+            <label for="usuario" class="form-label">Usuario</label>
+            <input type="text" class="form-control" id="usuario" name="usuario">
+        </div>
+        <div class="col-md-6">
+            <label for="contrasena" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="contrasena" name="contrasena">
+        </div>
         <div class="col-md-6">
             <label for="dni" class="form-label">DNI</label>
             <input type="number" class="form-control" id="dni" name="dni">
@@ -88,14 +96,6 @@
         <div class="col-md-6">
             <label for="telefono" class="form-label">Teléfono</label>
             <input type="text" class="form-control" id="telefono" name="telefono">
-        </div>
-        <div class="col-md-6">
-            <label for="usuario" class="form-label">Usuario</label>
-            <input type="text" class="form-control" id="usuario" name="usuario">
-        </div>
-        <div class="col-md-6">
-            <label for="contrasena" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" id="contrasena" name="contrasena">
         </div>
         <div class="col-12 text-center mt-4">
             <button type="submit" class="btn btn-custom px-5 py-2">Agregar Cliente</button>

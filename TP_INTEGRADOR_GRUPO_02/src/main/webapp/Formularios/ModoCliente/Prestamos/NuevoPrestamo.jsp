@@ -125,6 +125,7 @@
 
 <div id="sidebar" class="sidebar">
     <a href="#">Informacion Personal</a>
+    <a href="#">Cuentas</a>
     <a href="#">Transferir Dinero</a>
     <a href="#">Nuevo Prestamo</a>
     <a href="#">Pagar Prestamos</a>

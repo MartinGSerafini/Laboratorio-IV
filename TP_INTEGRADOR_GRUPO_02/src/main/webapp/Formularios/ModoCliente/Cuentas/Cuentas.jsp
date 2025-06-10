@@ -3,10 +3,9 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Menú Inicio</title>
-
-    <!-- Fuente moderna de Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Cuentas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
         body {
@@ -125,15 +124,15 @@
     <a href="#">Cerrar Sesion</a>
 </div>
 
-<div class="main-content">
-    <h2>Menú Inicio</h2>
-    <div class="button-grid">
-        <a href="#" class="btn">CUENTAS</a>
-        <a href="#" class="btn">TRASFERIR DINERO</a>
-        <a href="#" class="btn">NUEVO PRESTAMO</a>
-        <a href="#" class="btn">PAGAR PRESTAMOS</a>
-    </div>
+<div class="container mt-5">
+    <h2 class="text-center text-danger mb-4">Cuentas</h2>
+    <form class="row g-4">
+        
+        
+        
+        
+    </form>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
