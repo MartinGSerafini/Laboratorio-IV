@@ -19,7 +19,7 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">CLIENTES</a></li>
-                    <li><a class="dropdown-item" href="../ABMLCuentas/AgregarCuentas.jsp">CUENTAS</a></li>
+                    <li><a class="dropdown-item" href="#">CUENTAS</a></li>
                     <li><a class="dropdown-item" href="#">PRÉSTAMOS</a></li>
                     <li><a class="dropdown-item" href="#">INFORMES</a></li>
                     <li><a class="dropdown-item" href="#">CERRAR SESIÓN</a></li>

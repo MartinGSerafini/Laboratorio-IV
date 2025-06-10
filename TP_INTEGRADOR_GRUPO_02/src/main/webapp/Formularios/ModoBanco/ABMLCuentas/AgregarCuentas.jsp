@@ -19,7 +19,7 @@
                     ☰
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="../ABMLClientes/AgregarClientes.jsp">CLIENTES</a></li>
+                    <li><a class="dropdown-item" href="AgregarClientes.jsp">CLIENTES</a></li>
                     <li><a class="dropdown-item" href="#">CUENTAS</a></li>
                     <li><a class="dropdown-item" href="#">PRÉSTAMOS</a></li>
                     <li><a class="dropdown-item" href="#">INFORMES</a></li>

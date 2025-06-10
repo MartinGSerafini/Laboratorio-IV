@@ -39,8 +39,6 @@
     </div>
 
     <div class="text-center mt-4">
-      <a href="registro.jsp" class="link-custom d-block mb-2">¿No tienes cuenta? Crear una aquí</a>
-      <a href="registro.jsp" class="link-custom d-block mb-2">¿No recuerdas tu contraseña?</a>
       <a href="registro.jsp" class="link-custom d-block">¿Necesitas ayuda?</a>
     </div>
   </form>
