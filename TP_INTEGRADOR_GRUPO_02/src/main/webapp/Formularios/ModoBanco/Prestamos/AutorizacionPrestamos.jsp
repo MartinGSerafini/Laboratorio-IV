@@ -26,8 +26,6 @@
                     <li><a class="dropdown-item" href="#">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
-            <a href="AgregarCuentas.jsp" class="btn btn-custom me-2">Agregar Cuenta</a>
-            <a href="ListarCuentas.jsp" class="btn btn-custom">Listar Cuentas</a>
         </div>
         <span class="navbar-text text-white">
             <%= session.getAttribute("nombreUsuario") != null ? session.getAttribute("nombreUsuario") : "INVITADO" %>
