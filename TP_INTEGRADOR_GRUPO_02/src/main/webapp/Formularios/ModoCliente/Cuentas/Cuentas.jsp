@@ -132,30 +132,17 @@
         <table class="table table-striped table-bordered text-center w-auto">
             <thead class="table-dark">
                 <tr>
-                    <th>Nro Cuenta</th><th>Tipo</th>
-                    <th>CBU</th><th>Acciones</th>
+                    <th>Nro Cuenta</th><th>Tipo</th><th>CBU</th><th>Saldo</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>123321</td><td>Cuenta Corriente</td><td>75847261947</td>
+                    <td>123321</td><td>Cuenta Corriente</td><td>75847261947</td><td>$15000</td>
                     <td>
-                        <button class="btn btn-warning btn-sm">Ver</button>
+                        <button class="btn btn-warning btn-sm">Ver historial</button>
                     </td>
                 </tr>
-                <tr>
-                    <td>123452</td><td>Cuenta Corriente</td><td>61848961948</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm">Ver</button>
-                    </td>
-                </tr>
-                    <tr>
-                    <td>471452</td><td>Cuenta Corriente</td><td>45848751918</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm">Ver</button>
-                    </td>
-                </tr>
-                
             </tbody>
         </table>
     </div>
