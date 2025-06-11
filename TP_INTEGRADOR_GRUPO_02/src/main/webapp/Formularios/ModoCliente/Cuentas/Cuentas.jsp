@@ -82,13 +82,13 @@
         }
 
         .btn {
-            padding: 25px 30px;
+            padding: 5px 15px;
             border: 2px solid #ec0000;
             background-color: white;
             text-decoration: none;
             color: #ec0000;
-            font-weight: 600;
-            font-size: 20px;
+            font-weight: 500;
+            font-size: 15px;
             border-radius: 8px;
             transition: 0.3s;
         }
@@ -127,7 +127,38 @@
 <div class="container mt-5">
     <h2 class="text-center text-danger mb-4">Cuentas</h2>
     <form class="row g-4">
-        
+        <!-- Tabla de Cuentas -->
+    <div class="table-responsive d-flex justify-content-center">
+        <table class="table table-striped table-bordered text-center w-auto">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nro Cuenta</th><th>Tipo</th>
+                    <th>CBU</th><th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>123321</td><td>Cuenta Corriente</td><td>75847261947</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm">Ver</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>123452</td><td>Cuenta Corriente</td><td>61848961948</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm">Ver</button>
+                    </td>
+                </tr>
+                    <tr>
+                    <td>471452</td><td>Cuenta Corriente</td><td>45848751918</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm">Ver</button>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
         
         
         
