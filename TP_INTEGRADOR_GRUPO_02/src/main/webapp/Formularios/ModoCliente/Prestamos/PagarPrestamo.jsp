@@ -98,12 +98,13 @@
 </div>
 
 <div id="sidebar" class="sidebar">
-    <a href="#">Información Personal</a>
-    <a href="#">Cuentas</a>
-    <a href="#">Transferir Dinero</a>
-    <a href="#">Nuevo Préstamo</a>
-    <a href="#">Pagar Préstamos</a>
-    <a href="#">Cerrar Sesión</a>
+    <div id="sidebar" class="sidebar">
+    <a href="../InformacionPersonal.jsp">Informacion Personal</a>
+    <a href="../Cuentas.jsp">Cuentas</a>
+    <a href="../Transferencias.jsp">Transferir Dinero</a>
+    <a href=NuevoPrestamo.jsp>Nuevo Prestamo</a>
+    <a href="../../Login/IngresoCliente.jsp">Cerrar Sesion</a>
+</div>
 </div>
 
 <div class="main-content">

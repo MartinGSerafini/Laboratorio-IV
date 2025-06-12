@@ -3,10 +3,9 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Informes</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Transferencias</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
         body {
@@ -83,13 +82,13 @@
         }
 
         .btn {
-            padding: 25px 30px;
+            padding: 5px 15px;
             border: 2px solid #ec0000;
             background-color: white;
             text-decoration: none;
             color: #ec0000;
-            font-weight: 600;
-            font-size: 20px;
+            font-weight: 500;
+            font-size: 15px;
             border-radius: 8px;
             transition: 0.3s;
         }
@@ -108,7 +107,6 @@
     </script>
 </head>
 <body>
-
 <div class="navbar">
     <div class="menu-toggle" onclick="toggleSidebar()">☰</div>
     <div class="user-info">
@@ -117,63 +115,69 @@
 </div>
 
 <div id="sidebar" class="sidebar">
-    <a href="#">Clientes</a>
-    <a href="#">Cuentas</a>
-    <a href="#">Prestamos</a>
-    <a href="#">informes</a>
-    <a href="#">Cerrar Sesion</a>
+    <a href="InformacionPersonal.jsp">Informacion Personal</a>
+    <a href="Cuentas.Jsp">Cuentas</a>
+    <a href=Prestamos/NuevoPrestamo.jsp>Nuevo Prestamo</a>
+    <a href="Prestamos/PagarPrestamo.jsp">Pagar Prestamos</a>
+    <a href="../Login/IngresoCliente.jsp">Cerrar Sesion</a>
 </div>
-<div class="main-content">
-  <h2>Informes</h2>
-  <div class="button-grid">
-    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalInformeN1">Informe N1</button>
-    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalInformeN2">Informe N2</button>
+
+<!-- CONTENIDO -->
+<div class="container mt-5">
+    <h3 class="text-center mb-4 text-danger">Transferencias</h3>
+
+    <!-- Busqueda y Filtros -->
+    <form class="d-flex justify-content-center mb-4" method="get" action="ListarCuentas.jsp">
+        <input type="text" name="busqueda" class="form-control w-25 me-2" placeholder="Buscar...">
+
+        <button type="submit" class="btn btn-custom">Buscar Cuenta</button>
+    </form>
+
+    <!-- Tabla de Cuentas -->
+    <div class="table-responsive d-flex justify-content-center">
+        <table class="table table-striped table-bordered text-center w-auto">
+            <thead class="table-dark">
+                <tr>
+                	<th>Nombre</th><th>Apellido</th><th>Nro Cuenta</th><th>Tipo</th><th>CBU</th><th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Martin</td><td>Serafini</td><td>123321</td><td>Cuenta Corriente</td><td>75847261947</td>
+                <td>
+                	<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalTransferir">Transferir</button>
+                </td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Paginación -->
+    <nav class="d-flex justify-content-center mt-4">
+        <ul class="pagination">
+        </ul>
+    </nav>
+</div>
+
+<!-- MODAL TRANSFERIR -->
+<div class="modal fade" id="modalTransferir" tabindex="-1" aria-labelledby="modalTransferirLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- MODAL INFORME N1 -->
-<div class="modal fade" id="modalInformeN1" tabindex="-1" aria-labelledby="modalInformeN1Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="modalInformeN1Label">Informe N*1</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <p>
-          El porcentaje de X dentro de Y es %Z
-        </p>
-        <p>
-          Y el porcentaje de A en B es %C.
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- MODAL INFORME N2 -->
-<div class="modal fade" id="modalInformeN2" tabindex="-1" aria-labelledby="modalInformeN2Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="modalInformeN2Label">Informe N*2</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <p>
-          El porcentaje de X dentro de Y es %Z
-        </p>
-        <p>
-          Y el porcentaje de A en B es %C.
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- Bootstrap Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -117,20 +117,17 @@
 </div>
 
 <div id="sidebar" class="sidebar">
-    <a href="#">Clientes</a>
-    <a href="#">Cuentas</a>
-    <a href="#">Prestamos</a>
-    <a href="#">informes</a>
+    <a href="#">Informacion Personal</a>
     <a href="#">Cerrar Sesion</a>
 </div>
 
 <div class="main-content">
     <h2>Menú Inicio</h2>
     <div class="button-grid">
-        <a href="#" class="btn">CLIENTES</a>
-        <a href="#" class="btn">CUENTAS</a>
-        <a href="#" class="btn">PRESTAMOS</a>
-        <a href="#" class="btn">INFORMES</a>
+        <a href="Cuentas.jsp" class="btn">CUENTAS</a>
+        <a href="Transferencias.jsp" class="btn">TRASFERIR DINERO</a>
+        <a href="Prestamos/NuevoPrestamo.jsp" class="btn">NUEVO PRESTAMO</a>
+        <a href="Prestamos/PagarPrestamo.jsp" class="btn">PAGAR PRESTAMOS</a>
     </div>
 </div>
 

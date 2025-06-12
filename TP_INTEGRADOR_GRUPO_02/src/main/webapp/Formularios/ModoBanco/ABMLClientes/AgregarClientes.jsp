@@ -18,11 +18,10 @@
                     ☰
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">CLIENTES</a></li>
-                    <li><a class="dropdown-item" href="#">CUENTAS</a></li>
-                    <li><a class="dropdown-item" href="#">PRÉSTAMOS</a></li>
-                    <li><a class="dropdown-item" href="#">INFORMES</a></li>
-                    <li><a class="dropdown-item" href="#">CERRAR SESIÓN</a></li>
+                    <li><a class="dropdown-item" href="../ABMLCuentas/AgregarCuentas.jsp">CUENTAS</a></li>
+                    <li><a class="dropdown-item" href="../AutorizacionPrestamos.jsp">PRÉSTAMOS</a></li>
+                    <li><a class="dropdown-item" href="../Informes.jsp">INFORMES</a></li>
+                    <li><a class="dropdown-item" href="../../Login/IngresoAdministrador.jsp">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
             <a href="AgregarClientes.jsp" class="btn btn-custom me-2">Agregar Cliente</a>

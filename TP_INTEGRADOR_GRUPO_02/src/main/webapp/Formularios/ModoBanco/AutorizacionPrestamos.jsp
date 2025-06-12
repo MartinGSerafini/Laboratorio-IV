@@ -6,7 +6,7 @@
     <title>Prestamos solicitados</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../z-CSS/ABMLCuentasCSS/ListarCuentas.css">
+    <link rel="stylesheet" href="../z-CSS/ABMLCuentasCSS/ListarCuentas.css">
 </head>
 <body>
 
@@ -19,11 +19,10 @@
                     ☰
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">CLIENTES</a></li>
-                    <li><a class="dropdown-item" href="#">CUENTAS</a></li>
-                    <li><a class="dropdown-item" href="#">PRÉSTAMOS</a></li>
-                    <li><a class="dropdown-item" href="#">INFORMES</a></li>
-                    <li><a class="dropdown-item" href="#">CERRAR SESIÓN</a></li>
+                    <li><a class="dropdown-item" href="ABMLClientes/AgregarClientes.jsp">CLIENTES</a></li>
+          			<li><a class="dropdown-item" href="ABMLCuentas/AgregarCuentas.jsp">CUENTAS</a></li>
+                    <li><a class="dropdown-item" href="Informes.jsp">INFORMES</a></li>
+                    <li><a class="dropdown-item" href="../Login/IngresoAdministrador.jsp">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
         </div>

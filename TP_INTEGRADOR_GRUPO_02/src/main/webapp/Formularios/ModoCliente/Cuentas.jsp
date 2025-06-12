@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Transferencias</title>
+    <title>Cuentas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
@@ -115,61 +115,59 @@
 </div>
 
 <div id="sidebar" class="sidebar">
-    <a href="#">Informacion Personal</a>
-    <a href="#">Cuentas</a>
-    <a href="#">Transferir Dinero</a>
-    <a href="#">Nuevo Prestamo</a>
-    <a href="#">Pagar Prestamos</a>
-    <a href="#">Cerrar Sesion</a>
+    <a href="InformacionPersonal.jsp">Informacion Personal</a>
+    <a href="Transferencias.jsp">Transferir Dinero</a>
+    <a href=Prestamos/NuevoPrestamo.jsp>Nuevo Prestamo</a>
+    <a href="Prestamos/PagarPrestamo.jsp">Pagar Prestamos</a>
+    <a href="../Login/IngresoCliente.jsp">Cerrar Sesion</a>
 </div>
 
-<!-- CONTENIDO -->
 <div class="container mt-5">
-    <h3 class="text-center mb-4 text-danger">Transferencias</h3>
-
-    <!-- Busqueda y Filtros -->
-    <form class="d-flex justify-content-center mb-4" method="get" action="ListarCuentas.jsp">
-        <input type="text" name="busqueda" class="form-control w-25 me-2" placeholder="Buscar...">
-
-        <button type="submit" class="btn btn-custom">Buscar Cuenta</button>
-    </form>
-
-    <!-- Tabla de Cuentas -->
+    <h2 class="text-center text-danger mb-4">Cuentas</h2>
+    <form class="row g-4">
+        <!-- Tabla de Cuentas -->
     <div class="table-responsive d-flex justify-content-center">
         <table class="table table-striped table-bordered text-center w-auto">
             <thead class="table-dark">
                 <tr>
-                	<th>Nombre</th><th>Apellido</th><th>Nro Cuenta</th><th>Tipo</th><th>CBU</th><th>Acciones</th>
+                    <th>Nro Cuenta</th><th>Tipo</th><th>CBU</th><th>Saldo</th><th>Fecha de Creacion</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>123321</td><td>Cuenta Corriente</td><td>75847261947</td><td>$15000</td><td>25/06/2024</td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalHistorialCuenta">Ver Historial</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </form>
+</div>
+<!-- MODAL HISTORIAL DE CUENTA -->
+<div class="modal fade" id="modalHistorialCuenta" tabindex="-1" aria-labelledby="modalHistorialCuentaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-body">
+        <!-- Tabla de Clientes -->
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered text-center" style="min-width: 1200px; width: 100%;">
+            <thead class="table-dark">
+              <tr>
+                <th>ID</th><th>Fecha</th><th>Tipo de Movimiento</th><th>Cuenta Origen</th><th>Cuenta Destino</th><th>Importe</th>
+       			<th>Detalle</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Martin</td><td>Serafini</td><td>123321</td><td>Cuenta Corriente</td><td>75847261947</td>
-                <td>
-                	<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalTransferir">Transferir</button>
-                </td>
+                <td>0001</td><td>06/02/2023</td><td>Pago de Prestamo</td><td>39482758251</td><td>57282957162</td><td>$20500,60</td>
+        		<td>Pago de Cuota 2</td>
               </tr>
             </tbody>
-        </table>
-    </div>
-
-    <!-- Paginación -->
-    <nav class="d-flex justify-content-center mt-4">
-        <ul class="pagination">
-        </ul>
-    </nav>
-</div>
-
-<!-- MODAL TRANSFERIR -->
-<div class="modal fade" id="modalTransferir" tabindex="-1" aria-labelledby="modalTransferirLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header bg-danger text-white">
-
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        
+          </table>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -177,8 +175,6 @@
     </div>
   </div>
 </div>
-
-<!-- Bootstrap Bundle -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

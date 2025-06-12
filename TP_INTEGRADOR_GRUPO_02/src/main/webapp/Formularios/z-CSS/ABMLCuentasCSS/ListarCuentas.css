@@ -42,3 +42,13 @@
         .btn.dropdown-toggle {
             color: #ec0000 !important;
         }
+        
+       .btn-informe {
+		    padding: 1rem 2.5rem;          /* Más alto y ancho */
+		    font-size: 1.5rem;             /* Más grande el texto */
+		    font-weight: bold;
+		    border-width: 2px;
+		    border-radius: 0.75rem;        /* Bordes más redondeados */
+		}
+       
+        

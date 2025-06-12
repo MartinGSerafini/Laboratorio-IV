@@ -12,8 +12,7 @@
 <body>
 
   <div class="card-custom">
-    <h1>Sistema de Gestión</h1>
-    <h2>Banco BG2</h2>
+    <h1>Banco BG2</h1>
     <h4>Seleccionar Usuario</h4>
 
     <div class="d-grid gap-3 mt-4">

@@ -116,12 +116,11 @@
 </div>
 
 <div id="sidebar" class="sidebar">
-    <a href="#">Informacion Personal</a>
-    <a href="#">Cuentas</a>
-    <a href="#">Transferir Dinero</a>
-    <a href="#">Nuevo Prestamo</a>
-    <a href="#">Pagar Prestamos</a>
-    <a href="#">Cerrar Sesion</a>
+    <a href="Cuentas.Jsp">Cuentas</a>
+    <a href="Transferencias.jsp">Transferir Dinero</a>
+    <a href=Prestamos/NuevoPrestamo.jsp>Nuevo Prestamo</a>
+    <a href="Prestamos/PagarPrestamo.jsp">Pagar Prestamos</a>
+    <a href="../Login/IngresoCliente.jsp">Cerrar Sesion</a>
 </div>
 
 <div class="container mt-5">
