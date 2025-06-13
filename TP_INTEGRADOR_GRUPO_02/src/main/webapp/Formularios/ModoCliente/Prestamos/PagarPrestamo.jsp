@@ -9,82 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../z-CSS/ModoClienteCSS/Prestamos.css">
     
-    <!-- 
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #ffffff 0%, #ffe6eb 100%);
-            color: black;
-            margin: 0;
-            padding: 0;
-        }
-        .navbar {
-            background-color: #ec0000;
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-            font-size: 18px;
-        }
-        .menu-toggle { cursor: pointer; font-size: 28px; color: white; }
-        .user-info { font-size: 18px; font-weight: 600; color: white; }
-        .sidebar {
-            position: absolute;
-            top: 60px;
-            left: 10px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 15px;
-            display: none;
-            z-index: 1;
-        }
-        .sidebar a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: #ec0000;
-            font-weight: 600;
-            font-size: 16px;
-        }
-        .sidebar a:hover { background-color: #f2f2f2; }
-        .main-content {
-            text-align: center;
-            padding: 60px 20px;
-        }
-        .main-content h2 {
-            font-size: 36px;
-            color: #ec0000;
-            margin-bottom: 30px;
-        }
-        .btn {
-            padding: 10px 20px;
-            border: 2px solid #ec0000;
-            background-color: white;
-            text-decoration: none;
-            color: #ec0000;
-            font-weight: 500;
-            font-size: 16px;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-        .button-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 200px);
-            gap: 30px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        .btn:hover {
-            background-color: #ec0000;
-            color: white;
-        }
-        .btn:focus, .btn:active {
-            background-color: #004d40;
-            color: white;
-            outline: none;
-        }
-    </style>		 -->
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
@@ -101,14 +25,13 @@
 </div>
 
 <div id="sidebar" class="sidebar">
-    <div id="sidebar" class="sidebar">
     <a href="../InformacionPersonal.jsp">Informacion Personal</a>
     <a href="../Cuentas.jsp">Cuentas</a>
     <a href="../Transferencias.jsp">Transferir Dinero</a>
     <a href=NuevoPrestamo.jsp>Nuevo Prestamo</a>
     <a href="../../Login/IngresoCliente.jsp">Cerrar Sesion</a>
 </div>
-</div>
+
 
 <div class="main-content">
     <h2>Seleccione el préstamo a pagar</h2>
