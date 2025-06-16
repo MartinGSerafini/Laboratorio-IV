@@ -88,7 +88,7 @@ body {
             color: white;
         }
         .btn:focus, .btn:active {
-            background-color: #004d40;
+            background-color: #ec0000; 
             color: white;
             outline: none;
         }

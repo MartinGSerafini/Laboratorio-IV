@@ -68,16 +68,35 @@
     </nav>
 </div>
 
+
+
 <!-- MODAL TRANSFERIR -->
 <div class="modal fade" id="modalTransferir" tabindex="-1" aria-labelledby="modalTransferirLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+  <div class="modal-dialog modal-md modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header bg-danger text-white">
-
+      <div class="modal-header encabezado-modal">
+        <h5 class="modal-title" id="modalTransferirLabel">Transferencia</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
       <div class="modal-body">
-        
+
+        <!-- Dinero Disponible -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">Dinero Disponible:</label>
+          <p class="dinero-disponible">$ <span id="dineroDisponible">50,000</span></p>
+        </div>
+
+        <!-- Ingreso de Monto -->
+        <div class="mb-3">
+          <label for="montoTransferencia" class="form-label">Ingrese el monto a transferir:</label>
+          <input type="number" class="form-control" id="montoTransferencia" placeholder="Ej: 10000">
+        </div>
+
+        <!-- Botón Transferir -->
+        <div class="text-center">
+          <button type="button" class="btn-transferencia">Realizar Transferencia</button>
+        </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

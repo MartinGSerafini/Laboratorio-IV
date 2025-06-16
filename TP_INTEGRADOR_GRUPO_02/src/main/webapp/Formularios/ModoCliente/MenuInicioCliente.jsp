@@ -26,8 +26,8 @@
 </div>
 
 <div id="sidebar" class="sidebar">
-    <a href="#">Informacion Personal</a>
-    <a href="#">Cerrar Sesion</a>
+    <a href="InformacionPersonal.jsp">Informacion Personal</a>
+    <a href="../Login/IngresoCliente.jsp">Cerrar Sesion</a>
 </div>
 
 <div class="main-content">
