@@ -157,11 +157,11 @@ public class Cliente {
         this.usuarioCliente = usuarioCliente;
     }
 
-    public String getcontrasenaCliente() {
+    public String getContrasenaCliente() {
         return contrasenaCliente;
     }
 
-    public void setcontrasenaaCliente(String contrasenaCliente) {
+    public void setContrasenaaCliente(String contrasenaCliente) {
         this.contrasenaCliente = contrasenaCliente;
     }
 	

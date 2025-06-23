@@ -1,10 +1,13 @@
-package Dao;
+package dao;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class AdministradorDao {
+	
 	public boolean validarLogin(String usuario, String contrasena) {
-        String sql = "SELECT * FROM administrador WHERE usuario_admin = ? AND contraseña_admin = ?";
+        String sql = "SELECT * FROM administrador WHERE usuario_admin = ? AND contraseï¿½a_admin = ?";
         try (Connection con = Conexion.getConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
 

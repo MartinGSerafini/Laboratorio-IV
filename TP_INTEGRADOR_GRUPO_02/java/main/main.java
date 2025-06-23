@@ -2,7 +2,7 @@ package main;
 
 import java.sql.SQLException;
 
-import Dao.Conexion;
+import dao.Conexion;
 
 public class main {
 

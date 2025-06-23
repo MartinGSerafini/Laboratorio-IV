@@ -1,8 +1,10 @@
-package Controlador;
+package controlador;
 
-import Dao.AdministradorDao;
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import dao.AdministradorDao;
+
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 

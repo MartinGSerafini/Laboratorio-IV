@@ -32,10 +32,10 @@
         </span>
     </div>
 </nav>
-
+ 
 <div class="container mt-5">
     <h2 class="text-center mb-4 text-danger">Agregar Clientes</h2>
-    <form class="row g-4">
+    <form class="row g-4" action=" /TP_INTEGRADOR_GRUPO_02/AgregarClienteServlet" method="post">
     	<div class="col-md-6">
             <label for="usuario" class="form-label">Usuario</label>
             <input type="text" class="form-control" id="usuario" name="usuario">
@@ -101,6 +101,65 @@
         </div>
     </form>
 </div>
+
+<%
+    String msg = (String) request.getAttribute("mensaje");
+    if ("ok".equals(msg)) {
+%>
+    <script>
+        window.onload = function() {
+            let modal = new bootstrap.Modal(document.getElementById('modalExito'));
+            modal.show();
+        };
+    </script>
+<%
+    } else if ("error".equals(msg)) {
+%>
+    <script>
+        window.onload = function() {
+            let modal = new bootstrap.Modal(document.getElementById('modalError'));
+            modal.show();
+        };
+    </script>
+<% } %>
+
+<!-- Modal Éxito -->
+<div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="modalExitoLabel">Éxito</h5>
+      </div>
+      <div class="modal-body">
+        Cliente agregado con éxito.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Error -->
+<div class="modal fade" id="modalError" tabindex="-1" aria-labelledby="modalErrorLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="modalErrorLabel">Error</h5>
+      </div>
+      <div class="modal-body">
+        Hubo un problema al guardar el cliente.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
