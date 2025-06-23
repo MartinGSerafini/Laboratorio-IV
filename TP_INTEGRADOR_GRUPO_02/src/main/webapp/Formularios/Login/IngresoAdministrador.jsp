@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="../z-CSS/LoginCSS/IngresoAdministrador.css">
+  
 </head>
 
 <body>
@@ -20,19 +21,19 @@
   <div class="admin-box">Administrador</div>
   <br><h4 class="login-title">Inicio de Sesión</h4>
 
-  <form method="post" class="text-start">
+  <form method="post" action="${pageContext.request.contextPath}/loginAdmin" class="text-start">
     <div class="mb-3">
       <label for="usuario" class="form-label">Usuario</label>
       <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Ingrese su usuario">
     </div>
     <div class="mb-3">
       <label for="contraseña" class="form-label">Contraseña</label>
-      <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Ingrese su contraseña">
+      <input type="password" class="form-control" id="contraseña" name="contrasena" placeholder="Ingrese su contraseña">
     </div>
 
-    <% if ("POST".equalsIgnoreCase(request.getMethod())) { %>
-      <div class="error-message text-center">Usuario o contraseña incorrectos.</div>
-    <% } %>
+   <% if (request.getAttribute("errorLogin") != null) { %>
+    	<small class="text-danger">Usuario o contraseña incorrectos.</small>
+   <% } %>
 
     <div class="d-grid mt-4">
       <button type="submit" class="btn btn-custom btn-lg">Aceptar</button>

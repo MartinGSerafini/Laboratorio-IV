@@ -1,4 +1,4 @@
-package daoImplement;
+package Dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,6 +12,11 @@ public class Conexion {
     private static final String DBNAME = "bdbancobg2?useSSL=false&serverTimezone=UTC";
 
     public static Connection getConexion() throws SQLException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return DriverManager.getConnection(HOST + DBNAME, USER, PASS);
     }
 }

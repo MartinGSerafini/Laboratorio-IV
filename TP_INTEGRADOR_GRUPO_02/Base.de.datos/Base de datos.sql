@@ -2,11 +2,32 @@
 CREATE DATABASE IF NOT EXISTS bdbancobg2 CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE bdbancobg2;
 
+-- Creacion de Tablar
+-- Tabla Nacionalidad
+CREATE TABLE nacionalidad (
+  id_nacionalidad INT AUTO_INCREMENT PRIMARY KEY,
+  nombre_nacionalidad VARCHAR(50) NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  
+  -- Tabla Provincia
+CREATE TABLE provincia (
+  id_provincia INT AUTO_INCREMENT PRIMARY KEY,
+  nombre_provincia VARCHAR(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  
+  -- Tabla Localidad
+CREATE TABLE localidad (
+  id_localidad INT AUTO_INCREMENT PRIMARY KEY,
+  nombre_localidad VARCHAR(50) NOT NULL,
+  id_provincia INT,
+  FOREIGN KEY (id_provincia) REFERENCES provincia(id_provincia)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 -- Tabla administrador
 CREATE TABLE administrador (
   id_admin VARCHAR(10) NOT NULL,
-  usuario_admin VARCHAR(45) NOT NULL,
-  contraseÃ±a_admin VARCHAR(45) NOT NULL,
+  usuario_admin VARCHAR(45) NOT NULL UNIQUE,
+  contraseña_admin VARCHAR(45) NOT NULL,
   PRIMARY KEY (id_admin)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -18,17 +39,20 @@ CREATE TABLE cliente (
   nombre_cliente VARCHAR(45),
   apellido_cliente VARCHAR(45),
   sexo_cliente VARCHAR(15),
-  nacionalidad_cliente VARCHAR(25),
+  nacionalidad_cliente INT,
   fechaNac_cliente DATE,
   direccion_cliente VARCHAR(45),
-  localidad_cliente VARCHAR(45),
-  provincia_cliente VARCHAR(45),
+  provincia_cliente INT,
+  localidad_cliente INT,
   correo_cliente VARCHAR(45),
   telefono_cliente VARCHAR(20),
-  usuario_cliente VARCHAR(45),
-  contraseÃ±a_cliente VARCHAR(25),
+  usuario_cliente VARCHAR(45) UNIQUE,
+  contraseña_cliente VARCHAR(25),
   estado_cliente BOOLEAN DEFAULT TRUE,
-  PRIMARY KEY (id_cliente)
+  PRIMARY KEY (id_cliente),
+  FOREIGN KEY (nacionalidad_cliente) REFERENCES nacionalidad(id_nacionalidad),
+  FOREIGN KEY (provincia_cliente) REFERENCES provincia(id_provincia),
+  FOREIGN KEY (localidad_cliente) REFERENCES localidad(id_localidad)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Tabla tipocuenta
@@ -45,14 +69,14 @@ CREATE TABLE cuenta (
   idTipoCuenta_cuenta INT,
   fechaCreacion_cuenta DATE,
   numero_cuenta VARCHAR(45),
-  cbu_cuenta VARCHAR(45),
+  cbu_cuenta VARCHAR(45) UNIQUE,
   saldo_cuenta DECIMAL(12,2),
+  estado_cuentas BOOLEAN DEFAULT TRUE,
   PRIMARY KEY (id_cuenta),
   KEY fk_idCliente_idx (idCliente_cuenta),
   KEY fk_tipoCuenta_idx (idTipoCuenta_cuenta),
   CONSTRAINT fk_idCliente FOREIGN KEY (idCliente_cuenta) REFERENCES cliente (id_cliente),
-  CONSTRAINT fk_tipoCuenta FOREIGN KEY (idTipoCuenta_cuenta) REFERENCES tipocuenta (idtipoCuenta),
-  estado_cuentas BOOLEAN DEFAULT TRUE
+  CONSTRAINT fk_tipoCuenta FOREIGN KEY (idTipoCuenta_cuenta) REFERENCES tipocuenta (idtipoCuenta)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Tabla estadoprestamos
@@ -73,14 +97,14 @@ CREATE TABLE prestamo (
   montoCuota_pres DECIMAL(12,2),
   estado_pres INT,
   idCuentaDeposito_pres VARCHAR(10),
+  estado_prestamo BOOLEAN DEFAULT TRUE,
   PRIMARY KEY (id_prestamo),
   KEY fk_estado_idx (estado_pres),
   KEY fk_idCuentaDeposito_idx (idCuentaDeposito_pres),
   KEY fk_idClienPress_idx (idCliente_pres),
   CONSTRAINT fk_estado FOREIGN KEY (estado_pres) REFERENCES estadoprestamos (id_estadoPrestamos),
   CONSTRAINT fk_idCuentaDeposito FOREIGN KEY (idCuentaDeposito_pres) REFERENCES cuenta (id_cuenta),
-  CONSTRAINT fk_idClienPress FOREIGN KEY (idCliente_pres) REFERENCES cliente (id_cliente),
-  estado_prestamo BOOLEAN DEFAULT TRUE
+  CONSTRAINT fk_idClienPress FOREIGN KEY (idCliente_pres) REFERENCES cliente (id_cliente)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Tabla estadocuotas
@@ -93,7 +117,7 @@ CREATE TABLE estadocuotas (
 -- Tabla cuota
 CREATE TABLE cuota (
   id_cuota INT NOT NULL,
-  idPrestamo_cuota VARCHAR(45),
+  idPrestamo_cuota VARCHAR(10),
   numero_cuota INT,
   importe_cuota DECIMAL(12,2),
   fechaVenc_cuota DATE,
@@ -130,3 +154,332 @@ CREATE TABLE movimiento (
   CONSTRAINT fk_idCuentaDestino FOREIGN KEY (idCuentaDestino_mov) REFERENCES cuenta (id_cuenta),
   CONSTRAINT fk_idTipoMov FOREIGN KEY (idTipoMov_mov) REFERENCES tipomovimiento (idTipoMovimiento)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Creacion de registros
+-- Tabla de Nacionalidad
+INSERT INTO nacionalidad (nombre_nacionalidad) VALUES
+('Afganistán'), ('Albania'), ('Alemania'), ('Andorra'), ('Angola'),
+('Antigua y Barbuda'), ('Arabia Saudita'), ('Argelia'), ('Argentina'), ('Armenia'),
+('Australia'), ('Austria'), ('Azerbaiyán'), ('Bahamas'), ('Bangladés'),
+('Barbados'), ('Baréin'), ('Bélgica'), ('Belice'), ('Benín'),
+('Bielorrusia'), ('Birmania'), ('Bolivia'), ('Bosnia y Herzegovina'), ('Botsuana'),
+('Brasil'), ('Brunéi'), ('Bulgaria'), ('Burkina Faso'), ('Burundi'),
+('Bután'), ('Cabo Verde'), ('Camboya'), ('Camerún'), ('Canadá'),
+('Catar'), ('Chad'), ('Chile'), ('China'), ('Chipre'),
+('Colombia'), ('Comoras'), ('Corea del Norte'), ('Corea del Sur'), ('Costa de Marfil'),
+('Costa Rica'), ('Croacia'), ('Cuba'), ('Dinamarca'), ('Dominica'),
+('Ecuador'), ('Egipto'), ('El Salvador'), ('Emiratos Árabes Unidos'), ('Eritrea'),
+('Eslovaquia'), ('Eslovenia'), ('España'), ('Estados Unidos'), ('Estonia'),
+('Esuatini'), ('Etiopía'), ('Filipinas'), ('Finlandia'), ('Fiyi'),
+('Francia'), ('Gabón'), ('Gambia'), ('Georgia'), ('Ghana'),
+('Granada'), ('Grecia'), ('Guatemala'), ('Guinea'), ('Guinea-Bisáu'),
+('Guinea Ecuatorial'), ('Guyana'), ('Haití'), ('Honduras'), ('Hungría'),
+('India'), ('Indonesia'), ('Irak'), ('Irán'), ('Irlanda'),
+('Islandia'), ('Islas Marshall'), ('Islas Salomón'), ('Israel'), ('Italia'),
+('Jamaica'), ('Japón'), ('Jordania'), ('Kazajistán'), ('Kenia'),
+('Kirguistán'), ('Kiribati'), ('Kuwait'), ('Laos'), ('Lesoto'),
+('Letonia'), ('Líbano'), ('Liberia'), ('Libia'), ('Liechtenstein'),
+('Lituania'), ('Luxemburgo'), ('Madagascar'), ('Malasia'), ('Malaui'),
+('Maldivas'), ('Malí'), ('Malta'), ('Marruecos'), ('Mauricio'),
+('Mauritania'), ('México'), ('Micronesia'), ('Moldavia'), ('Mónaco'),
+('Mongolia'), ('Montenegro'), ('Mozambique'), ('Namibia'), ('Nauru'),
+('Nepal'), ('Nicaragua'), ('Níger'), ('Nigeria'), ('Noruega'),
+('Nueva Zelanda'), ('Omán'), ('Países Bajos'), ('Pakistán'), ('Palaos'),
+('Panamá'), ('Papúa Nueva Guinea'), ('Paraguay'), ('Perú'), ('Polonia'),
+('Portugal'), ('Reino Unido'), ('República Centroafricana'), ('República Checa'), ('República del Congo'),
+('República Democrática del Congo'), ('República Dominicana'), ('Ruanda'), ('Rumania'), ('Rusia'),
+('Samoa'), ('San Cristóbal y Nieves'), ('San Marino'), ('San Vicente y las Granadinas'), ('Santa Lucía'),
+('Santo Tomé y Príncipe'), ('Senegal'), ('Serbia'), ('Seychelles'), ('Sierra Leona'),
+('Singapur'), ('Siria'), ('Somalia'), ('Sri Lanka'), ('Sudáfrica'),
+('Sudán'), ('Sudán del Sur'), ('Suecia'), ('Suiza'), ('Surinam'),
+('Tailandia'), ('Tanzania'), ('Tayikistán'), ('Timor Oriental'), ('Togo'),
+('Tonga'), ('Trinidad y Tobago'), ('Túnez'), ('Turkmenistán'), ('Turquía'),
+('Tuvalu'), ('Ucrania'), ('Uganda'), ('Uruguay'), ('Uzbekistán'),
+('Vanuatu'), ('Vaticano'), ('Venezuela'), ('Vietnam'), ('Yemen'),
+('Yibuti'), ('Zambia'), ('Zimbabue');
+
+-- Tabla de Provincias
+INSERT INTO provincia (nombre_provincia) VALUES
+('Buenos Aires'), ('CABA'), ('Catamarca'), ('Chaco'),
+('Chubut'), ('Córdoba'), ('Corrientes'), ('Entre Ríos'),
+('Formosa'), ('Jujuy'), ('La Pampa'), ('La Rioja'),
+('Mendoza'), ('Misiones'), ('Neuquén'), ('Río Negro'), ('Salta'),
+('San Juan'), ('San Luis'), ('Santa Cruz'), ('Santa Fe'),
+('Santiago del Estero'), ('Tierra del Fuego'), ('Tucumán');
+
+-- Tabla de Localidades
+INSERT INTO localidad (nombre_localidad, id_provincia) VALUES
+('La Plata', 1), ('Mar del Plata', 1), ('Bahía Blanca', 1), ('Tandil', 1), ('Olavarría', 1),
+('Quilmes', 1), ('Florencio Varela', 1), ('Morón', 1), ('Avellaneda', 1), ('San Isidro', 1),
+('Luján', 1), ('Campana', 1), ('Pergamino', 1), ('Zárate', 1), ('Escobar', 1),
+('Palermo', 2), ('Recoleta', 2), ('Belgrano', 2), ('San Telmo', 2), ('La Boca', 2),
+('Caballito', 2), ('Almagro', 2), ('Villa Crespo', 2), ('Flores', 2), ('Villa Lugano', 2),
+('Villa Devoto', 2), ('Villa Urquiza', 2), ('Boedo', 2), ('Parque Patricios', 2), ('Chacarita', 2),
+('San Fernando del Valle de Catamarca', 3), ('Andalgalá', 3), ('Belén', 3), ('Santa María', 3), ('Tinogasta', 3),
+('Resistencia', 4), ('Sáenz Peña', 4), ('Villa Ángela', 4), ('Presidencia Roque Sáenz Peña', 4), ('Charata', 4),
+('Comodoro Rivadavia', 5), ('Puerto Madryn', 5), ('Trelew', 5), ('Esquel', 5), ('Rawson', 5),
+('Córdoba', 6), ('Río Cuarto', 6), ('Villa María', 6), ('Carlos Paz', 6), ('Jesús María', 6),
+('Corrientes', 7), ('Goya', 7), ('Paso de los Libres', 7), ('Ituzaingó', 7), ('Monte Caseros', 7),
+('Paraná', 8), ('Concordia', 8), ('Gualeguaychú', 8), ('Villaguay', 8), ('Nogoyá', 8),
+('Formosa', 9), ('Clorinda', 9), ('Pirané', 9), ('El Colorado', 9), ('Las Lomitas', 9),
+('San Salvador de Jujuy', 10), ('Palpalá', 10), ('Perico', 10), ('Libertador General San Martín', 10), ('Humahuaca', 10),
+('Santa Rosa', 11), ('General Pico', 11), ('Toay', 11), ('Guatraché', 11), ('Eduardo Castex', 11),
+('La Rioja', 12), ('Chepes', 12), ('Chamical', 12), ('Aimogasta', 12), ('Chilecito', 12),
+('Mendoza', 13), ('San Rafael', 13), ('Godoy Cruz', 13), ('Luján de Cuyo', 13), ('Tupungato', 13),
+('Posadas', 14), ('Eldorado', 14), ('Oberá', 14), ('Montecarlo', 14), ('Puerto Iguazú', 14),
+('Neuquén', 15), ('Plottier', 15), ('Centenario', 15), ('Cutral Có', 15), ('San Martín de los Andes', 15),
+('Viedma', 16), ('General Roca', 16), ('San Carlos de Bariloche', 16), ('Cipolletti', 16), ('Allen', 16),
+('Salta', 17), ('Orán', 17), ('Metán', 17), ('Embarcación', 17), ('Cerrillos', 17),
+('San Juan', 18), ('Rawson', 18), ('Chimbas', 18), ('Santa Lucía', 18), ('Rivadavia', 18),
+('San Luis', 19), ('Villa Mercedes', 19), ('La Punta', 19), ('Juana Koslay', 19), ('Justo Daract', 19),
+('Río Gallegos', 20), ('Caleta Olivia', 20), ('El Calafate', 20), ('Puerto Deseado', 20), ('Las Heras', 20),
+('Rosario', 21), ('Santa Fe', 21), ('Rafaela', 21), ('Venado Tuerto', 21), ('Esperanza', 21),
+('Santiago del Estero', 22), ('La Banda', 22), ('Termas de Río Hondo', 22), ('Añatuya', 22), ('Villa Ángela', 22),
+('Río Grande', 23), ('Ushuaia', 23), ('Tolhuin', 23), ('Puerto Almanza', 23), ('Cabo Domingo', 23),
+('San Miguel de Tucumán', 24), ('Yerba Buena', 24), ('Concepción', 24), ('Tafí Viejo', 24), ('Banda del Río Salí', 24);
+
+-- Tabla de Tipos de Cuenta
+INSERT INTO tipocuenta (idtipoCuenta, descripcion_tipoCuenta) VALUES
+(1, 'Caja de Ahorro'), (2, 'Cuenta Corriente');
+
+-- Tabla de Estados de Prestamos
+INSERT INTO estadoprestamos (id_estadoPrestamos, desc_estadoPrestamo) VALUES
+(1, 'Aprobado'), (2, 'Rechazado'), (3, 'Pendiente');
+
+-- Tabla de Estados de Cuotas
+INSERT INTO estadocuotas (id_estadoCuotas, desc_estadoCuotas) VALUES
+(1, 'Pagada'), (2, 'Vencida'), (3, 'Pendiente');
+
+-- Tabla de Tipos de Movimiento
+INSERT INTO tipomovimiento (idTipoMovimiento, descripcion_tipoMov) VALUES
+(1, 'Alta de Cuenta'),
+(2, 'Alta de Prestamo'),
+(3, 'Pago de Préstamo'),
+(4, 'Transferencia');
+
+-- Tabla de Administradores
+INSERT INTO administrador (id_admin, usuario_admin, contraseña_admin) VALUES
+('1', 'admin1', 'clave1'),
+('2', 'admin2', 'clave2'),
+('3', 'admin3', 'clave3'),
+('4', 'admin4', 'clave4'),
+('5', 'admin5', 'clave5'),
+('6', 'admin6', 'clave6'),
+('7', 'admin7', 'clave7'),
+('8', 'admin8', 'clave8'),
+('9', 'admin9', 'clave9'),
+('10', 'admin10', 'clave10'),
+('11', 'admin11', 'clave11'),
+('12', 'admin12', 'clave12'),
+('13', 'admin13', 'clave13'),
+('14', 'admin14', 'clave14'),
+('15', 'admin15', 'clave15');
+
+-- Tabla de Clientes
+INSERT INTO cliente (
+  id_cliente, dni_cliente, cuil_cliente, nombre_cliente, apellido_cliente,
+  sexo_cliente, nacionalidad_cliente, fechaNac_cliente, direccion_cliente,
+  provincia_cliente, localidad_cliente, correo_cliente, telefono_cliente,
+  usuario_cliente, contraseña_cliente
+) VALUES
+('1', 30111222, '20-30111222-5', 'Juan', 'Pérez', 'Masculino', 9, '1990-01-01', 'Calle 1', 1, 1, 'juan1@mail.com', '1111111111', 'cliente1', 'clave1'),
+('2', 30222333, '20-30222333-6', 'María', 'Gómez', 'Femenino', 9, '1989-02-15', 'Calle 2', 1, 2, 'maria2@mail.com', '2222222222', 'cliente2', 'clave2'),
+('3', 30333444, '20-30333444-7', 'Carlos', 'López', 'Masculino', 9, '1988-03-20', 'Calle 3', 1, 3, 'carlos3@mail.com', '3333333333', 'cliente3', 'clave3'),
+('4', 30444555, '20-30444555-8', 'Laura', 'Martínez', 'Femenino', 9, '1991-04-10', 'Calle 4', 1, 4, 'laura4@mail.com', '4444444444', 'cliente4', 'clave4'),
+('5', 30555666, '20-30555666-9', 'Pedro', 'Ramírez', 'Masculino', 9, '1992-05-25', 'Calle 5', 1, 5, 'pedro5@mail.com', '5555555555', 'cliente5', 'clave5'),
+('6', 30666777, '20-30666777-0', 'Ana', 'Fernández', 'Femenino', 9, '1987-06-30', 'Calle 6', 1, 6, 'ana6@mail.com', '6666666666', 'cliente6', 'clave6'),
+('7', 30777888, '20-30777888-1', 'Diego', 'Sánchez', 'Masculino', 9, '1985-07-07', 'Calle 7', 1, 7, 'diego7@mail.com', '7777777777', 'cliente7', 'clave7'),
+('8', 30888999, '20-30888999-2', 'Cecilia', 'Torres', 'Femenino', 9, '1993-08-18', 'Calle 8', 1, 8, 'cecilia8@mail.com', '8888888888', 'cliente8', 'clave8'),
+('9', 30999000, '20-30999000-3', 'Jorge', 'Flores', 'Masculino', 9, '1986-09-12', 'Calle 9', 1, 9, 'jorge9@mail.com', '9999999999', 'cliente9', 'clave9'),
+('10', 31000111, '20-31000111-4', 'Lucía', 'Moreno', 'Femenino', 9, '1984-10-22', 'Calle 10', 1, 10, 'lucia10@mail.com', '1010101010', 'cliente10', 'clave10'),
+('11', 31111222, '20-31111222-5', 'Ricardo', 'Aguirre', 'Masculino', 9, '1990-11-05', 'Calle 11', 2, 16, 'ricardo11@mail.com', '1111222233', 'cliente11', 'clave11'),
+('12', 31222333, '20-31222333-6', 'Florencia', 'Herrera', 'Femenino', 9, '1983-12-01', 'Calle 12', 2, 17, 'flor12@mail.com', '1222333444', 'cliente12', 'clave12'),
+('13', 31333444, '20-31333444-7', 'Martín', 'Silva', 'Masculino', 9, '1991-01-11', 'Calle 13', 2, 18, 'martin13@mail.com', '1333444555', 'cliente13', 'clave13'),
+('14', 31444555, '20-31444555-8', 'Paula', 'Sosa', 'Femenino', 9, '1982-02-22', 'Calle 14', 2, 19, 'paula14@mail.com', '1444555666', 'cliente14', 'clave14'),
+('15', 31555666, '20-31555666-9', 'Andrés', 'Castro', 'Masculino', 9, '1980-03-13', 'Calle 15', 2, 20, 'andres15@mail.com', '1555666777', 'cliente15', 'clave15');
+
+-- Tabla de Cuentas
+INSERT INTO cuenta (
+  id_cuenta, idCliente_cuenta, idTipoCuenta_cuenta, fechaCreacion_cuenta,
+  numero_cuenta, cbu_cuenta, saldo_cuenta, estado_cuentas
+) VALUES
+('1', '1', 2, '2022-10-23', '001-0001-01', '123000000001', 99276.06, TRUE),
+('2', '1', 2, '2022-11-02', '001-0001-01', '123000000002', 68784.36, TRUE),
+('3', '1', 1, '2022-05-21', '001-0001-03', '123000000003', 63435.93, TRUE),
+('4', '2', 1, '2022-06-21', '001-0002-01', '123000000004', 35130.93, TRUE),
+('5', '2', 1, '2022-04-23', '001-0002-03', '123000000005', 51497.06, TRUE),
+('6', '2', 2, '2022-06-30', '001-0002-02', '123000000006', 56060.07, TRUE),
+('7', '3', 2, '2022-06-12', '001-0003-01', '123000000007', 106342.72, TRUE),
+('8', '3', 1, '2022-04-23', '001-0003-02', '123000000008', 56839.16, TRUE),
+('9', '4', 1, '2022-09-07', '001-0004-02', '123000000009', 67890.93, TRUE),
+('10', '4', 2, '2022-12-28', '001-0004-03', '123000000010', 91999.64, TRUE),
+('11', '5', 1, '2022-09-17', '001-0005-01', '123000000011', 59164.96, TRUE),
+('12', '6', 1, '2022-06-16', '001-0006-02', '123000000012', 41736.74, TRUE),
+('13', '6', 2, '2022-09-23', '001-0006-03', '123000000013', 34793.71, TRUE),
+('14', '7', 1, '2022-12-19', '001-0007-02', '123000000014', 64126.60, TRUE),
+('15', '7', 1, '2022-03-10', '001-0007-03', '123000000015', 97579.45, TRUE),
+('16', '7', 2, '2022-10-30', '001-0007-02', '123000000016', 51215.03, TRUE),
+('17', '8', 1, '2022-11-05', '001-0008-01', '123000000017', 47467.89, TRUE),
+('18', '9', 2, '2022-02-06', '001-0009-03', '123000000018', 77379.64, TRUE),
+('19', '10', 1, '2022-01-10', '001-0010-02', '123000000019', 104650.85, TRUE),
+('20', '10', 2, '2022-08-17', '001-0010-02', '123000000020', 93000.10, TRUE),
+('21', '10', 2, '2022-02-08', '001-0010-03', '123000000021', 42809.23, TRUE),
+('22', '11', 2, '2022-10-15', '001-0011-02', '123000000022', 107477.19, TRUE),
+('23', '11', 2, '2022-01-05', '001-0011-01', '123000000023', 36454.36, TRUE),
+('24', '12', 2, '2022-03-04', '001-0012-03', '123000000024', 118550.34, TRUE),
+('25', '12', 2, '2022-02-07', '001-0012-02', '123000000025', 102100.83, TRUE),
+('26', '13', 2, '2022-04-09', '001-0013-03', '123000000026', 33531.44, TRUE),
+('27', '14', 2, '2022-12-28', '001-0014-02', '123000000027', 69168.17, TRUE),
+('28', '14', 1, '2022-12-14', '001-0014-03', '123000000028', 30104.74, TRUE),
+('29', '15', 1, '2022-08-26', '001-0015-01', '123000000029', 57805.35, TRUE),
+('30', '15', 1, '2022-04-09', '001-0015-03', '123000000030', 39613.49, TRUE),
+('31', NULL, 1, '2025-06-22', '001-9999-01', '123000000031', 0.00, TRUE),
+('32', NULL, 2, '2025-06-22', '001-9999-02', '123000000032', 0.00, TRUE),
+('33', NULL, 1, '2025-06-22', '001-9999-03', '123000000033', 0.00, TRUE);
+
+-- Tabla de Prestamos
+INSERT INTO prestamo (
+  id_prestamo, idCliente_pres, fechaSolicitud_pres, importeSolicitado_pres,
+  importeTotal_pres, plazoMeses_pres, montoCuota_pres, estado_pres, idCuentaDeposito_pres, estado_prestamo
+) VALUES
+('1', '2', '2023-01-28', 80000.00, 96000.00, 6, 16000.00, 1, '5', TRUE),
+('2', '15', '2023-04-11', 80000.00, 96000.00, 12, 8000.00, 3, '30', TRUE),
+('3', '14', '2023-01-10', 120000.00, 144000.00, 12, 12000.00, 3, '27', TRUE),
+('4', '8', '2023-03-26', 100000.00, 120000.00, 6, 20000.00, 1, '17', TRUE),
+('5', '1', '2023-02-10', 50000.00, 60000.00, 12, 5000.00, 3, '3', TRUE),
+('6', '4', '2023-02-14', 80000.00, 96000.00, 12, 8000.00, 1, '10', TRUE),
+('7', '7', '2023-06-26', 120000.00, 144000.00, 6, 24000.00, 3, '16', TRUE),
+('8', '6', '2023-06-28', 50000.00, 60000.00, 6, 10000.00, 3, '13', TRUE),
+('9', '10', '2023-04-03', 50000.00, 60000.00, 6, 10000.00, 3, '19', TRUE),
+('10', '11', '2023-02-10', 50000.00, 60000.00, 6, 10000.00, 1, '23', TRUE);
+
+-- Tabla de Cuota
+INSERT INTO cuota (
+  id_cuota, idPrestamo_cuota, numero_cuota, importe_cuota,
+  fechaVenc_cuota, fechaPago_cuota, estado_cuota
+) VALUES
+(1, 1, 1, 16000.00, '2023-02-27', '2023-02-27', 1),
+(2, 1, 2, 16000.00, '2023-03-29', '2023-03-29', 1),
+(3, 1, 3, 16000.00, '2023-04-28', '2023-04-28', 1),
+(4, 1, 4, 16000.00, '2023-05-28', '2023-05-28', 1),
+(5, 1, 5, 16000.00, '2023-06-27', '2023-06-27', 1),
+(6, 1, 6, 16000.00, '2023-07-27', '2023-07-27', 1),
+
+(7, 2, 1, 8000.00, '2023-05-11', NULL, 3),
+(8, 2, 2, 8000.00, '2023-06-10', NULL, 3),
+(9, 2, 3, 8000.00, '2023-07-10', NULL, 3),
+(10, 2, 4, 8000.00, '2023-08-09', NULL, 3),
+(11, 2, 5, 8000.00, '2023-09-08', NULL, 3),
+(12, 2, 6, 8000.00, '2023-10-08', NULL, 3),
+(13, 2, 7, 8000.00, '2023-11-07', NULL, 3),
+(14, 2, 8, 8000.00, '2023-12-07', NULL, 3),
+(15, 2, 9, 8000.00, '2024-01-06', NULL, 3),
+(16, 2, 10, 8000.00, '2024-02-05', NULL, 3),
+(17, 2, 11, 8000.00, '2024-03-06', NULL, 3),
+(18, 2, 12, 8000.00, '2024-04-05', NULL, 3),
+
+(19, 3, 1, 12000.00, '2023-02-10', NULL, 3),
+(20, 3, 2, 12000.00, '2023-03-12', NULL, 3),
+(21, 3, 3, 12000.00, '2023-04-11', NULL, 3),
+(22, 3, 4, 12000.00, '2023-05-11', NULL, 3),
+(23, 3, 5, 12000.00, '2023-06-10', NULL, 3),
+(24, 3, 6, 12000.00, '2023-07-10', NULL, 3),
+(25, 3, 7, 12000.00, '2023-08-09', NULL, 3),
+(26, 3, 8, 12000.00, '2023-09-08', NULL, 3),
+(27, 3, 9, 12000.00, '2023-10-08', NULL, 3),
+(28, 3, 10, 12000.00, '2023-11-07', NULL, 3),
+(29, 3, 11, 12000.00, '2023-12-07', NULL, 3),
+(30, 3, 12, 12000.00, '2024-01-06', NULL, 3),
+
+(31, 4, 1, 20000.00, '2023-04-25', '2023-04-25', 1),
+(32, 4, 2, 20000.00, '2023-05-25', '2023-05-25', 1),
+(33, 4, 3, 20000.00, '2023-06-24', '2023-06-24', 1),
+(34, 4, 4, 20000.00, '2023-07-24', '2023-07-24', 1),
+(35, 4, 5, 20000.00, '2023-08-23', NULL, 3),
+(36, 4, 6, 20000.00, '2023-09-22', NULL, 3),
+
+(37, 5, 1, 5000.00, '2023-03-12', NULL, 3),
+(38, 5, 2, 5000.00, '2023-04-11', NULL, 3),
+(39, 5, 3, 5000.00, '2023-05-11', NULL, 3),
+(40, 5, 4, 5000.00, '2023-06-10', NULL, 3),
+(41, 5, 5, 5000.00, '2023-07-10', NULL, 3),
+(42, 5, 6, 5000.00, '2023-08-09', NULL, 3),
+(43, 5, 7, 5000.00, '2023-09-08', NULL, 3),
+(44, 5, 8, 5000.00, '2023-10-08', NULL, 3),
+(45, 5, 9, 5000.00, '2023-11-07', NULL, 3),
+(46, 5, 10, 5000.00, '2023-12-07', NULL, 3),
+(47, 5, 11, 5000.00, '2024-01-06', NULL, 3),
+(48, 5, 12, 5000.00, '2024-02-05', NULL, 3),
+
+(49, 6, 1, 8000.00, '2023-03-14', '2023-03-14', 1),
+(50, 6, 2, 8000.00, '2023-04-13', '2023-04-13', 1),
+(51, 6, 3, 8000.00, '2023-05-13', '2023-05-13', 1),
+(52, 6, 4, 8000.00, '2023-06-12', '2023-06-12', 1),
+(53, 6, 5, 8000.00, '2023-07-12', NULL, 3),
+(54, 6, 6, 8000.00, '2023-08-11', NULL, 3),
+(55, 6, 7, 8000.00, '2023-09-10', NULL, 3),
+(56, 6, 8, 8000.00, '2023-10-10', NULL, 3),
+(57, 6, 9, 8000.00, '2023-11-09', NULL, 3),
+(58, 6, 10, 8000.00, '2023-12-09', NULL, 3),
+(59, 6, 11, 8000.00, '2024-01-08', NULL, 3),
+(60, 6, 12, 8000.00, '2024-02-07', NULL, 3),
+
+(61, 7, 1, 24000.00, '2023-07-26', NULL, 3),
+(62, 7, 2, 24000.00, '2023-08-25', NULL, 3),
+(63, 7, 3, 24000.00, '2023-09-24', NULL, 3),
+(64, 7, 4, 24000.00, '2023-10-24', NULL, 3),
+(65, 7, 5, 24000.00, '2023-11-23', NULL, 3),
+(66, 7, 6, 24000.00, '2023-12-23', NULL, 3),
+
+(67, 8, 1, 10000.00, '2023-07-28', NULL, 3),
+(68, 8, 2, 10000.00, '2023-08-27', NULL, 3),
+(69, 8, 3, 10000.00, '2023-09-26', NULL, 3),
+(70, 8, 4, 10000.00, '2023-10-26', NULL, 3),
+(71, 8, 5, 10000.00, '2023-11-25', NULL, 3),
+(72, 8, 6, 10000.00, '2023-12-25', NULL, 3),
+
+(73, 9, 1, 10000.00, '2023-05-03', NULL, 3),
+(74, 9, 2, 10000.00, '2023-06-02', NULL, 3),
+(75, 9, 3, 10000.00, '2023-07-02', NULL, 3),
+(76, 9, 4, 10000.00, '2023-08-01', NULL, 3),
+(77, 9, 5, 10000.00, '2023-08-31', NULL, 3),
+(78, 9, 6, 10000.00, '2023-09-30', NULL, 3),
+
+(79, 10, 1, 10000.00, '2023-03-10', '2023-03-10', 1),
+(80, 10, 2, 10000.00, '2023-04-09', '2023-04-09', 1),
+(81, 10, 3, 10000.00, '2023-05-09', '2023-05-09', 1),
+(82, 10, 4, 10000.00, '2023-06-08', '2023-06-08', 1),
+(83, 10, 5, 10000.00, '2023-07-08', '2023-07-08', 1),
+(84, 10, 6, 10000.00, '2023-08-07', '2023-08-07', 1);
+
+INSERT INTO movimiento (id_mov, idCuenta_mov, fecha_mov, detalle_mov, importe_mov, idTipoMov_mov, idCuentaDestino_mov) VALUES
+('1', '1', '2022-10-23', 'Apertura de cuenta', 0.00, 1, NULL),
+('2', '2', '2022-11-02', 'Apertura de cuenta', 0.00, 1, NULL),
+('3', '3', '2022-05-21', 'Apertura de cuenta', 0.00, 1, NULL),
+('4', '4', '2022-06-21', 'Apertura de cuenta', 0.00, 1, NULL),
+('5', '5', '2022-04-23', 'Apertura de cuenta', 0.00, 1, NULL),
+('6', '6', '2022-06-30', 'Apertura de cuenta', 0.00, 1, NULL),
+('7', '7', '2022-06-12', 'Apertura de cuenta', 0.00, 1, NULL),
+('8', '8', '2022-04-23', 'Apertura de cuenta', 0.00, 1, NULL),
+('9', '9', '2022-09-07', 'Apertura de cuenta', 0.00, 1, NULL),
+('10', '10', '2022-12-28', 'Apertura de cuenta', 0.00, 1, NULL),
+('11', '11', '2022-09-17', 'Apertura de cuenta', 0.00, 1, NULL),
+('12', '12', '2022-06-16', 'Apertura de cuenta', 0.00, 1, NULL),
+('13', '13', '2022-09-23', 'Apertura de cuenta', 0.00, 1, NULL),
+('14', '14', '2022-12-19', 'Apertura de cuenta', 0.00, 1, NULL),
+('15', '15', '2022-03-10', 'Apertura de cuenta', 0.00, 1, NULL),
+('16', '16', '2022-10-30', 'Apertura de cuenta', 0.00, 1, NULL),
+('17', '17', '2022-11-05', 'Apertura de cuenta', 0.00, 1, NULL),
+('18', '18', '2022-02-06', 'Apertura de cuenta', 0.00, 1, NULL),
+('19', '19', '2022-01-10', 'Apertura de cuenta', 0.00, 1, NULL),
+('20', '20', '2022-08-17', 'Apertura de cuenta', 0.00, 1, NULL),
+('21', '21', '2022-02-08', 'Apertura de cuenta', 0.00, 1, NULL),
+('22', '22', '2022-10-15', 'Apertura de cuenta', 0.00, 1, NULL),
+('23', '23', '2022-01-05', 'Apertura de cuenta', 0.00, 1, NULL),
+('24', '24', '2022-03-04', 'Apertura de cuenta', 0.00, 1, NULL),
+('25', '25', '2022-02-07', 'Apertura de cuenta', 0.00, 1, NULL),
+('26', '26', '2022-04-09', 'Apertura de cuenta', 0.00, 1, NULL),
+('27', '27', '2022-12-28', 'Apertura de cuenta', 0.00, 1, NULL),
+('28', '28', '2022-12-14', 'Apertura de cuenta', 0.00, 1, NULL),
+('29', '29', '2022-08-26', 'Apertura de cuenta', 0.00, 1, NULL),
+('30', '30', '2022-04-09', 'Apertura de cuenta', 0.00, 1, NULL);
