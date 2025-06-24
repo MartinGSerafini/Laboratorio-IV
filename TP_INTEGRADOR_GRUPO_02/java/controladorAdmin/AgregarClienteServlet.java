@@ -1,7 +1,9 @@
 package controladorAdmin;
 
 import java.io.IOException;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import entidades.Cliente;
+import entidades.Nacionalidad;
+import entidades.Provincia;
+import entidades.Localidad;
 import negocio.NegocioCliente;
+
+import dao.NacionalidadDao;
+import dao.ProvinciaDao;
+import dao.LocalidadDao;; 
 
 @WebServlet("/AgregarClienteServlet")
 public class AgregarClienteServlet extends HttpServlet {
@@ -20,12 +29,22 @@ public class AgregarClienteServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		//-------Nacionalidad--------
+
+		
+		//-------Provincia-----------
+		
+		
+		//-------Localidad------------
+		
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/Formularios/ModoBanco/ABMLClientes/AgregarClientes.jsp");
+		rd.forward(request, response); 
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		
 		String usuario = request.getParameter("usuario");
 	    String contrasena = request.getParameter("contrasena");
@@ -43,6 +62,7 @@ public class AgregarClienteServlet extends HttpServlet {
 	    String telefono = request.getParameter("telefono");
 
 	    java.sql.Date fechaNac = java.sql.Date.valueOf(fechaNacStr);
+	    
 
 	    Cliente cliente = new Cliente("001", dni, cuil, nombre, apellido, sexo,
 	                                   nacionalidad, fechaNac, direccion, localidad,
