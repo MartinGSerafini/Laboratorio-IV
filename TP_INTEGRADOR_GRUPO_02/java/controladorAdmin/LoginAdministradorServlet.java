@@ -1,4 +1,4 @@
-package controlador;
+package controladorAdmin;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

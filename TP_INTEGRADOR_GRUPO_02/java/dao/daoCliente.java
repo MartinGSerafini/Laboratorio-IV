@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import entidades.Cliente;
@@ -41,5 +42,25 @@ public class daoCliente {
 		    }
 		
 	} 
+	
+	public boolean verificarCliente(String usuario, String contraseña) {
+	    String sql = "SELECT * FROM cliente WHERE usuario_cliente = ? AND contraseña_cliente = ? AND estado_cliente = 1";
+
+	    try (Connection conn = Conexion.getConexion();
+	         PreparedStatement ps = conn.prepareStatement(sql)) {
+	        
+	        ps.setString(1, usuario);
+	        ps.setString(2, contraseña);
+
+	        try (ResultSet rs = ps.executeQuery()) {
+	            return rs.next();
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
 	
 }

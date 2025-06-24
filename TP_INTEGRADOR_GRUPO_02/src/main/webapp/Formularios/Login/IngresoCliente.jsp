@@ -20,7 +20,7 @@
   <div class="admin-box">Cliente</div>
   <br><h4 class="login-title">Inicio de Sesión</h4>
 
-  <form method="post" class="text-start">
+  <form action="IngresoClienteServlet" method="post" class="text-start">
     <div class="mb-3">
       <label for="usuario" class="form-label">Usuario</label>
       <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Ingrese su usuario">
@@ -30,12 +30,13 @@
       <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Ingrese su contraseña">
     </div>
 
-    <% if ("POST".equalsIgnoreCase(request.getMethod())) { %>
-      <div class="error-message text-center">Usuario o contraseña incorrectos.</div>
-    <% } %>
+    <% if (Boolean.TRUE.equals(request.getAttribute("LoginError"))) { %>
+  <div class="error-message text-center">Usuario o contraseña incorrectos.</div>
+<% } %>
+
 
     <div class="d-grid mt-4">
-      <button type="submit" class="btn btn-custom btn-lg">Aceptar</button>
+      <button type="submit" name="Aceptar" class="btn btn-custom btn-lg">Aceptar</button>
     </div>
 
     <div class="text-center mt-4">
