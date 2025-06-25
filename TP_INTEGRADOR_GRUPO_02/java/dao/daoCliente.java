@@ -91,7 +91,7 @@ public class daoCliente {
 				cliente.setCorreoCliente(rs.getString("correo_cliente"));
 				cliente.setTelefonoCliente(rs.getString("telefono_cliente"));
 				cliente.setUsuarioCliente(rs.getString("usuario_cliente"));
-				cliente.setContrasenaaCliente(rs.getString("contraseÃ±a_cliente"));
+				cliente.setContrasenaaCliente(rs.getString("contraseña_cliente"));
 				
 				lista.add(cliente);
 				}
