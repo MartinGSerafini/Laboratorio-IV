@@ -1,9 +1,12 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import entidades.Cliente;
 
@@ -44,7 +47,7 @@ public class daoCliente {
 	} 
 	
 	public boolean verificarCliente(String usuario, String contrasena) {
-	    String sql = "SELECT * FROM cliente WHERE usuario_cliente = ? AND contraseña_cliente = ? AND estado_cliente = 1";
+	    String sql = "SELECT * FROM cliente WHERE usuario_cliente = ? AND contraseï¿½a_cliente = ? AND estado_cliente = 1";
 
 	    try (Connection conn = Conexion.getConexion();
 	         PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -60,6 +63,44 @@ public class daoCliente {
 	        e.printStackTrace();
 	        return false;
 	    }
+	}
+	
+	public ArrayList<Cliente> obtenerClientes(){
+		String sql = "Select * From cliente";
+		ArrayList<Cliente> lista = new ArrayList<Cliente>();
+		try (Connection conn = Conexion.getConexion();
+				Statement st = conn.createStatement();) {
+			    ResultSet rs = st.executeQuery(sql);
+			
+			while(rs.next()) {
+				int estado = rs.getInt("estado_cliente");
+				if(estado == 1) {
+				
+				Cliente cliente = new Cliente();
+				cliente.setIdCliente(rs.getString("id_cliente"));
+				cliente.setDniCliente(rs.getInt("dni_cliente"));
+				cliente.setCuilCliente(rs.getString("cuil_cliente"));
+				cliente.setNombreCliente(rs.getString("nombre_cliente"));
+				cliente.setApellidoCliente(rs.getString("apellido_cliente"));
+				cliente.setSexoCliente(rs.getString("sexo_cliente"));
+				cliente.setNacionalidadCliente(rs.getString("nacionalidad_cliente"));
+				cliente.setFechaNacCliente(rs.getDate("fechaNac_cliente", null));
+				cliente.setDireccionCliente(rs.getString("direccion_cliente"));
+				cliente.setProvinciaCliente(rs.getString("provincia_cliente"));
+				cliente.setLocalidadCliente(rs.getString("localidad_cliente"));
+				cliente.setCorreoCliente(rs.getString("correo_cliente"));
+				cliente.setTelefonoCliente(rs.getString("telefono_cliente"));
+				cliente.setUsuarioCliente(rs.getString("usuario_cliente"));
+				cliente.setContrasenaaCliente(rs.getString("contraseÃ±a_cliente"));
+				
+				lista.add(cliente);
+				}
+			}
+			conn.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {}
+		return lista;
 	}
 	
 }

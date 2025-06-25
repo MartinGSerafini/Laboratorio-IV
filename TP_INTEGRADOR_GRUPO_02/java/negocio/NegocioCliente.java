@@ -1,5 +1,6 @@
 package negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.daoCliente;
@@ -43,6 +44,10 @@ public class NegocioCliente implements servicioABML<Cliente>{
 	}
 	
 	public boolean verificarCliente(String usuario, String contrasena) {
+		
+		if (usuario == null || usuario.trim().isEmpty()) return false;
+		if (contrasena == null || contrasena.trim().isEmpty()) return false; 
+		
 		boolean bool = daoCliente.verificarCliente(usuario, contrasena);
 		return bool;
 	}
@@ -77,5 +82,11 @@ public class NegocioCliente implements servicioABML<Cliente>{
 		catch (Exception e) { return false; }
 		
 		return true;
+	}
+	
+	public ArrayList<Cliente> ObtenerListadoClientes(){
+		ArrayList<Cliente> lista = new ArrayList<Cliente>();
+		lista = daoCliente.obtenerClientes();
+		return lista; 
 	}
 }

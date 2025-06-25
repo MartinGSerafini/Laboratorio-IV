@@ -20,7 +20,7 @@
   <div class="admin-box">Cliente</div>
   <br><h4 class="login-title">Inicio de Sesión</h4>
 
-  <form action="IngresoClienteServlet" method="post" class="text-start">
+  <form method="post" action=" /TP_INTEGRADOR_GRUPO_02/IngresoClienteServlet" class="text-start">
     <div class="mb-3">
       <label for="usuario" class="form-label">Usuario</label>
       <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Ingrese su usuario">

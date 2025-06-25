@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="entidades.Cliente"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,13 +39,22 @@
     <h3 class="text-center mb-4 text-danger">Listado de Clientes</h3>
 
     <!-- Busqueda y Filtros -->
-    <form class="d-flex justify-content-center mb-4" method="get" action="ListarClientes.jsp">
+    <form class="d-flex justify-content-center mb-4" method="get" action="/TP_INTEGRADOR_GRUPO_02/ListadoClientesServlet">
       <input type="text" name="busqueda" class="form-control w-25 me-2" placeholder="Buscar...">
       <select name="filtro" class="form-select w-25 me-2">
         <option selected>Seleccione un filtro</option>
       </select>
-      <button type="submit" class="btn btn-custom">Buscar</button>
+      <button type="submit" class="btn btn-custom" name="btnbuscar" >Buscar</button>
     </form>
+
+<%
+  ArrayList<Cliente> lista = null;
+  if(request.getAttribute("ListaCli") !=null){
+	  
+	  lista = (ArrayList<Cliente>) request.getAttribute("ListaCli");
+	  
+  }
+%>
 
    <!-- Tabla -->
 	<div class="table-responsive d-flex justify-content-center">
@@ -52,21 +63,29 @@
       	<tr>
         	<th>ID Cliente</th><th>DNI</th><th>CUIL</th><th>Nombre</th><th>Apellido</th><th>Sexo</th>
        		<th>Nacionalidad</th><th>Nacimiento</th><th>Dirección</th>
-        	<th>Localidad</th><th>Provincia</th><th>Correo</th>
+        	<th>Provincia</th><th>Localidad</th><th>Correo</th>
         	<th>Teléfono</th><th>Contrasena</th><th>Acciones</th>
       	</tr>
     	</thead>
     	<tbody>
+    	
+    	<%if(lista != null)
+    	for(Cliente cli : lista){ %>
+    	
       	<tr>
-        	<td>0001</td><td>42419413</td><td>1234</td><td>Martin</td><td>Serafini</td><td>Masculino</td>
-        	<td>Argentino</td><td>06/01/2000</td><td>Matheu</td>
-        	<td>Tigre</td><td>Buenos Aires</td><td>Guillermo@mail.com</td>
-        	<td>1123889911</td><td>06012000</td>
+        	<td><%= cli.getIdCliente() %></td><td><%= cli.getDniCliente() %></td><td><%= cli.getCuilCliente() %></td><td><%= cli.getNombreCliente() %></td>
+        	<td><%= cli.getApellidoCliente() %></td><td><%= cli.getSexoCliente() %></td><td><%= cli.getNacionalidadCliente() %></td>
+        	<td><%= cli.getFechaNacCliente() %></td><td><%= cli.getDireccionCliente() %></td><td><%= cli.getProvinciaCliente() %></td>
+        	<td><%= cli.getLocalidadCliente() %></td><td><%= cli.getCorreoCliente() %></td><td><%= cli.getTelefonoCliente() %></td>
+        	<td><%= cli.getContrasenaCliente() %></td>
         	<td>
           		<button class="btn btn-warning btn-sm">Editar</button>
           		<button class="btn btn-danger btn-sm">Eliminar</button>
         	</td>
       	</tr>
+      	
+      	<% } %>
+      	
     	</tbody>
   	</table>
 	</div>

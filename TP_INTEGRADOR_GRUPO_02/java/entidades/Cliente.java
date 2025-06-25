@@ -11,8 +11,8 @@ public class Cliente {
     private String nacionalidadCliente;
     private java.sql.Date fechaNacCliente;
     private String direccionCliente;
-    private String localidadCliente;
     private String provinciaCliente;
+    private String localidadCliente;
     private String correoCliente;
     private String telefonoCliente;
     private String usuarioCliente;
