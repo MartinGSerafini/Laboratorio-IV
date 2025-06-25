@@ -21,15 +21,14 @@ public class IngresoClienteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}
-
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    String usuario = request.getParameter("usuario");
-	    String contraseña = request.getParameter("contraseña");
+	    String contrasena = request.getParameter("contrasena");
 
-	    if (usuario != null && contraseña != null) {
+	    if (usuario != null && contrasena != null) {
 	        NegocioCliente negocio = new NegocioCliente();
-	        boolean valido = negocio.verificarCliente(usuario, contraseña);
+	        boolean valido = negocio.verificarCliente(usuario, contrasena);
 
 	        if (valido) {
 	            RequestDispatcher rd = request.getRequestDispatcher("/MenuInicioCliente.jsp");

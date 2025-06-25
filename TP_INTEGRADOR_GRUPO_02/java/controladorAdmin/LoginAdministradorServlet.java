@@ -8,7 +8,7 @@ import dao.AdministradorDao;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 
-@WebServlet("/loginAdmin")
+@WebServlet("/loginAdministradorServlet")
 public class LoginAdministradorServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -24,7 +24,7 @@ public class LoginAdministradorServlet extends HttpServlet {
         if (loginCorrecto) {
             HttpSession session = request.getSession();
             session.setAttribute("adminLogueado", usuario);
-            response.sendRedirect("ModoBanco/Menu/MenuInicioBanco.jsp");
+            response.sendRedirect("Formularios/ModoBanco/Menu/MenuInicioBanco.jsp");
         } else {
             request.setAttribute("errorLogin", true);
             RequestDispatcher rd = request.getRequestDispatcher("Formularios/Login/IngresoAdministrador.jsp");

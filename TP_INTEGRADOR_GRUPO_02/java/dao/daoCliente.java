@@ -43,14 +43,14 @@ public class daoCliente {
 		
 	} 
 	
-	public boolean verificarCliente(String usuario, String contraseña) {
-	    String sql = "SELECT * FROM cliente WHERE usuario_cliente = ? AND contraseña_cliente = ? AND estado_cliente = 1";
+	public boolean verificarCliente(String usuario, String contrasena) {
+	    String sql = "SELECT * FROM cliente WHERE usuario_cliente = ? AND contrase�a_cliente = ? AND estado_cliente = 1";
 
 	    try (Connection conn = Conexion.getConexion();
 	         PreparedStatement ps = conn.prepareStatement(sql)) {
 	        
 	        ps.setString(1, usuario);
-	        ps.setString(2, contraseña);
+	        ps.setString(2, contrasena);
 
 	        try (ResultSet rs = ps.executeQuery()) {
 	            return rs.next();
@@ -61,6 +61,5 @@ public class daoCliente {
 	        return false;
 	    }
 	}
-
 	
 }

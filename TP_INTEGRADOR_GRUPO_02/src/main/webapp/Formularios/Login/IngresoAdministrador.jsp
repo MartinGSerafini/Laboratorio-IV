@@ -21,14 +21,14 @@
   <div class="admin-box">Administrador</div>
   <br><h4 class="login-title">Inicio de Sesión</h4>
 
-  <form method="post" action="${pageContext.request.contextPath}/loginAdmin" class="text-start">
+  <form method="post" action="${pageContext.request.contextPath}/loginAdministradorServlet" class="text-start">
     <div class="mb-3">
       <label for="usuario" class="form-label">Usuario</label>
       <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Ingrese su usuario">
     </div>
     <div class="mb-3">
       <label for="contraseña" class="form-label">Contraseña</label>
-      <input type="password" class="form-control" id="contraseña" name="contrasena" placeholder="Ingrese su contraseña">
+      <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Ingrese su contraseña">
     </div>
 
    <% if (request.getAttribute("errorLogin") != null) { %>
