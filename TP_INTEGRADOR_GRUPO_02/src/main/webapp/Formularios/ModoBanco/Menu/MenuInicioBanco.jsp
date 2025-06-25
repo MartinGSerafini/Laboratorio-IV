@@ -99,12 +99,12 @@
                     ☰
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="../Login/IngresoAdministrador.jsp">CERRAR SESIÓN</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/MenuAdministrador?accion=cerrar">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
         </div>
         <span class="navbar-text text-white ms-auto">
-            <%= session.getAttribute("nombreUsuario") != null ? session.getAttribute("nombreUsuario") : "INVITADO" %>
+            <%= session.getAttribute("adminLogueado") != null ? session.getAttribute("adminLogueado") : "INVITADO" %>
         </span>
     </div>
 </nav>
@@ -112,10 +112,10 @@
 <div class="main-content">
     <h2>Menú Inicio</h2>
     <div class="button-grid">
-        <a href="ABMLClientes/AgregarClientes.jsp" class="btn">CLIENTES</a>
-        <a href="ABMLCuentas/AgregarCuentas.jsp" class="btn">CUENTAS</a>
-        <a href="AutorizacionPrestamos.jsp" class="btn">PRÉSTAMOS</a>
-        <a href="Informes.jsp" class="btn">INFORMES</a>
+        <a href="${pageContext.request.contextPath}/MenuAdministrador?destino=clientes" class="btn">CLIENTES</a>
+		<a href="${pageContext.request.contextPath}/MenuAdministrador?destino=cuentas" class="btn">CUENTAS</a>
+		<a href="${pageContext.request.contextPath}/MenuAdministrador?destino=prestamos" class="btn">PRÉSTAMOS</a>
+		<a href="${pageContext.request.contextPath}/MenuAdministrador?destino=informes" class="btn">INFORMES</a>
     </div>
 </div>
 
