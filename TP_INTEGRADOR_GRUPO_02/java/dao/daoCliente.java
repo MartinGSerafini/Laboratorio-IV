@@ -82,20 +82,22 @@ public class daoCliente {
 				if(estado == 1) {	
 				
 				Cliente cliente = new Cliente();
+				cliente.setIdCliente(rs.getString("id_cliente"));
 				cliente.setDniCliente(rs.getInt("dni_cliente"));
 				cliente.setCuilCliente(rs.getString("cuil_cliente"));
 				cliente.setNombreCliente(rs.getString("nombre_cliente"));
 				cliente.setApellidoCliente(rs.getString("apellido_cliente"));
 				cliente.setSexoCliente(rs.getString("sexo_cliente"));
 				cliente.setNacionalidadCliente(rs.getInt("nacionalidad_cliente"));
-				cliente.setFechaNacCliente(rs.getDate("fechaNac_cliente", null));
+				cliente.setFechaNacCliente(rs.getDate("fechaNac_cliente"));
 				cliente.setDireccionCliente(rs.getString("direccion_cliente"));
 				cliente.setProvinciaCliente(rs.getInt("provincia_cliente"));
 				cliente.setLocalidadCliente(rs.getInt("localidad_cliente"));
 				cliente.setCorreoCliente(rs.getString("correo_cliente"));
 				cliente.setTelefonoCliente(rs.getString("telefono_cliente"));
 				cliente.setUsuarioCliente(rs.getString("usuario_cliente"));
-				cliente.setContrasenaaCliente(rs.getString("contrase�a_cliente"));
+				cliente.setContrasenaaCliente(rs.getString("contraseña_cliente"));
+
 				
 				lista.add(cliente);
 				}
@@ -160,11 +162,11 @@ public class daoCliente {
 	                    cliente.setNombreCliente(rs.getString("nombre_cliente"));
 	                    cliente.setApellidoCliente(rs.getString("apellido_cliente"));
 	                    cliente.setSexoCliente(rs.getString("sexo_cliente"));
-	                    cliente.setNacionalidadCliente(rs.getInt("nombre_nacionalidad"));
+	                    cliente.setNacionalidadCliente(rs.getInt("nacionalidad_cliente"));
 	                    cliente.setFechaNacCliente(rs.getDate("fechaNac_cliente"));
 	                    cliente.setDireccionCliente(rs.getString("direccion_cliente"));
-	                    cliente.setProvinciaCliente(rs.getInt("nombre_provincia"));
-	                    cliente.setLocalidadCliente(rs.getInt("nombre_localidad"));
+	                    cliente.setProvinciaCliente(rs.getInt("provincia_cliente"));
+	                    cliente.setLocalidadCliente(rs.getInt("localidad_cliente"));
 	                    cliente.setCorreoCliente(rs.getString("correo_cliente"));
 	                    cliente.setTelefonoCliente(rs.getString("telefono_cliente"));
 	                    cliente.setUsuarioCliente(rs.getString("usuario_cliente"));

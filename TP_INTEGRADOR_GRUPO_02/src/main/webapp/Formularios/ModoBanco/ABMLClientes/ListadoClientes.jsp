@@ -24,7 +24,7 @@
                     <li><a class="dropdown-item" href="../../Login/IngresoAdministrador.jsp">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
-            <a href="AgregarClientes.jsp" class="btn btn-custom me-2">Agregar Cliente</a>
+            <a href="${pageContext.request.contextPath}/AgregarClienteServlet" class="btn btn-custom me-2">Agregar Cliente</a>
             <a href="${pageContext.request.contextPath}/ListadoClientesServlet" class="btn btn-custom">Listar Clientes</a>
         </div>
         <span class="navbar-text text-white">
