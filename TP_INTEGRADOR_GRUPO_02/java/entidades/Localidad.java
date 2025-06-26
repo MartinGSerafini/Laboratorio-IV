@@ -1,8 +1,7 @@
 package entidades;
 
-import java.util.Objects;
-
 public class Localidad {
+	private int id;
 	private int id_pcia; 
 	private String localidad; 
 	
@@ -19,4 +18,12 @@ public class Localidad {
 
 	public String getLocalidad() {return localidad;}
 	public void setLocalidad(String localidad) {this.localidad = localidad;}
+	
+	public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

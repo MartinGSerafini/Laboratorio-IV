@@ -5,6 +5,7 @@ import java.util.List;
 
 import dao.daoCliente;
 import entidades.Cliente;
+import excepciones.OperacionNoEfectuadaExc;
 import interfaces.servicioABML;
 
 public class NegocioCliente implements servicioABML<Cliente>{
@@ -13,12 +14,24 @@ public class NegocioCliente implements servicioABML<Cliente>{
 	
 	
 	@Override
-	public boolean alta(Cliente cliente) {
+	public boolean alta(Cliente cliente){
 		
-		return daoCliente.altaCliente(cliente);
+		try {
+			boolean filas= daoCliente.altaCliente(cliente);
+			
+			if(filas==false) {
+				throw new OperacionNoEfectuadaExc("No se insertó ningún cliente.");
+			}
+			
+			return true;
+		}
+		catch(OperacionNoEfectuadaExc e) {
+			System.out.println("Error: "+e.getMessage());
+			return false;
+		}
 		
 	}
- 
+  
 	@Override
 	public boolean baja(String id) {
 		// TODO Auto-generated method stub

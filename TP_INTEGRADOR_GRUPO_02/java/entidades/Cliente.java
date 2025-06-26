@@ -2,17 +2,16 @@ package entidades;
 
 public class Cliente {
 	
-	private String idCliente;
     private int dniCliente;
     private String cuilCliente;
     private String nombreCliente;
     private String apellidoCliente;
     private String sexoCliente;
-    private String nacionalidadCliente;
+    private int nacionalidadCliente;
     private java.sql.Date fechaNacCliente;
     private String direccionCliente;
-    private String provinciaCliente;
-    private String localidadCliente;
+    private int provinciaCliente;
+    private int localidadCliente;
     private String correoCliente;
     private String telefonoCliente;
     private String usuarioCliente;
@@ -22,11 +21,10 @@ public class Cliente {
     public Cliente() {}
 
     // Constructor completo
-    public Cliente(String idCliente, int dniCliente, String cuilCliente, String nombreCliente, String apellidoCliente,
-                   String sexoCliente, String nacionalidadCliente, java.sql.Date fechaNacCliente,
-                   String direccionCliente, String localidadCliente, String provinciaCliente,
+    public Cliente(int dniCliente, String cuilCliente, String nombreCliente, String apellidoCliente,
+                   String sexoCliente, int nacionalidadCliente, java.sql.Date fechaNacCliente,
+                   String direccionCliente,  int localidadCliente, int provinciaCliente,
                    String correoCliente, String telefonoCliente, String usuarioCliente, String contrasenaCliente) {
-        this.idCliente = idCliente;
         this.dniCliente = dniCliente;
         this.cuilCliente = cuilCliente;
         this.nombreCliente = nombreCliente;
@@ -44,14 +42,6 @@ public class Cliente {
     }
 
     // Getters y Setters
-
-    public String getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(String idCliente) {
-        this.idCliente = idCliente;
-    }
 
     public int getDniCliente() {
         return dniCliente;
@@ -93,11 +83,11 @@ public class Cliente {
         this.sexoCliente = sexoCliente;
     }
 
-    public String getNacionalidadCliente() {
+    public int getNacionalidadCliente() {
         return nacionalidadCliente;
     }
 
-    public void setNacionalidadCliente(String nacionalidadCliente) {
+    public void setNacionalidadCliente(int nacionalidadCliente) {
         this.nacionalidadCliente = nacionalidadCliente;
     }
 
@@ -117,19 +107,19 @@ public class Cliente {
         this.direccionCliente = direccionCliente;
     }
 
-    public String getLocalidadCliente() {
+    public int getLocalidadCliente() {
         return localidadCliente;
     }
 
-    public void setLocalidadCliente(String localidadCliente) {
+    public void setLocalidadCliente(int localidadCliente) {
         this.localidadCliente = localidadCliente;
     }
 
-    public String getProvinciaCliente() {
+    public int getProvinciaCliente() {
         return provinciaCliente;
     }
 
-    public void setProvinciaCliente(String provinciaCliente) {
+    public void setProvinciaCliente(int provinciaCliente) {
         this.provinciaCliente = provinciaCliente;
     }
 

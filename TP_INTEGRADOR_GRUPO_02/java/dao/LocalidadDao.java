@@ -13,23 +13,27 @@ public class LocalidadDao {
 	
 	//---lista las localidades segun el id de provincia----
 	public List<Localidad> obtenerLocalidadesPorProvincia(int id_provincia) {
-	ArrayList<Localidad> localidades = new ArrayList<>();
-	String sql = "SELECT nombre_localidad FROM localidad WHERE id_provincia = "+ id_provincia;
-	
-	try (Connection cn = Conexion.getConexion();
-			PreparedStatement ps = cn.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery()){
-		
-		while(rs.next()) {
-			Localidad l = new Localidad(); 
-			l.setId_pcia(rs.getInt("id_provincia"));
-			l.setLocalidad(rs.getString("nombre_localidad"));
-			localidades.add(l); 
-		}
+	    List<Localidad> localidades = new ArrayList<>();
+	    String sql = "SELECT id_localidad, nombre_localidad FROM localidad WHERE id_provincia = " + id_provincia;
+
+	    try (Connection cn = Conexion.getConexion();
+	         PreparedStatement ps = cn.prepareStatement(sql);
+	         ResultSet rs = ps.executeQuery()) {
+
+	        while (rs.next()) {
+	            Localidad l = new Localidad();
+	            l.setId(rs.getInt("id_localidad"));
+	            l.setLocalidad(rs.getString("nombre_localidad"));
+	            l.setId_pcia(id_provincia); // opcional
+	            localidades.add(l);
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return localidades;
 	}
-	catch(SQLException e) { e.printStackTrace(); }
-	 
-	return localidades;
- }
+
  
 }
