@@ -17,19 +17,13 @@ import interfaces.servicioABML;
 public class NegocioCliente implements servicioABML<Cliente>{
 
 	daoCliente daoCliente = new daoCliente();
-<<<<<<< HEAD
  
-=======
-	
-	
-	@Override
 	public boolean alta(Cliente cliente){
-		
 		try {
 			boolean filas= daoCliente.altaCliente(cliente);
 			
 			if(filas==false) {
-				throw new OperacionNoEfectuadaExc("No se insertÃ³ ningÃºn cliente.");
+				throw new OperacionNoEfectuadaExc("No se insertó ningún cliente.");
 			}
 			
 			return true;
@@ -38,11 +32,8 @@ public class NegocioCliente implements servicioABML<Cliente>{
 			System.out.println("Error: "+e.getMessage());
 			return false;
 		}
-		
 	}
-  
-	@Override
->>>>>>> e029133da8bac37a2d0954a75989187323d34262
+	
 	public boolean baja(String id) {
 	    return daoCliente.bajaLogicaCliente(id);
 	}
@@ -109,10 +100,6 @@ public class NegocioCliente implements servicioABML<Cliente>{
 		return lista; 
 	}
 
-	public boolean alta(Cliente entidad) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	public ArrayList<String> obtenerColumnasClientes() {
 	    return daoCliente.obtenerColumnasClientes();
 	}

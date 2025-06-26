@@ -34,6 +34,4 @@ public class LocalidadDao {
 
 	    return localidades;
 	}
-
- 
 }

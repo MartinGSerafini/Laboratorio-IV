@@ -13,7 +13,6 @@ public class Nacionalidad {
 
 	public String getNacionalidad() {return nacionalidad;}
 	public void setNacionalidad(String nacionalidad) {this.nacionalidad = nacionalidad;}
-
 	public int getId() {
 		return id;
 	}
@@ -21,6 +20,4 @@ public class Nacionalidad {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
 }

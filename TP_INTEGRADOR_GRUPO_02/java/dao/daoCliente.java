@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
-import java.util.ArrayList;
 
 import entidades.Cliente;
 
@@ -16,18 +15,13 @@ public class daoCliente {
 	
 	public boolean altaCliente(Cliente cliente) {
 		
-<<<<<<< HEAD
-		 String sql = "INSERT INTO Cliente (id_cliente, dni_cliente, cuil_cliente, nombre_cliente, apellido_cliente, sexo_cliente, nacionalidad_cliente, fechaNac_cliente, direccion_cliente, localidad_cliente, provincia_cliente, correo_cliente, telefono_cliente, usuario_cliente, contraseña_cliente)" +
-                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-=======
 		 String sql = "INSERT INTO Cliente (dni_cliente, cuil_cliente, nombre_cliente, apellido_cliente, sexo_cliente, nacionalidad_cliente, fechaNac_cliente, direccion_cliente, localidad_cliente, provincia_cliente, correo_cliente, telefono_cliente, usuario_cliente, contraseÃ±a_cliente)" +
                  "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
->>>>>>> e029133da8bac37a2d0954a75989187323d34262
 		 
 		 try (Connection conn = Conexion.getConexion();
 		         PreparedStatement ps = conn.prepareStatement(sql)) {
 
-		        ps.setInt(1, cliente.getDniCliente());
+			 	ps.setInt(1, cliente.getDniCliente());
 		        ps.setString(2, cliente.getCuilCliente());
 		        ps.setString(3, cliente.getNombreCliente());
 		        ps.setString(4, cliente.getApellidoCliente());
@@ -53,7 +47,7 @@ public class daoCliente {
 	} 
 	
 	public boolean verificarCliente(String usuario, String contrasena) {
-	    String sql = "SELECT * FROM cliente WHERE usuario_cliente = ? AND contraseña_cliente = ? AND estado_cliente = 1";
+	    String sql = "SELECT * FROM cliente WHERE usuario_cliente = ? AND contraseÃ±a_cliente = ? AND estado_cliente = 1";
 
 	    try (Connection conn = Conexion.getConexion();
 	         PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -93,19 +87,11 @@ public class daoCliente {
 				cliente.setNombreCliente(rs.getString("nombre_cliente"));
 				cliente.setApellidoCliente(rs.getString("apellido_cliente"));
 				cliente.setSexoCliente(rs.getString("sexo_cliente"));
-<<<<<<< HEAD
-                cliente.setNacionalidadCliente(rs.getString("nombre_nacionalidad"));
-				cliente.setFechaNacCliente(rs.getDate("fechaNac_cliente", null));
-				cliente.setDireccionCliente(rs.getString("direccion_cliente"));
-				cliente.setProvinciaCliente(rs.getString("nombre_provincia"));
-				cliente.setLocalidadCliente(rs.getString("nombre_localidad"));
-=======
 				cliente.setNacionalidadCliente(rs.getInt("nacionalidad_cliente"));
 				cliente.setFechaNacCliente(rs.getDate("fechaNac_cliente", null));
 				cliente.setDireccionCliente(rs.getString("direccion_cliente"));
 				cliente.setProvinciaCliente(rs.getInt("provincia_cliente"));
 				cliente.setLocalidadCliente(rs.getInt("localidad_cliente"));
->>>>>>> e029133da8bac37a2d0954a75989187323d34262
 				cliente.setCorreoCliente(rs.getString("correo_cliente"));
 				cliente.setTelefonoCliente(rs.getString("telefono_cliente"));
 				cliente.setUsuarioCliente(rs.getString("usuario_cliente"));
@@ -174,15 +160,15 @@ public class daoCliente {
 	                    cliente.setNombreCliente(rs.getString("nombre_cliente"));
 	                    cliente.setApellidoCliente(rs.getString("apellido_cliente"));
 	                    cliente.setSexoCliente(rs.getString("sexo_cliente"));
-	                    cliente.setNacionalidadCliente(rs.getString("nombre_nacionalidad"));
+	                    cliente.setNacionalidadCliente(rs.getInt("nombre_nacionalidad"));
 	                    cliente.setFechaNacCliente(rs.getDate("fechaNac_cliente"));
 	                    cliente.setDireccionCliente(rs.getString("direccion_cliente"));
-	                    cliente.setProvinciaCliente(rs.getString("nombre_provincia"));
-	                    cliente.setLocalidadCliente(rs.getString("nombre_localidad"));
+	                    cliente.setProvinciaCliente(rs.getInt("nombre_provincia"));
+	                    cliente.setLocalidadCliente(rs.getInt("nombre_localidad"));
 	                    cliente.setCorreoCliente(rs.getString("correo_cliente"));
 	                    cliente.setTelefonoCliente(rs.getString("telefono_cliente"));
 	                    cliente.setUsuarioCliente(rs.getString("usuario_cliente"));
-	                    cliente.setContrasenaaCliente(rs.getString("contraseña_cliente"));
+	                    cliente.setContrasenaaCliente(rs.getString("contraseÃ±a_cliente"));
 
 	                    listaFiltrada.add(cliente);
 	                }

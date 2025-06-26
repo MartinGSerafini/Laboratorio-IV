@@ -2,6 +2,7 @@ package entidades;
 
 public class Cliente {
 	
+	private String idCliente;
     private int dniCliente;
     private String cuilCliente;
     private String nombreCliente;
@@ -20,9 +21,9 @@ public class Cliente {
 
     // Constructor completo
     public Cliente(int dniCliente, String cuilCliente, String nombreCliente, String apellidoCliente,
-                   String sexoCliente, int nacionalidadCliente, java.sql.Date fechaNacCliente,
-                   String direccionCliente,  int localidadCliente, int provinciaCliente,
-                   String correoCliente, String telefonoCliente, String usuarioCliente, String contrasenaCliente) {
+            String sexoCliente, int nacionalidadCliente, java.sql.Date fechaNacCliente,
+            String direccionCliente,  int localidadCliente, int provinciaCliente,
+            String correoCliente, String telefonoCliente, String usuarioCliente, String contrasenaCliente) {
         this.dniCliente = dniCliente;
         this.cuilCliente = cuilCliente;
         this.nombreCliente = nombreCliente;
@@ -40,6 +41,14 @@ public class Cliente {
     }
 
     // Getters y Setters
+
+    public String getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(String idCliente) {
+        this.idCliente = idCliente;
+    }
 
     public int getDniCliente() {
         return dniCliente;

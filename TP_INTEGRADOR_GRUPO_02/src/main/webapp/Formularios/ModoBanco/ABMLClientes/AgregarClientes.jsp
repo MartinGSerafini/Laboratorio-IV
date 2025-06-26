@@ -38,35 +38,35 @@
  
 <div class="container mt-5">
     <h2 class="text-center mb-4 text-danger">Agregar Clientes</h2>
-    <form class="row g-4" action="/TP_INTEGRADOR_GRUPO_02/AgregarClienteServlet" method="post">
+        <form class="row g-4" action="/TP_INTEGRADOR_GRUPO_02/AgregarClienteServlet" method="post">
     	<div class="col-md-6">
             <label for="usuario" class="form-label">Usuario</label>
-            <input type="text" class="form-control" id="usuario" name="usuario" 
+             <input type="text" class="form-control" id="usuario" name="usuario" 
                    value="<%= request.getParameter("usuario") != null ? request.getParameter("usuario") : "" %>">
         </div>
         <div class="col-md-6">
             <label for="contrasena" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" id="contrasena" name="contrasena"
+                  <input type="password" class="form-control" id="contrasena" name="contrasena"
                    value="<%= request.getParameter("contrasena") != null ? request.getParameter("contrasena") : "" %>">
         </div>
         <div class="col-md-6">
             <label for="dni" class="form-label">DNI</label>
-            <input type="text" class="form-control" id="dni" name="dni"
+                        <input type="text" class="form-control" id="dni" name="dni"
                    value="<%= request.getParameter("dni") != null ? request.getParameter("dni") : "" %>">
         </div>
         <div class="col-md-6">
             <label for="cuil" class="form-label">CUIL</label>
-            <input type="text" class="form-control" id="cuil" name="cuil"
+             <input type="text" class="form-control" id="cuil" name="cuil"
                    value="<%= request.getParameter("cuil") != null ? request.getParameter("cuil") : "" %>">
         </div>
         <div class="col-md-6">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombre" name="nombre"
+                        <input type="text" class="form-control" id="nombre" name="nombre"
                    value="<%= request.getParameter("nombre") != null ? request.getParameter("nombre") : "" %>">
         </div>
         <div class="col-md-6">
             <label for="apellido" class="form-label">Apellido</label>
-            <input type="text" class="form-control" id="apellido" name="apellido"
+              <input type="text" class="form-control" id="apellido" name="apellido"
                    value="<%= request.getParameter("apellido") != null ? request.getParameter("apellido") : "" %>">
         </div>
         <div class="col-md-6">
@@ -79,7 +79,7 @@
         </div>
         <div class="col-md-6">
             <label for="nacionalidad" class="form-label">Nacionalidad</label>
-             <select id="nacionalidad" name="nacionalidad" class="form-control">
+                <select id="nacionalidad" name="nacionalidad" class="form-control">
         <%
             ArrayList<Nacionalidad> nacionalidades = (ArrayList<Nacionalidad>) request.getAttribute("nacionalidades");
             String nacionalidadSeleccionada = request.getParameter("nacionalidad");
@@ -98,12 +98,12 @@
         </div>
         <div class="col-md-6">
             <label for="fechaNac" class="form-label">Fecha de Nacimiento</label>
-            <input type="date" class="form-control" id="fechaNac" name="fechaNac"
+               <input type="date" class="form-control" id="fechaNac" name="fechaNac"
                    value="<%= request.getParameter("fechaNac") != null ? request.getParameter("fechaNac") : "" %>">
         </div>
         <div class="col-md-6">
             <label for="direccion" class="form-label">Dirección</label>
-            <input type="text" class="form-control" id="direccion" name="direccion"
+             <input type="text" class="form-control" id="direccion" name="direccion"
                    value="<%= request.getParameter("direccion") != null ? request.getParameter("direccion") : "" %>">
         </div>
         <div class="col-md-6">
@@ -131,7 +131,7 @@
     
         </div>
         <div class="col-md-6">
-            <label for="localidad" class="form-label">Localidad</label>
+              <label for="localidad" class="form-label">Localidad</label>
             <select name="localidad" id="localidad" class="form-control">
 	        <%
 	            ArrayList<Localidad> localidades = (ArrayList<Localidad>) request.getAttribute("localidades");
@@ -154,16 +154,16 @@
         </div>
         <div class="col-md-6">
             <label for="correo" class="form-label">Correo</label>
-            <input type="email" class="form-control" id="correo" name="correo"
+               <input type="email" class="form-control" id="correo" name="correo"
                    value="<%= request.getParameter("correo") != null ? request.getParameter("correo") : "" %>">
         </div>
         <div class="col-md-6">
             <label for="telefono" class="form-label">Teléfono</label>
-            <input type="text" class="form-control" id="telefono" name="telefono"
+           <input type="text" class="form-control" id="telefono" name="telefono"
                    value="<%= request.getParameter("telefono") != null ? request.getParameter("telefono") : "" %>">
         </div>
         <div class="col-12 text-center mt-4">
-           <button type="submit" name="accion" value="agregarCliente" class="btn btn-custom px-5 py-2">
+                  <button type="submit" name="accion" value="agregarCliente" class="btn btn-custom px-5 py-2">
             Agregar Cliente
         </button>
         </div>

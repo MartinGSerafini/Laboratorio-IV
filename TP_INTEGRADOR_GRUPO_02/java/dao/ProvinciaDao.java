@@ -11,27 +11,26 @@ import entidades.Provincia;
 
 public class ProvinciaDao {
  
-	//----obtener todas las provincias de la bd---
 	public List<Provincia> obtenerProvincias() {
-        List<Provincia> provincias = new ArrayList<>();
-        String sql = "SELECT id_provincia, nombre_provincia FROM provincia";
+		  List<Provincia> provincias = new ArrayList<>();
+	        String sql = "SELECT id_provincia, nombre_provincia FROM provincia";
 
-        try (Connection cn = Conexion.getConexion();
-             PreparedStatement ps = cn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+	        try (Connection cn = Conexion.getConexion();
+	             PreparedStatement ps = cn.prepareStatement(sql);
+	             ResultSet rs = ps.executeQuery()) {
 
-            while (rs.next()) {
-                Provincia p = new Provincia();
-                p.setId(rs.getInt("id_provincia"));
-                p.setProvicia(rs.getString("nombre_provincia"));
-                provincias.add(p);
-            }
+	            while (rs.next()) {
+	                Provincia p = new Provincia();
+	                p.setId(rs.getInt("id_provincia"));
+	                p.setProvicia(rs.getString("nombre_provincia"));
+	                provincias.add(p);
+	            }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
 
-        return provincias;
-    }
+	        return provincias;
+	}
 }
 

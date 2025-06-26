@@ -20,6 +20,7 @@ import entidades.Nacionalidad;
 import entidades.Provincia;
 import negocio.NegocioCliente;; 
 
+
 @WebServlet("/AgregarClienteServlet")
 public class AgregarClienteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -33,27 +34,21 @@ public class AgregarClienteServlet extends HttpServlet {
 		//-------Nacionalidad------------
 		NacionalidadDao nacionalidadDao = new NacionalidadDao();
 	    ArrayList<Nacionalidad> listaNacionalidades = nacionalidadDao.obtenerNacionalidades();
-
 	    request.setAttribute("nacionalidades", listaNacionalidades);
 
 	   
 	   //-------Provincia------------
 	    ProvinciaDao provinciaDao = new ProvinciaDao();
 	    List<Provincia> listaProvincias = provinciaDao.obtenerProvincias();
-
 	    request.setAttribute("provincias", listaProvincias);
-		
-		
-		//-------Localidad------------
-	    
-		
-		
+	
+	    //-------Localidad------------
 		RequestDispatcher rd = request.getRequestDispatcher("/Formularios/ModoBanco/ABMLClientes/AgregarClientes.jsp");
 		rd.forward(request, response); 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    
+		
 	    String accion = request.getParameter("accion");
 
 	    // Cargar nacionalidades y provincias siempre que vuelvas al JSP
@@ -66,7 +61,7 @@ public class AgregarClienteServlet extends HttpServlet {
 	    request.setAttribute("nacionalidades", nacionalidades);
 	    request.setAttribute("provincias", provincias);
 
-	    // AcciÃ³n: cargar localidades
+	    // Acción: cargar localidades
 	    if ("cargarLocalidades".equals(accion)) {
 	        String idProvStr = request.getParameter("provincia");
 
@@ -77,7 +72,7 @@ public class AgregarClienteServlet extends HttpServlet {
 	                List<Localidad> localidades = localidadDao.obtenerLocalidadesPorProvincia(idProv);
 	                request.setAttribute("localidades", localidades);
 	            } catch (NumberFormatException e) {
-	                e.printStackTrace(); // podÃ©s mejorar con logs o un mensaje de error al usuario
+	                e.printStackTrace(); // podés mejorar con logs o un mensaje de error al usuario
 	            }
 	        }
 
@@ -86,7 +81,7 @@ public class AgregarClienteServlet extends HttpServlet {
 	        return;
 	    }
 
-	    // AcciÃ³n: agregar cliente
+	    // Acción: agregar cliente
 	    if ("agregarCliente".equals(accion)) {
 	        try {
 	            String usuario = request.getParameter("usuario");
@@ -107,8 +102,8 @@ public class AgregarClienteServlet extends HttpServlet {
 	            java.sql.Date fechaNac = java.sql.Date.valueOf(fechaNacStr);
 
 	            Cliente cliente = new Cliente(dni, cuil, nombre, apellido, sexo,
-	                                          nacionalidad, fechaNac, direccion, localidad,
-	                                          provincia, correo, telefono, usuario, contrasena);
+                        nacionalidad, fechaNac, direccion, localidad,
+                        provincia, correo, telefono, usuario, contrasena);
 
 	            NegocioCliente servicio = new NegocioCliente();
 	            boolean exito = servicio.alta(cliente);
@@ -127,6 +122,4 @@ public class AgregarClienteServlet extends HttpServlet {
 	        request.getRequestDispatcher("/Formularios/ModoBanco/ABMLClientes/AgregarClientes.jsp").forward(request, response);
 	    }
 	}
-
-
 }

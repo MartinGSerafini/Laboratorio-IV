@@ -18,7 +18,6 @@ public class Localidad {
 
 	public String getLocalidad() {return localidad;}
 	public void setLocalidad(String localidad) {this.localidad = localidad;}
-	
 	public int getId() {
         return id;
     }
