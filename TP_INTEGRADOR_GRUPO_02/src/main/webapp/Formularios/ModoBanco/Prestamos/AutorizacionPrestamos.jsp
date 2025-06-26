@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="entidades.Prestamo"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -45,24 +47,56 @@
         <button type="submit" class="btn btn-custom">Buscar</button>
     </form>
 
+<%
+	ArrayList<Prestamo> lista = null;
+	if(request.getAttribute("ListaPrestamos") !=null){
+		  lista = (ArrayList<Prestamo>) request.getAttribute("ListaPrestamos");
+	}
+%>
+
     <!-- Tabla de Cuentas -->
     <div class="table-responsive d-flex justify-content-center">
         <table class="table table-striped table-bordered text-center w-auto">
             <thead class="table-dark">
                 <tr>
                     <th>ID Cuenta</th><th>ID Cliente</th><th>Fecha</th><th>Importe a pagar</th><th>Prestamo solicitado</th>
-                    <th>Plazo de pago mensual</th><th>Monto mensual</th><th>Cuotas</th><th>Acciones</th>
+                    <th>Plazo de pago en meses</th><th>Monto mensual</th>><th>Estado</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+           <!--     <tr>
                     <td>0001</td><td>0001</td><td>11/01/1111</td><td>1.000.000</td><td>2.000.000</td>
                     <td>30 días</td><td>100.000</td><td>20 cuotas</td>
                     <td>
-                        <button class="btn btn-warning btn-sm">Autorizar prestamo</button>
-                        <button class="btn btn-danger btn-sm">Rechazar prestamo</button>
+                        <button class="btn btn-warning btn-sm" id=1>Autorizar prestamo</button>
+                        <button class="btn btn-danger btn-sm" id=2>Rechazar prestamo</button>
                     </td>
-                </tr>
+                </tr> --> 
+            <%
+            if(lista != null){
+            	for(Prestamo p : lista){
+            		%>
+            		<tr>
+            		<td><%=p.getIdCuentaDepositoPres() %></td><td><%=p.getIdClientePres() %></td><td><%=p.getFechaSolicitudPres() %></td>
+            		<td>$<%=p.getImporteTotalPres() %></td><td>$<%=p.getImporteSolicitadoPres()%></td><td><%=p.getPlazoMesesPres() %></td>
+            		<td>$<%=p.getMontoCuotaPres() %></td>
+            		<%
+            		if(p.getEstadoPres().getId()==3){
+            			%>
+            			<td>
+                        <button class="btn btn-warning btn-sm" id=1>Autorizar prestamo</button>
+                        <button class="btn btn-danger btn-sm" id=2>Rechazar prestamo</button>
+                    </td>
+            		<%}else{%>
+            			<td><%=p.getEstadoPres().getDescripcion() %></td>
+            		<%}
+            		%>
+            		
+            		
+            		</tr>
+            	<% }
+            }
+            %>
             </tbody>
         </table>
     </div>
