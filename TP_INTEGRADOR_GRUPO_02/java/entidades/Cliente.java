@@ -17,8 +17,6 @@ public class Cliente {
     private String telefonoCliente;
     private String usuarioCliente;
     private String contrasenaCliente;
-
-    // Constructor vacío
     public Cliente() {}
 
     // Constructor completo

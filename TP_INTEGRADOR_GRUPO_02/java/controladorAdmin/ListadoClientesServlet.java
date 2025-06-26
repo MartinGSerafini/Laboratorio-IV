@@ -13,33 +13,54 @@ import javax.servlet.http.HttpServletResponse;
 import entidades.Cliente;
 import negocio.NegocioCliente;
 
-
 @WebServlet("/ListadoClientesServlet")
 public class ListadoClientesServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-     
-    public ListadoClientesServlet() {
-        super();
-        // TODO Auto-generated constructor stub
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        NegocioCliente negocio = new NegocioCliente();
+
+        ArrayList<String> columnas = negocio.obtenerColumnasClientes();
+        request.setAttribute("columnas", columnas);
+
+        String busqueda = request.getParameter("busqueda");
+        String filtro = request.getParameter("filtro");
+
+        ArrayList<Cliente> listaClientes;
+
+        if (busqueda != null && filtro != null && !busqueda.isEmpty() && !filtro.isEmpty()) {
+            listaClientes = negocio.obtenerClientesPorFiltro(filtro, busqueda);
+        } else {
+            listaClientes = negocio.ObtenerListadoClientes();
+        }
+
+        // Paginación
+        int registrosPorPagina = 10;
+        int paginaActual = 1;
+        if (request.getParameter("pagina") != null) {
+            try {
+                paginaActual = Integer.parseInt(request.getParameter("pagina"));
+            } catch (NumberFormatException e) {
+                paginaActual = 1;
+            }
+        }
+        int desde = (paginaActual - 1) * registrosPorPagina;
+        int hasta = Math.min(desde + registrosPorPagina, listaClientes.size());
+        ArrayList<Cliente> pagina = new ArrayList<>(listaClientes.subList(desde, hasta));
+
+        int totalPaginas = (int) Math.ceil((double) listaClientes.size() / registrosPorPagina);
+
+        request.setAttribute("ListaCli", pagina);
+        request.setAttribute("paginaActual", paginaActual);
+        request.setAttribute("totalPaginas", totalPaginas);
+        request.setAttribute("busqueda", busqueda);
+        request.setAttribute("filtroSeleccionado", filtro);
+
+        RequestDispatcher rd = request.getRequestDispatcher("Formularios/ModoBanco/ABMLClientes/ListadoClientes.jsp");
+        rd.forward(request, response);
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		if(request.getParameter("btnbuscar") != null) {
-			NegocioCliente negocio = new NegocioCliente();
-			ArrayList<Cliente> lista = negocio.ObtenerListadoClientes();
-			
-			request.setAttribute("ListaCli", lista);
-			
-			RequestDispatcher rd = request.getRequestDispatcher("Formularios/ModoBanco/ABMLClientes/ListadoClientes.jsp");
-            rd.forward(request, response);
-		}
-		
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
+    }
 }

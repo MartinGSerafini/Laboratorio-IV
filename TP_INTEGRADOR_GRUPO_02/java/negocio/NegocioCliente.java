@@ -1,8 +1,14 @@
 package negocio;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.Connection;
+
+import dao.Conexion;
 import dao.daoCliente;
 import entidades.Cliente;
 import interfaces.servicioABML;
@@ -10,34 +16,21 @@ import interfaces.servicioABML;
 public class NegocioCliente implements servicioABML<Cliente>{
 
 	daoCliente daoCliente = new daoCliente();
-	
-	
-	@Override
-	public boolean alta(Cliente cliente) {
-		
-		return daoCliente.altaCliente(cliente);
-		
-	}
  
-	@Override
 	public boolean baja(String id) {
-		// TODO Auto-generated method stub
-		return false;
+	    return daoCliente.bajaLogicaCliente(id);
 	}
 
-	@Override
 	public boolean modificacion(String id, Cliente cliente) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public boolean lectura(String id) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public List<Cliente> listarTodos() {
 		// TODO Auto-generated method stub
 		return null;
@@ -88,5 +81,17 @@ public class NegocioCliente implements servicioABML<Cliente>{
 		ArrayList<Cliente> lista = new ArrayList<Cliente>();
 		lista = daoCliente.obtenerClientes();
 		return lista; 
+	}
+
+	public boolean alta(Cliente entidad) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	public ArrayList<String> obtenerColumnasClientes() {
+	    return daoCliente.obtenerColumnasClientes();
+	}
+
+	public ArrayList<Cliente> obtenerClientesPorFiltro(String columna, String valor) {
+	    return daoCliente.obtenerClientesPorFiltro(columna, valor);
 	}
 }
