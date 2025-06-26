@@ -31,7 +31,7 @@ public class MenuAdministrador extends HttpServlet {
                 response.sendRedirect(contexto + "/Formularios/ModoBanco/ABMLCuentas/AgregarCuentas.jsp");
                 break;
             case "prestamos":
-                response.sendRedirect(contexto + "/Formularios/ModoBanco/Prestamos/AutorizacionPrestamos.jsp");
+                response.sendRedirect(contexto + "/AutorizacionPrestamosServlet");
                 break;
             case "informes":
                 response.sendRedirect(contexto + "/Formularios/ModoBanco/Informes/Informes.jsp");

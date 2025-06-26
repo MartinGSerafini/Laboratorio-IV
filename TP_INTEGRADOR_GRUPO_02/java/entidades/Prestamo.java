@@ -8,7 +8,7 @@ public class Prestamo {
     private java.math.BigDecimal importeTotalPres;
     private int plazoMesesPres;
     private java.math.BigDecimal montoCuotaPres;
-    private int estadoPres;
+    private EstadoPrestamo estadoPres;
     private String idCuentaDepositoPres;
 
     // Constructor por defecto
@@ -71,11 +71,11 @@ public class Prestamo {
         this.montoCuotaPres = montoCuotaPres;
     }
 
-    public int getEstadoPres() {
+    public EstadoPrestamo getEstadoPres() {
         return estadoPres;
     }
 
-    public void setEstadoPres(int estadoPres) {
+    public void setEstadoPres(EstadoPrestamo estadoPres) {
         this.estadoPres = estadoPres;
     }
 
