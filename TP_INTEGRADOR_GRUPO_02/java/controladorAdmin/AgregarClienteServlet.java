@@ -61,7 +61,7 @@ public class AgregarClienteServlet extends HttpServlet {
 	    request.setAttribute("nacionalidades", nacionalidades);
 	    request.setAttribute("provincias", provincias);
 
-	    // Acción: cargar localidades
+	    // Acciï¿½n: cargar localidades
 	    if ("cargarLocalidades".equals(accion)) {
 	        String idProvStr = request.getParameter("provincia");
 
@@ -72,7 +72,7 @@ public class AgregarClienteServlet extends HttpServlet {
 	                List<Localidad> localidades = localidadDao.obtenerLocalidadesPorProvincia(idProv);
 	                request.setAttribute("localidades", localidades);
 	            } catch (NumberFormatException e) {
-	                e.printStackTrace(); // podés mejorar con logs o un mensaje de error al usuario
+	                e.printStackTrace(); // podï¿½s mejorar con logs o un mensaje de error al usuario
 	            }
 	        }
 
@@ -81,7 +81,7 @@ public class AgregarClienteServlet extends HttpServlet {
 	        return;
 	    }
 
-	    // Acción: agregar cliente
+	    // Acciï¿½n: agregar cliente
 	    if ("agregarCliente".equals(accion)) {
 	        try {
 	            String usuario = request.getParameter("usuario");
@@ -101,11 +101,24 @@ public class AgregarClienteServlet extends HttpServlet {
 
 	            java.sql.Date fechaNac = java.sql.Date.valueOf(fechaNacStr);
 
+	            //instanciar NegocioCliente
+	            NegocioCliente servicio = new NegocioCliente();
+	           
+	            //validar cliente y obtener errores
+	            String ErroresValidacion = servicio.validarCliente(usuario, contrasena, dni, cuil,
+	                    nombre, apellido, sexo, nacionalidad, fechaNacStr, direccion,
+	                    localidad, provincia, correo, telefono);
+	            
+	            if(ErroresValidacion != null) {
+//	            	 request.setAttribute("mensajeValidacion", mensajeErrorValidacion);
+//		             request.setAttribute("mensaje", "errorValidacion");
+	            }
+	            
+	          //si no hay errores, procede con el alta
 	            Cliente cliente = new Cliente(dni, cuil, nombre, apellido, sexo,
                         nacionalidad, fechaNac, direccion, localidad,
                         provincia, correo, telefono, usuario, contrasena);
-
-	            NegocioCliente servicio = new NegocioCliente();
+	            
 	            boolean exito = servicio.alta(cliente);
 
 	            if (exito) {
