@@ -11,12 +11,38 @@ import com.mysql.jdbc.Connection;
 import dao.Conexion;
 import dao.daoCliente;
 import entidades.Cliente;
+import excepciones.OperacionNoEfectuadaExc;
 import interfaces.servicioABML;
 
 public class NegocioCliente implements servicioABML<Cliente>{
 
 	daoCliente daoCliente = new daoCliente();
+<<<<<<< HEAD
  
+=======
+	
+	
+	@Override
+	public boolean alta(Cliente cliente){
+		
+		try {
+			boolean filas= daoCliente.altaCliente(cliente);
+			
+			if(filas==false) {
+				throw new OperacionNoEfectuadaExc("No se insertó ningún cliente.");
+			}
+			
+			return true;
+		}
+		catch(OperacionNoEfectuadaExc e) {
+			System.out.println("Error: "+e.getMessage());
+			return false;
+		}
+		
+	}
+  
+	@Override
+>>>>>>> e029133da8bac37a2d0954a75989187323d34262
 	public boolean baja(String id) {
 	    return daoCliente.bajaLogicaCliente(id);
 	}

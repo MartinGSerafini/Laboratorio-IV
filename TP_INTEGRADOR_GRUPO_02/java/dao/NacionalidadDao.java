@@ -13,13 +13,14 @@ public class NacionalidadDao {
 	//------obtener todas las nacionalidades de la bd----
     public ArrayList<Nacionalidad> obtenerNacionalidades() {
         ArrayList<Nacionalidad> nacionalidades = new ArrayList<>();
-        String sql = "SELECT nombre_nacionalidad FROM nacionalidad";
+        String sql = "SELECT id_nacionalidad, nombre_nacionalidad FROM nacionalidad";
         try (Connection cn = Conexion.getConexion(); 
              PreparedStatement ps = cn.prepareStatement(sql); 
              ResultSet rs = ps.executeQuery()) { 
 
             while (rs.next()) { 
                 Nacionalidad n = new Nacionalidad();
+                n.setId(rs.getInt("id_nacionalidad"));
                 n.setNacionalidad(rs.getString("nombre_nacionalidad"));
                 nacionalidades.add(n); 
             }

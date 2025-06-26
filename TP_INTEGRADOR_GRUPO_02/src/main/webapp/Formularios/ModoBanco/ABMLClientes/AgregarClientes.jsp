@@ -1,3 +1,6 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="entidades.*" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="es">
@@ -6,7 +9,7 @@
     <title>Agregar Cliente</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../z-CSS/ABMLClientesCSS/AgregarClientes.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ABMLClientesCSS/AgregarClientes.css">
 </head>
 <body>
 
@@ -35,69 +38,134 @@
  
 <div class="container mt-5">
     <h2 class="text-center mb-4 text-danger">Agregar Clientes</h2>
-    <form class="row g-4" action=" /TP_INTEGRADOR_GRUPO_02/AgregarClienteServlet" method="post">
+    <form class="row g-4" action="/TP_INTEGRADOR_GRUPO_02/AgregarClienteServlet" method="post">
     	<div class="col-md-6">
             <label for="usuario" class="form-label">Usuario</label>
-            <input type="text" class="form-control" id="usuario" name="usuario">
+            <input type="text" class="form-control" id="usuario" name="usuario" 
+                   value="<%= request.getParameter("usuario") != null ? request.getParameter("usuario") : "" %>">
         </div>
         <div class="col-md-6">
             <label for="contrasena" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" id="contrasena" name="contrasena">
+            <input type="password" class="form-control" id="contrasena" name="contrasena"
+                   value="<%= request.getParameter("contrasena") != null ? request.getParameter("contrasena") : "" %>">
         </div>
         <div class="col-md-6">
             <label for="dni" class="form-label">DNI</label>
-            <input type="number" class="form-control" id="dni" name="dni">
+            <input type="text" class="form-control" id="dni" name="dni"
+                   value="<%= request.getParameter("dni") != null ? request.getParameter("dni") : "" %>">
         </div>
         <div class="col-md-6">
             <label for="cuil" class="form-label">CUIL</label>
-            <input type="text" class="form-control" id="cuil" name="cuil">
+            <input type="text" class="form-control" id="cuil" name="cuil"
+                   value="<%= request.getParameter("cuil") != null ? request.getParameter("cuil") : "" %>">
         </div>
         <div class="col-md-6">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombre" name="nombre">
+            <input type="text" class="form-control" id="nombre" name="nombre"
+                   value="<%= request.getParameter("nombre") != null ? request.getParameter("nombre") : "" %>">
         </div>
         <div class="col-md-6">
             <label for="apellido" class="form-label">Apellido</label>
-            <input type="text" class="form-control" id="apellido" name="apellido">
+            <input type="text" class="form-control" id="apellido" name="apellido"
+                   value="<%= request.getParameter("apellido") != null ? request.getParameter("apellido") : "" %>">
         </div>
         <div class="col-md-6">
             <label for="sexo" class="form-label">Sexo</label>
             <select class="form-select" id="sexo" name="sexo">
-                <option value="">Seleccione</option>
-                <option value="Masculino">Masculino</option>
-                <option value="Femenino">Femenino</option>
+                <option value="" <%= (request.getParameter("sexo") == null || request.getParameter("sexo").isEmpty()) ? "selected" : "" %>>Seleccione</option>
+                <option value="Masculino" <%= "Masculino".equals(request.getParameter("sexo")) ? "selected" : "" %>>Masculino</option>
+                <option value="Femenino" <%= "Femenino".equals(request.getParameter("sexo")) ? "selected" : "" %>>Femenino</option>
             </select>
         </div>
         <div class="col-md-6">
             <label for="nacionalidad" class="form-label">Nacionalidad</label>
-            <input type="text" class="form-control" id="nacionalidad" name="nacionalidad">
+             <select id="nacionalidad" name="nacionalidad" class="form-control">
+        <%
+            ArrayList<Nacionalidad> nacionalidades = (ArrayList<Nacionalidad>) request.getAttribute("nacionalidades");
+            String nacionalidadSeleccionada = request.getParameter("nacionalidad");
+            if (nacionalidades != null) {
+                for (Nacionalidad n : nacionalidades) {
+                    boolean selected = nacionalidadSeleccionada != null && nacionalidadSeleccionada.equals(n.getNacionalidad());
+        %>
+                    <option value="<%= n.getId() %>" <%= selected ? "selected" : "" %>>
+                        <%= n.getNacionalidad() %>
+                    </option>
+        <%
+                }
+            }
+        %>
+    </select>
         </div>
         <div class="col-md-6">
             <label for="fechaNac" class="form-label">Fecha de Nacimiento</label>
-            <input type="date" class="form-control" id="fechaNac" name="fechaNac">
+            <input type="date" class="form-control" id="fechaNac" name="fechaNac"
+                   value="<%= request.getParameter("fechaNac") != null ? request.getParameter("fechaNac") : "" %>">
         </div>
         <div class="col-md-6">
             <label for="direccion" class="form-label">Dirección</label>
-            <input type="text" class="form-control" id="direccion" name="direccion">
-        </div>
-        <div class="col-md-6">
-            <label for="localidad" class="form-label">Localidad</label>
-            <input type="text" class="form-control" id="localidad" name="localidad">
+            <input type="text" class="form-control" id="direccion" name="direccion"
+                   value="<%= request.getParameter("direccion") != null ? request.getParameter("direccion") : "" %>">
         </div>
         <div class="col-md-6">
             <label for="provincia" class="form-label">Provincia</label>
-            <input type="text" class="form-control" id="provincia" name="provincia">
+             <select name="provincia" id="provincia" class="form-control">
+        <option value="">Seleccione</option>
+	        <%
+	            ArrayList<Provincia> provincias = (ArrayList<Provincia>) request.getAttribute("provincias");
+	            String provinciaSeleccionada = request.getParameter("provincia");
+	
+	            if (provincias != null) {
+	                for (Provincia p : provincias) {
+	                    boolean selected = (provinciaSeleccionada != null && provinciaSeleccionada.equals(String.valueOf(p.getId())));
+	        %>
+	            <option value="<%= p.getId() %>" <%= selected ? "selected" : "" %>><%= p.getProvicia() %></option>
+	        <%
+	                }
+	            }
+	        %>
+    	</select>
+    	 <!-- Botón intermedio para cargar localidades -->
+	    <button type="submit" name="accion" value="cargarLocalidades" class="btn btn-outline-secondary btn-sm mt-2">
+	        Cargar localidades
+	    </button>
+    
+        </div>
+        <div class="col-md-6">
+            <label for="localidad" class="form-label">Localidad</label>
+            <select name="localidad" id="localidad" class="form-control">
+	        <%
+	            ArrayList<Localidad> localidades = (ArrayList<Localidad>) request.getAttribute("localidades");
+	            String localidadSeleccionada = request.getParameter("localidad");
+	
+	            if (localidades != null) {
+	                for (Localidad l : localidades) {
+	                    boolean selected = localidadSeleccionada != null && localidadSeleccionada.equals(String.valueOf(l.getId()));
+	        %>
+	            <option value="<%= l.getId() %>" <%= selected ? "selected" : "" %>><%= l.getLocalidad() %></option>
+	        <%
+	                }
+	            } else {
+	        %>
+	            <option value="">-- Cargue una provincia --</option>
+	        <%
+	            }
+	        %>
+	    </select>
         </div>
         <div class="col-md-6">
             <label for="correo" class="form-label">Correo</label>
-            <input type="email" class="form-control" id="correo" name="correo">
+            <input type="email" class="form-control" id="correo" name="correo"
+                   value="<%= request.getParameter("correo") != null ? request.getParameter("correo") : "" %>">
         </div>
         <div class="col-md-6">
             <label for="telefono" class="form-label">Teléfono</label>
-            <input type="text" class="form-control" id="telefono" name="telefono">
+            <input type="text" class="form-control" id="telefono" name="telefono"
+                   value="<%= request.getParameter("telefono") != null ? request.getParameter("telefono") : "" %>">
         </div>
         <div class="col-12 text-center mt-4">
-            <button type="submit" class="btn btn-custom px-5 py-2">Agregar Cliente</button>
+           <button type="submit" name="accion" value="agregarCliente" class="btn btn-custom px-5 py-2">
+            Agregar Cliente
+        </button>
         </div>
     </form>
 </div>
