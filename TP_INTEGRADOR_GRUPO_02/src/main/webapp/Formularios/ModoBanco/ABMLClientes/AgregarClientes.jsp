@@ -79,21 +79,19 @@
         </div>
         <div class="col-md-6">
             <label for="nacionalidad" class="form-label">Nacionalidad</label>
-                <select id="nacionalidad" name="nacionalidad" class="form-control">
+            <select id="nacionalidad" name="nacionalidad" class="form-control">
         <%
-            ArrayList<Nacionalidad> nacionalidades = (ArrayList<Nacionalidad>) request.getAttribute("nacionalidades");
-            String nacionalidadSeleccionada = request.getParameter("nacionalidad");
-            if (nacionalidades != null) {
-                for (Nacionalidad n : nacionalidades) {
-                    boolean selected = nacionalidadSeleccionada != null && nacionalidadSeleccionada.equals(n.getNacionalidad());
-        %>
-                    <option value="<%= n.getId() %>" <%= selected ? "selected" : "" %>>
-                        <%= n.getNacionalidad() %>
-                    </option>
-        <%
-                }
-            }
-        %>
+	        String nacionalidadSeleccionada = request.getParameter("nacionalidad");
+	        ArrayList<Nacionalidad> nacionalidades = (ArrayList<Nacionalidad>) request.getAttribute("nacionalidades");
+	        if (nacionalidades != null) {
+	            for (Nacionalidad n : nacionalidades) {
+	                boolean selected = nacionalidadSeleccionada != null && nacionalidadSeleccionada.equals(String.valueOf(n.getId()));
+	    %>
+	        <option value="<%= n.getId() %>" <%= selected ? "selected" : "" %>><%= n.getNacionalidad() %></option>
+	    <%
+	            }
+	        }
+	    %>
     </select>
         </div>
         <div class="col-md-6">

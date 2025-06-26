@@ -1,18 +1,13 @@
 package negocio;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.mysql.jdbc.Connection;
-
-import dao.Conexion;
 import dao.daoCliente;
 import entidades.Cliente;
+import excepciones.ClienteNoEncontradoExc;
 import excepciones.OperacionNoEfectuadaExc;
 import interfaces.servicioABML;
 
@@ -25,7 +20,7 @@ public class NegocioCliente implements servicioABML<Cliente>{
 			boolean filas= daoCliente.altaCliente(cliente);
 			
 			if(filas==false) {
-				throw new OperacionNoEfectuadaExc("No se insert� ning�n cliente.");
+				throw new OperacionNoEfectuadaExc("No se insertó ningún cliente.");
 			}
 			
 			return true;
@@ -167,4 +162,18 @@ public class NegocioCliente implements servicioABML<Cliente>{
 	public ArrayList<Cliente> obtenerClientesPorFiltro(String columna, String valor) {
 	    return daoCliente.obtenerClientesPorFiltro(columna, valor);
 	}
+	
+	public int obtenerIdCliente(String dni) {
+		
+		int idCliente = daoCliente.obtenerIdCliente(dni);
+		if(idCliente != 0) {
+			return idCliente;
+		}
+		else {
+			throw new ClienteNoEncontradoExc("No se encontró un cliente con el DNI: "+dni);
+		}
+	}
+	
+	
+	
 }

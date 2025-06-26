@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="entidades.*" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,8 +8,7 @@
     <title>Agregar Cuenta</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../z-CSS/ABMLCuentasCSS/AgregarCuentas.css">
-   
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ABMLCuentasCSS/AgregarCuentas.css">
 </head>
 <body>
 
@@ -36,31 +37,101 @@
 
 <div class="container mt-5">
     <h2 class="text-center mb-4 text-danger">Agregar Cuentas</h2>
-    <form class="row g-4">
+    <form class="row g-4" action="/TP_INTEGRADOR_GRUPO_02/AgregarCuentaServlet" method="post">
         <div class="col-md-6">
-            <label for="numero_Cuenta" class="form-label">Numero de Cuenta</label>
-            <input type="number" class="form-control" id="dni" name="dni">
+            <label for="nroCuenta" class="form-label">Numero de Cuenta</label>
+            <input type="text" class="form-control" id="nroCuenta" name="nroCuenta" 
+                   value="<%= request.getAttribute("nroCuenta") != null ? request.getAttribute("nroCuenta") : "" %>">
         </div>
         <div class="col-md-6">
             <label for="tipo_Cuenta" class="form-label">Tipo de Cuenta</label>
             <select class="form-select" id="tipo_Cuenta" name="tipo_Cuenta">
                 <option value="">Seleccione</option>
-                <option value="Masculino">Caja de ahorro</option>
-                <option value="Femenino">Cuenta corriente</option>
+                <%
+                    ArrayList<TipoCuenta> tipoCuentas = (ArrayList<TipoCuenta>) request.getAttribute("listaTipos");
+                    String tipoCuentaSeleccionada = (String) request.getAttribute("tipo_Cuenta");
+                    if (tipoCuentas != null) {
+                        for (TipoCuenta n : tipoCuentas) {
+                            boolean selected = tipoCuentaSeleccionada != null && tipoCuentaSeleccionada.equals(String.valueOf(n.getIdtipoCuenta()));
+                %>
+                    <option value="<%= n.getIdtipoCuenta() %>" <%= selected ? "selected" : "" %>><%= n.getDescripcionTipoCuenta() %></option>
+                <%
+                        }
+                    }
+                %>
             </select>
         </div>
         <div class="col-md-6">
-            <label for="CBU" class="form-label">CBU</label>
-            <input type="text" class="form-control" id="cuil" name="cuil">
+            <label for="cuil" class="form-label">CBU</label>
+            <input type="text" class="form-control" id="cuil" name="cuil" 
+                   value="<%= request.getAttribute("cuil") != null ? request.getAttribute("cuil") : "" %>">
         </div>
         <div class="col-md-6">
-            <label for="saldo" class="form-label">Saldo de Cuenta</label>
-            <input type="text" class="form-control" id="nombre" name="nombre">
+            <label for="dniCliente" class="form-label">DNI Cliente</label>
+            <input type="text" class="form-control" id="dniCliente" name="dniCliente" 
+                   value="<%= request.getAttribute("dniCliente") != null ? request.getAttribute("dniCliente") : "" %>">
         </div>
         <div class="col-12 text-center mt-4">
-            <button type="submit" class="btn btn-custom px-5 py-2">Agregar Cuenta</button>
+            <button type="submit" name="accion" value="agregarCuenta" class="btn btn-custom px-5 py-2">Agregar Cuenta</button>
         </div>
     </form>
+</div>
+
+<%
+    String msg = (String) request.getAttribute("mensaje");
+    if ("ok".equals(msg)) {
+%>
+    <script>
+        window.onload = function() {
+            let modal = new bootstrap.Modal(document.getElementById('modalExito'));
+            modal.show();
+        };
+    </script>
+<%
+    } else if ("error".equals(msg)) {
+%>
+    <script>
+        window.onload = function() {
+            let modal = new bootstrap.Modal(document.getElementById('modalError'));
+            modal.show();
+        };
+    </script>
+<% } %>
+
+<!-- Modal Éxito -->
+<div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="modalExitoLabel">Éxito</h5>
+      </div>
+      <div class="modal-body">
+        Cuenta agregada con éxito.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/AgregarCuentaServlet'">Aceptar</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Error -->
+<div class="modal fade" id="modalError" tabindex="-1" aria-labelledby="modalErrorLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="modalErrorLabel">Error</h5>
+      </div>
+      <div class="modal-body">
+        Hubo un problema al crear la cuenta.
+      </div>
+      <div class="modal-footer">
+       <button type="button" class="btn btn-danger" onclick="location.href='${pageContext.request.contextPath}/AgregarCuentaServlet'">Cerrar</button>
+       
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

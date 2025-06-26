@@ -6,7 +6,7 @@ import java.util.Date;
 public class Cuenta {
 	
 	private String idCuenta;
-    private String idClienteCuenta;
+    private int idClienteCuenta;
     private int idTipoCuentaCuenta;
     private Date fechaCreacionCuenta;
     private String numeroCuenta;
@@ -17,7 +17,7 @@ public class Cuenta {
     public Cuenta() {}
 
     // Constructor completo
-    public Cuenta(String idCuenta, String idClienteCuenta, int idTipoCuentaCuenta, Date fechaCreacionCuenta,
+    public Cuenta(String idCuenta, int idClienteCuenta, int idTipoCuentaCuenta, Date fechaCreacionCuenta,
                   String numeroCuenta, String cbuCuenta, BigDecimal saldoCuenta) {
         this.idCuenta = idCuenta;
         this.idClienteCuenta = idClienteCuenta;
@@ -38,11 +38,11 @@ public class Cuenta {
         this.idCuenta = idCuenta;
     }
 
-    public String getIdClienteCuenta() {
+    public int getIdClienteCuenta() {
         return idClienteCuenta;
     }
 
-    public void setIdClienteCuenta(String idClienteCuenta) {
+    public void setIdClienteCuenta(int idClienteCuenta) {
         this.idClienteCuenta = idClienteCuenta;
     }
 

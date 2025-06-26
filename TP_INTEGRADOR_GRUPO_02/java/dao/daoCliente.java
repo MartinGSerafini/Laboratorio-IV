@@ -1,13 +1,13 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.*;
 
 import entidades.Cliente;
 
@@ -213,5 +213,32 @@ public class daoCliente {
 	            e.printStackTrace();
 	            return false;
 	        }
-	    } 
+	    }
+	    
+	    public int obtenerIdCliente(String dni) {
+	    	
+	    	String sql = "SELECT id_cliente FROM cliente WHERE dni_cliente = ?";
+	    	int id = 0;
+	    	
+	    	try (Connection conn = Conexion.getConexion();
+		             PreparedStatement ps = conn.prepareStatement(sql)) {
+		            
+		            ps.setString(1, dni);
+		            try (ResultSet rs = ps.executeQuery()) {
+		            	
+		            	if (rs.next()) {
+		                    id = rs.getInt("id_cliente");
+		                }
+		            	
+		            }
+		            
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+	    	return id;
+	    }
+	    
+	    
+	     
+	    
 }
