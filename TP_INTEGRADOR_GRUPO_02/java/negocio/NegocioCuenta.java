@@ -1,5 +1,6 @@
 package negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.daoCuenta;
@@ -10,7 +11,6 @@ import interfaces.servicioABML;
 public class NegocioCuenta implements servicioABML<Cuenta>{
 
 	daoCuenta daoCuenta = new daoCuenta();
-	
 	
 	@Override
 	public boolean alta(Cuenta cuenta) {
@@ -53,6 +53,26 @@ public class NegocioCuenta implements servicioABML<Cuenta>{
 		return null;
 	}
 
+	public ArrayList<Cuenta> ObtenerListadoCuentas(){
+		ArrayList<Cuenta> lista = new ArrayList<Cuenta>();
+		lista = daoCuenta.obtenerCuentas();
+		return lista;
+	}
 	
+	public ArrayList<Cuenta> obtenerCuentasPorFiltro(String columna, String valor){
+		ArrayList<Cuenta> lista = new ArrayList<Cuenta>();
+		lista = daoCuenta.obtenerCuentasPorFiltro(columna,valor);
+		return lista;
+	}
+	
+	public ArrayList<String> obtenerColumnasCuentas(){
+		ArrayList<String> columnas = new ArrayList<String>();
+		columnas = daoCuenta.obtenerColumnasCuentas();
+		return columnas;
+	}
+	
+	public boolean bajaCuenta(String id) {
+	    return daoCuenta.bajaLogicaCuenta(id);
+	}
 	
 }
