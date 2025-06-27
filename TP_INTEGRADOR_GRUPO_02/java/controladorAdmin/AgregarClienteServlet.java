@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.LocalidadDao;
 import dao.NacionalidadDao;
 import dao.ProvinciaDao;
+import dao.daoCliente;
 import entidades.Cliente;
 import entidades.Localidad;
 import entidades.Nacionalidad;
@@ -31,6 +32,11 @@ public class AgregarClienteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		//-------Usuario------------
+		daoCliente daoCliente = new daoCliente();
+		int idCuenta = daoCliente.obtenerUltimoId() + 1; 
+		request.setAttribute("idUsuario", idCuenta);
+		
 		//-------Nacionalidad------------
 		NacionalidadDao nacionalidadDao = new NacionalidadDao();
 	    ArrayList<Nacionalidad> listaNacionalidades = nacionalidadDao.obtenerNacionalidades();
@@ -47,9 +53,9 @@ public class AgregarClienteServlet extends HttpServlet {
 		rd.forward(request, response); 
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
 		
-	    String accion = request.getParameter("accion");
+		String accion = request.getParameter("accion");
 
 	    // Cargar nacionalidades y provincias siempre que vuelvas al JSP
 	    NacionalidadDao nacionalidadDao = new NacionalidadDao();
@@ -137,9 +143,8 @@ public class AgregarClienteServlet extends HttpServlet {
 	                    request.setAttribute("localidades", localidadesCargadas);
 	                }
 
-
 	                request.getRequestDispatcher("/Formularios/ModoBanco/ABMLClientes/AgregarClientes.jsp").forward(request, response);
-	                return; // Importante para detener la ejecución
+	                return; 
 	            }
 	            
 	          //si no hay errores, procede con el alta

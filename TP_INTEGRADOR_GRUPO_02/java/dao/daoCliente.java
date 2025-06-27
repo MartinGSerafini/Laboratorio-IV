@@ -244,7 +244,25 @@ public class daoCliente {
 	    	return id;
 	    }
 	    
-	    
+	    public int obtenerUltimoId() {
+	        int ultimoId = 0;
+	    	String sql = "SELECT MAX(id_cliente) AS ultimo_id FROM cliente";
+	        
+	        try (Connection con = Conexion.getConexion();
+	             Statement st = con.createStatement();
+	             ResultSet rs = st.executeQuery(sql)) {
+	            
+	        	rs.next();
+	            ultimoId = rs.getInt("ultimo_id");
+	        	
+	            /*if (rs.next()) {
+	                ultimoId = rs.getInt("ultimo_id");
+	            }*/
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return ultimoId;
+	    }
 	     
 	    
 }

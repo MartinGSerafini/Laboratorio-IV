@@ -73,7 +73,8 @@ public class NegocioCliente implements servicioABML<Cliente>{
 		
 		/// --- Validacion de campos vacíos ---
 		//Si hay algun campo vacio, mostramos el mensaje y salimos del método
-		if (usuario == null || usuario.trim().isEmpty() ||
+		if (
+			/*usuario == null || usuario.trim().isEmpty() ||*/ // es autoincremental en la bd
 			contrasena == null || contrasena.trim().isEmpty() ||
 			dniStr.trim().isEmpty() || 
 			cuil == null || cuil.trim().isEmpty() ||

@@ -38,12 +38,14 @@
  
 <div class="container mt-5">
     <h2 class="text-center mb-4 text-danger">Agregar Clientes</h2>
-        <form class="row g-4" action="/TP_INTEGRADOR_GRUPO_02/AgregarClienteServlet" method="post">
+        <form class="row g-4" action="${pageContext.request.contextPath}/AgregarClienteServlet" method="post">
     	<div class="col-md-6">
-            <label for="usuario" class="form-label">Usuario</label>
-             <input type="text" class="form-control" id="usuario" name="usuario" 
-                   value="<%= request.getParameter("usuario") != null ? request.getParameter("usuario") : "" %>">
+            <label for="usuario" class="form-label">Usuario</label> 
+            <input type="text" class="form-control" id="idUsuario" name="idUsuario"
+          		 value="<%= request.getAttribute("idUsuario") %>" readonly>        		 
+				
         </div>
+        
         <div class="col-md-6">
             <label for="contrasena" class="form-label">Contraseña</label>
                   <input type="password" class="form-control" id="contrasena" name="contrasena"
