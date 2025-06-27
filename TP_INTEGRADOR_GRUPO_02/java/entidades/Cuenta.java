@@ -30,6 +30,20 @@ public class Cuenta {
         this.tipoCuentaCuenta = tipoCuentaCuenta;
     }
 
+    //constructor sin tipoCuentaCuenta (borar despues) 
+    public Cuenta(String idCuenta, int idClienteCuenta, int idTipoCuentaCuenta, Date fechaCreacionCuenta,
+                  String numeroCuenta, String cbuCuenta, BigDecimal saldoCuenta) {
+        this.idCuenta = idCuenta;
+        this.idClienteCuenta = idClienteCuenta;
+        this.idTipoCuentaCuenta = idTipoCuentaCuenta;
+        this.fechaCreacionCuenta = fechaCreacionCuenta;
+        this.numeroCuenta = numeroCuenta;
+        this.cbuCuenta = cbuCuenta;
+        this.saldoCuenta = saldoCuenta;
+        
+        this.tipoCuentaCuenta = "Desconocido"; 
+    }
+    
     // Getters y Setters
 
     public String getIdCuenta() {
