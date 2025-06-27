@@ -2,7 +2,7 @@ package entidades;
 
 public class Prestamo {
     private String idPrestamo;
-    private String idClientePres;
+    private int idClientePres;
     private java.sql.Date fechaSolicitudPres;
     private java.math.BigDecimal importeSolicitadoPres;
     private java.math.BigDecimal importeTotalPres;
@@ -23,11 +23,11 @@ public class Prestamo {
         this.idPrestamo = idPrestamo;
     }
 
-    public String getIdClientePres() {
+    public int getIdClientePres() {
         return idClientePres;
     }
 
-    public void setIdClientePres(String idClientePres) {
+    public void setIdClientePres(int idClientePres) {
         this.idClientePres = idClientePres;
     }
 

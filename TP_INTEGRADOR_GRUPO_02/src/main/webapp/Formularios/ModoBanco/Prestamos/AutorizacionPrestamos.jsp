@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.ArrayList"%>
-<%@ page import="entidades.Prestamo"%>
+<%@ page import="entidades.Prestamo, entidades.EstadoPrestamo"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,7 +8,7 @@
     <title>Prestamos solicitados</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../z-CSS/ABMLCuentasCSS/ListarCuentas.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ABMLClientesCSS/ListadoClientes.css">
 </head>
 <body>
 
@@ -33,20 +33,38 @@
         </span>
     </div>
 </nav>
-
+  
+  
 <!-- CONTENIDO -->
+
 <div class="container mt-5">
     <h3 class="text-center mb-4 text-danger">Prestamos solicitados</h3>
 
     <!-- Busqueda y Filtros -->
-    <form class="d-flex justify-content-center mb-4" method="get" action="ListarCuentas.jsp">
+    <%
+		String filtroSeleccionado = request.getParameter("filtro") != null ? request.getParameter("filtro") : "0";
+	%>
+    <form class="d-flex justify-content-center mb-4" method="post" action="${pageContext.request.contextPath}/AutorizacionPrestamosServlet">
         <input type="text" name="busqueda" class="form-control w-25 me-2" placeholder="Buscar...">
-        <select name="filtro" class="form-select w-25 me-2">
-            <option selected>Seleccione un filtro</option>
-        </select>
-        <button type="submit" class="btn btn-custom">Buscar</button>
-    </form>
-
+        <select name="filtro" id="filtro" class="form-select w-25 me-2" onchange="mostrarOpcionesEstado()">
+    		<option value="0" <%= filtroSeleccionado.equals("0") ? "selected" : "" %>>Seleccione un filtro</option>
+    		<option value="1" <%= filtroSeleccionado.equals("1") ? "selected" : "" %>>Estado</option>
+    		<option value="2" <%= filtroSeleccionado.equals("2") ? "selected" : "" %>>Plazo</option>
+		</select>
+    	<div id="estados" name="filtroEstados" class="me-2" style="display: none;">
+    	<select name="estadoSeleccionado" class="form-select">
+        	<option value="0" selected>Seleccione estado</option>
+        	<%
+        	ArrayList<EstadoPrestamo> listaEstados = (ArrayList<EstadoPrestamo>) request.getAttribute("ListaEstados");
+        	if(listaEstados != null){
+            	for(EstadoPrestamo e : listaEstados){ %>
+                	<option value="<%=e.getId()%>"><%=e.getDescripcion()%></option>
+        	<% } } %>
+    	</select>
+	</div>
+    	<button type="submit" name="btnBuscar" class="btn btn-custom">Buscar</button>
+    	</form>
+    
 <%
 	ArrayList<Prestamo> lista = null;
 	if(request.getAttribute("ListaPrestamos") !=null){
@@ -64,35 +82,32 @@
                 </tr>
             </thead>
             <tbody>
-           <!--     <tr>
-                    <td>0001</td><td>0001</td><td>11/01/1111</td><td>1.000.000</td><td>2.000.000</td>
-                    <td>30 días</td><td>100.000</td><td>20 cuotas</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm" id=1>Autorizar prestamo</button>
-                        <button class="btn btn-danger btn-sm" id=2>Rechazar prestamo</button>
-                    </td>
-                </tr> --> 
             <%
             if(lista != null){
             	for(Prestamo p : lista){
             		%>
             		<tr>
-            		<td><%=p.getIdCuentaDepositoPres() %></td><td><%=p.getIdClientePres() %></td><td><%=p.getFechaSolicitudPres() %></td>
-            		<td>$<%=p.getImporteTotalPres() %></td><td>$<%=p.getImporteSolicitadoPres()%></td><td><%=p.getPlazoMesesPres() %></td>
+            		<td><%=p.getIdCuentaDepositoPres() %></td>
+            		<td><%=p.getIdClientePres() %></td>
+            		<td><%=p.getFechaSolicitudPres() %></td>
+            		<td>$<%=p.getImporteTotalPres() %></td>
+            		<td>$<%=p.getImporteSolicitadoPres()%></td>
+            		<td><%=p.getPlazoMesesPres() %></td>
             		<td>$<%=p.getMontoCuotaPres() %></td>
             		<%
             		if(p.getEstadoPres().getId()==3){
             			%>
             			<td>
-                        <button class="btn btn-warning btn-sm" id=1>Autorizar prestamo</button>
-                        <button class="btn btn-danger btn-sm" id=2>Rechazar prestamo</button>
+            			<form method="get" action="${pageContext.request.contextPath}/AutorizacionPrestamosServlet">
+            			<input type="hidden" name="idPrestamo" value="<%= p.getIdPrestamo() %>">
+                        <button type="submit" name="autorizar" class="btn btn-warning btn-sm">Autorizar</button>
+                        <button type="submit" name="rechazar" class="btn btn-danger btn-sm">Rechazar</button>
+                    </form>
                     </td>
             		<%}else{%>
             			<td><%=p.getEstadoPres().getDescripcion() %></td>
             		<%}
             		%>
-            		
-            		
             		</tr>
             	<% }
             }
@@ -111,5 +126,25 @@
 
 <!-- Bootstrap Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+function mostrarOpcionesEstado() {
+    const filtro = document.getElementById("filtro").value;
+    const contenedor = document.getElementById("estados");
+
+    if (filtro === "1") {
+        contenedor.style.display = "block";
+    } else {
+        contenedor.style.display = "none";
+    }
+}
+</script>
+
+<script>
+window.onload = function() {
+    mostrarOpcionesEstado(); // Ejecuta esto automáticamente al abrir la página
+};
+</script>
+
 </body>
 </html>

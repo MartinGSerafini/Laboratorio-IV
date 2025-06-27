@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entidades.EstadoPrestamo;
 import entidades.Prestamo;
 import negocio.NegocioPrestamo;
 
@@ -31,6 +32,14 @@ public class AutorizacionPrestamosServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("autorizar") != null) {
+			negocioPrestamo.modificarEstadoPrestamo("1", request.getParameter("idPrestamo"));
+		}
+		
+		if(request.getParameter("rechazar") != null) {
+			negocioPrestamo.modificarEstadoPrestamo("2", request.getParameter("idPrestamo"));
+		}
+		
 		ArrayList<Prestamo> listado = negocioPrestamo.listarPrestamos();
 		request.setAttribute("ListaPrestamos", listado);
 		
@@ -40,8 +49,28 @@ public class AutorizacionPrestamosServlet extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+			
+		if (request.getParameter("filtro") != null && !request.getParameter("filtro").equals("0")) {
+		    int filtroSeleccionado = Integer.parseInt(request.getParameter("filtro"));
+		    switch(filtroSeleccionado) {
+		    case 1:
+                ArrayList<EstadoPrestamo> estados = negocioPrestamo.obtenerEstados();
+                request.setAttribute("ListaEstados", estados);
+                break;
+		    case 2:
+		    	break;
+		    }
+		}
+		if(request.getParameter("btnBuscar") != null) {
+			if (request.getParameter("estadoSeleccionado") != null && !request.getParameter("estadoSeleccionado").equals("0")) {
+			    ArrayList<Prestamo> listado = negocioPrestamo.filtrarPorEstado(request.getParameter("estadoSeleccionado"));
+			    request.setAttribute("ListaPrestamos", listado);
+			}
+			ArrayList<EstadoPrestamo> estados = negocioPrestamo.obtenerEstados();
+		    request.setAttribute("ListaEstados", estados);
+		}
+		RequestDispatcher rd = request.getRequestDispatcher("/Formularios/ModoBanco/Prestamos/AutorizacionPrestamos.jsp");
+		rd.forward(request, response); 
 	}
-
+	
 }
