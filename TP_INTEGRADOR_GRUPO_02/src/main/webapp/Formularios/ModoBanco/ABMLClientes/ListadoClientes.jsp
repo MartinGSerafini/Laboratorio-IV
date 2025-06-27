@@ -105,203 +105,169 @@
     </thead>
     <tbody>
       <% if(lista != null)
-          for(Cliente cli : lista) { %>
-          <tr 
-  data-id='<%= cli.getIdCliente() %>'
-  data-dni='<%= cli.getDniCliente() %>'
-  data-cuil='<%= cli.getCuilCliente() %>'
-  data-nombre='<%= cli.getNombreCliente() %>'
-  data-apellido='<%= cli.getApellidoCliente() %>'
-  data-sexo='<%= cli.getSexoCliente() %>'
-  data-nacionalidad='<%= cli.getNacionalidadCliente() %>'
-  data-nacimiento='<%= cli.getFechaNacCliente() %>'
-  data-direccion='<%= cli.getDireccionCliente() %>'
-  data-provincia='<%= cli.getProvinciaCliente() %>'
-  data-localidad='<%= cli.getLocalidadCliente() %>'
-  data-correo='<%= cli.getCorreoCliente() %>'
-  data-telefono='<%= cli.getTelefonoCliente() %>'
-  data-contrasena='<%= cli.getContrasenaCliente() %>'
->
-          
-        <td><%= cli.getIdCliente() %></td>
-        <td><%= cli.getDniCliente() %></td>
-        <td><%= cli.getCuilCliente() %></td>
-        <td><%= cli.getNombreCliente() %></td>
-        <td><%= cli.getApellidoCliente() %></td>
-        <td><%= cli.getSexoCliente() %></td>
-        <td><%= cli.getNacionalidadCliente() %></td>
-        <td><%= cli.getFechaNacCliente() %></td>
-        <td><%= cli.getDireccionCliente() %></td>
-        <td><%= cli.getProvinciaCliente() %></td>
-        <td><%= cli.getLocalidadCliente() %></td>
-        <td><%= cli.getCorreoCliente() %></td>
-        <td><%= cli.getTelefonoCliente() %></td>
-        <td><%= cli.getContrasenaCliente() %></td>
-        <td>
-          <button class="btn btn-warning btn-sm" onclick="editarFila(this)">Editar</button>
-          <button class="btn btn-success btn-sm d-none" onclick="guardarCambios(this, '<%= cli.getIdCliente() %>')">Guardar</button>
-          <button class="btn btn-secondary btn-sm d-none" onclick="cancelarEdicion(this)">Cancelar</button>
-          <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmarEliminarModal" data-id="<%= cli.getIdCliente() %>">Eliminar</button>
-        </td>
-      </tr>
+        for(Cliente cli : lista) { %>
+        <tr data-id='<%= cli.getIdCliente() %>'>
+          <td data-campo="id_cliente"><%= cli.getIdCliente() %></td>
+          <td data-campo="dni_cliente"><%= cli.getDniCliente() %></td>
+          <td data-campo="cuil_cliente"><%= cli.getCuilCliente() %></td>
+          <td data-campo="nombre_cliente"><%= cli.getNombreCliente() %></td>
+          <td data-campo="apellido_cliente"><%= cli.getApellidoCliente() %></td>
+          <td data-campo="sexo_cliente"><%= cli.getSexoCliente() %></td>
+          <td data-campo="nacionalidad_cliente"><%= cli.getNombreNacionalidad() %></td>
+          <td data-campo="fechaNac_cliente"><%= cli.getFechaNacCliente() %></td>
+          <td data-campo="direccion_cliente"><%= cli.getDireccionCliente() %></td>
+          <td data-campo="provincia_cliente"><%= cli.getNombreProvincia() %></td>
+          <td data-campo="localidad_cliente"><%= cli.getNombreCliente() %></td>
+          <td data-campo="correo_cliente"><%= cli.getCorreoCliente() %></td>
+          <td data-campo="telefono_cliente"><%= cli.getTelefonoCliente() %></td>
+          <td data-campo="contraseña_cliente"><%= cli.getContrasenaCliente() %></td>
+          <td>
+            <button class="btn btn-warning btn-sm" onclick="editarFila(this)">Editar</button>
+            <button class="btn btn-success btn-sm d-none" onclick="guardarFila(this)">Guardar</button>
+            <button class="btn btn-secondary btn-sm d-none" onclick="cancelarFila(this)">Cancelar</button>
+            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmarEliminarModal" data-id="<%= cli.getIdCliente() %>">Eliminar</button>
+          </td>
+        </tr>
       <% } %>
     </tbody>
   </table>
 </div>
 
-    <nav class="d-flex justify-content-center mt-4">
-      <ul class="pagination">
-        <li class="page-item <%= (paginaActual == 1) ? "disabled" : "" %>"><a class="page-link" href="ListadoClientesServlet?pagina=<%= paginaActual - 1 %>">Anterior</a></li>
-        <% for(int i = 1; i <= totalPaginas; i++) { %>
-          <li class="page-item <%= (i == paginaActual) ? "active" : "" %>"><a class="page-link" href="ListadoClientesServlet?pagina=<%= i %>"><%= i %></a></li>
-        <% } %>
-        <li class="page-item <%= (paginaActual == totalPaginas) ? "disabled" : "" %>"><a class="page-link" href="ListadoClientesServlet?pagina=<%= paginaActual + 1 %>">Siguiente</a></li>
-      </ul>
-    </nav>
+<nav class="d-flex justify-content-center mt-4">
+  <ul class="pagination">
+    <li class="page-item <%= (paginaActual == 1) ? "disabled" : "" %>"><a class="page-link" href="ListadoClientesServlet?pagina=<%= paginaActual - 1 %>">Anterior</a></li>
+    <% for(int i = 1; i <= totalPaginas; i++) { %>
+      <li class="page-item <%= (i == paginaActual) ? "active" : "" %>"><a class="page-link" href="ListadoClientesServlet?pagina=<%= i %>"><%= i %></a></li>
+    <% } %>
+    <li class="page-item <%= (paginaActual == totalPaginas) ? "disabled" : "" %>"><a class="page-link" href="ListadoClientesServlet?pagina=<%= paginaActual + 1 %>">Siguiente</a></li>
+  </ul>
+</nav>
 
-    <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" aria-labelledby="confirmarEliminarLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header bg-danger text-white">
-            <h5 class="modal-title">Confirmar Eliminación</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-          </div>
-          <div class="modal-body"> ¿Estás seguro que deseas eliminar este cliente? </div>
-          <div class="modal-footer">
-            <form id="formEliminar" method="post" action="/TP_INTEGRADOR_GRUPO_02/EliminarClienteServlet">
-              <input type="hidden" name="idCliente" id="idClienteEliminar">
-              <button type="submit" class="btn btn-danger">Sí, eliminar</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            </form>
-          </div>
-        </div>
+<div class="modal fade" id="confirmarEliminarModal" tabindex="-1" aria-labelledby="confirmarEliminarLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">Confirmar Eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body"> ¿Estás seguro que deseas eliminar este cliente? </div>
+      <div class="modal-footer">
+        <form id="formEliminar" method="post" action="/TP_INTEGRADOR_GRUPO_02/EliminarClienteServlet">
+          <input type="hidden" name="idCliente" id="idClienteEliminar">
+          <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </form>
       </div>
     </div>
   </div>
+</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const listaNacionalidades = [
+    <% 
+      ArrayList<entidades.Nacionalidad> listaNac = (ArrayList<entidades.Nacionalidad>) request.getAttribute("listaNacionalidades");
+      if (listaNac != null) {
+        for (int i = 0; i < listaNac.size(); i++) {
+          entidades.Nacionalidad n = listaNac.get(i);
+          out.print("{ id:" + n.getId() + ", nombre:'" + n.getNacionalidad().replace("'", "\\'") + "'}");
+          if (i < listaNac.size() - 1) out.print(",");
+        }
+      }
+    %>
+  ];
+</script>
   <script>
-    const modalEliminar = document.getElementById('confirmarEliminarModal');
-    modalEliminar.addEventListener('show.bs.modal', function (event) {
-      const boton = event.relatedTarget;
-      const idCliente = boton.getAttribute('data-id');
-      document.getElementById('idClienteEliminar').value = idCliente;
+  function escapeHtml(text) {
+	    const map = {
+	      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+	    };
+	    return text.replace(/[&<>"']/g, m => map[m]);
+	  }
+ 
+  function editarFila(btnEditar) {
+	  const fila = btnEditar.closest('tr');
+	  const tds = fila.querySelectorAll('td[data-campo]');
+	  tds.forEach(td => {
+	    const valor = td.textContent.trim();
+	    td.setAttribute('data-valor-original', valor);
+
+	    if (td.getAttribute('data-campo') === 'id_cliente') {
+	      td.innerText = valor;
+	    } else if (td.getAttribute('data-campo') === 'nacionalidad_cliente') {
+	      let options = '';
+	      listaNacionalidades.forEach(nac => {
+	        options += '<option value="' + nac.id + '"' + (valor === nac.nombre ? ' selected' : '') + '>' + nac.nombre + '</option>';
+	      });
+	      td.innerHTML = '<select class="form-select form-select-sm">' + options + '</select>';
+	    } else {
+	      td.innerHTML = `<input type="text" class="form-control form-control-sm" value="${escapeHtml(valor)}">`;
+	    }
+	  });
+
+	  toggleBotones(fila, true);
+	}
+
+
+  function cancelarEdicion(btnCancelar) {
+    const fila = btnCancelar.closest('tr');
+    const tds = fila.querySelectorAll('td[data-campo]');
+    tds.forEach(td => {
+      const valorOriginal = td.getAttribute('data-valor-original');
+      td.innerText = valorOriginal;
     });
 
-    function escaparHTML(texto) {
-      if (!texto) return '';
-      return texto
-        .replace(/&/g, "&amp;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-    }
+    toggleBotones(fila, false);
+  }
 
-    function editarFila(btnEditar) {
-    	  const fila = btnEditar.closest('tr');
-    	  const celdas = fila.querySelectorAll('td');
+  function guardarCambios(btnGuardar) {
+    const fila = btnGuardar.closest('tr');
+    const idCliente = fila.getAttribute('data-id');
+    const tds = fila.querySelectorAll('td[data-campo]');
+    const datos = { idCliente };
 
-    	  // Guardar el contenido original
-    	  fila.dataset.original = JSON.stringify(Array.from(celdas).slice(1, 14).map(td => td.textContent.trim()));
+    tds.forEach(td => {
+      const campo = td.getAttribute('data-campo');
+      const input = td.querySelector('input');
+      datos[campo] = input.value;
+    });
 
-    	  // Campos esperados
-    	  const nombresCampos = [
-    	    'dni', 'cuil', 'nombre', 'apellido', 'sexo', 'nacionalidad',
-    	    'nacimiento', 'direccion', 'provincia', 'localidad', 'correo',
-    	    'telefono', 'contrasena'
-    	  ];
+    fetch('/TP_INTEGRADOR_GRUPO_02/ModificarClienteServlet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos)
+    })
+    .then(res => res.json())
+    .then(resp => {
+      if (resp.success) {
+        tds.forEach(td => {
+          const input = td.querySelector('input');
+          td.innerText = input.value;
+        });
+        toggleBotones(fila, false);
+      } else {
+        alert("❌ Error al guardar cambios");
+      }
+    });
+  }
 
-    	  const idCliente = fila.dataset.id;
-
-    	  if (!idCliente) {
-    	    console.error("❌ No se encontró 'data-id' en la fila");
-    	    alert("Error: No se pudo obtener el ID del cliente");
-    	    return;
-    	  }
-
-    	  nombresCampos.forEach((nombre, i) => {
-    	    if (!nombre) {
-    	      console.warn(`⚠️ Campo en índice ${i} es vacío`);
-    	      return;
-    	    }
-
-    	    const valor = fila.dataset[nombre];
-    	    if (valor === undefined) {
-    	      console.warn(`⚠️ El atributo data-${nombre} no existe en <tr>. Revisa los nombres`);
-    	    }
-
-    	    const valorEscapado = escaparHTML(valor || '');
-    	    console.log(`✅ Campo: ${nombre}, ID: ${idCliente}, Valor: ${valor}`);
-
-    	    // Insertar input
-    	    celdas[i + 1].innerHTML = `
-    	      <input type="text" 
-    	             class="form-control form-control-sm"
-    	             name="${nombre}" 
-    	             id="${nombre}_${idCliente}" 
-    	             value="${valorEscapado}">
-    	    `;
-    	  });
-
-    	  // Mostrar botones "Guardar" y "Cancelar"
-    	  btnEditar.classList.add('d-none');
-    	  fila.querySelector('.btn-success').classList.remove('d-none');
-    	  fila.querySelector('.btn-secondary').classList.remove('d-none');
-    	}
+  function toggleBotones(fila, enEdicion) {
+    const [btnEditar, btnGuardar, btnCancelar] = fila.querySelectorAll('button');
+    btnEditar.classList.toggle('d-none', enEdicion);
+    btnGuardar.classList.toggle('d-none', !enEdicion);
+    btnCancelar.classList.toggle('d-none', !enEdicion);
+  }
 
 
+  // Código para eliminar
+  const modalEliminar = document.getElementById('confirmarEliminarModal');
+  modalEliminar.addEventListener('show.bs.modal', function (event) {
+    const boton = event.relatedTarget;
+    const idCliente = boton.getAttribute('data-id');
+    document.getElementById('idClienteEliminar').value = idCliente;
+  });
+</script>
 
-    function cancelarEdicion(btnCancelar) {
-      const fila = btnCancelar.closest('tr');
-      const celdas = fila.querySelectorAll('td');
-      const valoresOriginales = JSON.parse(fila.dataset.original);
-
-      valoresOriginales.forEach((val, i) => {
-        celdas[i + 1].innerText = val;
-      });
-
-      fila.querySelector('.btn-warning').classList.remove('d-none');
-      fila.querySelector('.btn-success').classList.add('d-none');
-      fila.querySelector('.btn-secondary').classList.add('d-none');
-    }
-
-    function guardarCambios(btnGuardar, idCliente) {
-      const fila = btnGuardar.closest('tr');
-      const inputs = fila.querySelectorAll('input');
-      const datos = Array.from(inputs).map(input => input.value.trim());
-      const cliente = {
-        idCliente,
-        dni: datos[0],
-        cuil: datos[1],
-        nombre: datos[2],
-        apellido: datos[3],
-        sexo: datos[4],
-        nacionalidad: datos[5],
-        fechaNac: datos[6],
-        direccion: datos[7],
-        provincia: datos[8],
-        localidad: datos[9],
-        correo: datos[10],
-        telefono: datos[11],
-        contrasena: datos[12]
-      };
-      fetch('/TP_INTEGRADOR_GRUPO_02/ModificarClienteServlet', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(cliente)
-      })
-      .then(res => res.json())
-      .then(response => {
-        if (response.success) {
-          alert('Cliente modificado con éxito');
-          location.reload();
-        } else {
-          alert('Error: ' + response.message);
-        }
-      })
-      .catch(err => alert('Error en la solicitud: ' + err));
-    }
-  </script>
 </body>
 </html>

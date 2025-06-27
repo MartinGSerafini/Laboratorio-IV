@@ -97,6 +97,9 @@ public class daoCliente {
 				cliente.setTelefonoCliente(rs.getString("telefono_cliente"));
 				cliente.setUsuarioCliente(rs.getString("usuario_cliente"));
 				cliente.setContrasenaaCliente(rs.getString("contraseña_cliente"));
+				cliente.setNombreProvincia(rs.getString("nombre_provincia"));
+				cliente.setNombreLocalidad(rs.getString("nombre_localidad"));
+				cliente.setNombreNacionalidad(rs.getString("nombre_nacionalidad"));
 
 				
 				lista.add(cliente);
@@ -171,6 +174,9 @@ public class daoCliente {
 	                    cliente.setTelefonoCliente(rs.getString("telefono_cliente"));
 	                    cliente.setUsuarioCliente(rs.getString("usuario_cliente"));
 	                    cliente.setContrasenaaCliente(rs.getString("contraseña_cliente"));
+	                    cliente.setNombreProvincia(rs.getString("nombre_provincia"));
+	                    cliente.setNombreLocalidad(rs.getString("nombre_localidad"));
+	                    cliente.setNombreNacionalidad(rs.getString("nombre_nacionalidad"));
 
 	                    listaFiltrada.add(cliente);
 	                }

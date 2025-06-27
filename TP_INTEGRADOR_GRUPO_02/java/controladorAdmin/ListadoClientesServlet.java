@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import entidades.Cliente;
+import entidades.Nacionalidad;
 import negocio.NegocioCliente;
+import negocio.NegocioNacionalidad;
 
 @WebServlet("/ListadoClientesServlet")
 public class ListadoClientesServlet extends HttpServlet {
@@ -23,6 +25,15 @@ public class ListadoClientesServlet extends HttpServlet {
         ArrayList<String> columnas = negocio.obtenerColumnasClientes();
         request.setAttribute("columnas", columnas);
 
+        NegocioNacionalidad negocioNac = new NegocioNacionalidad();
+        ArrayList<Nacionalidad> listaNacionalidades = negocioNac.obtenerTodasLasNacionalidades();
+        request.setAttribute("listaNacionalidades", listaNacionalidades);
+        
+        NegocioProvincia negocioProv = new NegocioProvincia();
+        ArrayList<Provincia> listaProvincias = negocioProv.obtenerTodasLasProvincias();
+        request.setAttribute("listaProvincias", listaProvincias);
+       
+        
         String busqueda = request.getParameter("busqueda");
         String filtro = request.getParameter("filtro");
 
@@ -33,7 +44,6 @@ public class ListadoClientesServlet extends HttpServlet {
         } else {
             listaClientes = negocio.ObtenerListadoClientes();
         }
-
         // Paginación
         int registrosPorPagina = 10;
         int paginaActual = 1;

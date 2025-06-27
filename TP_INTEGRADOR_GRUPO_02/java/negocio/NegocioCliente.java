@@ -20,7 +20,7 @@ public class NegocioCliente implements servicioABML<Cliente>{
 			boolean filas= daoCliente.altaCliente(cliente);
 			
 			if(filas==false) {
-				throw new OperacionNoEfectuadaExc("No se insertó ningún cliente.");
+				throw new OperacionNoEfectuadaExc("No se inserto ningun cliente.");
 			}
 			
 			return true;
@@ -170,7 +170,7 @@ public class NegocioCliente implements servicioABML<Cliente>{
 			return idCliente;
 		}
 		else {
-			throw new ClienteNoEncontradoExc("No se encontró un cliente con el DNI: "+dni);
+			throw new ClienteNoEncontradoExc("No se encontro un cliente con el DNI: "+dni);
 		}
 	}
 	

@@ -17,6 +17,9 @@ public class Cliente {
     private String telefonoCliente;
     private String usuarioCliente;
     private String contrasenaCliente;
+    private String nombreProvincia;
+    private String nombreLocalidad;
+    private String nombreNacionalidad;
     public Cliente() {}
 
     // Constructor completo
@@ -161,6 +164,28 @@ public class Cliente {
     public void setContrasenaaCliente(String contrasenaCliente) {
         this.contrasenaCliente = contrasenaCliente;
     }
-	
-	
+    public String getNombreProvincia() {
+        return nombreProvincia;
+    }
+
+    public void setNombreProvincia(String nombreProvincia) {
+        this.nombreProvincia = nombreProvincia;
+    }
+
+    public String getNombreLocalidad() {
+        return nombreLocalidad;
+    }
+
+    public void setNombreLocalidad(String nombreLocalidad) {
+        this.nombreLocalidad = nombreLocalidad;
+    }
+
+    public String getNombreNacionalidad() {
+        return nombreNacionalidad;
+    }
+
+    public void setNombreNacionalidad(String nombreNacionalidad) {
+        this.nombreNacionalidad = nombreNacionalidad;
+    }
+
 }
