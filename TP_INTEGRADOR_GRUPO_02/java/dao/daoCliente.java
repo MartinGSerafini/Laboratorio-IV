@@ -243,6 +243,7 @@ public class daoCliente {
 		        }
 	    	return id;
 	    }
+
 	    public boolean existeDni(int dni, String idClienteExcluir) {
 	        String sql = "SELECT COUNT(*) FROM cliente WHERE dni_cliente = ? AND id_cliente <> ?";
 	        try (Connection conn = Conexion.getConexion();
@@ -339,6 +340,10 @@ public class daoCliente {
 	        }
 	    }
 
+
+
+
+	    
 	    public int obtenerUltimoId() {
 	        int ultimoId = 0;
 	    	String sql = "SELECT MAX(id_cliente) AS ultimo_id FROM cliente";
@@ -358,5 +363,7 @@ public class daoCliente {
 	        }
 	        return ultimoId;
 	    }
+	     
+	    
 
 }

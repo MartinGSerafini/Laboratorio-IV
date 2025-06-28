@@ -35,10 +35,11 @@ public class ListadoClientesServlet extends HttpServlet {
         NegocioNacionalidad negocioNac = new NegocioNacionalidad();
         List<Nacionalidad> listaNacionalidades = negocioNac.obtenerTodasLasNacionalidades();
         request.setAttribute("listaNacionalidades", listaNacionalidades);
-        
+
         NegocioProvincia negocioProv = new NegocioProvincia();
         List<Provincia> listaProvincias = negocioProv.obtenerTodasLasProvincias();
         request.setAttribute("listaProvincias", listaProvincias);
+
         
         NegocioLocalidad negocioLoc = new NegocioLocalidad();
         List<Localidad> listaLocalidades = negocioLoc.obtenerTodasLasLocalidades();
@@ -54,7 +55,7 @@ public class ListadoClientesServlet extends HttpServlet {
         } else {
             listaClientes = negocio.ObtenerListadoClientes();
         }
-        // Paginacion
+        // Paginaci�n
         int registrosPorPagina = 10;
         int paginaActual = 1;
         if (request.getParameter("pagina") != null) {

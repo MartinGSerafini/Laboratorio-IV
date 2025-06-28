@@ -18,11 +18,12 @@
             <div class="dropdown me-3">
                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown">☰</button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="../ABMLCuentas/AgregarCuentas.jsp">CUENTAS</a></li>
-                    <li><a class="dropdown-item" href="../AutorizacionPrestamos.jsp">PRÉSTAMOS</a></li>
-                    <li><a class="dropdown-item" href="../Informes.jsp">INFORMES</a></li>
-                    <li><a class="dropdown-item" href="../../Login/IngresoAdministrador.jsp">CERRAR SESIÓN</a></li>
-                </ul>
+          <li><a class="dropdown-item" href="${pageContext.request.contextPath}/AgregarClienteServlet">CLIENTES</a></li>
+    		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/AgregarCuentaServlet">CUENTAS</a></li>
+    		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/AutorizacionPrestamosServlet">PRÉSTAMOS</a></li>
+    		<a class="dropdown-item" href="${pageContext.request.contextPath}//Formularios/ModoBanco/Informes/Informes.jsp">INFORMES</a>
+    		<a class="dropdown-item" href="${pageContext.request.contextPath}/Formularios/Login/IngresoAdministrador.jsp">CERRAR SESIÓN</a>
+			</ul>
             </div>
             <a href="${pageContext.request.contextPath}/AgregarCuentasServlet" class="btn btn-custom me-2">Agregar Cuenta</a>
             <a href="${pageContext.request.contextPath}/ListadoCuentasServlet" class="btn btn-custom">Listar Cuentas</a>
