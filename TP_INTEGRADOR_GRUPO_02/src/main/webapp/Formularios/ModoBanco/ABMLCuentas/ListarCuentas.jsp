@@ -8,7 +8,7 @@
   <title>Listado de Clientes</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ABMLClientesCSS/ListadoCuentas.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}Formularios/z-CSS/ABMLClientesCSS/ListarCuentas.css">
 </head>
 <body>
   <!-- Barra de Navegación -->
@@ -106,14 +106,14 @@
     <tbody>
       <% if(lista != null)
           for(Cuenta cue : lista) { %>
-      <tr data-id=´<%= cue.getIdCuenta() %>´>
+      <tr data-id='<%= cue.getIdCuenta() %>'>
         <td data-campo="id_cuenta"><%= cue.getIdCuenta() %></td>
         <td data-campo="idCliente_cuenta"><%= cue.getIdClienteCuenta() %></td>
         <td data-campo="fechaCreacion_cuenta"><%= cue.getFechaCreacionCuenta() %></td>
         <td data-campo="numero_cuenta"><%= cue.getNumeroCuenta() %></td>
         <td data-campo="cbu_cuenta"><%= cue.getCbuCuenta() %></td>
         <td data-campo="saldo_cuenta"><%= cue.getSaldoCuenta() %></td>
-        <td data-campo="descripcion_tipocuenta"><%= cue.getTipoCuentaCuenta() %></td>
+        <td data-campo="descripcion_tipocuenta"><%= cue.getIdTipoCuentaCuenta()%> - <%= cue.getTipoCuentaCuenta() %></td>
         <td>
           <button class="btn btn-warning btn-sm" onclick="editarFila(this)">Editar</button>
           <button class="btn btn-success btn-sm d-none" onclick="guardarFila(this)">Guardar</button>
@@ -143,40 +143,38 @@
   </ul>
 </nav>
 
-<!-- Modal de confirmación al eliminar un registro-->
-<div class="modal fade" id="confirmarEliminarModal" tabindex="-1" aria-labelledby="confirmarEliminarLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="confirmarEliminarLabel">Confirmar Eliminación</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        ¿Estás seguro que deseas eliminar este cliente?
-      </div>
-      <div class="modal-footer">
-        <form id="formEliminar" method="post" action="/TP_INTEGRADOR_GRUPO_02/EliminarCuentaServlet">
-          <input type="hidden" name="idCuenta" id="idCuentasEliminar">
-          <button type="submit" class="btn btn-danger" name="Eliminar">Sí, eliminar</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        </form>
+ <!-- Modal Confirmar Eliminación -->
+    <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" aria-labelledby="confirmarEliminarLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title">Confirmar Eliminación</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body"> ¿Estás seguro que deseas eliminar esta cuenta? </div>
+          <div class="modal-footer">
+            <form id="formEliminar" method="post" action="/TP_INTEGRADOR_GRUPO_02/EliminarCuentaServlet">
+              <input type="hidden" name="idCuenta" id="idCuentaEliminar">
+              <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 </div>
-
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Script para cargar el ID del cliente en el modal -->
 <script>
-  const modalEliminar = document.getElementById('confirmarEliminarModal');
-  modalEliminar.addEventListener('show.bs.modal', function (event) {
-    const boton = event.relatedTarget;
-    const idCliente = boton.getAttribute('data-id');
-    const inputHidden = modalEliminar.querySelector('#idCuentaEliminar');
-    inputHidden.value = idCuenta;
-  });
+// Modal eliminar: asignar idCliente al input hidden
+const modalEliminar = document.getElementById('confirmarEliminarModal');
+modalEliminar.addEventListener('show.bs.modal', function (event) {
+  const boton = event.relatedTarget;
+  const idCuenta = boton.getAttribute('data-id');
+  document.getElementById('idCuentaEliminar').value = idCuenta;
+});
 </script>
 
 </body>

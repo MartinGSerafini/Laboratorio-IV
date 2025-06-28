@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -128,5 +129,30 @@ public class daoCuenta {
 	            return false;
 	        }
 	    } 
+	 
+	 public boolean modificarCuenta(Cuenta cuenta) {
+	        String sql = "UPDATE cuenta SET " +
+	            "numero_cuenta = ?, " +
+	            "cbu_cuenta = ?, " +
+	            "saldo_cuenta = ?, " +
+	            "idTipoCuenta_cuenta = ?, "+
+	            "WHERE id_cuenta = ? AND estado_cuentas = 1";
+
+	        try (Connection conn = Conexion.getConexion();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+	            ps.setString(4, cuenta.getNumeroCuenta());
+	            ps.setString(6, cuenta.getCbuCuenta());
+	            ps.setBigDecimal(7, cuenta.getSaldoCuenta());
+	            ps.setInt(8, cuenta.getIdTipoCuentaCuenta());
+
+	            int filasActualizadas = ps.executeUpdate();
+	            return filasActualizadas > 0;
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
 	
 }

@@ -1,5 +1,6 @@
 package negocio;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +36,6 @@ public class NegocioCuenta implements servicioABML<Cuenta>{
 		return false;
 	}
 
-	@Override
-	public boolean modificacion(String id, Cuenta entidad) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public boolean lectura(String id) {
@@ -75,4 +71,73 @@ public class NegocioCuenta implements servicioABML<Cuenta>{
 	    return daoCuenta.bajaLogicaCuenta(id);
 	}
 	
+	public boolean modificacion(String id, Cuenta cuenta) {
+	    return daoCuenta.modificarCuenta(cuenta);
+	}
+	
+	public String validarYVerificarCuenta(String idCuenta, int idClienteCuenta, String fechaCreacionCuenta, String numeroCuenta,
+            String cbuCuenta, BigDecimal saldoCuenta, String descripcionTipoCuenta, int idTipoCuenta) {
+
+System.out.println("ValidarCliente - Par�metros recibidos: " +
+"idCuenta=" + idCuenta +
+", idClienteCuenta=" + idClienteCuenta +
+", fechaCreacionCuenta=" + fechaCreacionCuenta +
+", numeroCuenta=" + numeroCuenta +
+", cbuCuenta=" + cbuCuenta +
+", saldoCuenta=" + saldoCuenta +
+", descripcionTipoCuenta=" + descripcionTipoCuenta +
+", idTipoCuenta=" + idTipoCuenta);
+
+
+StringBuilder errores = new StringBuilder();
+
+// Validar campos String
+if (idCuenta == null || idCuenta.trim().isEmpty()) {
+errores.append("El idCuenta es obligatorio.\n");
+}
+if (numeroCuenta == null || numeroCuenta.trim().isEmpty()) {
+errores.append("El Numero de Cuenta es obligatorio.\n");
+}
+if (cbuCuenta == null || cbuCuenta.trim().isEmpty()) {
+errores.append("El CBU es obligatorio.\n");
+}
+if (descripcionTipoCuenta == null || descripcionTipoCuenta.trim().isEmpty()) {
+errores.append("El Descripciondel Tipo de Cuenta es obligatorio.\n");
+}
+// Validar campos num�ricos
+if (idClienteCuenta <= 0) {
+errores.append("El id Cliente Cuenta es obligatorio y debe ser un n�mero v�lido.\n");
+}
+if (idTipoCuenta <= 0) {
+errores.append("El id Tipo de Cuenta Cuenta es obligatorio y debe ser un n�mero v�lido.\n");
+}
+
+// Validar formatos espec�ficos
+if (saldoCuenta.compareTo(BigDecimal.ZERO) <= 0) {
+	errores.append("El saldo no debe ser negativo.\n");
+}
+
+// Validar fecha
+if (fechaCreacionCuenta != null && !fechaCreacionCuenta.trim().isEmpty()) {
+try {
+java.sql.Date.valueOf(fechaCreacionCuenta);
+} catch (IllegalArgumentException e) {
+errores.append("Formato de fecha de creación inv�lido.\n");
+}
+}
+/*
+// Validar longitud CBU solo si no hay errores anteriores en esos campos
+if (cbuCuenta > 0 && !String.valueOf(cbuCuenta).matches("\\d{22}")) {
+errores.append("El CBU debe tener exactamente 22 d�gitos num�ricos.\n");
+}
+
+// Validar unicidad solo si no hay errores con esos campos
+
+if (errores.length() == 0) {
+if (daoCuenta.existeDni(dni, idCliente)) {
+errores.append("El DNI ya est� registrado para otro cliente.\n");
+}
+*/
+return errores.length() > 0 ? errores.toString() : null;
+}
 }
