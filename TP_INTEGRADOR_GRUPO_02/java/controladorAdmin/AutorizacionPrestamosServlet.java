@@ -32,6 +32,7 @@ public class AutorizacionPrestamosServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ArrayList<Prestamo> listado = new ArrayList<Prestamo>();
 		if(request.getParameter("autorizar") != null) {
 			negocioPrestamo.modificarEstadoPrestamo("1", request.getParameter("idPrestamo"));
 		}
@@ -40,8 +41,41 @@ public class AutorizacionPrestamosServlet extends HttpServlet {
 			negocioPrestamo.modificarEstadoPrestamo("2", request.getParameter("idPrestamo"));
 		}
 		
-		ArrayList<Prestamo> listado = negocioPrestamo.listarPrestamos();
+		
+		listado = negocioPrestamo.listarPrestamos();
 		request.setAttribute("ListaPrestamos", listado);
+		
+		
+		
+		if (request.getParameter("filtro") != null && request.getParameter("filtro").equals("1")) {
+			ArrayList<EstadoPrestamo> estados = negocioPrestamo.obtenerEstados();
+			request.setAttribute("ListaEstados", estados);
+		}
+		
+		if(request.getParameter("btnBuscar") != null) {
+			if (request.getParameter("estadoSeleccionado") != null && !request.getParameter("estadoSeleccionado").equals("0")) {
+				listado = negocioPrestamo.filtrarPorEstado(request.getParameter("estadoSeleccionado"));
+				request.setAttribute("ListaPrestamos", listado);
+			}
+			ArrayList<EstadoPrestamo> estados = negocioPrestamo.obtenerEstados();
+			request.setAttribute("ListaEstados", estados);
+			
+			if(request.getParameter("busqueda") != null && !request.getParameter("busqueda").trim().isEmpty()) {
+				if(request.getParameter("busqueda").matches("\\d+")) {
+					listado = negocioPrestamo.filtrarPorPlazoMeses(request.getParameter("busqueda").trim());
+					request.setAttribute("ListaPrestamos", listado);
+				}
+			}
+		}
+		
+		if(request.getParameter("btnquitarFiltro")!= null) {
+			request.setAttribute("filtroSeleccionado", "0");
+			request.setAttribute("busqueda", "");
+			listado = negocioPrestamo.listarPrestamos();
+			request.setAttribute("ListaPrestamos", listado);
+		}
+		
+		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/Formularios/ModoBanco/Prestamos/AutorizacionPrestamos.jsp");
 		rd.forward(request, response); 
@@ -50,25 +84,7 @@ public class AutorizacionPrestamosServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
-		if (request.getParameter("filtro") != null && !request.getParameter("filtro").equals("0")) {
-		    int filtroSeleccionado = Integer.parseInt(request.getParameter("filtro"));
-		    switch(filtroSeleccionado) {
-		    case 1:
-                ArrayList<EstadoPrestamo> estados = negocioPrestamo.obtenerEstados();
-                request.setAttribute("ListaEstados", estados);
-                break;
-		    case 2:
-		    	break;
-		    }
-		}
-		if(request.getParameter("btnBuscar") != null) {
-			if (request.getParameter("estadoSeleccionado") != null && !request.getParameter("estadoSeleccionado").equals("0")) {
-			    ArrayList<Prestamo> listado = negocioPrestamo.filtrarPorEstado(request.getParameter("estadoSeleccionado"));
-			    request.setAttribute("ListaPrestamos", listado);
-			}
-			ArrayList<EstadoPrestamo> estados = negocioPrestamo.obtenerEstados();
-		    request.setAttribute("ListaEstados", estados);
-		}
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/Formularios/ModoBanco/Prestamos/AutorizacionPrestamos.jsp");
 		rd.forward(request, response); 
 	}

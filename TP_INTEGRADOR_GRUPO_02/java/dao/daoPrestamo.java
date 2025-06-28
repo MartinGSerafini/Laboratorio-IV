@@ -19,7 +19,6 @@ public class daoPrestamo {
 		try (Connection conn = Conexion.getConexion();
 				Statement st = conn.createStatement();) {
 			    ResultSet rs = st.executeQuery(sql);
-			    rs.next();
 			    while(rs.next()) {
 			    	EstadoPrestamo estadoPrestamo = new EstadoPrestamo(rs.getInt("id_estadoPrestamos"),rs.getString("desc_estadoPrestamo"));
 			    	lista.add(estadoPrestamo);
@@ -102,22 +101,7 @@ public class daoPrestamo {
 				Statement st = conn.createStatement();) {
 			    ResultSet rs = st.executeQuery(sql);
 			
-			    while(rs.next()) {
-					int estado = rs.getInt("estado_prestamo");
-					if(estado == 1) {
-						Prestamo prestamo = new Prestamo();
-						prestamo.setIdPrestamo(rs.getString("id_prestamo"));
-						prestamo.setIdClientePres(rs.getInt("idCliente_pres"));
-						prestamo.setFechaSolicitudPres(rs.getDate("fechaSolicitud_pres"));
-						prestamo.setImporteSolicitadoPres(rs.getBigDecimal("importeSolicitado_pres"));
-						prestamo.setImporteTotalPres(rs.getBigDecimal("importeTotal_pres"));
-						prestamo.setPlazoMesesPres(rs.getInt("plazoMeses_pres"));
-						prestamo.setMontoCuotaPres(rs.getBigDecimal("montoCuota_pres"));
-						prestamo.setEstadoPres(obtenerEstadoPrestamo(rs.getInt("estado_pres")));
-						prestamo.setIdCuentaDepositoPres(rs.getString("idCuentaDeposito_pres"));
-						lista.add(prestamo);
-					}
-				}
+			    cargar(lista,rs);
 			
 			conn.close();
 		}catch(Exception e) {

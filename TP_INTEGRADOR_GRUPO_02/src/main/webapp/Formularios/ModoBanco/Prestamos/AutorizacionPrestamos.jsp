@@ -44,9 +44,9 @@
     <%
 		String filtroSeleccionado = request.getParameter("filtro") != null ? request.getParameter("filtro") : "0";
 	%>
-    <form class="d-flex justify-content-center mb-4" method="post" action="${pageContext.request.contextPath}/AutorizacionPrestamosServlet">
-        <input type="text" name="busqueda" class="form-control w-25 me-2" placeholder="Buscar...">
-        <select name="filtro" id="filtro" class="form-select w-25 me-2" onchange="mostrarOpcionesEstado()">
+    <form class="d-flex justify-content-center mb-4" method="get" action="${pageContext.request.contextPath}/AutorizacionPrestamosServlet">
+        <input type="text" name="busqueda" id="busqueda" class="form-control w-25 me-2" placeholder="Buscar...">
+        <select name="filtro" id="filtro" class="form-select w-25 me-2" onchange="mostrarOpciones()">
     		<option value="0" <%= filtroSeleccionado.equals("0") ? "selected" : "" %>>Seleccione un filtro</option>
     		<option value="1" <%= filtroSeleccionado.equals("1") ? "selected" : "" %>>Estado</option>
     		<option value="2" <%= filtroSeleccionado.equals("2") ? "selected" : "" %>>Plazo</option>
@@ -63,6 +63,9 @@
     	</select>
 	</div>
     	<button type="submit" name="btnBuscar" class="btn btn-custom">Buscar</button>
+    	<div id="quitarFiltro" name="quitarFiltro" class="me-2" style="display: none;">
+    		<button type="submit" name="btnquitarFiltro" onclick="quitarFiltro()" class="btn btn-custom ms-2">Quitar filtro</button>
+    	</div>
     	</form>
     
 <%
@@ -128,22 +131,46 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-function mostrarOpcionesEstado() {
+function mostrarOpciones() {
     const filtro = document.getElementById("filtro").value;
-    const contenedor = document.getElementById("estados");
-
-    if (filtro === "1") {
-        contenedor.style.display = "block";
-    } else {
-        contenedor.style.display = "none";
+    const estados = document.getElementById("estados");
+    const txtBusqueda = document.getElementById("busqueda");
+    const quitarFiltro = document.getElementById("quitarFiltro");
+	
+    if (filtro !== "0"){
+    	quitarFiltro.style.display = "block";
+    	if (filtro === "1") {
+        	estados.style.display = "block";
+    	} else if (filtro === "2") {
+        	estados.style.display = "none";
+        	txtBusqueda.placeholder = "Ingrese un plazo";
+    	} else {
+        	estados.style.display = "none";
+        	txtBusqueda.placeholder = "Buscar...";
+    	}
     }
 }
 </script>
 
 <script>
 window.onload = function() {
-    mostrarOpcionesEstado(); // Ejecuta esto automáticamente al abrir la página
+    mostrarOpciones(); // Ejecuta esto automáticamente al abrir la página
 };
+</script>
+
+<script>
+function quitarFiltro() {
+    const filtro = document.getElementById("filtro");
+    const txtBusqueda = document.getElementById("busqueda");
+    const estados = document.getElementById("estados");
+    const quitarFiltro = document.getElementById("quitarFiltro");
+
+    filtro.value = "0";
+    txtBusqueda.value = "";
+    txtBusqueda.placeholder = "Buscar...";
+    estados.style.display = "none";
+    quitarFiltro.style.display = "none";
+}
 </script>
 
 </body>

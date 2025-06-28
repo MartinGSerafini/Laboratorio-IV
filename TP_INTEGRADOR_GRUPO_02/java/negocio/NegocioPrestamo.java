@@ -25,5 +25,10 @@ public class NegocioPrestamo {
 		String sql = "SELECT * FROM prestamo where estado_pres="+estado;
 		return daoPrestamo.filtrar(sql);
 	}
+	
+	public ArrayList<Prestamo> filtrarPorPlazoMeses(String plazo) {
+		String sql = "SELECT * FROM prestamo where plazoMeses_pres="+plazo;
+		return daoPrestamo.filtrar(sql);
+	}
 
 }
