@@ -36,9 +36,12 @@ public class ListadoClientesServlet extends HttpServlet {
         List<Nacionalidad> listaNacionalidades = negocioNac.obtenerTodasLasNacionalidades();
         request.setAttribute("listaNacionalidades", listaNacionalidades);
         
+<<<<<<< HEAD
         NegocioProvincia negocioProv = new NegocioProvincia();
         List<Provincia> listaProvincias = negocioProv.obtenerTodasLasProvincias();
         request.setAttribute("listaProvincias", listaProvincias);
+=======
+>>>>>>> 87e21f88d9b20a448c60a7650fa55d3b4902a95e
         
         NegocioLocalidad negocioLoc = new NegocioLocalidad();
         List<Localidad> listaLocalidades = negocioLoc.obtenerTodasLasLocalidades();
@@ -54,7 +57,7 @@ public class ListadoClientesServlet extends HttpServlet {
         } else {
             listaClientes = negocio.ObtenerListadoClientes();
         }
-        // Paginación
+        // Paginaciï¿½n
         int registrosPorPagina = 10;
         int paginaActual = 1;
         if (request.getParameter("pagina") != null) {

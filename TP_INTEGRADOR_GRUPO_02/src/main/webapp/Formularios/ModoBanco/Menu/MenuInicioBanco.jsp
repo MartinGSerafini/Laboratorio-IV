@@ -113,7 +113,7 @@
     <div class="button-grid">
         <a href="${pageContext.request.contextPath}/ListadoClientesServlet" class="btn">CLIENTES</a>
 		<a href="${pageContext.request.contextPath}/ListadoCuentasServlet" class="btn">CUENTAS</a>
-		<a href="${pageContext.request.contextPath}/PrestamosServlet" class="btn">PRÉSTAMOS</a>
+		<a href="${pageContext.request.contextPath}/AutorizacionPrestamosServlet" class="btn">PRÉSTAMOS</a>
 		<a href="${pageContext.request.contextPath}/InformesServlet" class="btn">INFORMES</a>
     </div>
 </div>

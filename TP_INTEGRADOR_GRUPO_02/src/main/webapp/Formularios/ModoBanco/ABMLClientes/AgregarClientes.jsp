@@ -38,12 +38,14 @@
  
 <div class="container mt-5">
     <h2 class="text-center mb-4 text-danger">Agregar Clientes</h2>
-        <form class="row g-4" action="/TP_INTEGRADOR_GRUPO_02/AgregarClienteServlet" method="post">
+        <form class="row g-4" action="${pageContext.request.contextPath}/AgregarClienteServlet" method="post">
     	<div class="col-md-6">
-            <label for="usuario" class="form-label">Usuario</label>
-             <input type="text" class="form-control" id="usuario" name="usuario" 
-                   value="<%= request.getParameter("usuario") != null ? request.getParameter("usuario") : "" %>">
+            <label for="usuario" class="form-label">Usuario</label> 
+            <input type="text" class="form-control" id="idUsuario" name="idUsuario"
+          		 value="<%= request.getAttribute("idUsuario") %>" readonly>        		 
+				
         </div>
+        
         <div class="col-md-6">
             <label for="contrasena" class="form-label">Contraseña</label>
                   <input type="password" class="form-control" id="contrasena" name="contrasena"
@@ -188,6 +190,19 @@
         };
     </script>
 <% } %>
+<%
+    ArrayList<String> errores = (ArrayList<String>) request.getAttribute("errores");
+    if (errores != null && !errores.isEmpty()) {
+%>
+    <script>
+        window.onload = function() {
+            let modal = new bootstrap.Modal(document.getElementById('modalErroresValidacion'));
+            modal.show();
+        };
+    </script>
+<%
+    }
+%>
 
 <!-- Modal Éxito -->
 <div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
@@ -222,6 +237,33 @@
     </div>
   </div>
 </div>
+
+<!-- Modal errores validación -->
+<div class="modal fade" id="modalErroresValidacion" tabindex="-1" aria-labelledby="modalErroresValidacionLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="modalErroresValidacionLabel">Errores de Validación</h5>
+      </div>
+      <div class="modal-body">
+        <% 
+            //ArrayList<String> errores = (ArrayList<String>) request.getAttribute("errores");
+            if (errores != null && !errores.isEmpty()) {
+                for (String error : errores) {
+        %>
+                    <p><%= error %></p>
+        <% 
+                }
+            } 
+        %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+ </div>
+  
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

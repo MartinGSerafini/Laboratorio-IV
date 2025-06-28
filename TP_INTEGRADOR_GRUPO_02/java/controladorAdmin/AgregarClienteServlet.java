@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.LocalidadDao;
 import dao.NacionalidadDao;
 import dao.ProvinciaDao;
+import dao.daoCliente;
 import entidades.Cliente;
 import entidades.Localidad;
 import entidades.Nacionalidad;
@@ -31,6 +32,11 @@ public class AgregarClienteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		//-------Usuario------------
+		daoCliente daoCliente = new daoCliente();
+		int idCuenta = daoCliente.obtenerUltimoId() + 1; 
+		request.setAttribute("idUsuario", idCuenta);
+		
 		//-------Nacionalidad------------
 		NacionalidadDao nacionalidadDao = new NacionalidadDao();
 	    ArrayList<Nacionalidad> listaNacionalidades = nacionalidadDao.obtenerNacionalidades();
@@ -47,9 +53,9 @@ public class AgregarClienteServlet extends HttpServlet {
 		rd.forward(request, response); 
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
 		
-	    String accion = request.getParameter("accion");
+		String accion = request.getParameter("accion");
 
 	    // Cargar nacionalidades y provincias siempre que vuelvas al JSP
 	    NacionalidadDao nacionalidadDao = new NacionalidadDao();
@@ -109,9 +115,36 @@ public class AgregarClienteServlet extends HttpServlet {
 	                    nombre, apellido, sexo, nacionalidad, fechaNacStr, direccion,
 	                    localidad, provincia, correo, telefono);
 	            
-	            if(ErroresValidacion != null) {
-//	            	 request.setAttribute("mensajeValidacion", mensajeErrorValidacion);
-//		             request.setAttribute("mensaje", "errorValidacion");
+	            if(ErroresValidacion != null && !ErroresValidacion.isEmpty()) {
+	            	ArrayList<String> errores = new ArrayList<>();
+	            	errores.add(ErroresValidacion);
+	            	request.setAttribute("errores", errores);
+	            	
+	            	// Mantener los valores ingresados en el formulario después del error
+	                request.setAttribute("usuario", usuario);
+	                request.setAttribute("contrasena", contrasena);
+	                request.setAttribute("dni", dni); 
+	                request.setAttribute("cuil", cuil);
+	                request.setAttribute("nombre", nombre);
+	                request.setAttribute("apellido", apellido);
+	                request.setAttribute("sexo", sexo);
+	                request.setAttribute("nacionalidad", String.valueOf(nacionalidad)); 
+	                request.setAttribute("fechaNac", fechaNacStr);
+	                request.setAttribute("direccion", direccion);
+	                request.setAttribute("provincia", String.valueOf(provincia)); 
+	                request.setAttribute("localidad", String.valueOf(localidad)); 
+	                request.setAttribute("correo", correo);
+	                request.setAttribute("telefono", telefono);
+
+	                // Si hay una provincia seleccionada, recargar las localidades
+	                if (provincia > 0) {
+	                    LocalidadDao localidadDao = new LocalidadDao();
+	                    List<Localidad> localidadesCargadas = localidadDao.obtenerLocalidadesPorProvincia(provincia);
+	                    request.setAttribute("localidades", localidadesCargadas);
+	                }
+
+	                request.getRequestDispatcher("/Formularios/ModoBanco/ABMLClientes/AgregarClientes.jsp").forward(request, response);
+	                return; 
 	            }
 	            
 	          //si no hay errores, procede con el alta
