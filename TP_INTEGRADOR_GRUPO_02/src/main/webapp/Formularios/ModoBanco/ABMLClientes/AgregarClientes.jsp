@@ -32,8 +32,8 @@
             <a href="${pageContext.request.contextPath}/ListadoClientesServlet" class="btn btn-custom">Listar Clientes</a>
         </div>
         <span class="navbar-text text-white">
-            <%= session.getAttribute("nombreUsuario") != null ? session.getAttribute("nombreUsuario") : "INVITADO" %>
-        </span>
+        <%= session.getAttribute("adminLogueado") != null ? session.getAttribute("adminLogueado") : "INVITADO" %>
+      </span>
     </div>
 </nav>
  

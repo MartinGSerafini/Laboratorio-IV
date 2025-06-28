@@ -55,7 +55,7 @@ public class ListadoClientesServlet extends HttpServlet {
         } else {
             listaClientes = negocio.ObtenerListadoClientes();
         }
-        // Paginaci�n
+        // Paginacion
         int registrosPorPagina = 10;
         int paginaActual = 1;
         if (request.getParameter("pagina") != null) {

@@ -30,8 +30,8 @@
             </div>
         </div>
         <span class="navbar-text text-white">
-            <%= session.getAttribute("nombreUsuario") != null ? session.getAttribute("nombreUsuario") : "INVITADO" %>
-        </span>
+        <%= session.getAttribute("adminLogueado") != null ? session.getAttribute("adminLogueado") : "INVITADO" %>
+      </span>
     </div>
 </nav>
   

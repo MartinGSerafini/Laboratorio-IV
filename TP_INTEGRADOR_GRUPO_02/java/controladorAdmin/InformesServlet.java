@@ -24,15 +24,15 @@ public class InformesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         NegocioInformes negocio = new NegocioInformes();
 
-        // Informe 1: top provincias
+        // Informe 1
         ArrayList<ProvinciaCantidad> listaTopProvincias = negocio.top3provincias();
         request.setAttribute("topProvincias", listaTopProvincias);
 
-        // Informe 2: distribución por género
+        // Informe 2
         ArrayList<GeneroClientes> generos = negocio.obtenerCantidadGenero();
         request.setAttribute("generoClientes", generos);
 
-        // Parámetros fecha para reporte 1 (movimientos)
+        // Informe 3
         String fechaInicioStr = request.getParameter("fechaInicio");
         String fechaFinStr = request.getParameter("fechaFin");
 
@@ -66,7 +66,6 @@ public class InformesServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Por simplicidad redirigimos al doGet para manejar envíos del formulario
         doGet(request, response);
     }
 }

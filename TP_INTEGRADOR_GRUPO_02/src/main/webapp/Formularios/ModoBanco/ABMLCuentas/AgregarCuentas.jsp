@@ -27,12 +27,12 @@
     		<a class="dropdown-item" href="${pageContext.request.contextPath}/Formularios/Login/IngresoAdministrador.jsp">CERRAR SESIÓN</a>
 			</ul>
             </div>
-            <a href="AgregarCuentas.jsp" class="btn btn-custom me-2">Agregar Cuenta</a>
-            <a href="ListarCuentas.jsp" class="btn btn-custom">Listar Cuentas</a>
+            <a href="${pageContext.request.contextPath}/AgregarCuentaServlet" class="btn btn-custom me-2">Agregar Cuenta</a>
+        	<a href="${pageContext.request.contextPath}/ListarCuentas" class="btn btn-custom">Listar Cuentas</a>
         </div>
         <span class="navbar-text text-white">
-            <%= session.getAttribute("nombreUsuario") != null ? session.getAttribute("nombreUsuario") : "INVITADO" %>
-        </span>
+        <%= session.getAttribute("adminLogueado") != null ? session.getAttribute("adminLogueado") : "INVITADO" %>
+      </span>
     </div>
 </nav>
 
