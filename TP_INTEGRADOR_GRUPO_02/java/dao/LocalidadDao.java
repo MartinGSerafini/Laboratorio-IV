@@ -11,7 +11,6 @@ import entidades.Localidad;
 
 public class LocalidadDao {
 	
-	//---lista las localidades segun el id de provincia----
 	public List<Localidad> obtenerLocalidadesPorProvincia(int id_provincia) {
 	    List<Localidad> localidades = new ArrayList<>();
 	    String sql = "SELECT id_localidad, nombre_localidad FROM localidad WHERE id_provincia = ?";
@@ -33,4 +32,25 @@ public class LocalidadDao {
 	    }
 	    return localidades;
 	}
+	public List<Localidad> obtenerTodasLasLocalidades() {
+	    List<Localidad> localidades = new ArrayList<>();
+	    String sql = "SELECT id_localidad, nombre_localidad, id_provincia FROM localidad";
+	    try (Connection cn = Conexion.getConexion();
+	         PreparedStatement ps = cn.prepareStatement(sql);
+	         ResultSet rs = ps.executeQuery()) {
+
+	        while (rs.next()) {
+	            Localidad l = new Localidad();
+	            l.setId(rs.getInt("id_localidad"));
+	            l.setLocalidad(rs.getString("nombre_localidad"));
+	            l.setId_pcia(rs.getInt("id_provincia"));
+	            localidades.add(l);
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return localidades;
+	}
+
 }

@@ -14,9 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import entidades.Cliente;
 import entidades.Nacionalidad;
 import entidades.Provincia;
+import entidades.Localidad;
+
 import negocio.NegocioCliente;
 import negocio.NegocioNacionalidad;
 import negocio.NegocioProvincia;
+import negocio.NegocioLocalidad;
 
 
 @WebServlet("/ListadoClientesServlet")
@@ -37,6 +40,10 @@ public class ListadoClientesServlet extends HttpServlet {
         List<Provincia> listaProvincias = negocioProv.obtenerTodasLasProvincias();
         request.setAttribute("listaProvincias", listaProvincias);
         
+        NegocioLocalidad negocioLoc = new NegocioLocalidad();
+        List<Localidad> listaLocalidades = negocioLoc.obtenerTodasLasLocalidades();
+        
+        request.setAttribute("listaLocalidades", listaLocalidades);
         String busqueda = request.getParameter("busqueda");
         String filtro = request.getParameter("filtro");
 
