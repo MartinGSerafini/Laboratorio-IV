@@ -14,9 +14,7 @@ import entidades.EstadoPrestamo;
 import entidades.Prestamo;
 import negocio.NegocioPrestamo;
 
-/**
- * Servlet implementation class AutorizacionPrestamosServlet
- */
+
 @WebServlet("/AutorizacionPrestamosServlet")
 public class AutorizacionPrestamosServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

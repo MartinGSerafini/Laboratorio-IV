@@ -162,7 +162,7 @@
             <tr>
                 <td><%= mov.getDetalleMov() %></td>
                 <td><%= mov.getImporteMov() %></td>
-                <td><%= mov.getFechaMov() %></td> <!-- asumiendo que tienes getFechaMov() -->
+                <td><%= mov.getFechaMov() %></td>
             </tr>
             <%
                 }
