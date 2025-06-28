@@ -116,7 +116,7 @@
 	                for (Provincia p : provincias) {
 	                    boolean selected = (provinciaSeleccionada != null && provinciaSeleccionada.equals(String.valueOf(p.getId())));
 	        %>
-	            <option value="<%= p.getId() %>" <%= selected ? "selected" : "" %>><%= p.getProvicia() %></option>
+	            <option value="<%= p.getId() %>" <%= selected ? "selected" : "" %>><%= p.getProvincia() %></option>
 	        <%
 	                }
 	            }

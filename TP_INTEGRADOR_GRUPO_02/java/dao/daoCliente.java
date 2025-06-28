@@ -243,8 +243,102 @@ public class daoCliente {
 		        }
 	    	return id;
 	    }
-	    
-	    
-	     
-	    
+	    public boolean existeDni(int dni, String idClienteExcluir) {
+	        String sql = "SELECT COUNT(*) FROM cliente WHERE dni_cliente = ? AND id_cliente <> ?";
+	        try (Connection conn = Conexion.getConexion();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setInt(1, dni);
+	            ps.setString(2, idClienteExcluir);
+	            try (ResultSet rs = ps.executeQuery()) {
+	                if (rs.next()) {
+	                    return rs.getInt(1) > 0;
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return false;
+	    }
+
+	    public boolean existeCuil(String cuil, String idClienteExcluir) {
+	        String sql = "SELECT COUNT(*) FROM cliente WHERE cuil_cliente = ? AND id_cliente <> ?";
+	        try (Connection conn = Conexion.getConexion();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setString(1, cuil);
+	            ps.setString(2, idClienteExcluir);
+	            try (ResultSet rs = ps.executeQuery()) {
+	                if (rs.next()) {
+	                    return rs.getInt(1) > 0;
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return false;
+	    }
+
+	    public boolean existeUsuario(String usuario, String idClienteExcluir) {
+	        String sql = "SELECT COUNT(*) FROM cliente WHERE usuario_cliente = ? AND id_cliente <> ?";
+	        try (Connection conn = Conexion.getConexion();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setString(1, usuario);
+	            ps.setString(2, idClienteExcluir);
+	            try (ResultSet rs = ps.executeQuery()) {
+	                if (rs.next()) {
+	                    return rs.getInt(1) > 0;
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return false;
+	    }
+	    public boolean modificarCliente(Cliente cliente) {
+	        String sql = "UPDATE cliente SET " +
+	            "usuario_cliente = ?, " +
+	            "contraseña_cliente = ?, " +
+	            "dni_cliente = ?, " +
+	            "cuil_cliente = ?, " +
+	            "nombre_cliente = ?, " +
+	            "apellido_cliente = ?, " +
+	            "sexo_cliente = ?, " +
+	            "nacionalidad_cliente = ?, " +
+	            "fechaNac_cliente = ?, " +
+	            "direccion_cliente = ?, " +
+	            "provincia_cliente = ?, " +
+	            "localidad_cliente = ?, " +
+	            "correo_cliente = ?, " +
+	            "telefono_cliente = ? " +
+	            "WHERE id_cliente = ? AND estado_cliente = 1";
+
+	        try (Connection conn = Conexion.getConexion();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+	            ps.setString(1, cliente.getUsuarioCliente());
+	            ps.setString(2, cliente.getContrasenaCliente());
+	            ps.setInt(3, cliente.getDniCliente());
+	            ps.setString(4, cliente.getCuilCliente());
+	            ps.setString(5, cliente.getNombreCliente());
+	            ps.setString(6, cliente.getApellidoCliente());
+	            ps.setString(7, cliente.getSexoCliente());
+	            ps.setInt(8, cliente.getNacionalidadCliente());
+	            ps.setDate(9, cliente.getFechaNacCliente());
+	            ps.setString(10, cliente.getDireccionCliente());
+	            ps.setInt(11, cliente.getProvinciaCliente());
+	            ps.setInt(12, cliente.getLocalidadCliente());
+	            ps.setString(13, cliente.getCorreoCliente());
+	            ps.setString(14, cliente.getTelefonoCliente());
+	            ps.setString(15, cliente.getIdCliente());
+
+	            int filasActualizadas = ps.executeUpdate();
+	            return filasActualizadas > 0;
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+
+
+
 }

@@ -22,7 +22,7 @@ public class ProvinciaDao {
 	            while (rs.next()) {
 	                Provincia p = new Provincia();
 	                p.setId(rs.getInt("id_provincia"));
-	                p.setProvicia(rs.getString("nombre_provincia"));
+	                p.setProvincia(rs.getString("nombre_provincia"));
 	                provincias.add(p);
 	            }
 

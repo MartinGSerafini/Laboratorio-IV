@@ -2,6 +2,7 @@ package controladorAdmin;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,8 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import entidades.Cliente;
 import entidades.Nacionalidad;
+import entidades.Provincia;
 import negocio.NegocioCliente;
 import negocio.NegocioNacionalidad;
+import negocio.NegocioProvincia;
+
 
 @WebServlet("/ListadoClientesServlet")
 public class ListadoClientesServlet extends HttpServlet {
@@ -26,13 +30,12 @@ public class ListadoClientesServlet extends HttpServlet {
         request.setAttribute("columnas", columnas);
 
         NegocioNacionalidad negocioNac = new NegocioNacionalidad();
-        ArrayList<Nacionalidad> listaNacionalidades = negocioNac.obtenerTodasLasNacionalidades();
+        List<Nacionalidad> listaNacionalidades = negocioNac.obtenerTodasLasNacionalidades();
         request.setAttribute("listaNacionalidades", listaNacionalidades);
         
         NegocioProvincia negocioProv = new NegocioProvincia();
-        ArrayList<Provincia> listaProvincias = negocioProv.obtenerTodasLasProvincias();
+        List<Provincia> listaProvincias = negocioProv.obtenerTodasLasProvincias();
         request.setAttribute("listaProvincias", listaProvincias);
-       
         
         String busqueda = request.getParameter("busqueda");
         String filtro = request.getParameter("filtro");
