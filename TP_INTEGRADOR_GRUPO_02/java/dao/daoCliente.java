@@ -243,7 +243,7 @@ public class daoCliente {
 		        }
 	    	return id;
 	    }
-<<<<<<< HEAD
+
 	    public boolean existeDni(int dni, String idClienteExcluir) {
 	        String sql = "SELECT COUNT(*) FROM cliente WHERE dni_cliente = ? AND id_cliente <> ?";
 	        try (Connection conn = Conexion.getConexion();
@@ -342,7 +342,7 @@ public class daoCliente {
 
 
 
-=======
+
 	    
 	    public int obtenerUltimoId() {
 	        int ultimoId = 0;
@@ -365,5 +365,5 @@ public class daoCliente {
 	    }
 	     
 	    
->>>>>>> 87e21f88d9b20a448c60a7650fa55d3b4902a95e
+
 }
