@@ -154,5 +154,21 @@ public class daoCuenta {
 	            return false;
 	        }
 	    }
+	 
+	 public boolean existeCBU(String cbu) {
+	        String sql = "SELECT COUNT(*) FROM cuenta WHERE cbu_cuenta = ?";
+	        try (Connection conn = Conexion.getConexion();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setString(1, cbu);
+	            try (ResultSet rs = ps.executeQuery()) {
+	                if (rs.next()) {
+	                    return rs.getInt(1) > 0;
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return false;
+	    }
 	
 }

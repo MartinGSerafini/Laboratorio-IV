@@ -76,7 +76,7 @@ public class NegocioCuenta implements servicioABML<Cuenta>{
 	}
 	
 	public String validarYVerificarCuenta(String idCuenta, int idClienteCuenta, String fechaCreacionCuenta, String numeroCuenta,
-            String cbuCuenta, BigDecimal saldoCuenta, String descripcionTipoCuenta, int idTipoCuenta) {
+            String cbuCuenta, BigDecimal saldoCuenta, int idTipoCuenta) {
 
 System.out.println("ValidarCliente - Par�metros recibidos: " +
 "idCuenta=" + idCuenta +
@@ -85,7 +85,6 @@ System.out.println("ValidarCliente - Par�metros recibidos: " +
 ", numeroCuenta=" + numeroCuenta +
 ", cbuCuenta=" + cbuCuenta +
 ", saldoCuenta=" + saldoCuenta +
-", descripcionTipoCuenta=" + descripcionTipoCuenta +
 ", idTipoCuenta=" + idTipoCuenta);
 
 
@@ -98,12 +97,10 @@ errores.append("El idCuenta es obligatorio.\n");
 if (numeroCuenta == null || numeroCuenta.trim().isEmpty()) {
 errores.append("El Numero de Cuenta es obligatorio.\n");
 }
-if (cbuCuenta == null || cbuCuenta.trim().isEmpty()) {
-errores.append("El CBU es obligatorio.\n");
+if(cbuCuenta == null || cbuCuenta.trim().isEmpty()) {
+errores.append("El 	CBU es obligatorio y debe tener sólo números.\n");
 }
-if (descripcionTipoCuenta == null || descripcionTipoCuenta.trim().isEmpty()) {
-errores.append("El Descripciondel Tipo de Cuenta es obligatorio.\n");
-}
+
 // Validar campos num�ricos
 if (idClienteCuenta <= 0) {
 errores.append("El id Cliente Cuenta es obligatorio y debe ser un n�mero v�lido.\n");
@@ -125,19 +122,20 @@ java.sql.Date.valueOf(fechaCreacionCuenta);
 errores.append("Formato de fecha de creación inv�lido.\n");
 }
 }
-/*
+
 // Validar longitud CBU solo si no hay errores anteriores en esos campos
-if (cbuCuenta > 0 && !String.valueOf(cbuCuenta).matches("\\d{22}")) {
+if (cbuCuenta == null || !String.valueOf(cbuCuenta).matches("\\d{12}") || Integer.parseInt(cbuCuenta) <=0) {
 errores.append("El CBU debe tener exactamente 22 d�gitos num�ricos.\n");
 }
 
 // Validar unicidad solo si no hay errores con esos campos
 
 if (errores.length() == 0) {
-if (daoCuenta.existeDni(dni, idCliente)) {
-errores.append("El DNI ya est� registrado para otro cliente.\n");
+if (daoCuenta.existeCBU(cbuCuenta)) {
+errores.append("El CBU ya est� registrado para otro cliente.\n");
 }
-*/
+}
+
 return errores.length() > 0 ? errores.toString() : null;
 }
 }

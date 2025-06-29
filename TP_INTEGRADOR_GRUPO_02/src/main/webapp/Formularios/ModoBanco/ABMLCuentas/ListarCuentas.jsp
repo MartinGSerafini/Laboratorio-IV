@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="entidades.Cuenta"%>
+<%@ page import="entidades.TipoCuenta"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,7 @@
   <title>Listado de Clientes</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}Formularios/z-CSS/ABMLClientesCSS/ListarCuentas.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ABMLClientesCSS/ListarCuentas.css">
 </head>
 <body>
   <!-- Barra de Navegación -->
@@ -113,11 +114,12 @@
         <td data-campo="numero_cuenta"><%= cue.getNumeroCuenta() %></td>
         <td data-campo="cbu_cuenta"><%= cue.getCbuCuenta() %></td>
         <td data-campo="saldo_cuenta"><%= cue.getSaldoCuenta() %></td>
-        <td data-campo="descripcion_tipocuenta"><%= cue.getIdTipoCuentaCuenta()%> - <%= cue.getTipoCuentaCuenta() %></td>
+        <td data-campo="idTipoCuenta" data-id="<%= cue.getIdTipoCuentaCuenta() %>">
+            <%= cue.getIdTipoCuentaCuenta() %> - <%= cue.getTipoCuentaCuenta() %></td>
         <td>
           <button class="btn btn-warning btn-sm" onclick="editarFila(this)">Editar</button>
-          <button class="btn btn-success btn-sm d-none" onclick="guardarFila(this)">Guardar</button>
-          <button class="btn btn-secondary btn-sm d-none" onclick="cancelarFila(this)">Cancelar</button>
+          <button class="btn btn-success btn-sm d-none" onclick="guardarCambios(this)">Guardar</button>
+          <button class="btn btn-secondary btn-sm d-none" onclick="cancelarCambios(this)">Cancelar</button>
           <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmarEliminarModal" data-id="<%= cue.getIdCuenta() %>">Eliminar</button>
         </td>
       </tr>
@@ -162,12 +164,193 @@
         </div>
       </div>
     </div>
+    
+    <!-- Modal Confirmar Modificación -->
+    <div class="modal fade" id="confirmarModificarModal" tabindex="-1" aria-labelledby="confirmarModificarLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-warning">
+            <h5 class="modal-title">Confirmar Modificación</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            ¿Estás seguro que deseas modificar esta cuenta?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning" id="confirmarGuardarBtn">Sí, modificar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
 </div>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Script para cargar el ID del cliente en el modal -->
+<!-- Lista de Tipos de cuentas -->
+<%
+ArrayList<TipoCuenta> tipos = (ArrayList<TipoCuenta>) request.getAttribute("listaTipoCuenta");
+if (tipos == null) tipos = new ArrayList<TipoCuenta>();
+%>
 <script>
+  const listaTipoCuenta = [
+    <% for (int i = 0; i < tipos.size(); i++) {
+         TipoCuenta tipo = tipos.get(i);
+         String descripcion = tipo.getDescripcionTipoCuenta();
+         if (descripcion == null) descripcion = "";
+         descripcion = descripcion.replace("\"", "\\\""); // Escapar comillas dobles
+    %>
+    {
+      idtipoCuenta: <%= tipo.getIdtipoCuenta() %>,
+      descripcionTipoCuenta: "<%= descripcion %>"
+    }<%= (i < tipos.size() - 1) ? "," : "" %>
+    <% } %>
+  ];
+</script>
+
+<script>
+
+//Variables globales para el proceso de edición
+let datosAEnviar;
+let filaEnEdicion;
+
+function escapeHtml(text) {
+  const map = {
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+  };
+  return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+function editarFila(btnEditar) {
+	  const fila = btnEditar.closest('tr');
+	  const tds = fila.querySelectorAll('td[data-campo]');
+
+	  for (const td of tds) {
+	    const campo = td.getAttribute('data-campo');
+	    let valor = (campo === 'idTipoCuenta') ? td.dataset.id : td.textContent.trim();
+
+	    td.setAttribute('data-valor-original', valor);
+
+	    if (campo === 'numero_cuenta' || campo === 'cbu_cuenta' || campo === 'saldo_cuenta') {
+	      td.innerHTML = `<input type="text" class="form-control form-control-sm" value="${escapeHtml(valor)}">`;
+	    } else if (campo === 'idTipoCuenta') {
+	      const select = document.createElement('select');
+	      select.className = 'form-select form-select-sm';
+
+	      listaTipoCuenta.forEach(tc => {
+	        const option = document.createElement('option');
+	        option.value = tc.idtipoCuenta;
+	        option.textContent = tc.descripcionTipoCuenta;
+
+	        if (String(tc.idtipoCuenta) === valor) {
+	          option.selected = true;
+	        }
+
+	        select.appendChild(option);
+	      });
+
+	      td.innerHTML = '';
+	      td.appendChild(select);
+	    }
+	  }
+
+	  toggleBotones(fila, true);
+	}
+	
+let datosAEnviar; // << fuera de toda función
+
+function guardarCambios(btnGuardar) {
+  const filaEnEdicion = btnGuardar.closest('tr');
+  const idCuenta = filaEnEdicion.getAttribute('data-id');
+  const tds = filaEnEdicion.querySelectorAll('td[data-campo]');
+  datosAEnviar = new URLSearchParams();
+
+  datosAEnviar.append("idCuenta", idCuenta);
+
+  tds.forEach(td => {
+    const campo = td.getAttribute('data-campo');
+    const input = td.querySelector('input');
+    const select = td.querySelector('select');
+    let valor = "";
+
+    if (input) valor = input.value.trim();
+    else if (select) valor = select.value.trim();
+    else valor = td.textContent.trim();
+
+    datosAEnviar.append(campo, valor);
+  });
+
+  const modalModificar = new bootstrap.Modal(document.getElementById('confirmarModificarModal'));
+  modalModificar.show();
+}
+
+
+	
+document.getElementById('confirmarGuardarBtn').addEventListener('click', () => {
+	  fetch('/TP_INTEGRADOR_GRUPO_02/ModificarCuentaServlet', {
+	    method: 'POST',
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+	    body: datosAEnviar.toString()
+	  })
+	  .then(res => res.json())
+	  .then(resp => {
+	    if (resp.success) {
+	      alert('✔️ Cuenta modificada correctamente');
+	      toggleBotones(filaEnEdicion, false);
+
+	      filaEnEdicion.querySelectorAll('td[data-campo]').forEach(td => {
+	        const campo = td.getAttribute('data-campo');
+	        const valorId = datosAEnviar.get(campo);
+	        td.setAttribute('data-valor-original', valorId);
+
+	        if (campo === "idTipoCuenta") {
+	          const tipo = listaTipoCuenta.find(tc => String(tc.idtipoCuenta) === valorId);
+	          td.textContent = `${valorId} - ${tipo ? tipo.descripcionTipoCuenta : ''}`;
+	          td.dataset.id = valorId; // para futuras ediciones
+	        } else {
+	          td.textContent = valorId;
+	        }
+	      });
+
+	    } else {
+	      alert("❌ " + resp.mensaje);
+	    }
+	  })
+	  .catch(err => {
+	    console.error("Error en fetch:", err);
+	    alert("❌ Error al intentar guardar los cambios: " + err.message);
+	  });
+
+	  const modalEl = document.getElementById('confirmarModificarModal');
+	  const modalInstance = bootstrap.Modal.getInstance(modalEl);
+	  modalInstance.hide();
+	});
+
+	function cancelarCambios(btnCancelar) {
+	  const fila = btnCancelar.closest('tr');
+	  fila.querySelectorAll('td[data-campo]').forEach(td => {
+	    const original = td.getAttribute('data-valor-original');
+	    if (td.getAttribute('data-campo') === 'idTipoCuenta') {
+	      const tipo = listaTipoCuenta.find(tc => String(tc.idtipoCuenta) === original);
+	      td.textContent = `${original} - ${tipo ? tipo.descripcionTipoCuenta : ''}`;
+	      td.dataset.id = original;
+	    } else {
+	      td.textContent = original;
+	    }
+	  });
+	  toggleBotones(fila, false);
+	}
+
+	function toggleBotones(fila, editar) {
+	  fila.querySelectorAll('button').forEach(btn => {
+	    if (btn.textContent.trim() === "Editar") btn.classList.toggle('d-none', editar);
+	    else if (btn.textContent.trim() === "Guardar") btn.classList.toggle('d-none', !editar);
+	    else if (btn.textContent.trim() === "Cancelar") btn.classList.toggle('d-none', !editar);
+	    else if (btn.classList.contains('btn-danger')) btn.disabled = editar;
+	  });
+	}
+
 // Modal eliminar: asignar idCliente al input hidden
 const modalEliminar = document.getElementById('confirmarEliminarModal');
 modalEliminar.addEventListener('show.bs.modal', function (event) {

@@ -142,7 +142,7 @@ public class NegocioCliente implements servicioABML<Cliente>{
             String fechaNacStr, String direccion, int localidad, int provincia,
             String correo, String telefono) {
 
-System.out.println("ValidarCliente - Parámetros recibidos: " +
+System.out.println("ValidarCliente - Parï¿½metros recibidos: " +
 "idCliente=" + idCliente +
 ", usuario=" + usuario +
 ", contrasena=" + contrasena +
@@ -166,7 +166,7 @@ if (usuario == null || usuario.trim().isEmpty()) {
 errores.append("El usuario es obligatorio.\n");
 }
 if (contrasena == null || contrasena.trim().isEmpty()) {
-errores.append("La contraseña es obligatoria.\n");
+errores.append("La contraseï¿½a es obligatoria.\n");
 }
 if (cuil == null || cuil.trim().isEmpty()) {
 errores.append("El CUIL es obligatorio.\n");
@@ -184,58 +184,58 @@ if (fechaNacStr == null || fechaNacStr.trim().isEmpty()) {
 errores.append("La fecha de nacimiento es obligatoria.\n");
 }
 if (direccion == null || direccion.trim().isEmpty()) {
-errores.append("La dirección es obligatoria.\n");
+errores.append("La direcciï¿½n es obligatoria.\n");
 }
 if (correo == null || correo.trim().isEmpty()) {
 errores.append("El correo es obligatorio.\n");
 }
 if (telefono == null || telefono.trim().isEmpty()) {
-errores.append("El teléfono es obligatorio.\n");
+errores.append("El telï¿½fono es obligatorio.\n");
 }
 
-// Validar campos numéricos
+// Validar campos numï¿½ricos
 if (dni <= 0) {
-errores.append("El DNI es obligatorio y debe ser un número válido.\n");
+errores.append("El DNI es obligatorio y debe ser un nï¿½mero vï¿½lido.\n");
 }
 if (nacionalidad <= 0) {
-errores.append("Debe seleccionar una nacionalidad válida.\n");
+errores.append("Debe seleccionar una nacionalidad vï¿½lida.\n");
 }
 if (localidad <= 0) {
-errores.append("Debe seleccionar una localidad válida.\n");
+errores.append("Debe seleccionar una localidad vï¿½lida.\n");
 }
 if (provincia <= 0) {
-errores.append("Debe seleccionar una provincia válida.\n");
+errores.append("Debe seleccionar una provincia vï¿½lida.\n");
 }
 
-// Validar formatos específicos
+// Validar formatos especï¿½ficos
 
 // Validar fecha
 if (fechaNacStr != null && !fechaNacStr.trim().isEmpty()) {
 try {
 java.sql.Date.valueOf(fechaNacStr);
 } catch (IllegalArgumentException e) {
-errores.append("Formato de fecha de nacimiento inválido.\n");
+errores.append("Formato de fecha de nacimiento invï¿½lido.\n");
 }
 }
 
 // Validar longitud DNI y CUIL solo si no hay errores anteriores en esos campos
 if (dni > 0 && !String.valueOf(dni).matches("\\d{8}")) {
-errores.append("El DNI debe tener exactamente 8 dígitos numéricos.\n");
+errores.append("El DNI debe tener exactamente 8 dï¿½gitos numï¿½ricos.\n");
 }
 if (cuil != null && !cuil.trim().isEmpty() && !cuil.matches("\\d{11}")) {
-errores.append("El CUIL debe tener exactamente 11 dígitos numéricos.\n");
+errores.append("El CUIL debe tener exactamente 11 dï¿½gitos numï¿½ricos.\n");
 }
 
 // Validar unicidad solo si no hay errores con esos campos
 if (errores.length() == 0) {
 if (daoCliente.existeDni(dni, idCliente)) {
-errores.append("El DNI ya está registrado para otro cliente.\n");
+errores.append("El DNI ya estï¿½ registrado para otro cliente.\n");
 }
 if (daoCliente.existeCuil(cuil, idCliente)) {
-errores.append("El CUIL ya está registrado para otro cliente.\n");
+errores.append("El CUIL ya estï¿½ registrado para otro cliente.\n");
 }
 if (daoCliente.existeUsuario(usuario, idCliente)) {
-errores.append("El usuario ya está registrado para otro cliente.\n");
+errores.append("El usuario ya estï¿½ registrado para otro cliente.\n");
 }
 }
 
