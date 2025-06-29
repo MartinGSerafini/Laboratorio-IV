@@ -114,8 +114,7 @@
         <td data-campo="numero_cuenta"><%= cue.getNumeroCuenta() %></td>
         <td data-campo="cbu_cuenta"><%= cue.getCbuCuenta() %></td>
         <td data-campo="saldo_cuenta"><%= cue.getSaldoCuenta() %></td>
-        <td data-campo="idTipoCuenta" data-id="<%= cue.getIdTipoCuentaCuenta() %>">
-            <%= cue.getIdTipoCuentaCuenta() %> - <%= cue.getTipoCuentaCuenta() %></td>
+        <td data-campo="idTipoCuenta" data-id="<%= cue.getIdTipoCuentaCuenta() %>"> <%= cue.getTipoCuentaCuenta() %></td>
         <td>
           <button class="btn btn-warning btn-sm" onclick="editarFila(this)">Editar</button>
           <button class="btn btn-success btn-sm d-none" onclick="guardarCambios(this)">Guardar</button>
@@ -283,10 +282,10 @@
 	          let texto = "";
 	          switch (nuevoValor) {
 	            case "1":
-	              texto = "1 - Caja de Ahorro";
+	              texto = "Caja de Ahorro";
 	              break;
 	            case "2":
-	              texto = "2 - Cuenta Corriente";
+	              texto = "Cuenta Corriente";
 	              break;
 	            default:
 	              texto = nuevoValor;
@@ -299,6 +298,7 @@
 	    });
 
 	    toggleBotones(filaEnEdicion, false);
+	    location.reload();
 	  } else {
 	    alert("❌ " + resp.mensaje);
 	  }

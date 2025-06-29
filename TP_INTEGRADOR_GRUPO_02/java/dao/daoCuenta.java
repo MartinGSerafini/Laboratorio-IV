@@ -151,11 +151,12 @@ public class daoCuenta {
 	        }
 	    }
 	 
-	 public boolean existeCBU(String cbu) {
-	        String sql = "SELECT COUNT(*) FROM cuenta WHERE cbu_cuenta = ?";
+	 public boolean existeCBU(String cbu, String id) {
+	        String sql = "SELECT COUNT(*) FROM cuenta WHERE cbu_cuenta = ? AND id_cuenta = ?";
 	        try (Connection conn = Conexion.getConexion();
 	             PreparedStatement ps = conn.prepareStatement(sql)) {
 	            ps.setString(1, cbu);
+	            ps.setString(2, id);
 	            try (ResultSet rs = ps.executeQuery()) {
 	                if (rs.next()) {
 	                    return rs.getInt(1) > 0;

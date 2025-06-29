@@ -1,0 +1,505 @@
+CREATE DATABASE  IF NOT EXISTS `bdbancobg2` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `bdbancobg2`;
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+--
+-- Host: localhost    Database: bdbancobg2
+-- ------------------------------------------------------
+-- Server version	5.7.18-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `administrador`
+--
+
+DROP TABLE IF EXISTS `administrador`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `administrador` (
+  `id_admin` varchar(10) NOT NULL,
+  `usuario_admin` varchar(45) NOT NULL,
+  `contraseña_admin` varchar(45) NOT NULL,
+  PRIMARY KEY (`id_admin`),
+  UNIQUE KEY `usuario_admin` (`usuario_admin`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `administrador`
+--
+
+LOCK TABLES `administrador` WRITE;
+/*!40000 ALTER TABLE `administrador` DISABLE KEYS */;
+INSERT INTO `administrador` VALUES ('1','admin1','clave1'),('10','admin10','clave10'),('11','admin11','clave11'),('12','admin12','clave12'),('13','admin13','clave13'),('14','admin14','clave14'),('15','admin15','clave15'),('2','admin2','clave2'),('3','admin3','clave3'),('4','admin4','clave4'),('5','admin5','clave5'),('6','admin6','clave6'),('7','admin7','clave7'),('8','admin8','clave8'),('9','admin9','clave9');
+/*!40000 ALTER TABLE `administrador` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cliente`
+--
+
+DROP TABLE IF EXISTS `cliente`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cliente` (
+  `id_cliente` int(11) NOT NULL AUTO_INCREMENT,
+  `dni_cliente` int(8) DEFAULT NULL,
+  `cuil_cliente` varchar(15) DEFAULT NULL,
+  `nombre_cliente` varchar(45) DEFAULT NULL,
+  `apellido_cliente` varchar(45) DEFAULT NULL,
+  `sexo_cliente` varchar(15) DEFAULT NULL,
+  `nacionalidad_cliente` int(11) DEFAULT NULL,
+  `fechaNac_cliente` date DEFAULT NULL,
+  `direccion_cliente` varchar(45) DEFAULT NULL,
+  `provincia_cliente` int(11) DEFAULT NULL,
+  `localidad_cliente` int(11) DEFAULT NULL,
+  `correo_cliente` varchar(45) DEFAULT NULL,
+  `telefono_cliente` varchar(20) DEFAULT NULL,
+  `usuario_cliente` varchar(45) DEFAULT NULL,
+  `contraseña_cliente` varchar(25) DEFAULT NULL,
+  `estado_cliente` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`id_cliente`),
+  UNIQUE KEY `usuario_cliente` (`usuario_cliente`),
+  KEY `nacionalidad_cliente` (`nacionalidad_cliente`),
+  KEY `provincia_cliente` (`provincia_cliente`),
+  KEY `localidad_cliente` (`localidad_cliente`),
+  CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`nacionalidad_cliente`) REFERENCES `nacionalidad` (`id_nacionalidad`),
+  CONSTRAINT `cliente_ibfk_2` FOREIGN KEY (`provincia_cliente`) REFERENCES `provincia` (`id_provincia`),
+  CONSTRAINT `cliente_ibfk_3` FOREIGN KEY (`localidad_cliente`) REFERENCES `localidad` (`id_localidad`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cliente`
+--
+
+LOCK TABLES `cliente` WRITE;
+/*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
+INSERT INTO `cliente` VALUES 
+(1,30111222,'20301112225','Juan','Pérez','Masculino',9,'1990-01-01','Calle 1',1,1,'juan1@mail.com','1111111111','cliente1','clave1',1),
+(2,30222333,'20302223336','María','Gómez','Femenino',9,'1989-02-15','Calle 2',1,2,'maria2@mail.com','2222222222','cliente2','clave2',1),
+(3,30333444,'20303334447','Carlos','López','Masculino',9,'1988-03-20','Calle 3',1,3,'carlos3@mail.com','3333333333','cliente3','clave3',1),
+(4,30444555,'20304445558','Laura','Martínez','Femenino',9,'1991-04-10','Calle 4',1,4,'laura4@mail.com','4444444444','cliente4','clave4',1),
+(5,30555666,'20305556669','Pedro','Ramírez','Masculino',9,'1992-05-25','Calle 5',1,5,'pedro5@mail.com','5555555555','cliente5','clave5',1),
+(6,30666777,'20306667770','Ana','Fernández','Femenino',9,'1987-06-30','Calle 6',1,6,'ana6@mail.com','6666666666','cliente6','clave6',1),
+(7,30777888,'20307778881','Diego','Sánchez','Masculino',9,'1985-07-07','Calle 7',1,7,'diego7@mail.com','7777777777','cliente7','clave7',1),
+(8,30888999,'20308889992','Cecilia','Torres','Femenino',9,'1993-08-18','Calle 8',1,8,'cecilia8@mail.com','8888888888','cliente8','clave8',1),
+(9,30999000,'20309990003','Jorge','Flores','Masculino',9,'1986-09-12','Calle 9',1,9,'jorge9@mail.com','9999999999','cliente9','clave9',1),
+(10,31000111,'20310001114','Lucía','Moreno','Femenino',9,'1984-10-22','Calle 10',1,10,'lucia10@mail.com','1010101010','cliente10','clave10',1),
+(11,31111222,'20311112225','Ricardo','Aguirre','Masculino',9,'1990-11-05','Calle 11',2,16,'ricardo11@mail.com','1111222233','cliente11','clave11',1),
+(12,31222333,'20312223336','Florencia','Herrera','Femenino',9,'1983-12-01','Calle 12',2,17,'flor12@mail.com','1222333444','cliente12','clave12',1),
+(13,31333444,'20313334447','Martín','Silva','Masculino',9,'1991-01-11','Calle 13',2,18,'martin13@mail.com','1333444555','cliente13','clave13',1),
+(14,31444555,'20314445558','Paula','Sosa','Femenino',9,'1982-02-22','Calle 14',2,19,'paula14@mail.com','1444555666','cliente14','clave14',1),
+(15,31555666,'20315556669','Andrés','Castro','Masculino',9,'1980-03-13','Calle 15',2,20,'andres15@mail.com','1555666777','cliente15','clave15',1);
+/*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cuenta`
+--
+
+DROP TABLE IF EXISTS `cuenta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cuenta` (
+  `id_cuenta` int(11) NOT NULL AUTO_INCREMENT,
+  `idCliente_cuenta` int(11) DEFAULT NULL,
+  `idTipoCuenta_cuenta` int(11) DEFAULT NULL,
+  `fechaCreacion_cuenta` date DEFAULT NULL,
+  `numero_cuenta` varchar(45) DEFAULT NULL,
+  `cbu_cuenta` varchar(45) DEFAULT NULL,
+  `saldo_cuenta` decimal(12,2) DEFAULT NULL,
+  `estado_cuentas` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`id_cuenta`),
+  UNIQUE KEY `cbu_cuenta` (`cbu_cuenta`),
+  KEY `fk_idCliente_idx` (`idCliente_cuenta`),
+  KEY `fk_tipoCuenta_idx` (`idTipoCuenta_cuenta`),
+  CONSTRAINT `fk_idCliente` FOREIGN KEY (`idCliente_cuenta`) REFERENCES `cliente` (`id_cliente`),
+  CONSTRAINT `fk_tipoCuenta` FOREIGN KEY (`idTipoCuenta_cuenta`) REFERENCES `tipocuenta` (`idtipoCuenta`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cuenta`
+--
+
+LOCK TABLES `cuenta` WRITE;
+/*!40000 ALTER TABLE `cuenta` DISABLE KEYS */;
+INSERT INTO `cuenta` VALUES (1,1,2,'2022-10-23','001-0001-01','123000000001',99276.06,1),(2,1,2,'2022-11-02','001-0001-01','123000000002',68784.36,1),(3,1,1,'2022-05-21','001-0001-03','123000000003',63435.93,1),(4,2,1,'2022-06-21','001-0002-01','123000000004',35130.93,1),(5,2,1,'2022-04-23','001-0002-03','123000000005',51497.06,1),(6,2,2,'2022-06-30','001-0002-02','123000000006',56060.07,1),(7,3,2,'2022-06-12','001-0003-01','123000000007',106342.72,1),(8,3,1,'2022-04-23','001-0003-02','123000000008',56839.16,1),(9,4,1,'2022-09-07','001-0004-02','123000000009',67890.93,1),(10,4,2,'2022-12-28','001-0004-03','123000000010',91999.64,1),(11,5,1,'2022-09-17','001-0005-01','123000000011',59164.96,1),(12,6,1,'2022-06-16','001-0006-02','123000000012',41736.74,1),(13,6,2,'2022-09-23','001-0006-03','123000000013',34793.71,1),(14,7,1,'2022-12-19','001-0007-02','123000000014',64126.60,1),(15,7,1,'2022-03-10','001-0007-03','123000000015',97579.45,1),(16,7,2,'2022-10-30','001-0007-02','123000000016',51215.03,1),(17,8,1,'2022-11-05','001-0008-01','123000000017',47467.89,1),(18,9,2,'2022-02-06','001-0009-03','123000000018',77379.64,1),(19,10,1,'2022-01-10','001-0010-02','123000000019',104650.85,1),(20,10,2,'2022-08-17','001-0010-02','123000000020',93000.10,1),(21,10,2,'2022-02-08','001-0010-03','123000000021',42809.23,1),(22,11,2,'2022-10-15','001-0011-02','123000000022',107477.19,1),(23,11,2,'2022-01-05','001-0011-01','123000000023',36454.36,1),(24,12,2,'2022-03-04','001-0012-03','123000000024',118550.34,1),(25,12,2,'2022-02-07','001-0012-02','123000000025',102100.83,1),(26,13,2,'2022-04-09','001-0013-03','123000000026',33531.44,1),(27,14,2,'2022-12-28','001-0014-02','123000000027',69168.17,1),(28,14,1,'2022-12-14','001-0014-03','123000000028',30104.74,1),(29,15,1,'2022-08-26','001-0015-01','123000000029',57805.35,1),(30,15,1,'2022-04-09','001-0015-03','123000000030',39613.49,1),(31,NULL,1,'2025-06-22','001-9999-01','123000000031',0.00,1),(32,NULL,2,'2025-06-22','001-9999-02','123000000032',0.00,1),(33,NULL,1,'2025-06-22','001-9999-03','123000000033',0.00,1);
+/*!40000 ALTER TABLE `cuenta` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER TR_setear_saldo_cuenta_nueva
+BEFORE INSERT ON cuenta
+FOR EACH ROW
+BEGIN
+	IF new.estado_cuentas = TRUE THEN
+	SET new.saldo_cuenta = 10000;
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `cuota`
+--
+
+DROP TABLE IF EXISTS `cuota`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cuota` (
+  `id_cuota` int(11) NOT NULL,
+  `idPrestamo_cuota` varchar(10) DEFAULT NULL,
+  `numero_cuota` int(11) DEFAULT NULL,
+  `importe_cuota` decimal(12,2) DEFAULT NULL,
+  `fechaVenc_cuota` date DEFAULT NULL,
+  `fechaPago_cuota` date DEFAULT NULL,
+  `estado_cuota` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_cuota`),
+  KEY `fk_idPrestamo_idx` (`idPrestamo_cuota`),
+  KEY `fk_idEstadoCuota_idx` (`estado_cuota`),
+  CONSTRAINT `fk_idEstadoCuota` FOREIGN KEY (`estado_cuota`) REFERENCES `estadocuotas` (`id_estadoCuotas`),
+  CONSTRAINT `fk_idPrestamo` FOREIGN KEY (`idPrestamo_cuota`) REFERENCES `prestamo` (`id_prestamo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cuota`
+--
+
+LOCK TABLES `cuota` WRITE;
+/*!40000 ALTER TABLE `cuota` DISABLE KEYS */;
+INSERT INTO `cuota` VALUES (1,'1',1,16000.00,'2023-02-27','2023-02-27',1),(2,'1',2,16000.00,'2023-03-29','2023-03-29',1),(3,'1',3,16000.00,'2023-04-28','2023-04-28',1),(4,'1',4,16000.00,'2023-05-28','2023-05-28',1),(5,'1',5,16000.00,'2023-06-27','2023-06-27',1),(6,'1',6,16000.00,'2023-07-27','2023-07-27',1),(7,'2',1,8000.00,'2023-05-11',NULL,3),(8,'2',2,8000.00,'2023-06-10',NULL,3),(9,'2',3,8000.00,'2023-07-10',NULL,3),(10,'2',4,8000.00,'2023-08-09',NULL,3),(11,'2',5,8000.00,'2023-09-08',NULL,3),(12,'2',6,8000.00,'2023-10-08',NULL,3),(13,'2',7,8000.00,'2023-11-07',NULL,3),(14,'2',8,8000.00,'2023-12-07',NULL,3),(15,'2',9,8000.00,'2024-01-06',NULL,3),(16,'2',10,8000.00,'2024-02-05',NULL,3),(17,'2',11,8000.00,'2024-03-06',NULL,3),(18,'2',12,8000.00,'2024-04-05',NULL,3),(19,'3',1,12000.00,'2023-02-10',NULL,3),(20,'3',2,12000.00,'2023-03-12',NULL,3),(21,'3',3,12000.00,'2023-04-11',NULL,3),(22,'3',4,12000.00,'2023-05-11',NULL,3),(23,'3',5,12000.00,'2023-06-10',NULL,3),(24,'3',6,12000.00,'2023-07-10',NULL,3),(25,'3',7,12000.00,'2023-08-09',NULL,3),(26,'3',8,12000.00,'2023-09-08',NULL,3),(27,'3',9,12000.00,'2023-10-08',NULL,3),(28,'3',10,12000.00,'2023-11-07',NULL,3),(29,'3',11,12000.00,'2023-12-07',NULL,3),(30,'3',12,12000.00,'2024-01-06',NULL,3),(31,'4',1,20000.00,'2023-04-25','2023-04-25',1),(32,'4',2,20000.00,'2023-05-25','2023-05-25',1),(33,'4',3,20000.00,'2023-06-24','2023-06-24',1),(34,'4',4,20000.00,'2023-07-24','2023-07-24',1),(35,'4',5,20000.00,'2023-08-23',NULL,3),(36,'4',6,20000.00,'2023-09-22',NULL,3),(37,'5',1,5000.00,'2023-03-12',NULL,3),(38,'5',2,5000.00,'2023-04-11',NULL,3),(39,'5',3,5000.00,'2023-05-11',NULL,3),(40,'5',4,5000.00,'2023-06-10',NULL,3),(41,'5',5,5000.00,'2023-07-10',NULL,3),(42,'5',6,5000.00,'2023-08-09',NULL,3),(43,'5',7,5000.00,'2023-09-08',NULL,3),(44,'5',8,5000.00,'2023-10-08',NULL,3),(45,'5',9,5000.00,'2023-11-07',NULL,3),(46,'5',10,5000.00,'2023-12-07',NULL,3),(47,'5',11,5000.00,'2024-01-06',NULL,3),(48,'5',12,5000.00,'2024-02-05',NULL,3),(49,'6',1,8000.00,'2023-03-14','2023-03-14',1),(50,'6',2,8000.00,'2023-04-13','2023-04-13',1),(51,'6',3,8000.00,'2023-05-13','2023-05-13',1),(52,'6',4,8000.00,'2023-06-12','2023-06-12',1),(53,'6',5,8000.00,'2023-07-12',NULL,3),(54,'6',6,8000.00,'2023-08-11',NULL,3),(55,'6',7,8000.00,'2023-09-10',NULL,3),(56,'6',8,8000.00,'2023-10-10',NULL,3),(57,'6',9,8000.00,'2023-11-09',NULL,3),(58,'6',10,8000.00,'2023-12-09',NULL,3),(59,'6',11,8000.00,'2024-01-08',NULL,3),(60,'6',12,8000.00,'2024-02-07',NULL,3),(61,'7',1,24000.00,'2023-07-26',NULL,3),(62,'7',2,24000.00,'2023-08-25',NULL,3),(63,'7',3,24000.00,'2023-09-24',NULL,3),(64,'7',4,24000.00,'2023-10-24',NULL,3),(65,'7',5,24000.00,'2023-11-23',NULL,3),(66,'7',6,24000.00,'2023-12-23',NULL,3),(67,'8',1,10000.00,'2023-07-28',NULL,3),(68,'8',2,10000.00,'2023-08-27',NULL,3),(69,'8',3,10000.00,'2023-09-26',NULL,3),(70,'8',4,10000.00,'2023-10-26',NULL,3),(71,'8',5,10000.00,'2023-11-25',NULL,3),(72,'8',6,10000.00,'2023-12-25',NULL,3),(73,'9',1,10000.00,'2023-05-03',NULL,3),(74,'9',2,10000.00,'2023-06-02',NULL,3),(75,'9',3,10000.00,'2023-07-02',NULL,3),(76,'9',4,10000.00,'2023-08-01',NULL,3),(77,'9',5,10000.00,'2023-08-31',NULL,3),(78,'9',6,10000.00,'2023-09-30',NULL,3),(79,'10',1,10000.00,'2023-03-10','2023-03-10',1),(80,'10',2,10000.00,'2023-04-09','2023-04-09',1),(81,'10',3,10000.00,'2023-05-09','2023-05-09',1),(82,'10',4,10000.00,'2023-06-08','2023-06-08',1),(83,'10',5,10000.00,'2023-07-08','2023-07-08',1),(84,'10',6,10000.00,'2023-08-07','2023-08-07',1);
+/*!40000 ALTER TABLE `cuota` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `estadocuotas`
+--
+
+DROP TABLE IF EXISTS `estadocuotas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `estadocuotas` (
+  `id_estadoCuotas` int(11) NOT NULL,
+  `desc_estadoCuotas` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id_estadoCuotas`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `estadocuotas`
+--
+
+LOCK TABLES `estadocuotas` WRITE;
+/*!40000 ALTER TABLE `estadocuotas` DISABLE KEYS */;
+INSERT INTO `estadocuotas` VALUES (1,'Pagada'),(2,'Vencida'),(3,'Pendiente');
+/*!40000 ALTER TABLE `estadocuotas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `estadoprestamos`
+--
+
+DROP TABLE IF EXISTS `estadoprestamos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `estadoprestamos` (
+  `id_estadoPrestamos` int(11) NOT NULL,
+  `desc_estadoPrestamo` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id_estadoPrestamos`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `estadoprestamos`
+--
+
+LOCK TABLES `estadoprestamos` WRITE;
+/*!40000 ALTER TABLE `estadoprestamos` DISABLE KEYS */;
+INSERT INTO `estadoprestamos` VALUES (1,'Aprobado'),(2,'Rechazado'),(3,'Pendiente');
+/*!40000 ALTER TABLE `estadoprestamos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `localidad`
+--
+
+DROP TABLE IF EXISTS `localidad`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `localidad` (
+  `id_localidad` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_localidad` varchar(50) NOT NULL,
+  `id_provincia` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_localidad`),
+  KEY `id_provincia` (`id_provincia`),
+  CONSTRAINT `localidad_ibfk_1` FOREIGN KEY (`id_provincia`) REFERENCES `provincia` (`id_provincia`)
+) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `localidad`
+--
+
+LOCK TABLES `localidad` WRITE;
+/*!40000 ALTER TABLE `localidad` DISABLE KEYS */;
+INSERT INTO `localidad` VALUES (1,'La Plata',1),(2,'Mar del Plata',1),(3,'Bahía Blanca',1),(4,'Tandil',1),(5,'Olavarría',1),(6,'Quilmes',1),(7,'Florencio Varela',1),(8,'Morón',1),(9,'Avellaneda',1),(10,'San Isidro',1),(11,'Luján',1),(12,'Campana',1),(13,'Pergamino',1),(14,'Zárate',1),(15,'Escobar',1),(16,'Palermo',2),(17,'Recoleta',2),(18,'Belgrano',2),(19,'San Telmo',2),(20,'La Boca',2),(21,'Caballito',2),(22,'Almagro',2),(23,'Villa Crespo',2),(24,'Flores',2),(25,'Villa Lugano',2),(26,'Villa Devoto',2),(27,'Villa Urquiza',2),(28,'Boedo',2),(29,'Parque Patricios',2),(30,'Chacarita',2),(31,'San Fernando del Valle de Catamarca',3),(32,'Andalgalá',3),(33,'Belén',3),(34,'Santa María',3),(35,'Tinogasta',3),(36,'Resistencia',4),(37,'Sáenz Peña',4),(38,'Villa Ángela',4),(39,'Presidencia Roque Sáenz Peña',4),(40,'Charata',4),(41,'Comodoro Rivadavia',5),(42,'Puerto Madryn',5),(43,'Trelew',5),(44,'Esquel',5),(45,'Rawson',5),(46,'Córdoba',6),(47,'Río Cuarto',6),(48,'Villa María',6),(49,'Carlos Paz',6),(50,'Jesús María',6),(51,'Corrientes',7),(52,'Goya',7),(53,'Paso de los Libres',7),(54,'Ituzaingó',7),(55,'Monte Caseros',7),(56,'Paraná',8),(57,'Concordia',8),(58,'Gualeguaychú',8),(59,'Villaguay',8),(60,'Nogoyá',8),(61,'Formosa',9),(62,'Clorinda',9),(63,'Pirané',9),(64,'El Colorado',9),(65,'Las Lomitas',9),(66,'San Salvador de Jujuy',10),(67,'Palpalá',10),(68,'Perico',10),(69,'Libertador General San Martín',10),(70,'Humahuaca',10),(71,'Santa Rosa',11),(72,'General Pico',11),(73,'Toay',11),(74,'Guatraché',11),(75,'Eduardo Castex',11),(76,'La Rioja',12),(77,'Chepes',12),(78,'Chamical',12),(79,'Aimogasta',12),(80,'Chilecito',12),(81,'Mendoza',13),(82,'San Rafael',13),(83,'Godoy Cruz',13),(84,'Luján de Cuyo',13),(85,'Tupungato',13),(86,'Posadas',14),(87,'Eldorado',14),(88,'Oberá',14),(89,'Montecarlo',14),(90,'Puerto Iguazú',14),(91,'Neuquén',15),(92,'Plottier',15),(93,'Centenario',15),(94,'Cutral Có',15),(95,'San Martín de los Andes',15),(96,'Viedma',16),(97,'General Roca',16),(98,'San Carlos de Bariloche',16),(99,'Cipolletti',16),(100,'Allen',16),(101,'Salta',17),(102,'Orán',17),(103,'Metán',17),(104,'Embarcación',17),(105,'Cerrillos',17),(106,'San Juan',18),(107,'Rawson',18),(108,'Chimbas',18),(109,'Santa Lucía',18),(110,'Rivadavia',18),(111,'San Luis',19),(112,'Villa Mercedes',19),(113,'La Punta',19),(114,'Juana Koslay',19),(115,'Justo Daract',19),(116,'Río Gallegos',20),(117,'Caleta Olivia',20),(118,'El Calafate',20),(119,'Puerto Deseado',20),(120,'Las Heras',20),(121,'Rosario',21),(122,'Santa Fe',21),(123,'Rafaela',21),(124,'Venado Tuerto',21),(125,'Esperanza',21),(126,'Santiago del Estero',22),(127,'La Banda',22),(128,'Termas de Río Hondo',22),(129,'Añatuya',22),(130,'Villa Ángela',22),(131,'Río Grande',23),(132,'Ushuaia',23),(133,'Tolhuin',23),(134,'Puerto Almanza',23),(135,'Cabo Domingo',23),(136,'San Miguel de Tucumán',24),(137,'Yerba Buena',24),(138,'Concepción',24),(139,'Tafí Viejo',24),(140,'Banda del Río Salí',24);
+/*!40000 ALTER TABLE `localidad` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `movimiento`
+--
+
+DROP TABLE IF EXISTS `movimiento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `movimiento` (
+  `id_mov` varchar(10) NOT NULL,
+  `idCuenta_mov` int(11) DEFAULT NULL,
+  `fecha_mov` date DEFAULT NULL,
+  `detalle_mov` varchar(45) DEFAULT NULL,
+  `importe_mov` decimal(12,2) DEFAULT NULL,
+  `idTipoMov_mov` int(11) DEFAULT NULL,
+  `idCuentaDestino_mov` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_mov`),
+  KEY `fk_idCuenta_idx` (`idCuenta_mov`),
+  KEY `fk_idTipoMov_idx` (`idTipoMov_mov`),
+  KEY `fk_idCuentaDestino_idx` (`idCuentaDestino_mov`),
+  CONSTRAINT `fk_idCuenta` FOREIGN KEY (`idCuenta_mov`) REFERENCES `cuenta` (`id_cuenta`),
+  CONSTRAINT `fk_idCuentaDestino` FOREIGN KEY (`idCuentaDestino_mov`) REFERENCES `cuenta` (`id_cuenta`),
+  CONSTRAINT `fk_idTipoMov` FOREIGN KEY (`idTipoMov_mov`) REFERENCES `tipomovimiento` (`idTipoMovimiento`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `movimiento`
+--
+
+LOCK TABLES `movimiento` WRITE;
+/*!40000 ALTER TABLE `movimiento` DISABLE KEYS */;
+INSERT INTO `movimiento` VALUES ('1',1,'2022-10-23','Apertura de cuenta',0.00,1,NULL),('10',10,'2022-12-28','Apertura de cuenta',0.00,1,NULL),('11',11,'2022-09-17','Apertura de cuenta',0.00,1,NULL),('12',12,'2022-06-16','Apertura de cuenta',0.00,1,NULL),('13',13,'2022-09-23','Apertura de cuenta',0.00,1,NULL),('14',14,'2022-12-19','Apertura de cuenta',0.00,1,NULL),('15',15,'2022-03-10','Apertura de cuenta',0.00,1,NULL),('16',16,'2022-10-30','Apertura de cuenta',0.00,1,NULL),('17',17,'2022-11-05','Apertura de cuenta',0.00,1,NULL),('18',18,'2022-02-06','Apertura de cuenta',0.00,1,NULL),('19',19,'2022-01-10','Apertura de cuenta',0.00,1,NULL),('2',2,'2022-11-02','Apertura de cuenta',0.00,1,NULL),('20',20,'2022-08-17','Apertura de cuenta',0.00,1,NULL),('21',21,'2022-02-08','Apertura de cuenta',0.00,1,NULL),('22',22,'2022-10-15','Apertura de cuenta',0.00,1,NULL),('23',23,'2022-01-05','Apertura de cuenta',0.00,1,NULL),('24',24,'2022-03-04','Apertura de cuenta',0.00,1,NULL),('25',25,'2022-02-07','Apertura de cuenta',0.00,1,NULL),('26',26,'2022-04-09','Apertura de cuenta',0.00,1,NULL),('27',27,'2022-12-28','Apertura de cuenta',0.00,1,NULL),('28',28,'2022-12-14','Apertura de cuenta',0.00,1,NULL),('29',29,'2022-08-26','Apertura de cuenta',0.00,1,NULL),('3',3,'2022-05-21','Apertura de cuenta',0.00,1,NULL),('30',30,'2022-04-09','Apertura de cuenta',0.00,1,NULL),('4',4,'2022-06-21','Apertura de cuenta',0.00,1,NULL),('5',5,'2022-04-23','Apertura de cuenta',0.00,1,NULL),('6',6,'2022-06-30','Apertura de cuenta',0.00,1,NULL),('7',7,'2022-06-12','Apertura de cuenta',0.00,1,NULL),('8',8,'2022-04-23','Apertura de cuenta',0.00,1,NULL),('9',9,'2022-09-07','Apertura de cuenta',0.00,1,NULL);
+/*!40000 ALTER TABLE `movimiento` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `nacionalidad`
+--
+
+DROP TABLE IF EXISTS `nacionalidad`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `nacionalidad` (
+  `id_nacionalidad` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_nacionalidad` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_nacionalidad`)
+) ENGINE=InnoDB AUTO_INCREMENT=194 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `nacionalidad`
+--
+
+LOCK TABLES `nacionalidad` WRITE;
+/*!40000 ALTER TABLE `nacionalidad` DISABLE KEYS */;
+INSERT INTO `nacionalidad` VALUES (1,'Afganistán'),(2,'Albania'),(3,'Alemania'),(4,'Andorra'),(5,'Angola'),(6,'Antigua y Barbuda'),(7,'Arabia Saudita'),(8,'Argelia'),(9,'Argentina'),(10,'Armenia'),(11,'Australia'),(12,'Austria'),(13,'Azerbaiyán'),(14,'Bahamas'),(15,'Bangladés'),(16,'Barbados'),(17,'Baréin'),(18,'Bélgica'),(19,'Belice'),(20,'Benín'),(21,'Bielorrusia'),(22,'Birmania'),(23,'Bolivia'),(24,'Bosnia y Herzegovina'),(25,'Botsuana'),(26,'Brasil'),(27,'Brunéi'),(28,'Bulgaria'),(29,'Burkina Faso'),(30,'Burundi'),(31,'Bután'),(32,'Cabo Verde'),(33,'Camboya'),(34,'Camerún'),(35,'Canadá'),(36,'Catar'),(37,'Chad'),(38,'Chile'),(39,'China'),(40,'Chipre'),(41,'Colombia'),(42,'Comoras'),(43,'Corea del Norte'),(44,'Corea del Sur'),(45,'Costa de Marfil'),(46,'Costa Rica'),(47,'Croacia'),(48,'Cuba'),(49,'Dinamarca'),(50,'Dominica'),(51,'Ecuador'),(52,'Egipto'),(53,'El Salvador'),(54,'Emiratos Árabes Unidos'),(55,'Eritrea'),(56,'Eslovaquia'),(57,'Eslovenia'),(58,'España'),(59,'Estados Unidos'),(60,'Estonia'),(61,'Esuatini'),(62,'Etiopía'),(63,'Filipinas'),(64,'Finlandia'),(65,'Fiyi'),(66,'Francia'),(67,'Gabón'),(68,'Gambia'),(69,'Georgia'),(70,'Ghana'),(71,'Granada'),(72,'Grecia'),(73,'Guatemala'),(74,'Guinea'),(75,'Guinea-Bisáu'),(76,'Guinea Ecuatorial'),(77,'Guyana'),(78,'Haití'),(79,'Honduras'),(80,'Hungría'),(81,'India'),(82,'Indonesia'),(83,'Irak'),(84,'Irán'),(85,'Irlanda'),(86,'Islandia'),(87,'Islas Marshall'),(88,'Islas Salomón'),(89,'Israel'),(90,'Italia'),(91,'Jamaica'),(92,'Japón'),(93,'Jordania'),(94,'Kazajistán'),(95,'Kenia'),(96,'Kirguistán'),(97,'Kiribati'),(98,'Kuwait'),(99,'Laos'),(100,'Lesoto'),(101,'Letonia'),(102,'Líbano'),(103,'Liberia'),(104,'Libia'),(105,'Liechtenstein'),(106,'Lituania'),(107,'Luxemburgo'),(108,'Madagascar'),(109,'Malasia'),(110,'Malaui'),(111,'Maldivas'),(112,'Malí'),(113,'Malta'),(114,'Marruecos'),(115,'Mauricio'),(116,'Mauritania'),(117,'México'),(118,'Micronesia'),(119,'Moldavia'),(120,'Mónaco'),(121,'Mongolia'),(122,'Montenegro'),(123,'Mozambique'),(124,'Namibia'),(125,'Nauru'),(126,'Nepal'),(127,'Nicaragua'),(128,'Níger'),(129,'Nigeria'),(130,'Noruega'),(131,'Nueva Zelanda'),(132,'Omán'),(133,'Países Bajos'),(134,'Pakistán'),(135,'Palaos'),(136,'Panamá'),(137,'Papúa Nueva Guinea'),(138,'Paraguay'),(139,'Perú'),(140,'Polonia'),(141,'Portugal'),(142,'Reino Unido'),(143,'República Centroafricana'),(144,'República Checa'),(145,'República del Congo'),(146,'República Democrática del Congo'),(147,'República Dominicana'),(148,'Ruanda'),(149,'Rumania'),(150,'Rusia'),(151,'Samoa'),(152,'San Cristóbal y Nieves'),(153,'San Marino'),(154,'San Vicente y las Granadinas'),(155,'Santa Lucía'),(156,'Santo Tomé y Príncipe'),(157,'Senegal'),(158,'Serbia'),(159,'Seychelles'),(160,'Sierra Leona'),(161,'Singapur'),(162,'Siria'),(163,'Somalia'),(164,'Sri Lanka'),(165,'Sudáfrica'),(166,'Sudán'),(167,'Sudán del Sur'),(168,'Suecia'),(169,'Suiza'),(170,'Surinam'),(171,'Tailandia'),(172,'Tanzania'),(173,'Tayikistán'),(174,'Timor Oriental'),(175,'Togo'),(176,'Tonga'),(177,'Trinidad y Tobago'),(178,'Túnez'),(179,'Turkmenistán'),(180,'Turquía'),(181,'Tuvalu'),(182,'Ucrania'),(183,'Uganda'),(184,'Uruguay'),(185,'Uzbekistán'),(186,'Vanuatu'),(187,'Vaticano'),(188,'Venezuela'),(189,'Vietnam'),(190,'Yemen'),(191,'Yibuti'),(192,'Zambia'),(193,'Zimbabue');
+/*!40000 ALTER TABLE `nacionalidad` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `prestamo`
+--
+
+DROP TABLE IF EXISTS `prestamo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `prestamo` (
+  `id_prestamo` varchar(10) NOT NULL,
+  `idCliente_pres` int(11) DEFAULT NULL,
+  `fechaSolicitud_pres` date DEFAULT NULL,
+  `importeSolicitado_pres` decimal(12,2) DEFAULT NULL,
+  `importeTotal_pres` decimal(12,2) DEFAULT NULL,
+  `plazoMeses_pres` int(11) DEFAULT NULL,
+  `montoCuota_pres` decimal(12,2) DEFAULT NULL,
+  `estado_pres` int(11) DEFAULT NULL,
+  `idCuentaDeposito_pres` int(11) DEFAULT NULL,
+  `estado_prestamo` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`id_prestamo`),
+  KEY `fk_estado_idx` (`estado_pres`),
+  KEY `fk_idCuentaDeposito_idx` (`idCuentaDeposito_pres`),
+  KEY `fk_idClienPress_idx` (`idCliente_pres`),
+  CONSTRAINT `fk_estado` FOREIGN KEY (`estado_pres`) REFERENCES `estadoprestamos` (`id_estadoPrestamos`),
+  CONSTRAINT `fk_idClienPress` FOREIGN KEY (`idCliente_pres`) REFERENCES `cliente` (`id_cliente`),
+  CONSTRAINT `fk_idCuentaDeposito` FOREIGN KEY (`idCuentaDeposito_pres`) REFERENCES `cuenta` (`id_cuenta`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `prestamo`
+--
+
+LOCK TABLES `prestamo` WRITE;
+/*!40000 ALTER TABLE `prestamo` DISABLE KEYS */;
+INSERT INTO `prestamo` VALUES ('1',2,'2023-01-28',80000.00,96000.00,6,16000.00,1,5,1),('10',11,'2023-02-10',50000.00,60000.00,6,10000.00,1,23,1),('2',15,'2023-04-11',80000.00,96000.00,12,8000.00,3,30,1),('3',14,'2023-01-10',120000.00,144000.00,12,12000.00,3,27,1),('4',8,'2023-03-26',100000.00,120000.00,6,20000.00,1,17,1),('5',1,'2023-02-10',50000.00,60000.00,12,5000.00,3,3,1),('6',4,'2023-02-14',80000.00,96000.00,12,8000.00,1,10,1),('7',7,'2023-06-26',120000.00,144000.00,6,24000.00,3,16,1),('8',6,'2023-06-28',50000.00,60000.00,6,10000.00,3,13,1),('9',10,'2023-04-03',50000.00,60000.00,6,10000.00,3,19,1);
+/*!40000 ALTER TABLE `prestamo` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER TR_agregar_saldo_prestamo
+AFTER UPDATE ON prestamo
+FOR EACH ROW
+BEGIN
+	IF new.estado_pres = 1 AND old.estado_pres != 1 THEN
+	UPDATE cuenta SET saldo_cuenta = saldo_cuenta + new.importeSolicitado_pres
+    WHERE id_cuenta = new.idCuentaDeposito_pres;
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `provincia`
+--
+
+DROP TABLE IF EXISTS `provincia`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `provincia` (
+  `id_provincia` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_provincia` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_provincia`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `provincia`
+--
+
+LOCK TABLES `provincia` WRITE;
+/*!40000 ALTER TABLE `provincia` DISABLE KEYS */;
+INSERT INTO `provincia` VALUES (1,'Buenos Aires'),(2,'CABA'),(3,'Catamarca'),(4,'Chaco'),(5,'Chubut'),(6,'Córdoba'),(7,'Corrientes'),(8,'Entre Ríos'),(9,'Formosa'),(10,'Jujuy'),(11,'La Pampa'),(12,'La Rioja'),(13,'Mendoza'),(14,'Misiones'),(15,'Neuquén'),(16,'Río Negro'),(17,'Salta'),(18,'San Juan'),(19,'San Luis'),(20,'Santa Cruz'),(21,'Santa Fe'),(22,'Santiago del Estero'),(23,'Tierra del Fuego'),(24,'Tucumán');
+/*!40000 ALTER TABLE `provincia` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipocuenta`
+--
+
+DROP TABLE IF EXISTS `tipocuenta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipocuenta` (
+  `idtipoCuenta` int(11) NOT NULL,
+  `descripcion_tipoCuenta` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idtipoCuenta`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipocuenta`
+--
+
+LOCK TABLES `tipocuenta` WRITE;
+/*!40000 ALTER TABLE `tipocuenta` DISABLE KEYS */;
+INSERT INTO `tipocuenta` VALUES (1,'Caja de Ahorro'),(2,'Cuenta Corriente');
+/*!40000 ALTER TABLE `tipocuenta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipomovimiento`
+--
+
+DROP TABLE IF EXISTS `tipomovimiento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipomovimiento` (
+  `idTipoMovimiento` int(11) NOT NULL,
+  `descripcion_tipoMov` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idTipoMovimiento`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipomovimiento`
+--
+
+LOCK TABLES `tipomovimiento` WRITE;
+/*!40000 ALTER TABLE `tipomovimiento` DISABLE KEYS */;
+INSERT INTO `tipomovimiento` VALUES (1,'Alta de Cuenta'),(2,'Alta de Prestamo'),(3,'Pago de Préstamo'),(4,'Transferencia');
+/*!40000 ALTER TABLE `tipomovimiento` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping events for database 'bdbancobg2'
+--
+
+--
+-- Dumping routines for database 'bdbancobg2'
+--
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+use bdbancobg2;
+
+DELIMITER //
+CREATE TRIGGER TR_setear_saldo_cuenta_nueva
+BEFORE INSERT ON cuenta
+FOR EACH ROW
+BEGIN
+	IF new.estado_cuentas = TRUE THEN
+	SET new.saldo_cuenta = 10000;
+    END IF;
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER TR_agregar_saldo_prestamo
+AFTER UPDATE ON prestamo
+FOR EACH ROW
+BEGIN
+	IF new.estado_pres = 1 AND old.estado_pres != 1 THEN
+	UPDATE cuenta SET saldo_cuenta = saldo_cuenta + new.importeSolicitado_pres
+    WHERE id_cuenta = new.idCuentaDeposito_pres;
+    END IF;
+END;
+//
+DELIMITER ;

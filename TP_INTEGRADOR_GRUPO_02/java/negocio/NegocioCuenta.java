@@ -91,9 +91,6 @@ System.out.println("ValidarCliente - Par�metros recibidos: " +
 StringBuilder errores = new StringBuilder();
 
 // Validar campos String
-if (idCuenta == null || idCuenta.trim().isEmpty()) {
-errores.append("El idCuenta es obligatorio.\n");
-}
 if (numeroCuenta == null || numeroCuenta.trim().isEmpty()) {
 errores.append("El Numero de Cuenta es obligatorio.\n");
 }
@@ -110,7 +107,7 @@ errores.append("El id Tipo de Cuenta Cuenta es obligatorio y debe ser un n�mer
 }
 
 // Validar formatos espec�ficos
-if (saldoCuenta.compareTo(BigDecimal.ZERO) <= 0) {
+if (saldoCuenta.compareTo(BigDecimal.ZERO) < 0) {
 	errores.append("El saldo no debe ser negativo.\n");
 }
 
@@ -124,19 +121,17 @@ errores.append("Formato de fecha de creación inv�lido.\n");
 }
 
 // Validar longitud CBU solo si no hay errores anteriores en esos campos
-/*
-if (cbuCuenta == null || !String.valueOf(cbuCuenta).matches("\\d{12}") || Integer.parseInt(cbuCuenta) <=0) {
-errores.append("El CBU debe tener exactamente 22 d�gitos num�ricos.\n");
+
+if (cbuCuenta == null || cbuCuenta.trim().isEmpty() || !cbuCuenta.matches("\\d{12}")) {
+    errores.append("El CBU debe tener exactamente 22 dígitos numéricos.\n");
 }
-*/
-// Validar unicidad solo si no hay errores con esos campos
-/*
-if (errores.length() == 0) {
-if (daoCuenta.existeCBU(cbuCuenta)) {
-errores.append("El CBU ya est� registrado para otro cliente.\n");
+
+// Validar el cliente
+if(daoCuenta.existeCBU(cbuCuenta, idCuenta) == false) {
+	errores.append("El CBU ya existe en otra cuenta.\n");
 }
-}
-*/
+	
+	
 return errores.length() > 0 ? errores.toString() : null;
 }
 }
