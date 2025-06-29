@@ -39,29 +39,33 @@ public class AutorizacionPrestamosServlet extends HttpServlet {
 			negocioPrestamo.modificarEstadoPrestamo("2", request.getParameter("idPrestamo"));
 		}
 		
+		ArrayList<String> filtros = negocioPrestamo.obtenerColumnas();
+		request.setAttribute("ListaFiltros", filtros);
+		
+		ArrayList<EstadoPrestamo> estados = negocioPrestamo.obtenerEstados();
+		request.setAttribute("ListaEstados", estados);
 		
 		listado = negocioPrestamo.listarPrestamos();
 		request.setAttribute("ListaPrestamos", listado);
 		
 		
 		
-		if (request.getParameter("filtro") != null && request.getParameter("filtro").equals("1")) {
-			ArrayList<EstadoPrestamo> estados = negocioPrestamo.obtenerEstados();
-			request.setAttribute("ListaEstados", estados);
-		}
-		
 		if(request.getParameter("btnBuscar") != null) {
 			if (request.getParameter("estadoSeleccionado") != null && !request.getParameter("estadoSeleccionado").equals("0")) {
 				listado = negocioPrestamo.filtrarPorEstado(request.getParameter("estadoSeleccionado"));
 				request.setAttribute("ListaPrestamos", listado);
 			}
-			ArrayList<EstadoPrestamo> estados = negocioPrestamo.obtenerEstados();
 			request.setAttribute("ListaEstados", estados);
 			
-			if(request.getParameter("busqueda") != null && !request.getParameter("busqueda").trim().isEmpty()) {
-				if(request.getParameter("busqueda").matches("\\d+")) {
-					listado = negocioPrestamo.filtrarPorPlazoMeses(request.getParameter("busqueda").trim());
-					request.setAttribute("ListaPrestamos", listado);
+			if(request.getParameter("filtro")!= null) {
+				if(request.getParameter("busqueda") != null && !request.getParameter("busqueda").trim().isEmpty()) {
+						listado = negocioPrestamo.filtrarBusqueda(request.getParameter("filtro"),request.getParameter("busqueda").trim());
+						if(listado != null) {
+							request.setAttribute("ListaPrestamos", listado);
+						}
+						else {
+							request.setAttribute("errores", "INGRESE DATO VALIDO");
+						}
 				}
 			}
 		}
@@ -81,10 +85,7 @@ public class AutorizacionPrestamosServlet extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/Formularios/ModoBanco/Prestamos/AutorizacionPrestamos.jsp");
-		rd.forward(request, response); 
 	}
 	
 }
