@@ -124,18 +124,19 @@ errores.append("Formato de fecha de creación inv�lido.\n");
 }
 
 // Validar longitud CBU solo si no hay errores anteriores en esos campos
+/*
 if (cbuCuenta == null || !String.valueOf(cbuCuenta).matches("\\d{12}") || Integer.parseInt(cbuCuenta) <=0) {
 errores.append("El CBU debe tener exactamente 22 d�gitos num�ricos.\n");
 }
-
+*/
 // Validar unicidad solo si no hay errores con esos campos
-
+/*
 if (errores.length() == 0) {
 if (daoCuenta.existeCBU(cbuCuenta)) {
 errores.append("El CBU ya est� registrado para otro cliente.\n");
 }
 }
-
+*/
 return errores.length() > 0 ? errores.toString() : null;
 }
 }

@@ -38,14 +38,14 @@ public class ModificarCuentaServlet extends HttpServlet {
 	        BigDecimal saldoCuenta = null;
 
 	        try {
-	            String idCuenta = request.getParameter("idCuenta");
-	            int idClienteCuenta = Integer.parseInt(request.getParameter("idClienteCuenta"));
+	            String idCuenta = request.getParameter("id_cuenta");
+	            int idClienteCuenta = Integer.parseInt(request.getParameter("idCliente_cuenta"));
 	            int idTipoCuenta = Integer.parseInt(request.getParameter("idTipoCuenta"));
-	            String fechaCreacionCuenta = request.getParameter("fechaCreacionCuenta");
-	            String numeroCuenta = request.getParameter("numeroCuenta");
-	            String cbuCuenta = request.getParameter("cbuCuenta");
-	            String saldoStr = request.getParameter("saldoCuenta");
-	            if (saldoStr != null && !saldoStr.trim().isEmpty()) {
+	            String fechaCreacionCuenta = request.getParameter("fechaCreacion_cuenta");
+	            String numeroCuenta = request.getParameter("numero_cuenta");
+	            String cbuCuenta = request.getParameter("cbu_cuenta");
+	            String saldoStr = request.getParameter("saldo_cuenta");
+	            if (saldoStr != null) {
 	                saldoStr = saldoStr.replace(",", ".");
 	                BigDecimal saldo = new BigDecimal(saldoStr);
 	                saldoCuenta = saldo;
