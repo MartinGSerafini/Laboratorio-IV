@@ -209,14 +209,16 @@
       if (campo === 'id_cuenta') {
         td.innerText = valor;
 
-      } else if (campo === 'idTipoCuenta') {
-        td.innerHTML =
-          '<select class="form-select form-select-sm">' +
-          '<option value="1"' + (valor === '1' ? ' selected' : '') + '>Caja de Ahorro</option>' +
-          '<option value="2"' + (valor === '2' ? ' selected' : '') + '>Cuenta Corriente</option>' +
-          '</select>';
+      }  else if (campo === 'idTipoCuenta') {
+    	  const idTipo = td.getAttribute("data-id");
 
-      } else {
+    	  td.innerHTML =
+    	    '<select class="form-select form-select-sm">' +
+    	    '<option value="1"' + (idTipo === '1' ? ' selected' : '') + '>Caja de Ahorro</option>' +
+    	    '<option value="2"' + (idTipo === '2' ? ' selected' : '') + '>Cuenta Corriente</option>' +
+    	    '</select>';
+    	    
+    	} else {
         td.innerHTML = '<input type="text" class="form-control form-control-sm" value="' + escapeHtml(valor) + '">';
       }
     }
@@ -259,31 +261,48 @@
   }
 
   document.getElementById('confirmarGuardarBtn').addEventListener('click', () => {
-    fetch('/TP_INTEGRADOR_GRUPO_02/ModificarCuentaServlet', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-      body: datosAEnviar.toString()
-    })
-    .then(res => res.json())
-    .then(resp => {
-      if (resp.success) {
-        alert('✔️ Cuenta modificada correctamente');
-        toggleBotones(filaEnEdicion, false);
+	    fetch('/TP_INTEGRADOR_GRUPO_02/ModificarCuentaServlet', {
+	      method: 'POST',
+	      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+	      body: datosAEnviar.toString()
+	    })
+	    .then(res => res.json())
+	    .then(resp => {
+	  if (resp.success) {
+	    alert('✔️ Cuenta modificada correctamente');
+	    filaEnEdicion.querySelectorAll('td[data-campo]').forEach(td => {
+	      const campo = td.getAttribute('data-campo');
+	      const input = td.querySelector('input');
+	      const select = td.querySelector('select');
+	      const nuevoValor = datosAEnviar.get(campo);
 
-        filaEnEdicion.querySelectorAll('td[data-campo]').forEach(td => {
-      	  const campo = td.getAttribute('data-campo');
-      	  const valorId = datosAEnviar.get(campo);
-      	  td.setAttribute('data-valor-original', valorId);
-      	});
+	      td.setAttribute('data-valor-original', nuevoValor);
 
-      } else {
-        alert("❌ " + resp.mensaje);
-      }
-    })
-    .catch(err => {
-      console.error("Error en fetch:", err);
-      alert("❌ Error al intentar guardar los cambios: " + err.message);
-    });
+	      if (input || select) {
+	        if (campo === "idTipoCuenta") {
+	          let texto = "";
+	          switch (nuevoValor) {
+	            case "1":
+	              texto = "1 - Caja de Ahorro";
+	              break;
+	            case "2":
+	              texto = "2 - Cuenta Corriente";
+	              break;
+	            default:
+	              texto = nuevoValor;
+	          }
+	          td.textContent = texto;
+	        } else {
+	          td.textContent = nuevoValor;
+	        }
+	      }
+	    });
+
+	    toggleBotones(filaEnEdicion, false);
+	  } else {
+	    alert("❌ " + resp.mensaje);
+	  }
+	})
 
     // Ocultar modal
     const modalEl = document.getElementById('confirmarModificarModal');

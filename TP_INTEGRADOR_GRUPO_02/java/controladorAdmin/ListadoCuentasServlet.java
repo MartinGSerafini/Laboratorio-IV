@@ -28,9 +28,6 @@ public class ListadoCuentasServlet extends HttpServlet {
         String filtro = request.getParameter("filtro");
 
         ArrayList<Cuenta> listaCuentas;
-        ArrayList<TipoCuenta> listaTipoCuenta = new ArrayList<TipoCuenta>();
-        listaTipoCuenta.add(new TipoCuenta(1, "Caja de ahorro"));
-        listaTipoCuenta.add(new TipoCuenta(2, "Cuenta corriente"));
 
         if (busqueda != null && filtro != null && !busqueda.isEmpty() && !filtro.isEmpty()) {
             listaCuentas = negocio.obtenerCuentasPorFiltro(filtro, busqueda);
@@ -59,7 +56,6 @@ public class ListadoCuentasServlet extends HttpServlet {
         request.setAttribute("totalPaginas", totalPaginas);
         request.setAttribute("busqueda", busqueda);
         request.setAttribute("filtroSeleccionado", filtro);
-        request.setAttribute("listaTipoCuenta", listaTipoCuenta);
 
         RequestDispatcher rd = request.getRequestDispatcher("Formularios/ModoBanco/ABMLCuentas/ListarCuentas.jsp");
         rd.forward(request, response);
