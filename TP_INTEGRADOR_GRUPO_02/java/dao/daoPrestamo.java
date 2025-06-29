@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import entidades.Prestamo;
+import entidades.Cliente;
 import entidades.EstadoPrestamo;
 
 
@@ -97,17 +98,38 @@ public class daoPrestamo {
 	
 	public ArrayList<Prestamo> filtrar(String sql){
 		ArrayList<Prestamo> lista = new ArrayList<Prestamo>();
-		try (Connection conn = Conexion.getConexion();
-				Statement st = conn.createStatement();) {
-			    ResultSet rs = st.executeQuery(sql);
-			
-			    cargar(lista,rs);
-			
-			conn.close();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}finally {}
+		
+
+   try (Connection conn = Conexion.getConexion();
+        PreparedStatement ps = conn.prepareStatement(sql)) {
+       try (ResultSet rs = ps.executeQuery()) {
+           cargar(lista,rs);
+       }
+
+   } catch (Exception e) {
+       e.printStackTrace();
+   }
 		return lista;
 	}
+	
+	public ArrayList<String> obtenerColumnasPrestamo() {
+        ArrayList<String> columnas = new ArrayList<>();
+        String sql = "SHOW COLUMNS FROM prestamo";
+        try (Connection conn = Conexion.getConexion();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                String nombreColumna = rs.getString("Field");
+                if (!nombreColumna.equalsIgnoreCase("id_prestamo") && !nombreColumna.equalsIgnoreCase("estado_prestamo") &&
+                	!nombreColumna.equalsIgnoreCase("fechaSolicitud_pres") &&
+                !nombreColumna.equalsIgnoreCase("importeTotal_pres") && !nombreColumna.equalsIgnoreCase("montoCuota_pres")) {
+                    columnas.add(nombreColumna);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return columnas;
+    }
 
 }

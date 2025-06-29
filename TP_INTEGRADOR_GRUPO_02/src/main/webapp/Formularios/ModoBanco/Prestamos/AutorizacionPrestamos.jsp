@@ -8,7 +8,7 @@
     <title>Prestamos solicitados</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ABMLClientesCSS/ListadoClientes.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ModoBancoCSS\ABMLClientesCSS\ListadoClientes.css">
 </head>
 <body>
 
@@ -48,9 +48,19 @@
     <form class="d-flex justify-content-center mb-4" method="get" action="${pageContext.request.contextPath}/AutorizacionPrestamosServlet">
         <input type="text" name="busqueda" id="busqueda" class="form-control w-25 me-2" placeholder="Buscar...">
         <select name="filtro" id="filtro" class="form-select w-25 me-2" onchange="mostrarOpciones()">
-    		<option value="0" <%= filtroSeleccionado.equals("0") ? "selected" : "" %>>Seleccione un filtro</option>
-    		<option value="1" <%= filtroSeleccionado.equals("1") ? "selected" : "" %>>Estado</option>
-    		<option value="2" <%= filtroSeleccionado.equals("2") ? "selected" : "" %>>Plazo</option>
+        	<option value="0" <%= filtroSeleccionado.equals("0") ? "selected" : "" %>>Seleccione un filtro</option>
+        	<%
+    		ArrayList<String> listaFiltros = (ArrayList<String>) request.getAttribute("ListaFiltros");
+        	if(listaFiltros != null){
+        		for(String f : listaFiltros){
+        		%>
+        			<option value="<%=f %>" <%= f.equals(filtroSeleccionado) ? "selected" : "" %>>
+        			<%= f.replace("_pres", "").replace("tamo", "").replaceAll("([a-z])([A-Z])", "$1 $2").toUpperCase()
+        			%>
+        </option>
+        		<%}
+        	}
+        	%>
 		</select>
     	<div id="estados" name="filtroEstados" class="me-2" style="display: none;">
     	<select name="estadoSeleccionado" class="form-select">
@@ -115,6 +125,9 @@
             		</tr>
             	<% }
             }
+            else{
+            	
+            }
             %>
             </tbody>
         </table>
@@ -128,8 +141,6 @@
     </nav>
 </div>
 
-<!-- Bootstrap Bundle -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
 function mostrarOpciones() {
@@ -140,11 +151,21 @@ function mostrarOpciones() {
 	
     if (filtro !== "0"){
     	quitarFiltro.style.display = "block";
-    	if (filtro === "1") {
+    	if (filtro === "estado_pres") {
         	estados.style.display = "block";
-    	} else if (filtro === "2") {
+        	txtBusqueda.placeholder = "Buscar...";
+    	} else if (filtro === "plazoMeses_pres") {
         	estados.style.display = "none";
         	txtBusqueda.placeholder = "Ingrese un plazo";
+    	} else if (filtro === "idCliente_pres") {
+        	estados.style.display = "none";
+        	txtBusqueda.placeholder = "Ingrese ID de cliente";
+    	} else if (filtro === "idCuentaDeposito_pres") {
+        	estados.style.display = "none";
+        	txtBusqueda.placeholder = "Ingrese ID de cuenta";
+    	} else if (filtro === "importeSolicitado_pres") {
+        	estados.style.display = "none";
+        	txtBusqueda.placeholder = "Ingrese un monto (sin comas ni puntos)";
     	} else {
         	estados.style.display = "none";
         	txtBusqueda.placeholder = "Buscar...";
@@ -156,6 +177,12 @@ function mostrarOpciones() {
 <script>
 window.onload = function() {
     mostrarOpciones(); // Ejecuta esto automáticamente al abrir la página
+    
+ // Mostrar modal solo si hay errores
+    <% if (request.getAttribute("errores") != null) { %>
+        let modal = new bootstrap.Modal(document.getElementById('modalError'));
+        modal.show();
+    <% } %>
 };
 </script>
 
@@ -173,6 +200,33 @@ function quitarFiltro() {
     quitarFiltro.style.display = "none";
 }
 </script>
+
+<div class="modal fade" id="modalError" tabindex="-1" aria-labelledby="modalError" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="modalError">Error</h5>
+      </div>
+      <div class="modal-body">
+        <% 
+            String errores = (String) request.getAttribute("errores");
+            if (errores != null && !errores.isEmpty()) {
+        %>
+                    <p>INGRESE DATO VALIDO</p>
+        <% 
+                
+            } 
+        %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+ </div>
+
+<!-- Bootstrap Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

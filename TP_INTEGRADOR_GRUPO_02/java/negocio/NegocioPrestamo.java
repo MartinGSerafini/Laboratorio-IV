@@ -21,14 +21,28 @@ public class NegocioPrestamo {
 		return daoPrestamo.obtenerEstados();
 	}
 	
+	public ArrayList<String> obtenerColumnas(){
+		return daoPrestamo.obtenerColumnasPrestamo();
+	}
+	
 	public ArrayList<Prestamo> filtrarPorEstado(String estado) {
 		String sql = "SELECT * FROM prestamo where estado_pres="+estado;
 		return daoPrestamo.filtrar(sql);
 	}
 	
-	public ArrayList<Prestamo> filtrarPorPlazoMeses(String plazo) {
-		String sql = "SELECT * FROM prestamo where plazoMeses_pres="+plazo;
+	public ArrayList<Prestamo> filtrarBusqueda(String columna, String valor) {
+		if(validarDatos(valor)) {
+			String sql = "SELECT * FROM prestamo WHERE prestamo." + columna + " = '" + valor + "' AND estado_prestamo = 1";
 		return daoPrestamo.filtrar(sql);
+		}
+		return null;
+	}
+	
+	private boolean validarDatos(String valor) {
+		if(valor.matches("\\d+")) {
+			return true;
+		}
+		return false;
 	}
 
 }
