@@ -188,168 +188,126 @@
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Lista de Tipos de cuentas -->
-<%
-ArrayList<TipoCuenta> tipos = (ArrayList<TipoCuenta>) request.getAttribute("listaTipoCuenta");
-if (tipos == null) tipos = new ArrayList<TipoCuenta>();
-%>
-<script>
-  const listaTipoCuenta = [
-    <% for (int i = 0; i < tipos.size(); i++) {
-         TipoCuenta tipo = tipos.get(i);
-         String descripcion = tipo.getDescripcionTipoCuenta();
-         if (descripcion == null) descripcion = "";
-         descripcion = descripcion.replace("\"", "\\\""); // Escapar comillas dobles
-    %>
-    {
-      idtipoCuenta: <%= tipo.getIdtipoCuenta() %>,
-      descripcionTipoCuenta: "<%= descripcion %>"
-    }<%= (i < tipos.size() - 1) ? "," : "" %>
-    <% } %>
-  ];
-</script>
 
 <script>
+  function escapeHtml(text) {
+    const map = {
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, m => map[m]);
+  }
 
-//Variables globales para el proceso de edición
-let datosAEnviar;
-let filaEnEdicion;
+  async function editarFila(btnEditar) {
+    const fila = btnEditar.closest('tr');
+    const tds = fila.querySelectorAll('td[data-campo]');
 
-function escapeHtml(text) {
-  const map = {
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
-  };
-  return text.replace(/[&<>"']/g, m => map[m]);
-}
+    for (const td of tds) {
+      const valor = td.textContent.trim();
+      td.setAttribute('data-valor-original', valor);
+      const campo = td.getAttribute('data-campo');
 
-function editarFila(btnEditar) {
-	  const fila = btnEditar.closest('tr');
-	  const tds = fila.querySelectorAll('td[data-campo]');
+      if (campo === 'id_cuenta') {
+        td.innerText = valor;
 
-	  for (const td of tds) {
-	    const campo = td.getAttribute('data-campo');
-	    let valor = (campo === 'idTipoCuenta') ? td.dataset.id : td.textContent.trim();
+      } else if (campo === 'idTipoCuenta') {
+        td.innerHTML =
+          '<select class="form-select form-select-sm">' +
+          '<option value="1"' + (valor === '1' ? ' selected' : '') + '>Caja de Ahorro</option>' +
+          '<option value="2"' + (valor === '2' ? ' selected' : '') + '>Cuenta Corriente</option>' +
+          '</select>';
 
-	    td.setAttribute('data-valor-original', valor);
+      } else {
+        td.innerHTML = '<input type="text" class="form-control form-control-sm" value="' + escapeHtml(valor) + '">';
+      }
+    }
 
-	    if (campo === 'numero_cuenta' || campo === 'cbu_cuenta' || campo === 'saldo_cuenta') {
-	      td.innerHTML = `<input type="text" class="form-control form-control-sm" value="${escapeHtml(valor)}">`;
-	    } else if (campo === 'idTipoCuenta') {
-	      const select = document.createElement('select');
-	      select.className = 'form-select form-select-sm';
+    toggleBotones(fila, true);
+  }
 
-	      listaTipoCuenta.forEach(tc => {
-	        const option = document.createElement('option');
-	        option.value = tc.idtipoCuenta;
-	        option.textContent = tc.descripcionTipoCuenta;
+  // Variables globales para manejar datos y fila en edición
+  let datosAEnviar = null;
+  let filaEnEdicion = null;
 
-	        if (String(tc.idtipoCuenta) === valor) {
-	          option.selected = true;
-	        }
+  function guardarCambios(btnGuardar) {
+    filaEnEdicion = btnGuardar.closest('tr');
+    const idCuenta = filaEnEdicion.getAttribute('data-id');
+    const tds = filaEnEdicion.querySelectorAll('td[data-campo]');
+    datosAEnviar = new URLSearchParams();
 
-	        select.appendChild(option);
-	      });
+    datosAEnviar.append("idCuenta", idCuenta);
 
-	      td.innerHTML = '';
-	      td.appendChild(select);
-	    }
-	  }
+    tds.forEach(td => {
+      const campo = td.getAttribute('data-campo');
+      const input = td.querySelector('input');
+      const select = td.querySelector('select');
+      let valor = "";
 
-	  toggleBotones(fila, true);
-	}
-	
-let datosAEnviar; // << fuera de toda función
+      if (input) valor = input.value.trim();
+      else if (select) {
+        // En select puede estar un option seleccionado
+        if (select.options) valor = select.options[select.selectedIndex].value;
+        else valor = select.value.trim();
+      }
+      else valor = td.textContent.trim();
 
-function guardarCambios(btnGuardar) {
-  const filaEnEdicion = btnGuardar.closest('tr');
-  const idCuenta = filaEnEdicion.getAttribute('data-id');
-  const tds = filaEnEdicion.querySelectorAll('td[data-campo]');
-  datosAEnviar = new URLSearchParams();
+      datosAEnviar.append(campo, valor);
+    });
 
-  datosAEnviar.append("idCuenta", idCuenta);
+    // Mostrar modal para confirmar modificación
+    const modalModificar = new bootstrap.Modal(document.getElementById('confirmarModificarModal'));
+    modalModificar.show();
+  }
 
-  tds.forEach(td => {
-    const campo = td.getAttribute('data-campo');
-    const input = td.querySelector('input');
-    const select = td.querySelector('select');
-    let valor = "";
+  document.getElementById('confirmarGuardarBtn').addEventListener('click', () => {
+    fetch('/TP_INTEGRADOR_GRUPO_02/ModificarCuentaServlet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+      body: datosAEnviar.toString()
+    })
+    .then(res => res.json())
+    .then(resp => {
+      if (resp.success) {
+        alert('✔️ Cuenta modificada correctamente');
+        toggleBotones(filaEnEdicion, false);
 
-    if (input) valor = input.value.trim();
-    else if (select) valor = select.value.trim();
-    else valor = td.textContent.trim();
+        filaEnEdicion.querySelectorAll('td[data-campo]').forEach(td => {
+      	  const campo = td.getAttribute('data-campo');
+      	  const valorId = datosAEnviar.get(campo);
+      	  td.setAttribute('data-valor-original', valorId);
+      	});
 
-    datosAEnviar.append(campo, valor);
+      } else {
+        alert("❌ " + resp.mensaje);
+      }
+    })
+    .catch(err => {
+      console.error("Error en fetch:", err);
+      alert("❌ Error al intentar guardar los cambios: " + err.message);
+    });
+
+    // Ocultar modal
+    const modalEl = document.getElementById('confirmarModificarModal');
+    const modalInstance = bootstrap.Modal.getInstance(modalEl);
+    modalInstance.hide();
   });
 
-  const modalModificar = new bootstrap.Modal(document.getElementById('confirmarModificarModal'));
-  modalModificar.show();
-}
+  function cancelarCambios(btnCancelar) {
+    const fila = btnCancelar.closest('tr');
+    fila.querySelectorAll('td[data-campo]').forEach(td => {
+      const original = td.getAttribute('data-valor-original');
+      td.textContent = original;
+    });
+    toggleBotones(fila, false);
+  }
 
-
-	
-document.getElementById('confirmarGuardarBtn').addEventListener('click', () => {
-	  fetch('/TP_INTEGRADOR_GRUPO_02/ModificarCuentaServlet', {
-	    method: 'POST',
-	    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-	    body: datosAEnviar.toString()
-	  })
-	  .then(res => res.json())
-	  .then(resp => {
-	    if (resp.success) {
-	      alert('✔️ Cuenta modificada correctamente');
-	      toggleBotones(filaEnEdicion, false);
-
-	      filaEnEdicion.querySelectorAll('td[data-campo]').forEach(td => {
-	        const campo = td.getAttribute('data-campo');
-	        const valorId = datosAEnviar.get(campo);
-	        td.setAttribute('data-valor-original', valorId);
-
-	        if (campo === "idTipoCuenta") {
-	          const tipo = listaTipoCuenta.find(tc => String(tc.idtipoCuenta) === valorId);
-	          td.textContent = `${valorId} - ${tipo ? tipo.descripcionTipoCuenta : ''}`;
-	          td.dataset.id = valorId; // para futuras ediciones
-	        } else {
-	          td.textContent = valorId;
-	        }
-	      });
-
-	    } else {
-	      alert("❌ " + resp.mensaje);
-	    }
-	  })
-	  .catch(err => {
-	    console.error("Error en fetch:", err);
-	    alert("❌ Error al intentar guardar los cambios: " + err.message);
-	  });
-
-	  const modalEl = document.getElementById('confirmarModificarModal');
-	  const modalInstance = bootstrap.Modal.getInstance(modalEl);
-	  modalInstance.hide();
-	});
-
-	function cancelarCambios(btnCancelar) {
-	  const fila = btnCancelar.closest('tr');
-	  fila.querySelectorAll('td[data-campo]').forEach(td => {
-	    const original = td.getAttribute('data-valor-original');
-	    if (td.getAttribute('data-campo') === 'idTipoCuenta') {
-	      const tipo = listaTipoCuenta.find(tc => String(tc.idtipoCuenta) === original);
-	      td.textContent = `${original} - ${tipo ? tipo.descripcionTipoCuenta : ''}`;
-	      td.dataset.id = original;
-	    } else {
-	      td.textContent = original;
-	    }
-	  });
-	  toggleBotones(fila, false);
-	}
-
-	function toggleBotones(fila, editar) {
-	  fila.querySelectorAll('button').forEach(btn => {
-	    if (btn.textContent.trim() === "Editar") btn.classList.toggle('d-none', editar);
-	    else if (btn.textContent.trim() === "Guardar") btn.classList.toggle('d-none', !editar);
-	    else if (btn.textContent.trim() === "Cancelar") btn.classList.toggle('d-none', !editar);
-	    else if (btn.classList.contains('btn-danger')) btn.disabled = editar;
-	  });
-	}
+  function toggleBotones(fila, editar) {
+    fila.querySelectorAll('button').forEach(btn => {
+      if (btn.textContent.trim() === "Editar") btn.classList.toggle('d-none', editar);
+      else if (btn.textContent.trim() === "Guardar") btn.classList.toggle('d-none', !editar);
+      else if (btn.textContent.trim() === "Cancelar") btn.classList.toggle('d-none', !editar);
+      else if (btn.classList.contains('btn-danger')) btn.disabled = editar;
+    });
+  }
 
 // Modal eliminar: asignar idCliente al input hidden
 const modalEliminar = document.getElementById('confirmarEliminarModal');
