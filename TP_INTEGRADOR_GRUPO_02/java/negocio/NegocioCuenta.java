@@ -75,6 +75,10 @@ public class NegocioCuenta implements servicioABML<Cuenta>{
 	    return daoCuenta.modificarCuenta(cuenta);
 	}
 	
+	public int cuentasXClientes(int cliente) {
+		return daoCuenta.cuentasXClientes(cliente);
+	}
+	
 	public String validarYVerificarCuenta(String idCuenta, int idClienteCuenta, String fechaCreacionCuenta, String numeroCuenta,
             String cbuCuenta, BigDecimal saldoCuenta, int idTipoCuenta) {
 

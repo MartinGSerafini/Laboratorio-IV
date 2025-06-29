@@ -67,8 +67,17 @@ public class AgregarCuentaServlet extends HttpServlet {
 				java.util.Date fechaCreacion = new java.util.Date();
 				BigDecimal saldoFicticio = new BigDecimal("0.00");
 				
+				
 				Cuenta cuenta = new Cuenta(" ", idCliente, idTipo, fechaCreacion, nroCuenta, cuil, saldoFicticio);
 				NegocioCuenta negCuenta = new NegocioCuenta();
+				
+				int cuentasObtenidas = negCuenta.cuentasXClientes(idCliente);
+				if(cuentasObtenidas == 3) {
+					request.setAttribute("mensaje", "error");
+					request.setAttribute("errorDetalle", "El cliente ya tiene 3 cuentas asignadas");
+					forwardForm(request, response);
+					return;
+				}
 				
 				boolean exito = negCuenta.alta(cuenta);
 

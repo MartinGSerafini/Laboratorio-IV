@@ -167,5 +167,22 @@ public class daoCuenta {
 	        }
 	        return false;
 	    }
+	 
+	 public int cuentasXClientes(int cliente) {
+		 String sql = "SELECT COUNT(*) FROM cuenta WHERE idCliente_cuenta=?";
+		 int cantCuentas = 0;
+	        try (Connection conn = Conexion.getConexion();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setInt(1, cliente);
+	            try (ResultSet rs = ps.executeQuery()) {
+	                if (rs.next()) {
+	                    cantCuentas = rs.getInt(1);
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return cantCuentas;
+	 }
 	
 }
