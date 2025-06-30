@@ -48,7 +48,7 @@ public class InformesServlet extends HttpServlet {
                 request.setAttribute("listaMovimientos", listaMovimientos);
                 request.setAttribute("mostrarModalInforme3", true);
                 
-                System.out.println("Movimientos encontrados: " + listaMovimientos.size());
+               
                 for (MovimientoReporte r : listaMovimientos) {
                     System.out.println(r.getDetalleMov() + " - " + r.getImporteMov());
                 }

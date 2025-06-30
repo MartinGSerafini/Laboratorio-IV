@@ -32,10 +32,6 @@ public class AgregarClienteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//-------usuario------------
-		daoCliente daoCliente = new daoCliente();
-		int idCliente = daoCliente.obtenerUltimoId() + 1;
-		
 		//-------Nacionalidad------------
 		NacionalidadDao nacionalidadDao = new NacionalidadDao();
 	    ArrayList<Nacionalidad> listaNacionalidades = nacionalidadDao.obtenerNacionalidades();
@@ -70,7 +66,7 @@ public class AgregarClienteServlet extends HttpServlet {
 	    request.setAttribute("nacionalidades", nacionalidades);
 	    request.setAttribute("provincias", provincias);
 
-	    // Acci�n: cargar localidades
+	    // Acción: cargar localidades
 	    if ("cargarLocalidades".equals(accion)) {
 	        String idProvStr = request.getParameter("provincia");
 
@@ -81,7 +77,7 @@ public class AgregarClienteServlet extends HttpServlet {
 	                List<Localidad> localidades = localidadDao.obtenerLocalidadesPorProvincia(idProv);
 	                request.setAttribute("localidades", localidades);
 	            } catch (NumberFormatException e) {
-	                e.printStackTrace(); // pod�s mejorar con logs o un mensaje de error al usuario
+	                e.printStackTrace(); 
 	            }
 	        }
 
@@ -90,7 +86,7 @@ public class AgregarClienteServlet extends HttpServlet {
 	        return;
 	    }
 
-	    // Acci�n: agregar cliente
+	    // Acción: agregar cliente
 	    if ("agregarCliente".equals(accion)) {
 	        try {
 	            String usuario = request.getParameter("usuario");
@@ -172,5 +168,23 @@ public class AgregarClienteServlet extends HttpServlet {
 
 	        request.getRequestDispatcher("/Formularios/ModoBanco/ABMLClientes/AgregarClientes.jsp").forward(request, response);
 	    }
+	    
+	    // Acción: Limpiar form
+	    if ("resetFormulario".equals(accion)) {
+	        // Evitás cargar datos anteriores y reenviás limpio
+	        NacionalidadDao nacionalidadDao2 = new NacionalidadDao();
+	        ProvinciaDao provinciaDao2 = new ProvinciaDao();
+
+	        List<Nacionalidad> nacionalidades2 = nacionalidadDao.obtenerNacionalidades();
+	        List<Provincia> provincias2 = provinciaDao.obtenerProvincias();
+
+	        request.setAttribute("nacionalidades", nacionalidades);
+	        request.setAttribute("provincias", provincias);
+
+	        request.getRequestDispatcher("/Formularios/ModoBanco/ABMLClientes/AgregarClientes.jsp").forward(request, response);
+	        return;
+	    }
+	    
+	    
 	}
 }

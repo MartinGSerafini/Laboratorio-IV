@@ -22,7 +22,7 @@
           <li><a class="dropdown-item" href="${pageContext.request.contextPath}/AgregarClienteServlet">CLIENTES</a></li>
     		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/AgregarCuentaServlet">CUENTAS</a></li>
     		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/AutorizacionPrestamosServlet">PRÉSTAMOS</a></li>
-    		<a class="dropdown-item" href="${pageContext.request.contextPath}//Formularios/ModoBanco/Informes/Informes.jsp">INFORMES</a>
+    		<a class="dropdown-item" href="${pageContext.request.contextPath}/InformesServlet">INFORMES</a>
     		<a class="dropdown-item" href="${pageContext.request.contextPath}/Formularios/Login/IngresoAdministrador.jsp">CERRAR SESIÓN</a>
 			</ul>
             </div>

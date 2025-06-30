@@ -8,7 +8,7 @@
   <title>Listado de Clientes</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ModoBancoCSS/ABMLClientesCSS/ListadoClientes.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ModoBancoCSS/ABMLClientesCSS/ListadoClientes.css?v=2">
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-custom px-4">
@@ -20,7 +20,7 @@
           <li><a class="dropdown-item" href="${pageContext.request.contextPath}/AgregarClienteServlet">CLIENTES</a></li>
     		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/AgregarCuentaServlet">CUENTAS</a></li>
     		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/AutorizacionPrestamosServlet">PRÉSTAMOS</a></li>
-    		<a class="dropdown-item" href="${pageContext.request.contextPath}/Formularios/ModoBanco/Informes/Informes.jsp">INFORMES</a>
+    		<a class="dropdown-item" href="${pageContext.request.contextPath}/InformesServlet">INFORMES</a>
     		<a class="dropdown-item" href="${pageContext.request.contextPath}/Formularios/Login/IngresoAdministrador.jsp">CERRAR SESIÓN</a>
 			</ul>
         </div>
@@ -83,8 +83,8 @@
       int totalPaginas = (request.getAttribute("totalPaginas") != null) ? (Integer)request.getAttribute("totalPaginas") : 1;
     %>
 
-    <div class="table-responsive">
-      <table class="table table-striped table-bordered text-center">
+    <div class="table-responsive" style="width: 100vw; margin-left: calc(-50vw + 50%); padding: 0 12px;">
+   <table class="table table-striped table-bordered text-center align-middle" style="font-size: 0.85rem;">
         <thead class="table-dark">
           <tr>
             <th>ID Cliente</th>

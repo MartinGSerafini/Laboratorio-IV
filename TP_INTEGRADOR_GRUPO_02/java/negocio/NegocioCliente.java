@@ -2,8 +2,6 @@ package negocio;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import dao.daoCliente;
 import entidades.Cliente;
@@ -170,20 +168,21 @@ public class NegocioCliente implements servicioABML<Cliente>{
 	if (dni > 0 && !String.valueOf(dni).matches("\\d{8}")) {
 	errores.append("El DNI debe tener exactamente 8 digitos.\n");
 	}
-	if (cuil != null && !cuil.trim().isEmpty() && !cuil.matches("\\d{11}")) {
-	errores.append("El CUIL debe tener exactamente 11 digitos.\n");
+	if (cuil != null && !cuil.trim().isEmpty() && !cuil.matches("\\d{2}-\\d{8}-\\d")) {
+	    errores.append("El CUIL debe tener el formato XX-XXXXXXXX-X (11 dígitos con guiones).\n");
 	}
+
 	
 	// Validar unicidad solo si no hay errores con esos campos
 	if (errores.length() == 0) {
 	if (daoCliente.existeDni(dni, idCliente)) {
-	errores.append("El DNI ya est� registrado para otro cliente.\n");
+	errores.append("El DNI ya está registrado para otro cliente.\n");
 	}
 	if (daoCliente.existeCuil(cuil, idCliente)) {
-	errores.append("El CUIL ya est� registrado para otro cliente.\n");
+	errores.append("El CUIL ya está registrado para otro cliente.\n");
 	}
 	if (daoCliente.existeUsuario(usuario, idCliente)) {
-	errores.append("El usuario ya est� registrado para otro cliente.\n");
+	errores.append("El usuario ya está registrado para otro cliente.\n");
 	}
 	}
 	

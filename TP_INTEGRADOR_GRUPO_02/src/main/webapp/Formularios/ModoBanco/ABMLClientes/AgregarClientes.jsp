@@ -9,7 +9,7 @@
     <title>Agregar Cliente</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ABMLClientesCSS/AgregarClientes.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ModoBancoCSS/ABMLClientesCSS/AgregarClientes.css">
 </head>
 <body>
 
@@ -24,7 +24,7 @@
           <li><a class="dropdown-item" href="${pageContext.request.contextPath}/AgregarClienteServlet">CLIENTES</a></li>
     		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/AgregarCuentaServlet">CUENTAS</a></li>
     		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/AutorizacionPrestamosServlet">PRÉSTAMOS</a></li>
-    		<a class="dropdown-item" href="${pageContext.request.contextPath}//Formularios/ModoBanco/Informes/Informes.jsp">INFORMES</a>
+    		<a class="dropdown-item" href="${pageContext.request.contextPath}/InformesServlet">INFORMES</a>
     		<a class="dropdown-item" href="${pageContext.request.contextPath}/Formularios/Login/IngresoAdministrador.jsp">CERRAR SESIÓN</a>
 			</ul>
             </div>
@@ -44,7 +44,6 @@
             <label for="usuario" class="form-label">Usuario</label> 
             <input type="text" class="form-control" id="usuario" name="usuario"
           		 value="<%= request.getParameter("usuario") != null ? request.getParameter("usuario") : "" %>">        		 
-				
         </div>
         
         <div class="col-md-6">
@@ -163,7 +162,7 @@
            <input type="text" class="form-control" id="telefono" name="telefono"
                    value="<%= request.getParameter("telefono") != null ? request.getParameter("telefono") : "" %>">
         </div>
-        <div class="col-12 text-center mt-4">
+        <div class="col-12 text-center mt-4 mb-3">
                   <button type="submit" name="accion" value="agregarCliente" class="btn btn-custom px-5 py-2">
             Agregar Cliente
         </button>
@@ -205,6 +204,11 @@
     }
 %>
 
+<form id="formReset" method="post" action="AgregarClienteServlet">
+  <input type="hidden" name="accion" value="resetFormulario" />
+</form>
+
+
 <!-- Modal Éxito -->
 <div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -216,7 +220,7 @@
         Cliente agregado con éxito.
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="document.getElementById('formReset').submit();">Aceptar</button>
       </div>
     </div>
   </div>

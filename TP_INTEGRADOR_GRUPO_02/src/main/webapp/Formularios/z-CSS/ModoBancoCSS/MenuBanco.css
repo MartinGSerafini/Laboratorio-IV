@@ -1,0 +1,79 @@
+body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #ffe6eb 100%);
+            color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-custom {
+            background-color: #ec0000;
+        }
+
+        .navbar-custom .nav-link,
+        .navbar-custom .navbar-brand,
+        .navbar-custom .dropdown-toggle {
+            color: white;
+            font-weight: bold;
+        }
+
+        .navbar-custom .nav-link:hover,
+        .navbar-custom .dropdown-menu a:hover {
+            color: #ec0000;
+            background-color: white;
+        }
+
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        .dropdown-toggle {
+            font-size: 1.2rem;
+            padding: 0.375rem 0.75rem;
+            color: #ec0000 !important;
+            background-color: white !important;
+            border: 2px solid #ec0000;
+            font-weight: bold;
+        }
+
+        .user-info {
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .main-content {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .main-content h2 {
+            font-size: 36px;
+            color: #ec0000;
+            margin-bottom: 30px;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 200px);
+            gap: 30px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 25px 30px;
+            border: 2px solid #ec0000;
+            background-color: white;
+            text-decoration: none;
+            color: #ec0000;
+            font-weight: 600;
+            font-size: 20px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #ec0000;
+            color: white;
+        }
