@@ -294,6 +294,7 @@ public class daoCliente {
 	        }
 	        return false;
 	    }
+	    
 	    public boolean modificarCliente(Cliente cliente) {
 	        String sql = "UPDATE cliente SET " +
 	            "usuario_cliente = ?, " +
@@ -340,7 +341,21 @@ public class daoCliente {
 	        }
 	    }
 
-
+	    public boolean verificarClientePorID(int id) {
+	    	String sql = "SELECT * FROM cliente WHERE id_cliente = ? AND estado_cliente = 1";
+	        try (Connection conn = Conexion.getConexion();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setInt(1, id);
+	            try (ResultSet rs = ps.executeQuery()) {
+	                if (rs.next()) {
+	                    return true;
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return false;
+	    }
 
 
 	    

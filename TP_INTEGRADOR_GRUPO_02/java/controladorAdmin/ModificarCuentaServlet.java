@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import entidades.Cuenta;
+import negocio.NegocioCliente;
 import negocio.NegocioCuenta;
 
 
@@ -59,6 +60,12 @@ public class ModificarCuentaServlet extends HttpServlet {
 	            if (error != null) {
 	                out.print("{\"success\":false,\"mensaje\":\"" + jsonEscape(error) + "\"}");
 	                return;
+	            }
+	            
+	            NegocioCliente negocioCliente = new NegocioCliente();
+	            if(!negocioCliente.verificarClientePorID(idClienteCuenta)) {
+	            	out.print("{\"success\":false,\"mensaje\":\"" + jsonEscape("Ese cliente no existe. Ingrese uno válido.") + "\"}");
+					return;
 	            }
 	            
 	            int cuentasObtenidas = negocioCuenta.cuentasXClientes(idClienteCuenta);

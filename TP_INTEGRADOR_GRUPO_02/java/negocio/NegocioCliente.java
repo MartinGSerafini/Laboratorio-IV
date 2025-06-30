@@ -40,7 +40,6 @@ public class NegocioCliente implements servicioABML<Cliente>{
 	}
 
 	public boolean lectura(String id) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -56,6 +55,10 @@ public class NegocioCliente implements servicioABML<Cliente>{
 		
 		boolean bool = daoCliente.verificarCliente(usuario, contrasena);
 		return bool;
+	}
+	
+	public boolean verificarClientePorID(int id) {
+		return daoCliente.verificarClientePorID(id);
 	}
 
     public String validarCliente(String usuario, String contrasena, int dni, String cuil,
