@@ -131,16 +131,17 @@ public class daoCuenta {
 	    } 
 	 
 	 public boolean modificarCuenta(Cuenta cuenta) {
-	        String sql = "UPDATE cuenta SET numero_cuenta = ?, cbu_cuenta = ?, saldo_cuenta = ?, idTipoCuenta_cuenta = ? WHERE id_cuenta = ? AND estado_cuentas = 1";
+	        String sql = "UPDATE cuenta SET numero_cuenta = ?, idCliente_cuenta = ?, cbu_cuenta = ?, saldo_cuenta = ?, idTipoCuenta_cuenta = ? WHERE id_cuenta = ? AND estado_cuentas = 1";
 
 	        try (Connection conn = Conexion.getConexion();
 	             PreparedStatement ps = conn.prepareStatement(sql)) {
 
 	            ps.setString(1, cuenta.getNumeroCuenta());
-	            ps.setString(2, cuenta.getCbuCuenta());
-	            ps.setBigDecimal(3, cuenta.getSaldoCuenta());
-	            ps.setInt(4, cuenta.getIdTipoCuentaCuenta());
-	            ps.setString(5, cuenta.getIdCuenta());
+	            ps.setInt(2, cuenta.getIdClienteCuenta());
+	            ps.setString(3, cuenta.getCbuCuenta());
+	            ps.setBigDecimal(4, cuenta.getSaldoCuenta());
+	            ps.setInt(5, cuenta.getIdTipoCuentaCuenta());
+	            ps.setString(6, cuenta.getIdCuenta());
 
 	            int filasActualizadas = ps.executeUpdate();
 	            return filasActualizadas > 0;
