@@ -208,7 +208,7 @@
       if (campo === 'id_cuenta') {
         td.innerText = valor;
 
-      }  else if (campo === 'idTipoCuenta') {
+      } else if (campo === 'idTipoCuenta') {
     	  const idTipo = td.getAttribute("data-id");
 
     	  td.innerHTML =
@@ -236,7 +236,7 @@
     datosAEnviar = new URLSearchParams();
 
     datosAEnviar.append("idCuenta", idCuenta);
-
+    
     tds.forEach(td => {
       const campo = td.getAttribute('data-campo');
       const input = td.querySelector('input');

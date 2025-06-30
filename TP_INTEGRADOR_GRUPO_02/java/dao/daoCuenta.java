@@ -67,15 +67,12 @@ public class daoCuenta {
 	
 	 public ArrayList<Cuenta> obtenerCuentasPorFiltro(String columna, String valor) {
 	        ArrayList<Cuenta> listaFiltrada = new ArrayList<Cuenta>();
-	        String sql = "SELECT c.*, tc.descripcion_tipocuenta" + 
-	        " FROM Cuenta c " + 
-	        "INNER JOIN tipocuenta tc ON c.idTipoCuenta_cuenta = tc.idTipoCuenta" + 
-	        " WHERE c." + columna + " LIKE ? AND c.estado_cuentas = 1";
+	        String sql = "SELECT c.*, tc.descripcion_tipocuenta FROM Cuenta c INNER JOIN tipocuenta tc ON c.idTipoCuenta_cuenta = tc.idTipoCuenta WHERE c." + columna + " LIKE ? AND c.estado_cuentas = 1";
 
 	        try (Connection conn = Conexion.getConexion();
 	             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-	            ps.setString(1, "%" + valor + "%");
+	        	ps.setString(1,"%" + valor + "%");
 	            try (ResultSet rs = ps.executeQuery()) {
 	                while (rs.next()) {
 	                	Cuenta cuenta = new Cuenta();
@@ -186,4 +183,26 @@ public class daoCuenta {
 	        return cantCuentas;
 	 }
 	
+	 public int buscarCuentaXIdCliente(String id) {
+		 String sql = "SELECT idCliente_cuenta FROM cuenta WHERE id_cuenta=?";
+		 int idCliente = 0;
+	    	
+	    	try (Connection conn = Conexion.getConexion();
+		             PreparedStatement ps = conn.prepareStatement(sql)) {
+		            
+		            ps.setString(1, id);
+		            try (ResultSet rs = ps.executeQuery()) {
+		            	
+		            	if (rs.next()) {
+		                    idCliente = rs.getInt("idCliente_cuenta");
+		                }
+		            	
+		            }
+		            
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+	    	return idCliente;
+	 }
+	 
 }

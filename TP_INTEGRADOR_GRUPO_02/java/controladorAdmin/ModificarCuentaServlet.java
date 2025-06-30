@@ -37,9 +37,11 @@ public class ModificarCuentaServlet extends HttpServlet {
 	        PrintWriter out = response.getWriter();
 	        
 	        BigDecimal saldoCuenta = null;
+	        int idClientePrevio;
 
 	        try {
 	            String idCuenta = request.getParameter("id_cuenta");
+	            idClientePrevio = negocioCuenta.buscarCuentaXIdCliente(idCuenta);
 	            int idClienteCuenta = Integer.parseInt(request.getParameter("idCliente_cuenta"));
 	            int idTipoCuenta = Integer.parseInt(request.getParameter("idTipoCuenta"));
 	            String fechaCreacionCuenta = request.getParameter("fechaCreacion_cuenta");
@@ -69,10 +71,12 @@ public class ModificarCuentaServlet extends HttpServlet {
 	            }
 	            
 	            int cuentasObtenidas = negocioCuenta.cuentasXClientes(idClienteCuenta);
+	            if(idClientePrevio != idClienteCuenta) {
 				if(cuentasObtenidas == 3) {
 					out.print("{\"success\":false,\"mensaje\":\"" + jsonEscape("El cliente ya tiene 3 cuentas asignadas") + "\"}");
 					return;
 				}
+	            }
 	            
 	            Cuenta cuenta = new Cuenta();
 	            cuenta.setIdCuenta(idCuenta);

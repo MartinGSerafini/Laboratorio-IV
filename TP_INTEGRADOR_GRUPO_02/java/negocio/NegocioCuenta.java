@@ -79,6 +79,11 @@ public class NegocioCuenta implements servicioABML<Cuenta>{
 		return daoCuenta.cuentasXClientes(cliente);
 	}
 	
+	public int buscarCuentaXIdCliente(String idCuenta) {
+		return daoCuenta.buscarCuentaXIdCliente(idCuenta);
+	}
+	
+	
 	public String validarYVerificarCuenta(String idCuenta, int idClienteCuenta, String fechaCreacionCuenta, String numeroCuenta,
             String cbuCuenta, BigDecimal saldoCuenta, int idTipoCuenta) {
 
