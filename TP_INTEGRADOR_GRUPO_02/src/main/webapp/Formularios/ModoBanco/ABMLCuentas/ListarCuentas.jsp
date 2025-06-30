@@ -26,7 +26,7 @@
     		<a class="dropdown-item" href="${pageContext.request.contextPath}/Formularios/Login/IngresoAdministrador.jsp">CERRAR SESIÓN</a>
 			</ul>
             </div>
-            <a href="${pageContext.request.contextPath}/AgregarCuentasServlet" class="btn btn-custom me-2">Agregar Cuenta</a>
+            <a href="${pageContext.request.contextPath}/AgregarCuentaServlet" class="btn btn-custom me-2">Agregar Cuenta</a>
             <a href="${pageContext.request.contextPath}/ListadoCuentasServlet" class="btn btn-custom">Listar Cuentas</a>
         </div>
         <span class="navbar-text text-white">
