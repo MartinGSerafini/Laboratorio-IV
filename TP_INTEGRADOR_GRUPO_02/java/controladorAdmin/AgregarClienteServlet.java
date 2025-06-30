@@ -32,10 +32,9 @@ public class AgregarClienteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//-------Usuario------------
+		//-------usuario------------
 		daoCliente daoCliente = new daoCliente();
-		int idCuenta = daoCliente.obtenerUltimoId() + 1; 
-		request.setAttribute("idUsuario", idCuenta);
+		int idCliente = daoCliente.obtenerUltimoId() + 1;
 		
 		//-------Nacionalidad------------
 		NacionalidadDao nacionalidadDao = new NacionalidadDao();
@@ -56,8 +55,12 @@ public class AgregarClienteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
 		
 		String accion = request.getParameter("accion");
-
-	    // Cargar nacionalidades y provincias siempre que vuelvas al JSP
+		
+		daoCliente daoCliente = new daoCliente();
+		int idCliente = daoCliente.obtenerUltimoId() + 1;
+		String idClienteStr = String.valueOf(idCliente);
+		
+	    // Cargar nacionalidades y provincias siempre que vuelvas al JSP	
 	    NacionalidadDao nacionalidadDao = new NacionalidadDao();
 	    ProvinciaDao provinciaDao = new ProvinciaDao();
 
@@ -111,13 +114,15 @@ public class AgregarClienteServlet extends HttpServlet {
 	            NegocioCliente servicio = new NegocioCliente();
 	           
 	            //validar cliente y obtener errores
-	            String ErroresValidacion = servicio.validarCliente(usuario, contrasena, dni, cuil,
+	            String ErroresValidacion = servicio.validarYVerificarCliente(idClienteStr, usuario, contrasena, dni, cuil,
 	                    nombre, apellido, sexo, nacionalidad, fechaNacStr, direccion,
 	                    localidad, provincia, correo, telefono);
 	            
+	            ArrayList<String> errores = new ArrayList<>();
+	            errores.add(ErroresValidacion);
+	            
 	            if(ErroresValidacion != null && !ErroresValidacion.isEmpty()) {
-	            	ArrayList<String> errores = new ArrayList<>();
-	            	errores.add(ErroresValidacion);
+	            	
 	            	request.setAttribute("errores", errores);
 	            	
 	            	// Mantener los valores ingresados en el formulario después del error
@@ -157,7 +162,7 @@ public class AgregarClienteServlet extends HttpServlet {
 	            if (exito) {
 	                request.setAttribute("mensaje", "ok");
 	            } else {
-	                request.setAttribute("mensaje", "error");
+	            	request.setAttribute("mensaje", "error");
 	            }
 
 	        } catch (Exception e) {

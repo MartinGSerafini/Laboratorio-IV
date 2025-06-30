@@ -42,8 +42,8 @@
         <form class="row g-4" action="${pageContext.request.contextPath}/AgregarClienteServlet" method="post">
     	<div class="col-md-6">
             <label for="usuario" class="form-label">Usuario</label> 
-            <input type="text" class="form-control" id="idUsuario" name="idUsuario"
-          		 value="<%= request.getAttribute("idUsuario") %>" readonly>        		 
+            <input type="text" class="form-control" id="usuario" name="usuario"
+          		 value="<%= request.getParameter("usuario") != null ? request.getParameter("usuario") : "" %>">        		 
 				
         </div>
         
@@ -259,7 +259,7 @@
         %>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
