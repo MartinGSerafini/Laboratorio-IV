@@ -48,7 +48,21 @@ public class AutorizacionPrestamosServlet extends HttpServlet {
 		listado = negocioPrestamo.listarPrestamos();
 		request.setAttribute("ListaPrestamos", listado);
 		
-		
+		//PAGINACION
+		 int registrosPorPagina = 10;
+	        int paginaActual = 1;
+	        if (request.getParameter("pagina") != null) {
+	            try {
+	                paginaActual = Integer.parseInt(request.getParameter("pagina"));
+	            } catch (NumberFormatException e) {
+	                paginaActual = 1;
+	            }
+	        }
+	        int desde = (paginaActual - 1) * registrosPorPagina;
+	        int hasta = Math.min(desde + registrosPorPagina, listado.size());
+	        ArrayList<Prestamo> pagina = new ArrayList<>(listado.subList(desde, hasta));
+
+	        int totalPaginas = (int) Math.ceil((double) listado.size() / registrosPorPagina);
 		
 		if(request.getParameter("btnBuscar") != null) {
 			if (request.getParameter("estadoSeleccionado") != null && !request.getParameter("estadoSeleccionado").equals("0")) {
@@ -64,7 +78,7 @@ public class AutorizacionPrestamosServlet extends HttpServlet {
 							request.setAttribute("ListaPrestamos", listado);
 						}
 						else {
-							request.setAttribute("errores", "INGRESE DATO VALIDO");
+							request.setAttribute("errores", "Ingrese un dato numerico.");
 						}
 				}
 			}

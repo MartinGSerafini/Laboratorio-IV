@@ -73,7 +73,7 @@
         	<% } } %>
     	</select>
 	</div>
-    	<button type="submit" name="btnBuscar" class="btn btn-custom">Buscar</button>
+    	<button type="submit" name="btnBuscar" class="btn btn-custom" onclick="return validarIngresoBusqueda()">Buscar</button>
     	<div id="quitarFiltro" name="quitarFiltro" class="me-2" style="display: none;">
     		<button type="submit" name="btnquitarFiltro" onclick="quitarFiltro()" class="btn btn-custom ms-2">Quitar filtro</button>
     	</div>
@@ -84,9 +84,12 @@
 	if(request.getAttribute("ListaPrestamos") !=null){
 		  lista = (ArrayList<Prestamo>) request.getAttribute("ListaPrestamos");
 	}
+	
+	int paginaActual = (request.getAttribute("paginaActual") != null) ? (Integer)request.getAttribute("paginaActual") : 1;
+    int totalPaginas = (request.getAttribute("totalPaginas") != null) ? (Integer)request.getAttribute("totalPaginas") : 1;
 %>
 
-    <!-- Tabla de Cuentas -->
+    <!-- Tabla de Prestamo -->
     <div class="table-responsive d-flex justify-content-center">
         <table class="table table-striped table-bordered text-center w-auto">
             <thead class="table-dark">
@@ -125,19 +128,20 @@
             		</tr>
             	<% }
             }
-            else{
-            	
-            }
             %>
             </tbody>
         </table>
     </div>
 
     <!-- Paginación -->
-    <nav class="d-flex justify-content-center mt-4">
-        <ul class="pagination">
-            <!-- Pagination dinámica futura -->
-        </ul>
+        <nav class="d-flex justify-content-center mt-4">
+      <ul class="pagination">
+        <li class="page-item <%= (paginaActual == 1) ? "disabled" : "" %>"><a class="page-link" href="ListadoClientesServlet?pagina=<%= paginaActual - 1 %>">Anterior</a></li>
+        <% for(int i = 1; i <= totalPaginas; i++) { %>
+          <li class="page-item <%= (i == paginaActual) ? "active" : "" %>"><a class="page-link" href="ListadoClientesServlet?pagina=<%= i %>"><%= i %></a></li>
+        <% } %>
+        <li class="page-item <%= (paginaActual == totalPaginas) ? "disabled" : "" %>"><a class="page-link" href="ListadoClientesServlet?pagina=<%= paginaActual + 1 %>">Siguiente</a></li>
+      </ul>
     </nav>
 </div>
 
@@ -175,14 +179,33 @@ function mostrarOpciones() {
 </script>
 
 <script>
+function validarIngresoBusqueda(){
+	const filtro = document.getElementById("filtro").value;
+	const busqueda = document.getElementById("busqueda").value;
+	if(filtro !== "0"){
+		if(filtro!=="estado_pres" && busqueda.trim()===""){
+			let modal = new bootstrap.Modal(document.getElementById('modalError'));
+	        modal.show();
+	        return false;
+		}
+	}
+	else{
+		return false;
+	}
+	return true;
+}
+</script>
+
+<script>
 window.onload = function() {
     mostrarOpciones(); // Ejecuta esto automáticamente al abrir la página
     
- // Mostrar modal solo si hay errores
     <% if (request.getAttribute("errores") != null) { %>
-        let modal = new bootstrap.Modal(document.getElementById('modalError'));
+        let modal = new bootstrap.Modal(document.getElementById('modalErrorDatoInvalido'));
         modal.show();
-    <% } %>
+    <% }else{%>
+    	validarIngresoBusqueda();
+   <% }%>
 };
 </script>
 
@@ -201,22 +224,37 @@ function quitarFiltro() {
 }
 </script>
 
-<div class="modal fade" id="modalError" tabindex="-1" aria-labelledby="modalError" aria-hidden="true">
+<div class="modal fade" id="modalErrorDatoInvalido" tabindex="-1" aria-labelledby="modalError" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="modalError">Error</h5>
+        <h5 class="modal-title" id="modalErrorDatoInvalido">Error</h5>
       </div>
       <div class="modal-body">
         <% 
             String errores = (String) request.getAttribute("errores");
             if (errores != null && !errores.isEmpty()) {
         %>
-                    <p>INGRESE DATO VALIDO</p>
-        <% 
-                
-            } 
+                    <p><%=errores %></p>
+        <%   
+            }
         %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+ </div>
+ 
+ <div class="modal fade" id="modalError" tabindex="-1" aria-labelledby="modalError" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="modalError">Error</h5>
+      </div>
+      <div class="modal-body">
+      		<p>Ingrese un dato para buscar, por favor.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
