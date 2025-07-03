@@ -27,7 +27,7 @@
     </div>
     <div class="mb-3">
       <label for="contraseña" class="form-label">Contraseña</label>
-      <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Ingrese su contraseña">
+      <input type="password" class="form-control" id="contraseña" name="contrasena" placeholder="Ingrese su contraseña">
     </div>
 
     <% if (Boolean.TRUE.equals(request.getAttribute("LoginError"))) { %>

@@ -31,7 +31,7 @@ public class IngresoClienteServlet extends HttpServlet {
 	        boolean valido = negocio.verificarCliente(usuario, contrasena);
 
 	        if (valido) {
-	            RequestDispatcher rd = request.getRequestDispatcher("src/main/webapp/Formularios/ModoCliente/MenuInicioCliente.jsp");
+	            RequestDispatcher rd = request.getRequestDispatcher("Formularios/ModoCliente/MenuInicioCliente.jsp");
 	            rd.forward(request, response);
 	        } else {
 	            request.setAttribute("LoginError", true);
