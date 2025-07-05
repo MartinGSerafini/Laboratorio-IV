@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import entidades.Prestamo;
-import entidades.Cliente;
 import entidades.EstadoPrestamo;
 
 

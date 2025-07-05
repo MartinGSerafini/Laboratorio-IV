@@ -70,7 +70,7 @@ public class ModificarCuentaServlet extends HttpServlet {
 					return;
 	            }
 	            
-	            int cuentasObtenidas = negocioCuenta.cuentasXClientes(idClienteCuenta);
+	            int cuentasObtenidas = negocioCuenta.contarCuentasXClientes(idClienteCuenta);
 	            if(idClientePrevio != idClienteCuenta) {
 				if(cuentasObtenidas == 3) {
 					out.print("{\"success\":false,\"mensaje\":\"" + jsonEscape("El cliente ya tiene 3 cuentas asignadas") + "\"}");

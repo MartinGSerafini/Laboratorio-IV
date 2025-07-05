@@ -95,7 +95,7 @@
             <thead class="table-dark">
                 <tr>
                     <th>ID Cuenta</th><th>ID Cliente</th><th>Fecha</th><th>Importe a pagar</th><th>Prestamo solicitado</th>
-                    <th>Plazo de pago en meses</th><th>Monto mensual</th>><th>Estado</th>
+                    <th>Plazo de pago en meses</th><th>Monto mensual</th><th>Estado</th>
                 </tr>
             </thead>
             <tbody>

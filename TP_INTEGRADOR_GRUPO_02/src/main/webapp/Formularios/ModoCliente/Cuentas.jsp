@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="entidades.*" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +8,7 @@
     <title>Cuentas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../z-CSS/ModoClienteCSS/Cuentas.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ModoClienteCSS/Cuentas.css">
 
     <script>
         function toggleSidebar() {
@@ -33,7 +35,13 @@
 
 <div class="container mt-5">
     <h2 class="text-center text-danger mb-4">Cuentas</h2>
-    <form class="row g-4">
+    
+    <%
+    ArrayList<Cuenta> lista = null;
+    lista = (ArrayList<Cuenta>) request.getAttribute("ListaCuentas");
+    %>
+    
+    <form class="row g-4" method="get" action="/CuentasClienteServlet">
         <!-- Tabla de Cuentas -->
     <div class="table-responsive d-flex justify-content-center">
         <table class="table table-striped table-bordered text-center w-auto">
@@ -44,12 +52,23 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>123321</td><td>Cuenta Corriente</td><td>75847261947</td><td>$15000</td><td>25/06/2024</td>
-                    <td>
-                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalHistorialCuenta">Ver Historial</button>
-                    </td>
-                </tr>
+            <%
+            if(lista != null){
+            	for(Cuenta c : lista){%>
+            		<tr>
+                    	<td><%=c.getNumeroCuenta() %><input type="hidden" name="idCuenta" value="<%=c.getIdCuenta()%>"></td>
+                    	<td><%=c.getTipoCuentaCuenta() %></td>
+                    	<td><%=c.getCbuCuenta() %></td>
+                    	<td>$<%=c.getSaldoCuenta() %></td>
+                    	<td><%=c.getFechaCreacionCuenta() %></td>
+                    	<td>
+                        <button type="submit" name="btnVerHistorial" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalHistorialCuenta">Ver Historial</button>
+                    	</td>
+                	</tr>
+            	<%}
+            }
+            %>
+                
             </tbody>
         </table>
     </div>
@@ -60,7 +79,7 @@
   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-body">
-        <!-- Tabla de Clientes -->
+        <!-- Tabla de Historial -->
         <div class="table-responsive">
           <table class="table table-striped table-bordered text-center" style="min-width: 1200px; width: 100%;">
             <thead class="table-dark">

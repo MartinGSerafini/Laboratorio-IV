@@ -75,14 +75,13 @@ public class NegocioCuenta implements servicioABML<Cuenta>{
 	    return daoCuenta.modificarCuenta(cuenta);
 	}
 	
-	public int cuentasXClientes(int cliente) {
-		return daoCuenta.cuentasXClientes(cliente);
+	public int contarCuentasXClientes(int cliente) {
+		return daoCuenta.contarCuentasXClientes(cliente);
 	}
 	
 	public int buscarCuentaXIdCliente(String idCuenta) {
 		return daoCuenta.buscarCuentaXIdCliente(idCuenta);
 	}
-	
 	
 	public String validarYVerificarCuenta(String idCuenta, int idClienteCuenta, String fechaCreacionCuenta, String numeroCuenta,
             String cbuCuenta, BigDecimal saldoCuenta, int idTipoCuenta) {
@@ -143,4 +142,9 @@ if(daoCuenta.existeCBU(cbuCuenta, idCuenta) == false) {
 	
 return errores.length() > 0 ? errores.toString() : null;
 }
+	
+	public ArrayList<Cuenta> cuentasXCliente(String idCliente){
+		int id = Integer.parseInt(idCliente);
+		return daoCuenta.cuentasXCliente(id);
+	}
 }

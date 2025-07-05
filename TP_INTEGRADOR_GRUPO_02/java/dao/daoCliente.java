@@ -132,7 +132,7 @@ public class daoCliente {
 	        List<String> columnas = new ArrayList<>();
 	        try (Connection con = Conexion.getConexion()) {
 	            DatabaseMetaData metaData = con.getMetaData();
-	            ResultSet rs = metaData.getColumns(null, null, "clientes", null); // Asegurate que el nombre coincida con tu tabla
+	            ResultSet rs = metaData.getColumns(null, null, "clientes", null);
 	            while (rs.next()) {
 	                columnas.add(rs.getString("COLUMN_NAME"));
 	            }
@@ -357,7 +357,43 @@ public class daoCliente {
 	        return false;
 	    }
 
+	    public Cliente obtenerCliente(String usuario) {
+	    	String sql = "SELECT * from cliente where usuario_cliente = ? AND estado_cliente = 1";
+	    	Cliente cliente = new Cliente();
+	    	try (Connection conn = Conexion.getConexion();
+	   	         PreparedStatement ps = conn.prepareStatement(sql)) {
+	   	        
+	   	        ps.setString(1, usuario);
 
+	   	        try (ResultSet rs = ps.executeQuery()) {
+	   	        	if(rs.next()) {
+	   	        		cliente.setIdCliente(rs.getString("id_cliente"));
+	   	        		cliente.setDniCliente(rs.getInt("dni_cliente"));
+	   	        		cliente.setCuilCliente(rs.getString("cuil_cliente"));
+	   	        		cliente.setNombreCliente(rs.getString("nombre_cliente"));
+	   	        		cliente.setApellidoCliente(rs.getString("apellido_cliente"));
+						cliente.setSexoCliente(rs.getString("sexo_cliente"));
+						cliente.setNacionalidadCliente(rs.getInt("nacionalidad_cliente"));
+						cliente.setFechaNacCliente(rs.getDate("fechaNac_cliente"));
+						cliente.setDireccionCliente(rs.getString("direccion_cliente"));
+						cliente.setProvinciaCliente(rs.getInt("provincia_cliente"));
+						cliente.setLocalidadCliente(rs.getInt("localidad_cliente"));
+						cliente.setCorreoCliente(rs.getString("correo_cliente"));
+						cliente.setTelefonoCliente(rs.getString("telefono_cliente"));
+						cliente.setUsuarioCliente(rs.getString("usuario_cliente"));
+						cliente.setContrasenaaCliente(rs.getString("contraseña_cliente"));
+						cliente.setNombreProvincia(rs.getString("nombre_provincia"));
+						cliente.setNombreLocalidad(rs.getString("nombre_localidad"));
+						cliente.setNombreNacionalidad(rs.getString("nombre_nacionalidad"));
+	   	        	}
+	   	            
+	   	        }
+
+	   	    } catch (SQLException e) {
+	   	        e.printStackTrace();
+	   	    }
+	    	return cliente;
+	    }
 	    
 	    public int obtenerUltimoId() {
 	        int ultimoId = 0;

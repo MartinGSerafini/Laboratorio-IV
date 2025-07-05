@@ -33,7 +33,7 @@
 <div class="main-content">
     <h2>Menú Inicio</h2>
     <div class="button-grid">
-        <a href="Cuentas.jsp" class="btn">CUENTAS</a>
+        <a href="${pageContext.request.contextPath}/CuentasClienteServlet" class="btn">CUENTAS</a>
         <a href="Transferencias.jsp" class="btn">TRASFERIR DINERO</a>
         <a href="Prestamos/NuevoPrestamo.jsp" class="btn">NUEVO PRESTAMO</a>
         <a href="Prestamos/PagarPrestamo.jsp" class="btn">PAGAR PRESTAMOS</a>

@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import entidades.Cuenta;
-import entidades.TipoCuenta;
 import negocio.NegocioCuenta;
 
 @WebServlet("/ListadoCuentasServlet")

@@ -8,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import negocio.NegocioCliente;
 
 @WebServlet("/IngresoClienteServlet")
@@ -31,8 +33,9 @@ public class IngresoClienteServlet extends HttpServlet {
 	        boolean valido = negocio.verificarCliente(usuario, contrasena);
 
 	        if (valido) {
-	            RequestDispatcher rd = request.getRequestDispatcher("Formularios/ModoCliente/MenuInicioCliente.jsp");
-	            rd.forward(request, response);
+	        	HttpSession session = request.getSession();
+	            session.setAttribute("nombreUsuario", usuario);
+	            response.sendRedirect("Formularios/ModoCliente/MenuInicioCliente.jsp");
 	        } else {
 	            request.setAttribute("LoginError", true);
 	            RequestDispatcher rd = request.getRequestDispatcher("Formularios/Login/IngresoCliente.jsp");
