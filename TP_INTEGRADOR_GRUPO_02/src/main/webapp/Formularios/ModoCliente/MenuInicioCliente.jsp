@@ -26,7 +26,7 @@
 </div>
 
 <div id="sidebar" class="sidebar">
-    <a href="InformacionPersonal.jsp">Informacion Personal</a>
+    <a href="${pageContext.request.contextPath}/InfoPersonalClienteServlet">Informacion Personal</a>
     <a href="../Login/IngresoCliente.jsp">Cerrar Sesion</a>
 </div>
 

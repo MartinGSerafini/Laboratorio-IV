@@ -358,7 +358,12 @@ public class daoCliente {
 	    }
 
 	    public Cliente obtenerCliente(String usuario) {
-	    	String sql = "SELECT * from cliente where usuario_cliente = ? AND estado_cliente = 1";
+	    	String sql = "SELECT c.*, p.nombre_provincia, l.nombre_localidad, n.nombre_nacionalidad " +
+	                "FROM cliente c " +
+	                "LEFT JOIN provincia p ON c.provincia_cliente = p.id_provincia " +
+	                "LEFT JOIN localidad l ON c.localidad_cliente = l.id_localidad " +
+	                "LEFT JOIN nacionalidad n ON c.nacionalidad_cliente = n.id_nacionalidad " +
+	                "WHERE c.estado_cliente = 1 AND usuario_cliente = ?";
 	    	Cliente cliente = new Cliente();
 	    	try (Connection conn = Conexion.getConexion();
 	   	         PreparedStatement ps = conn.prepareStatement(sql)) {
