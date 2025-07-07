@@ -73,6 +73,11 @@ public class NegocioCliente implements servicioABML<Cliente>{
 	    return daoCliente.obtenerClientesPorFiltro(columna, valor);
 	}
 	
+	public Cliente obtenerClienteXid(int id) {
+		return daoCliente.obtenerClienteXid(id);
+	}
+	
+	
 	public int obtenerIdCliente(String dni) {
 		
 		int idCliente = daoCliente.obtenerIdCliente(dni);

@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -35,10 +36,37 @@ public class DaoTipoCuenta {
 		        e.printStackTrace();
 		    }
 		
-		return lista;   
-		
+		return lista;   	
 		 
 	}
+	
+	
+	public String obtenerTipoXid(int id) {
+		
+		String sql = "SELECT descripcion_tipoCuenta FROM tipocuenta WHERE idtipoCuenta = ?";
+		String desc = null;
+		
+		try (Connection conn = Conexion.getConexion();
+				
+				PreparedStatement ps = conn.prepareStatement(sql)) {
+        		ps.setInt(1,id);
+        		
+        		try(ResultSet rs = ps.executeQuery()){
+        			
+        			if (rs.next()) {
+    					
+        				desc = rs.getString("descripcion_tipoCuenta");
+        		   }
+        		}
+        		conn.close();
+        		
+        	 }catch(Exception e) {
+				e.printStackTrace();
+			}finally {}
+			return desc;
+		
+	}
+	
 	
 	
 }

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.DaoTipoCuenta;
 import dao.daoCuenta;
 import entidades.Cuenta;
 import excepciones.OperacionNoEfectuadaExc;
@@ -12,6 +13,7 @@ import interfaces.servicioABML;
 public class NegocioCuenta implements servicioABML<Cuenta>{
 
 	daoCuenta daoCuenta = new daoCuenta();
+	DaoTipoCuenta daoTipoCuenta = new DaoTipoCuenta();
 	
 	@Override
 	public boolean alta(Cuenta cuenta) {
@@ -67,6 +69,24 @@ public class NegocioCuenta implements servicioABML<Cuenta>{
 		return columnas;
 	}
 	
+	public Cuenta obtenerCuentaCBU(String cbu){
+		Cuenta cuenta = new Cuenta();
+		cuenta = daoCuenta.obtenerCuentaCBU(cbu);
+		return cuenta;
+	} 
+	
+	public String obtenerTipoXid(int id) {
+		String desc = daoTipoCuenta.obtenerTipoXid(id);
+		return desc;
+	}
+	
+	public boolean realizarTransferencia(String cbuOrigen, String cbuDestino, BigDecimal monto) {
+		return daoCuenta.realizarTransferencia(cbuOrigen, cbuDestino, monto);
+	}
+	 
+	
+	 
+	
 	public boolean bajaCuenta(String id) {
 	    return daoCuenta.bajaLogicaCuenta(id);
 	}
@@ -86,7 +106,7 @@ public class NegocioCuenta implements servicioABML<Cuenta>{
 	public String validarYVerificarCuenta(String idCuenta, int idClienteCuenta, String fechaCreacionCuenta, String numeroCuenta,
             String cbuCuenta, BigDecimal saldoCuenta, int idTipoCuenta) {
 
-System.out.println("ValidarCliente - Par�metros recibidos: " +
+System.out.println("ValidarCliente - Parámetros recibidos: " +
 "idCuenta=" + idCuenta +
 ", idClienteCuenta=" + idClienteCuenta +
 ", fechaCreacionCuenta=" + fechaCreacionCuenta +

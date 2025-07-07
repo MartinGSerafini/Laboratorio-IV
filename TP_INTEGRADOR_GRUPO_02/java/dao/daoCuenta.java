@@ -1,5 +1,6 @@
 package dao;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -203,14 +204,14 @@ public class daoCuenta {
 		        }
 	    	return idCliente;
 	 }
-	
 	 
 	 public ArrayList<Cuenta> cuentasXCliente(int idCliente){
 		 String sql = "SELECT c.*, tc.descripcion_tipocuenta FROM Cuenta c INNER JOIN tipocuenta tc ON c.idTipoCuenta_cuenta = tc.idTipoCuenta WHERE idCliente_cuenta = ? AND c.estado_cuentas = 1";
 			ArrayList<Cuenta> lista = new ArrayList<Cuenta>();
 			
 			try (Connection conn = Conexion.getConexion();
-		             PreparedStatement ps = conn.prepareStatement(sql)) {
+					
+		            PreparedStatement ps = conn.prepareStatement(sql)) {
 
 		        	ps.setInt(1,idCliente);
 		            try (ResultSet rs = ps.executeQuery()) {
@@ -233,5 +234,83 @@ public class daoCuenta {
 		        }
 			return lista;
 	 }
+
 	 
+	 public Cuenta obtenerCuentaCBU(String cbu){
+			String sql = "SELECT c.*, tc.descripcion_tipocuenta FROM Cuenta c INNER JOIN tipocuenta tc ON c.idTipoCuenta_cuenta = tc.idTipoCuenta WHERE c.estado_cuentas = 1 AND c.cbu_cuenta = ?";
+			Cuenta cuenta = new Cuenta();
+			
+			try (Connection conn = Conexion.getConexion();
+					
+					PreparedStatement ps = conn.prepareStatement(sql)) {
+	        		ps.setString(1,cbu);
+	        		
+	        		try(ResultSet rs = ps.executeQuery()){
+	        			
+	        			if (rs.next()) {
+	    					
+	        				cuenta.setIdCuenta(rs.getString("id_cuenta"));
+	    					cuenta.setIdClienteCuenta(rs.getInt("idCliente_cuenta"));
+	    					cuenta.setIdTipoCuentaCuenta(rs.getInt("idTipoCuenta_cuenta"));
+	    					cuenta.setFechaCreacionCuenta(rs.getDate("fechaCreacion_cuenta"));
+	    					cuenta.setNumeroCuenta(rs.getString("numero_cuenta"));
+	    					cuenta.setCbuCuenta(rs.getString("cbu_cuenta"));
+	    					cuenta.setSaldoCuenta(rs.getBigDecimal("saldo_cuenta"));
+	    					cuenta.setTipoCuentaCuenta(rs.getString("descripcion_tipocuenta"));
+	        		   }
+	        		}
+	        		conn.close();
+	        		
+	        	 }catch(Exception e) {
+					e.printStackTrace();
+				}finally {}
+				return cuenta;
+			}
+	 
+	 
+	 public boolean realizarTransferencia(String cbuOrigen, String cbuDestino, BigDecimal monto) {
+		 
+		 
+		 String sql1 = "UPDATE Cuenta SET saldo_cuenta = saldo_cuenta - ? WHERE cbu_cuenta = ?";
+		 String sql2 = "UPDATE Cuenta SET saldo_cuenta = saldo_cuenta + ? WHERE cbu_cuenta = ?";
+		 
+		 
+		 try (Connection conn = Conexion.getConexion()) {
+		        conn.setAutoCommit(false);
+
+		        try (
+		            PreparedStatement ps1 = conn.prepareStatement(sql1);
+		            PreparedStatement ps2 = conn.prepareStatement(sql2)
+		        ) {
+		            ps1.setBigDecimal(1, monto);
+		            ps1.setString(2, cbuOrigen);
+
+		            ps2.setBigDecimal(1, monto);
+		            ps2.setString(2, cbuDestino);
+
+		            int filas1 = ps1.executeUpdate();
+		            int filas2 = ps2.executeUpdate();
+
+		            if (filas1 == 1 && filas2 == 1) {
+		                conn.commit();
+		                return true;
+		            } else {
+		                conn.rollback();
+		                return false;
+		            }
+
+		        } catch (Exception e) {
+		            conn.rollback();
+		            e.printStackTrace();
+		            return false;
+		        }
+
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        return false;
+		    }
+		 
+		 
+	 }
+
 }

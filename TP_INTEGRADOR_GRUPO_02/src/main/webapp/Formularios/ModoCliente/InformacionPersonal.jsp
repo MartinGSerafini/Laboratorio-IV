@@ -35,7 +35,7 @@
 
 <div class="container mt-5">
     <h2 class="text-center text-danger mb-4">Información Personal</h2>
-    <form class="row g-4" method="get" action="/InfoPersonalClienteServlet">
+    <form class="row g-4 mb-4" method="get" action="/InfoPersonalClienteServlet">
     <% Cliente cli = new Cliente(); 
        cli = (Cliente) request.getAttribute("cliente"); 
        if(cli != null){%>
