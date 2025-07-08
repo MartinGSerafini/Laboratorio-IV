@@ -41,7 +41,6 @@
     lista = (ArrayList<Cuenta>) request.getAttribute("ListaCuentas");
     %>
     
-    <form class="row g-4" method="get" action="/CuentasClienteServlet">
         <!-- Tabla de Cuentas -->
     <div class="table-responsive d-flex justify-content-center">
         <table class="table table-striped table-bordered text-center w-auto">
@@ -56,13 +55,17 @@
             if(lista != null){
             	for(Cuenta c : lista){%>
             		<tr>
-                    	<td><%=c.getNumeroCuenta() %><input type="hidden" name="idCuenta" value="<%=c.getIdCuenta()%>"></td>
+                    	<td><%=c.getNumeroCuenta() %></td>
                     	<td><%=c.getTipoCuentaCuenta() %></td>
                     	<td><%=c.getCbuCuenta() %></td>
                     	<td>$<%=c.getSaldoCuenta() %></td>
                     	<td><%=c.getFechaCreacionCuenta() %></td>
                     	<td>
-                        <button type="submit" name="btnVerHistorial" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalHistorialCuenta">Ver Historial</button>
+   						<form class="row g-4" method="get" action="${pageContext.request.contextPath}/CuentasClienteServlet">
+   							<input type="hidden" name="idCuenta" value="<%=c.getIdCuenta()%>">
+   							<input type="hidden" name="cbuCuenta" value="<%=c.getCbuCuenta() %>">
+                        	<button type="submit" name="btnVerHistorial" class="btn btn-danger btn-sm">Ver Historial</button>
+    					</form>
                     	</td>
                 	</tr>
             	<%}
@@ -72,13 +75,13 @@
             </tbody>
         </table>
     </div>
-    </form>
 </div>
 <!-- MODAL HISTORIAL DE CUENTA -->
 <div class="modal fade" id="modalHistorialCuenta" tabindex="-1" aria-labelledby="modalHistorialCuentaLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-body">
+      
         <!-- Tabla de Historial -->
         <div class="table-responsive">
           <table class="table table-striped table-bordered text-center" style="min-width: 1200px; width: 100%;">
@@ -89,10 +92,29 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>0001</td><td>06/02/2023</td><td>Pago de Prestamo</td><td>39482758251</td><td>57282957162</td><td>$20500,60</td>
-        		<td>Pago de Cuota 2</td>
-              </tr>
+              <%
+              ArrayList<Movimiento> listaMov = null;
+              listaMov = (ArrayList<Movimiento>) request.getAttribute("ListaMovimientos");
+              if(listaMov != null){
+            	  for(Movimiento m : listaMov){%>
+            		  <tr>
+            		  <td><%=m.getIdMov() %></td>
+            		  <td><%=m.getFechaMov() %></td>
+            		  <td><%=m.getDescTipoMov() %></td>
+            		  <%String cbu = (String) request.getAttribute("CbuCuenta");%>
+            		  <td><%=cbu %></td>
+            		  <%
+            		  if(m.getIdCuentaDestinoMov()== null){%>
+            			  <td>-</td>
+            		  <%}else{%>
+            			  <td><%=m.getIdCuentaDestinoMov() %></td>
+            		  <%}%>
+            		  <td>$<%=m.getImporteMov() %></td>
+            		  <td><%=m.getDetalleMov() %></td>
+            		  </tr>
+            	  <%}
+              }
+              %>
             </tbody>
           </table>
         </div>
@@ -103,6 +125,15 @@
     </div>
   </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<% Boolean abrirModal = (Boolean) request.getAttribute("AbrirModal");%>
+<script>
+	<%if(abrirModal != null && abrirModal){%>
+		const modal = new bootstrap.Modal(document.getElementById('modalHistorialCuenta'));
+    	modal.show();
+	<%}%>
+</script>
 </body>
 </html>

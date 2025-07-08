@@ -14,7 +14,9 @@ import javax.servlet.http.HttpSession;
 
 import entidades.Cliente;
 import entidades.Cuenta;
+import entidades.Movimiento;
 import negocio.NegocioCuenta;
+import negocio.NegocioMovimiento;
 import negocio.NegocioCliente;
 
 
@@ -29,6 +31,7 @@ public class CuentasClienteServlet extends HttpServlet {
 
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession session = request.getSession(false);  // false para no crear nueva si no existe
 		Cliente cliente = new Cliente();
 		if (session != null) {
@@ -39,11 +42,16 @@ public class CuentasClienteServlet extends HttpServlet {
 		ArrayList<Cuenta> lista = negocioCuenta.cuentasXCliente(cliente.getIdCliente());
 		request.setAttribute("ListaCuentas", lista);
 		
+		ArrayList<Movimiento> listaMovimientos = new ArrayList<Movimiento>();
 		if(request.getParameter("btnVerHistorial") != null) {
-			String id = request.getParameter("btnVerHistorial");
-			System.out.println(id);
+			String id = request.getParameter("idCuenta");
+			String cbu = request.getParameter("cbuCuenta");
+			request.setAttribute("CbuCuenta", cbu); //setea el cbu para mostrarlo
+			NegocioMovimiento negocioMovimiento = new NegocioMovimiento();
+			listaMovimientos = negocioMovimiento.obtenerMovimientosPorCuenta(id);
+			request.setAttribute("ListaMovimientos", listaMovimientos);
+			request.setAttribute("AbrirModal", true);
 		}
-		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/Formularios/ModoCliente/Cuentas.jsp");
 		rd.forward(request, response); 

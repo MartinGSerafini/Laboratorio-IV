@@ -2,11 +2,12 @@ package entidades;
 
 public class Movimiento {
     private String idMov;
-    private String idCuentaMov;
+    private int idCuentaMov;
     private java.sql.Date fechaMov;
     private String detalleMov;
     private java.math.BigDecimal importeMov;
     private int idTipoMovMov;
+    private String descTipoMov;
     private String idCuentaDestinoMov;
 
     // Constructor por defecto
@@ -21,11 +22,11 @@ public class Movimiento {
         this.idMov = idMov;
     }
 
-    public String getIdCuentaMov() {
+    public int getIdCuentaMov() {
         return idCuentaMov;
     }
 
-    public void setIdCuentaMov(String idCuentaMov) {
+    public void setIdCuentaMov(int idCuentaMov) {
         this.idCuentaMov = idCuentaMov;
     }
 
@@ -53,7 +54,15 @@ public class Movimiento {
         this.importeMov = importeMov;
     }
 
-    public int getIdTipoMovMov() {
+    public String getDescTipoMov() {
+		return descTipoMov;
+	}
+
+	public void setDescTipoMov(String descTipoMov) {
+		this.descTipoMov = descTipoMov;
+	}
+
+	public int getIdTipoMovMov() {
         return idTipoMovMov;
     }
 
