@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../z-CSS/ModoClienteCSS/Prestamos.css">
+    <link rel="stylesheet" href="../../z-CSS/ModoBancoCSS/PrestamosCSS/Prestamos.css">
         
     <script>
         function toggleSidebar() {
@@ -33,27 +33,48 @@
     <a href="../../Login/IngresoCliente.jsp">Cerrar Sesion</a>
 </div>
 
+<!-- Prestamos disponibles -->
 <div class="main-content">
     <h2>Prestamos disponibles</h2>
     <div class="button-grid">
-        <a href="#" class="btn">Prestamo 1 por $xxx.xx</a>
-        <a href="#" class="btn">Prestamo 2 por $xxx.xx</a>
-        <a href="#" class="btn">Prestamo 3 por $xxx.xx</a>
-        <a href="#" class="btn">Prestamo 4 por $xxx.xx</a>
+    	<form action="NuevoPrestamoServlet" method="get">
+            <input type="hidden" name="accion" value="seleccionarPrestamo">
+            <input type="hidden" name="monto" value="80000">
+            <button type="submit" class="btn">Prestamo 1 por $80.000</button>
+        </form>
+        <form action="NuevoPrestamoServlet" method="get">
+            <input type="hidden" name="accion" value="seleccionarPrestamo">
+            <input type="hidden" name="monto" value="90000">
+            <button type="submit" class="btn">Prestamo 2 por $90.000</button>
+        </form>
+        <form action="NuevoPrestamoServlet" method="get">
+            <input type="hidden" name="accion" value="seleccionarPrestamo">
+            <input type="hidden" name="monto" value="100000">
+            <button type="submit" class="btn">Prestamo 3 por $100.000</button>
+        </form>
+        <form action="NuevoPrestamoServlet" method="get">
+            <input type="hidden" name="accion" value="seleccionarPrestamo">
+            <input type="hidden" name="monto" value="120000">
+            <button type="submit" class="btn">Prestamo 4 por $120.000</button>
+        </form>
+
     </div>
 </div>
 
-<div class="main-content">
+<!-- Cuotas disponibles -->
+<div class="main-content" id="cuotasSection" style="display: none;">
     <h2>Cuotas disponibles</h2>
     <div class="button-grid">
-        <a href="#" class="btn">x cuotas de $xxx.xx</a>
-        <a href="#" class="btn">x cuotas de $xxx.xx</a>
-        <a href="#" class="btn">x cuotas de $xxx.xx</a>
-        <a href="#" class="btn">x cuotas de $xxx.xx</a>
+        <a href="#" class="btn" onclick="mostrarCuentas()">Pagar en 4 cuotas</a>
+        <a href="#" class="btn" onclick="mostrarCuentas()">Pagar en 6 cuotas</a>
+        <a href="#" class="btn" onclick="mostrarCuentas()">Pagar en 8 cuotas</a>
+        <a href="#" class="btn" onclick="mostrarCuentas()">Pagar en 12 cuotas</a>
     </div>
 </div>
 
-<div class="container mt-5">
+
+<!-- Cuentas disponibles -->
+<div class="container mt-5" id="cuentasSection" style="display: none;">
     <h3 class="text-center mb-4 text-danger">Cuenta a seleccionar</h3>
     <!-- Tabla de Cuentas -->
     <div class="table-responsive d-flex justify-content-center">
@@ -82,6 +103,19 @@
         </ul>
     </nav>
 </div>
+
+<!-- Script para manejar la visibilidad de botones y tabla de cuentas -->
+<script>
+    function mostrarCuotas() {
+        document.getElementById("cuotasSection").style.display = "block";
+        document.getElementById("cuentasSection").style.display = "none";
+    }
+
+    function mostrarCuentas() {
+        document.getElementById("cuentasSection").style.display = "block";
+    }
+</script>
+
 
 <div class="main-content">
         <a href="#" class="btn">Aceptar</a>

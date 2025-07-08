@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import entidades.Cuenta;
 
@@ -204,6 +205,41 @@ public class daoCuenta {
 		        }
 	    	return idCliente;
 	 }
+	 
+	 public List<Cuenta> obtenerCuentasPorCliente(int idCliente) {
+		    List<Cuenta> cuentas = new ArrayList<>();
+
+		    String query = "SELECT IdCuenta, IdClienteCuenta, IdTipoCuentaCuenta, FechaCreacionCuenta, " +
+		                   "NumeroCuenta, CBUCuenta, SaldoCuenta, TipoCuentaCuenta " +
+		                   "FROM Cuentas WHERE IdClienteCuenta = ?";
+
+		    try (Connection conn = Conexion.getConexion();
+		             PreparedStatement ps = conn.prepareStatement(query)) {
+		        ps.setInt(1, idCliente);
+
+		        ResultSet rs = ps.executeQuery();
+		        while (rs.next()) {
+		            Cuenta c = new Cuenta();
+		            c.setIdCuenta(rs.getString("IdCuenta"));
+		            c.setIdClienteCuenta(rs.getInt("IdClienteCuenta"));
+		            c.setIdTipoCuentaCuenta(rs.getInt("IdTipoCuentaCuenta"));
+		            c.setFechaCreacionCuenta(rs.getDate("FechaCreacionCuenta"));
+		            c.setNumeroCuenta(rs.getString("NumeroCuenta"));
+		            c.setCbuCuenta(rs.getString("CBUCuenta"));
+		            c.setSaldoCuenta(rs.getBigDecimal("SaldoCuenta"));
+		            c.setTipoCuentaCuenta(rs.getString("TipoCuentaCuenta"));
+
+		            cuentas.add(c);
+		        }
+
+		    } catch (SQLException e) {
+		        e.printStackTrace(); 
+		    }
+
+		    return cuentas;
+		}
+
+	 
 	 
 	 public ArrayList<Cuenta> cuentasXCliente(int idCliente){
 		 String sql = "SELECT c.*, tc.descripcion_tipocuenta FROM Cuenta c INNER JOIN tipocuenta tc ON c.idTipoCuenta_cuenta = tc.idTipoCuenta WHERE idCliente_cuenta = ? AND c.estado_cuentas = 1";

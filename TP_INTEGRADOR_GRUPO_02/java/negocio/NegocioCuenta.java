@@ -84,8 +84,9 @@ public class NegocioCuenta implements servicioABML<Cuenta>{
 		return daoCuenta.realizarTransferencia(cbuOrigen, cbuDestino, monto);
 	}
 	 
-	
-	 
+	public List<Cuenta> obtenerCuentasPorCliente(int idCliente) {
+		return daoCuenta.obtenerCuentasPorCliente(idCliente);
+	}
 	
 	public boolean bajaCuenta(String id) {
 	    return daoCuenta.bajaLogicaCuenta(id);

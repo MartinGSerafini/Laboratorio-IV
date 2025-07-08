@@ -29,7 +29,7 @@
 <div id="sidebar" class="sidebar">
     <a href="InformacionPersonal.jsp">Informacion Personal</a>
     <a href="Cuentas.Jsp">Cuentas</a>
-    <a href=Prestamos/NuevoPrestamo.jsp>Nuevo Prestamo</a>
+    <a href="Prestamos/NuevoPrestamo.jsp">Nuevo Prestamo</a>
     <a href="Prestamos/PagarPrestamo.jsp">Pagar Prestamos</a>
     <a href="../Login/IngresoCliente.jsp">Cerrar Sesion</a>
 </div>
