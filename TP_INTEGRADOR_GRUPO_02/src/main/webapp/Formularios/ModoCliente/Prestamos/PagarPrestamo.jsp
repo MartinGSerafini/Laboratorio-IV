@@ -25,11 +25,11 @@
 </div>
 
 <div id="sidebar" class="sidebar">
-    <a href="../InformacionPersonal.jsp">Informacion Personal</a>
-    <a href="../Cuentas.jsp">Cuentas</a>
-    <a href="../Transferencias.jsp">Transferir Dinero</a>
+    <a href="${pageContext.request.contextPath}/InfoPersonalClienteServlet">Informacion Personal</a>
+    <a href="${pageContext.request.contextPath}/CuentasClienteServlet">Cuentas</a>
+    <a href="${pageContext.request.contextPath}/TransferenciasClienteServlet">Transferir Dinero</a>
     <a href=NuevoPrestamo.jsp>Nuevo Prestamo</a>
-    <a href="../../Login/IngresoCliente.jsp">Cerrar Sesion</a>
+    <a href="${pageContext.request.contextPath}/Formularios/Login/IngresoCliente.jsp">Cerrar Sesion</a>
 </div>
 
 
