@@ -1,4 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.LinkedHashMap" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -37,22 +42,22 @@
 <div class="main-content">
     <h2>Prestamos disponibles</h2>
     <div class="button-grid">
-    	<form action="NuevoPrestamoServlet" method="get">
+    	<form action="${pageContext.request.contextPath}/NuevoPrestamoServlet" method="get">
             <input type="hidden" name="accion" value="seleccionarPrestamo">
             <input type="hidden" name="monto" value="80000">
             <button type="submit" class="btn">Prestamo 1 por $80.000</button>
         </form>
-        <form action="NuevoPrestamoServlet" method="get">
+        <form action="${pageContext.request.contextPath}/NuevoPrestamoServlet" method="get">
             <input type="hidden" name="accion" value="seleccionarPrestamo">
             <input type="hidden" name="monto" value="90000">
             <button type="submit" class="btn">Prestamo 2 por $90.000</button>
         </form>
-        <form action="NuevoPrestamoServlet" method="get">
+        <form action="${pageContext.request.contextPath}/NuevoPrestamoServlet" method="get">
             <input type="hidden" name="accion" value="seleccionarPrestamo">
             <input type="hidden" name="monto" value="100000">
             <button type="submit" class="btn">Prestamo 3 por $100.000</button>
         </form>
-        <form action="NuevoPrestamoServlet" method="get">
+        <form action="${pageContext.request.contextPath}NuevoPrestamoServlet" method="get">
             <input type="hidden" name="accion" value="seleccionarPrestamo">
             <input type="hidden" name="monto" value="120000">
             <button type="submit" class="btn">Prestamo 4 por $120.000</button>
@@ -62,18 +67,30 @@
 </div>
 
 <!-- Cuotas disponibles -->
-<div class="main-content" id="cuotasSection" style="display: none;">
-    <h2>Cuotas disponibles</h2>
+<div class="main-content" id="cuotasSection" 
+    <% if (request.getAttribute("cuotasDisponibles") == null) { %>
+        style="display: none;"
+    <% } %>
+>
+    <h2>Cuotas disponibles para el préstamo </h2>
     <div class="button-grid">
-        <a href="#" class="btn" onclick="mostrarCuentas()">Pagar en 4 cuotas</a>
-        <a href="#" class="btn" onclick="mostrarCuentas()">Pagar en 6 cuotas</a>
-        <a href="#" class="btn" onclick="mostrarCuentas()">Pagar en 8 cuotas</a>
-        <a href="#" class="btn" onclick="mostrarCuentas()">Pagar en 12 cuotas</a>
+        <% 
+            LinkedHashMap<Integer, Double> cuotas = (LinkedHashMap<Integer, Double>) request.getAttribute("cuotasDisponibles");
+            if (cuotas != null) {
+                NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("es", "AR"));
+                for (Map.Entry<Integer, Double> entry : cuotas.entrySet()) {
+                    int numeroCuotas = entry.getKey();
+                    double valorCuota = entry.getValue();
+        %>
+                    <a href="#" class="btn" onclick="mostrarCuentas()">Pagar en <%= numeroCuotas %> cuotas de <%= formatter.format(valorCuota) %></a>
+        <%
+                }
+            }
+        %>
     </div>
 </div>
 
-
-<!-- Cuentas disponibles -->
+<!-- Cuentas Disponibles -->
 <div class="container mt-5" id="cuentasSection" style="display: none;">
     <h3 class="text-center mb-4 text-danger">Cuenta a seleccionar</h3>
     <!-- Tabla de Cuentas -->

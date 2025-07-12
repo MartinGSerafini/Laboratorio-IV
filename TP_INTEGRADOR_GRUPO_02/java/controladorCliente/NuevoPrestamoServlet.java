@@ -27,17 +27,33 @@ public class NuevoPrestamoServlet extends HttpServlet {
 		String accion = request.getParameter("accion");
 
 		if ("seleccionarPrestamo".equals(accion)) {
-			//obtener id del cliente desde la sesión
-			HttpSession sesion = request.getSession();
-			int idCliente = (int) sesion.getAttribute("idCliente");
+			/*//obtener id del cliente desde la sesión
+			HttpSession session = request.getSession();
+            Integer idClienteObj = (Integer) session.getAttribute("idCliente"); 
+            int idCliente = idClienteObj.intValue(); 
 			
 			//obtener cuentas del cliente
 			NegocioCuenta negocio = new NegocioCuenta();
 			List<Cuenta> cuentas = negocio.obtenerCuentasPorCliente(idCliente);
+			request.setAttribute("cuentas", cuentas);*/
+			
+			// --- Lógica para calcular y pasar las cuotas al JSP ---
+            // Obtener el monto del préstamo seleccionado
+            double montoPrestamo = Double.parseDouble(request.getParameter("monto"));
 
-			request.setAttribute("cuentas", cuentas);
+            // Creamos un mapa para almacenar las cuotas y sus valores..
+            LinkedHashMap<Integer, Double> cuotasDisponibles = new LinkedHashMap<>(); //clave: nro de cuotas, valor: monto de cada cuota
 
-			request.getRequestDispatcher("/Formularios/ModoBanco/Prestamos/NuevoPrestamo.jsp").forward(request, response);
+            cuotasDisponibles.put(4, montoPrestamo / 4);  
+            cuotasDisponibles.put(6, montoPrestamo / 6);  
+            cuotasDisponibles.put(8, montoPrestamo / 8);  
+            cuotasDisponibles.put(12, montoPrestamo / 12);
+
+            // Pasamos el mapa de cuotas al JSP para que pueda mostrarlas.
+            request.setAttribute("cuotasDisponibles", cuotasDisponibles);
+			
+
+			request.getRequestDispatcher("/Formularios/ModoCliente/Prestamos/NuevoPrestamo.jsp").forward(request, response);
 		}
 		
 		// TODO Auto-generated method stub
