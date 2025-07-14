@@ -13,7 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../z-CSS/ModoBancoCSS/PrestamosCSS/Prestamos.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ModoBancoCSS/PrestamosCSS/Prestamos.css">
         
     <script>
         function toggleSidebar() {
@@ -57,7 +57,7 @@
             <input type="hidden" name="monto" value="100000">
             <button type="submit" class="btn">Prestamo 3 por $100.000</button>
         </form>
-        <form action="${pageContext.request.contextPath}NuevoPrestamoServlet" method="get">
+        <form action="${pageContext.request.contextPath}/NuevoPrestamoServlet" method="get">
             <input type="hidden" name="accion" value="seleccionarPrestamo">
             <input type="hidden" name="monto" value="120000">
             <button type="submit" class="btn">Prestamo 4 por $120.000</button>
@@ -65,6 +65,7 @@
 
     </div>
 </div>
+
 
 <!-- Cuotas disponibles -->
 <div class="main-content" id="cuotasSection" 

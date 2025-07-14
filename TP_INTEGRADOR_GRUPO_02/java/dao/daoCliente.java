@@ -272,6 +272,23 @@ public class daoCliente {
 		        }
 	    	return id;
 	    }
+	    
+	    public int obtenerIdClientePorUsuario(String usuario) {
+	        String sql = "SELECT id_cliente FROM cliente WHERE usuario_cliente = ?";
+	        int id = 0;
+	        try (Connection conn = Conexion.getConexion();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setString(1, usuario);
+	            try (ResultSet rs = ps.executeQuery()) {
+	                if (rs.next()) {
+	                    id = rs.getInt("id_cliente");
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return id;
+	    }
 
 	    public boolean existeDni(int dni, String idClienteExcluir) {
 	        String sql = "SELECT COUNT(*) FROM cliente WHERE dni_cliente = ? AND id_cliente <> ?";

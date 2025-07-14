@@ -207,27 +207,26 @@ public class daoCuenta {
 	 }
 	 
 	 public List<Cuenta> obtenerCuentasPorCliente(int idCliente) {
+		    System.out.println("daoCuenta - obtenerCuentasPorCliente - ID Cliente: " + idCliente);
 		    List<Cuenta> cuentas = new ArrayList<>();
 
-		    String query = "SELECT IdCuenta, IdClienteCuenta, IdTipoCuentaCuenta, FechaCreacionCuenta, " +
-		                   "NumeroCuenta, CBUCuenta, SaldoCuenta, TipoCuentaCuenta " +
-		                   "FROM Cuentas WHERE IdClienteCuenta = ?";
+		    String query = "SELECT c.Numero_Cuenta, c.CBU_Cuenta, c.Saldo_Cuenta, t.Descripcion_TipoCuenta " +
+		                   "FROM Cuentas c " +
+		                   "INNER JOIN TipoCuenta t ON c.IdTipoCuenta_Cuenta = t.IdTipoCuenta " +
+		                   "WHERE c.IdCliente_Cuenta = ?";
 
 		    try (Connection conn = Conexion.getConexion();
-		             PreparedStatement ps = conn.prepareStatement(query)) {
+		         PreparedStatement ps = conn.prepareStatement(query)) {
+
 		        ps.setInt(1, idCliente);
 
 		        ResultSet rs = ps.executeQuery();
 		        while (rs.next()) {
 		            Cuenta c = new Cuenta();
-		            c.setIdCuenta(rs.getString("IdCuenta"));
-		            c.setIdClienteCuenta(rs.getInt("IdClienteCuenta"));
-		            c.setIdTipoCuentaCuenta(rs.getInt("IdTipoCuentaCuenta"));
-		            c.setFechaCreacionCuenta(rs.getDate("FechaCreacionCuenta"));
-		            c.setNumeroCuenta(rs.getString("NumeroCuenta"));
-		            c.setCbuCuenta(rs.getString("CBUCuenta"));
-		            c.setSaldoCuenta(rs.getBigDecimal("SaldoCuenta"));
-		            c.setTipoCuentaCuenta(rs.getString("TipoCuentaCuenta"));
+		            c.setNumeroCuenta(rs.getString("Numero_Cuenta"));
+		            c.setCbuCuenta(rs.getString("CBU_Cuenta"));
+		            c.setSaldoCuenta(rs.getBigDecimal("Saldo_Cuenta"));
+		            c.setTipoCuentaCuenta(rs.getString("Descripcion_TipoCuenta")); 
 
 		            cuentas.add(c);
 		        }
@@ -236,6 +235,7 @@ public class daoCuenta {
 		        e.printStackTrace(); 
 		    }
 
+		    System.out.println("daoCuenta - obtenerCuentasPorCliente - Cuentas encontradas: " + cuentas.size());
 		    return cuentas;
 		}
 

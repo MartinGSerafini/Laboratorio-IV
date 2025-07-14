@@ -25,23 +25,27 @@ public class NuevoPrestamoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String accion = request.getParameter("accion");
-
-		if ("seleccionarPrestamo".equals(accion)) {
-			/*//obtener id del cliente desde la sesión
+				
+			// --- Lógica para obtener el cliente y sus cuentas ---
 			HttpSession session = request.getSession();
-            Integer idClienteObj = (Integer) session.getAttribute("idCliente"); 
-            int idCliente = idClienteObj.intValue(); 
+			String nombreUsuario = (String) session.getAttribute("nombreUsuario");
 			
-			//obtener cuentas del cliente
-			NegocioCuenta negocio = new NegocioCuenta();
-			List<Cuenta> cuentas = negocio.obtenerCuentasPorCliente(idCliente);
-			request.setAttribute("cuentas", cuentas);*/
+			NegocioCliente negocioCliente = new NegocioCliente();
+			int idCliente = negocioCliente.obtenerIdClientePorUsuario(nombreUsuario);
+					
+			NegocioCuenta negocioCuenta = new NegocioCuenta();
+			List<Cuenta> cuentas = negocioCuenta.obtenerCuentasPorCliente(idCliente);
+			System.out.println("Cuentas del cliente: " + cuentas);
+			
+			request.setAttribute("cuentas", cuentas);
+			
+			
+		if ("seleccionarPrestamo".equals(accion)) {
+
 			
 			// --- Lógica para calcular y pasar las cuotas al JSP ---
-            // Obtener el monto del préstamo seleccionado
-            double montoPrestamo = Double.parseDouble(request.getParameter("monto"));
-
-            // Creamos un mapa para almacenar las cuotas y sus valores..
+            double montoPrestamo = Double.parseDouble(request.getParameter("monto")); // Obtener el monto del préstamo seleccionado 
+            // Mapa para almacenar las cuotas y sus valores
             LinkedHashMap<Integer, Double> cuotasDisponibles = new LinkedHashMap<>(); //clave: nro de cuotas, valor: monto de cada cuota
 
             cuotasDisponibles.put(4, montoPrestamo / 4);  
@@ -49,15 +53,10 @@ public class NuevoPrestamoServlet extends HttpServlet {
             cuotasDisponibles.put(8, montoPrestamo / 8);  
             cuotasDisponibles.put(12, montoPrestamo / 12);
 
-            // Pasamos el mapa de cuotas al JSP para que pueda mostrarlas.
             request.setAttribute("cuotasDisponibles", cuotasDisponibles);
 			
-
 			request.getRequestDispatcher("/Formularios/ModoCliente/Prestamos/NuevoPrestamo.jsp").forward(request, response);
 		}
-		
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

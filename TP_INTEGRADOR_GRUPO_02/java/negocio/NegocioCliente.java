@@ -88,6 +88,17 @@ public class NegocioCliente implements servicioABML<Cliente>{
 			throw new ClienteNoEncontradoExc("No se encontro un cliente con el DNI: "+dni);
 		}
 	}
+	
+	public int obtenerIdClientePorUsuario(String usuario) {
+		int idCliente = daoCliente.obtenerIdClientePorUsuario(usuario);
+		if(idCliente != 0) {
+			return idCliente;
+		}
+		else {
+			throw new ClienteNoEncontradoExc("No se encontro un cliente con el usuario: "+usuario);
+		}
+	}
+	
 	public String validarYVerificarCliente(String idCliente, String usuario, String contrasena, int dni, String cuil,
             String nombre, String apellido, String sexo, int nacionalidad,
             String fechaNacStr, String direccion, int localidad, int provincia,
