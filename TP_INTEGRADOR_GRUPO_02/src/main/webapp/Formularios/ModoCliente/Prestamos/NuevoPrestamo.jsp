@@ -4,6 +4,7 @@
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="java.util.List" %>
+<%@ page import="entidades.Cuenta" %>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -104,14 +105,29 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>123321</td><td>Cuenta Corriente</td><td>75847261947</td>
-                    <td>$15000</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm">Editar</button>
-                    </td>
-                </tr>
-            </tbody>
+			    <%
+			        List<Cuenta> listaCuentas = (List<Cuenta>) request.getAttribute("cuentas");
+			        if (listaCuentas != null && !listaCuentas.isEmpty()) {
+			            for (Cuenta c : listaCuentas) {
+			    %>
+			        <tr>
+			            <td><%= c.getNumeroCuenta() %></td>
+			            <td><%= c.getTipoCuentaCuenta() %></td>
+			            <td><%= c.getCbuCuenta() %></td>
+			            <td>$<%= c.getSaldoCuenta() %></td>
+			            <td><button class="btn btn-success btn-sm">Usar</button></td>
+			        </tr>
+			    <%
+			            }
+			        } else {
+			    %>
+			        <tr>
+			            <td colspan="5">No se encontraron cuentas para mostrar.</td>
+			        </tr>
+			    <%
+			        }
+			    %>
+			</tbody>
         </table>
     </div>
 

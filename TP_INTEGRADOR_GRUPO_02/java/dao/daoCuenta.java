@@ -207,11 +207,10 @@ public class daoCuenta {
 	 }
 	 
 	 public List<Cuenta> obtenerCuentasPorCliente(int idCliente) {
-		    System.out.println("daoCuenta - obtenerCuentasPorCliente - ID Cliente: " + idCliente);
 		    List<Cuenta> cuentas = new ArrayList<>();
 
 		    String query = "SELECT c.Numero_Cuenta, c.CBU_Cuenta, c.Saldo_Cuenta, t.Descripcion_TipoCuenta " +
-		                   "FROM Cuentas c " +
+		                   "FROM Cuenta c " +
 		                   "INNER JOIN TipoCuenta t ON c.IdTipoCuenta_Cuenta = t.IdTipoCuenta " +
 		                   "WHERE c.IdCliente_Cuenta = ?";
 
@@ -235,7 +234,6 @@ public class daoCuenta {
 		        e.printStackTrace(); 
 		    }
 
-		    System.out.println("daoCuenta - obtenerCuentasPorCliente - Cuentas encontradas: " + cuentas.size());
 		    return cuentas;
 		}
 

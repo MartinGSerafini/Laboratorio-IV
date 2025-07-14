@@ -35,7 +35,6 @@ public class NuevoPrestamoServlet extends HttpServlet {
 					
 			NegocioCuenta negocioCuenta = new NegocioCuenta();
 			List<Cuenta> cuentas = negocioCuenta.obtenerCuentasPorCliente(idCliente);
-			System.out.println("Cuentas del cliente: " + cuentas);
 			
 			request.setAttribute("cuentas", cuentas);
 			
