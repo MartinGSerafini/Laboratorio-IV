@@ -92,8 +92,7 @@
               </tr>
             </thead>
             <tbody>
-              <%
-              ArrayList<Movimiento> listaMov = null;
+              <% ArrayList<Movimiento> listaMov = null;
               listaMov = (ArrayList<Movimiento>) request.getAttribute("ListaMovimientos");
               if(listaMov != null){
             	  for(Movimiento m : listaMov){%>
@@ -107,10 +106,16 @@
             		  if(m.getIdCuentaDestinoMov()== null){%>
             			  <td>-</td>
             		  <%}else{%>
-            			  <td><%=m.getIdCuentaDestinoMov() %></td>
+            			  <td><%=m.getCbuCuentaDestino() %></td>
             		  <%}%>
             		  <td>$<%=m.getImporteMov() %></td>
-            		  <td><%=m.getDetalleMov() %></td>
+            		  <% if(m.getIdTipoMovMov() == 4 && m.getCbuCuentaDestino().equals(cbu)){%>
+            			  <td>Depósito de dinero</td>
+            		  <%} else if(m.getIdTipoMovMov() == 4 && !m.getCbuCuentaDestino().equals(cbu)){%>
+            			  <td>Extracción de dinero</td>
+            		  <%} else{%>
+            			  <td><%=m.getDetalleMov() %></td>
+            		  <%} %>
             		  </tr>
             	  <%}
               }

@@ -9,6 +9,7 @@ public class Movimiento {
     private int idTipoMovMov;
     private String descTipoMov;
     private String idCuentaDestinoMov;
+    private String cbuCuentaDestino;
 
     // Constructor por defecto
     public Movimiento() {}
@@ -77,4 +78,14 @@ public class Movimiento {
     public void setIdCuentaDestinoMov(String idCuentaDestinoMov) {
         this.idCuentaDestinoMov = idCuentaDestinoMov;
     }
+
+	public String getCbuCuentaDestino() {
+		return cbuCuentaDestino;
+	}
+
+	public void setCbuCuentaDestino(String cbuCuentaDestino) {
+		this.cbuCuentaDestino = cbuCuentaDestino;
+	}
+    
+    
 }
