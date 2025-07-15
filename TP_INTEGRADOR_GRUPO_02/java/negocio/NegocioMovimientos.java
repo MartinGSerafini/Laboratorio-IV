@@ -14,4 +14,7 @@ public class NegocioMovimientos {
 		
 	}
 	
+	public boolean registrarMovimiento(int idCuenta, BigDecimal importe, int idTipoMovimiento, String detalle) {
+		return daoMovimientos.registrarMovimiento(idCuenta, importe, idTipoMovimiento, detalle);
+	}
 }

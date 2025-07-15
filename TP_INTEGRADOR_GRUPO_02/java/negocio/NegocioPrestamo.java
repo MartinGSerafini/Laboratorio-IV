@@ -44,5 +44,8 @@ public class NegocioPrestamo {
 		}
 		return false;
 	}
-
+	
+	public boolean registrarPrestamo(Prestamo prestamo) {
+		return daoPrestamo.registrarPrestamo(prestamo);
+	}
 }

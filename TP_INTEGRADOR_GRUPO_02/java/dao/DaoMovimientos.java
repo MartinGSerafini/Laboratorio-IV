@@ -3,8 +3,10 @@ package dao;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class DaoMovimientos {
+	
 	public boolean registrarMovimientoTransferencia(int idCuentaOrigen, int idCuentaDestino, BigDecimal importe, String detalle) {
 	    Connection conn = null;
 	    PreparedStatement stmt = null;
@@ -32,6 +34,32 @@ public class DaoMovimientos {
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
+	    }
+	}
+	
+	//funcion genérica, sirve para registrar cualquier tipo de movimiento
+	public boolean registrarMovimiento(int idCuenta, BigDecimal importe, int idTipoMovimiento, String detalle) {
+	    String sql = "INSERT INTO MOVIMIENTO (idCuenta_mov, fecha_mov, detalle_mov, importe_mov, idTipoMov_mov) " +
+	                 "VALUES (?, CURRENT_DATE, ?, ?, ?)";
+
+	    try (Connection conn = Conexion.getConexion();
+	         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+	        ps.setInt(1, idCuenta);
+	        ps.setString(2, detalle); 
+	        ps.setBigDecimal(3, importe);
+	        ps.setInt(4, idTipoMovimiento); 
+
+	        int filasAfectadas = ps.executeUpdate();
+	        
+			        if(filasAfectadas > 0) {System.out.println("Movimiento de préstamo registrado correctamente.");} 
+			        else {System.out.println("No se pudo registrar el movimiento de préstamo.");}
+	        
+	        return filasAfectadas > 0;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
 	    }
 	}
 

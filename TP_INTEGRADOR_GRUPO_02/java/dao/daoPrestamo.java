@@ -1,5 +1,6 @@
 package dao;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -130,5 +131,36 @@ public class daoPrestamo {
         }
         return columnas;
     }
+	
+	public boolean registrarPrestamo(Prestamo prestamo) {
+	    String sql = "INSERT INTO PRESTAMO (" +
+	                 "idCliente_pres, fechaSolicitud_pres, importeSolicitado_pres, " +
+	                 "importeTotal_pres, plazoMeses_pres, montoCuota_pres, estado_pres, idCuentaDeposito_pres) " +
+	                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+	    try (Connection conn = Conexion.getConexion();
+	         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+	        ps.setInt(1, prestamo.getIdClientePres());
+	        ps.setDate(2, prestamo.getFechaSolicitudPres()); 
+	        ps.setBigDecimal(3, prestamo.getImporteSolicitadoPres());
+	        ps.setBigDecimal(4, prestamo.getImporteTotalPres());
+	        ps.setInt(5, prestamo.getPlazoMesesPres());
+	        ps.setBigDecimal(6, prestamo.getMontoCuotaPres());
+	        ps.setInt(7, prestamo.getEstadoPres().getId()); 
+	        ps.setString(8, prestamo.getIdCuentaDepositoPres());
+
+	        int filasAfectadas = ps.executeUpdate();
+	        return filasAfectadas > 0;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
+
+	
+
 
 }

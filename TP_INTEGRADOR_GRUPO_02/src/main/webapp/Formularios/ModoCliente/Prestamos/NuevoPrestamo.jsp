@@ -83,9 +83,6 @@
                 for (Map.Entry<Integer, Double> entry : cuotas.entrySet()) {
                     int numeroCuotas = entry.getKey();
                     double valorCuota = entry.getValue();
-        %>
-                    <a href="#" class="btn" onclick="mostrarCuentas()">Pagar en <%= numeroCuotas %> cuotas de <%= formatter.format(valorCuota) %></a>
-        <%
                 }
             }
         %>

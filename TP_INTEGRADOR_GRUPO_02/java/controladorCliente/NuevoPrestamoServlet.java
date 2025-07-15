@@ -16,6 +16,7 @@ import entidades.Cuenta;
 import entidades.Prestamo;
 import negocio.NegocioCliente;
 import negocio.NegocioCuenta;
+import negocio.NegocioMovimientos;
 
 
 @WebServlet("/NuevoPrestamoServlet")
@@ -59,7 +60,11 @@ public class NuevoPrestamoServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		NegocioMovimientos negocioMovimientos = new NegocioMovimientos();
+		
+		
+		
 		doGet(request, response);
 	}
 
