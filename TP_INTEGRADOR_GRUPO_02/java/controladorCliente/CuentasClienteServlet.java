@@ -32,10 +32,10 @@ public class CuentasClienteServlet extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession(false);  // false para no crear nueva si no existe
+		HttpSession session = request.getSession(false);
 		Cliente cliente = new Cliente();
 		if (session != null) {
-		    String usuarioCliente = (String) session.getAttribute("nombreUsuario");
+		    String usuarioCliente = (String) session.getAttribute("ClienteLogueado");
 		    NegocioCliente negocioCliente = new NegocioCliente();
 		    cliente = negocioCliente.obtenerCliente(usuarioCliente);
 		}
@@ -46,14 +46,14 @@ public class CuentasClienteServlet extends HttpServlet {
 		if(request.getParameter("btnVerHistorial") != null) {
 			String id = request.getParameter("idCuenta");
 			String cbu = request.getParameter("cbuCuenta");
-			request.setAttribute("CbuCuenta", cbu); //setea el cbu para mostrarlo
+			request.setAttribute("CbuCuenta", cbu);
 			NegocioMovimiento negocioMovimiento = new NegocioMovimiento();
 			listaMovimientos = negocioMovimiento.obtenerMovimientosPorCuenta(id);
 			request.setAttribute("ListaMovimientos", listaMovimientos);
 			request.setAttribute("AbrirModal", true);
 		}
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/Formularios/ModoCliente/Cuentas.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/Formularios/ModoCliente/Cuentas/Cuentas.jsp");
 		rd.forward(request, response); 
 	}
 

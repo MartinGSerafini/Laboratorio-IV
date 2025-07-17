@@ -25,15 +25,19 @@ public class InfoPersonalClienteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		String usuario = (String) session.getAttribute("nombreUsuario");
+		String usuario = (String) session.getAttribute("ClienteLogueado");
 		
 		Cliente cliente = new Cliente();
 		NegocioCliente negocio = new NegocioCliente();
 		
 		cliente = negocio.obtenerCliente(usuario);
-		
+		if (cliente == null) {
+		    System.out.println("No se encontró cliente para usuario: " + usuario);
+		} else {
+		    System.out.println("Cliente encontrado: " + cliente.getNombreCliente());
+		}
 		request.setAttribute("cliente", cliente);
-		RequestDispatcher rd = request.getRequestDispatcher("Formularios/ModoCliente/InformacionPersonal.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("Formularios/ModoCliente/InformacionPersonal/InformacionPersonal.jsp");
         rd.forward(request, response);
 		
 	}

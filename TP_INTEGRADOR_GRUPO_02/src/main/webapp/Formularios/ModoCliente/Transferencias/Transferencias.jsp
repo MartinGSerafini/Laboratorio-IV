@@ -9,7 +9,7 @@
     <title>Transferencias</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ModoClienteCSS/Transferencias.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ModoClienteCSS/Transferencias/Transferencias.css">
 
     <script>
         function toggleSidebar() {
@@ -19,20 +19,29 @@
     </script>
 </head>
 <body>
-<div class="navbar">
-    <div class="menu-toggle" onclick="toggleSidebar()">☰</div>
-    <div class="user-info">
-        <%= session.getAttribute("nombreUsuario") != null ? session.getAttribute("nombreUsuario") : "INVITADO" %>
-    </div>
-</div>
 
-<div id="sidebar" class="sidebar">
-    <a href="${pageContext.request.contextPath}/InfoPersonalClienteServlet">Informacion Personal</a>
-    <a href="${pageContext.request.contextPath}/CuentasClienteServlet">Cuentas</a>
-    <a href="Prestamos/NuevoPrestamo.jsp">Nuevo Prestamo</a>
-    <a href="Prestamos/PagarPrestamo.jsp">Pagar Prestamos</a>
-    <a href="${pageContext.request.contextPath}/Formularios/Login/IngresoCliente.jsp">Cerrar Sesion</a>
-</div>
+<nav class="navbar navbar-expand-lg navbar-custom px-4">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center">
+            <div class="dropdown me-3">
+                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    ☰
+                </button>      
+                <ul class="dropdown-menu">
+           			 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/InfoPersonalClienteServlet">Informacion Personal</a></li>
+           			 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/CuentasClienteServlet">Cuentas</a></li>
+           			 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/TransferenciasClienteServlet">Transferir Dinero</a></li>
+           			 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/NuevoPrestamoServlet">Nuevo Prestamo</a></li>
+           			 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/PagarPrestamoServlet">Pagar Prestamo</a></li>
+					 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/Formularios/Login/InicioUsuario.jsp">Cerrar Sesion</a></li>
+				</ul>
+            </div>
+        </div>
+        <span class="navbar-text text-white">
+        <%= session.getAttribute("ClienteLogueado") != null ? session.getAttribute("ClienteLogueado") : "INVITADO" %>
+      </span>
+    </div>
+</nav>
 
 <!-- CONTENIDO -->
 <div class="container mt-5">

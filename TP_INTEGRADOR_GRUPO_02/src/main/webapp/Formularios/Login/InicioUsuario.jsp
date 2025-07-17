@@ -7,7 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../z-CSS/LoginCSS/InicioUsuario.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/LoginCSS/InicioUsuario.css">
+  
 </head>
 <body>
 

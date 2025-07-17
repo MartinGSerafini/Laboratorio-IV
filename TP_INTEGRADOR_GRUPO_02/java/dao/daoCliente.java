@@ -404,46 +404,48 @@ public class daoCliente {
 	    }
 
 	    public Cliente obtenerCliente(String usuario) {
-	    	String sql = "SELECT c.*, p.nombre_provincia, l.nombre_localidad, n.nombre_nacionalidad " +
-	                "FROM cliente c " +
-	                "LEFT JOIN provincia p ON c.provincia_cliente = p.id_provincia " +
-	                "LEFT JOIN localidad l ON c.localidad_cliente = l.id_localidad " +
-	                "LEFT JOIN nacionalidad n ON c.nacionalidad_cliente = n.id_nacionalidad " +
-	                "WHERE c.estado_cliente = 1 AND usuario_cliente = ?";
-	    	Cliente cliente = new Cliente();
-	    	try (Connection conn = Conexion.getConexion();
-	   	         PreparedStatement ps = conn.prepareStatement(sql)) {
-	   	        
-	   	        ps.setString(1, usuario);
+	        String sql = "SELECT c.*, p.nombre_provincia, l.nombre_localidad, n.nombre_nacionalidad " +
+	                     "FROM cliente c " +
+	                     "LEFT JOIN provincia p ON c.provincia_cliente = p.id_provincia " +
+	                     "LEFT JOIN localidad l ON c.localidad_cliente = l.id_localidad " +
+	                     "LEFT JOIN nacionalidad n ON c.nacionalidad_cliente = n.id_nacionalidad " +
+	                     "WHERE c.estado_cliente = 1 AND c.usuario_cliente = ?";
 
-	   	        try (ResultSet rs = ps.executeQuery()) {
-	   	        	if(rs.next()) {
-	   	        		cliente.setIdCliente(rs.getString("id_cliente"));
-	   	        		cliente.setDniCliente(rs.getInt("dni_cliente"));
-	   	        		cliente.setCuilCliente(rs.getString("cuil_cliente"));
-	   	        		cliente.setNombreCliente(rs.getString("nombre_cliente"));
-	   	        		cliente.setApellidoCliente(rs.getString("apellido_cliente"));
-						cliente.setSexoCliente(rs.getString("sexo_cliente"));
-						cliente.setNacionalidadCliente(rs.getInt("nacionalidad_cliente"));
-						cliente.setFechaNacCliente(rs.getDate("fechaNac_cliente"));
-						cliente.setDireccionCliente(rs.getString("direccion_cliente"));
-						cliente.setProvinciaCliente(rs.getInt("provincia_cliente"));
-						cliente.setLocalidadCliente(rs.getInt("localidad_cliente"));
-						cliente.setCorreoCliente(rs.getString("correo_cliente"));
-						cliente.setTelefonoCliente(rs.getString("telefono_cliente"));
-						cliente.setUsuarioCliente(rs.getString("usuario_cliente"));
-						cliente.setContrasenaaCliente(rs.getString("contraseña_cliente"));
-						cliente.setNombreProvincia(rs.getString("nombre_provincia"));
-						cliente.setNombreLocalidad(rs.getString("nombre_localidad"));
-						cliente.setNombreNacionalidad(rs.getString("nombre_nacionalidad"));
-	   	        	}
-	   	            
-	   	        }
+	        Cliente cliente = null;
+	        try (Connection conn = Conexion.getConexion();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-	   	    } catch (SQLException e) {
-	   	        e.printStackTrace();
-	   	    }
-	    	return cliente;
+	            ps.setString(1, usuario);
+
+	            try (ResultSet rs = ps.executeQuery()) {
+	                if (rs.next()) {
+	                    cliente = new Cliente();
+	                    cliente.setIdCliente(rs.getString("id_cliente"));
+	                    cliente.setDniCliente(rs.getInt("dni_cliente"));
+	                    cliente.setCuilCliente(rs.getString("cuil_cliente"));
+	                    cliente.setNombreCliente(rs.getString("nombre_cliente"));
+	                    cliente.setApellidoCliente(rs.getString("apellido_cliente"));
+	                    cliente.setSexoCliente(rs.getString("sexo_cliente"));
+	                    cliente.setNacionalidadCliente(rs.getInt("nacionalidad_cliente"));
+	                    cliente.setFechaNacCliente(rs.getDate("fechaNac_cliente"));
+	                    cliente.setDireccionCliente(rs.getString("direccion_cliente"));
+	                    cliente.setProvinciaCliente(rs.getInt("provincia_cliente"));
+	                    cliente.setLocalidadCliente(rs.getInt("localidad_cliente"));
+	                    cliente.setCorreoCliente(rs.getString("correo_cliente"));
+	                    cliente.setTelefonoCliente(rs.getString("telefono_cliente"));
+	                    cliente.setUsuarioCliente(rs.getString("usuario_cliente"));
+	                    cliente.setContrasenaaCliente(rs.getString("contraseña_cliente"));
+	                    cliente.setNombreProvincia(rs.getString("nombre_provincia"));
+	                    cliente.setNombreLocalidad(rs.getString("nombre_localidad"));
+	                    cliente.setNombreNacionalidad(rs.getString("nombre_nacionalidad"));
+	                }
+	            }
+
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+
+	        return cliente;
 	    }
 	    
 	    public int obtenerUltimoId() {

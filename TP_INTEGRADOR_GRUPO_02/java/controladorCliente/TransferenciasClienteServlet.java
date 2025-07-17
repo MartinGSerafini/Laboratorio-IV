@@ -29,11 +29,10 @@ public class TransferenciasClienteServlet extends HttpServlet {
 		
 		String cbu = request.getParameter("cbuInput");
 		    
-	    // Validar que el CBU no sea nulo ni vacío
 	    if (cbu == null || cbu.trim().isEmpty()) {
 	        request.setAttribute("error", "Debe ingresar un CBU para buscar la cuenta");
 	        cargarDatosVista(request, cbu);
-	        request.getRequestDispatcher("Formularios/ModoCliente/Transferencias.jsp").forward(request, response);
+	        request.getRequestDispatcher("Formularios/ModoCliente/Transferencias/Transferencias.jsp").forward(request, response);
 	        return;
 	    }
 
@@ -41,13 +40,13 @@ public class TransferenciasClienteServlet extends HttpServlet {
 	    Cuenta cuentaDestino = negocioCuenta.obtenerCuentaCBU(cbu);
 
 	    if (cuentaDestino.getCbuCuenta() == null) {
-	        request.setAttribute("error", "No se encontró ninguna cuenta con ese CBU");
-	        request.getRequestDispatcher("Formularios/ModoCliente/Transferencias.jsp").forward(request, response);
+	        request.setAttribute("error", "No se encontro ninguna cuenta con ese CBU");
+	        request.getRequestDispatcher("Formularios/ModoCliente/Transferencias/Transferencias.jsp").forward(request, response);
 	        return;
 	    }
 
 	    cargarDatosVista(request, cbu);
-		RequestDispatcher rd = request.getRequestDispatcher("Formularios/ModoCliente/Transferencias.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("Formularios/ModoCliente/Transferencias/Transferencias.jsp");
         rd.forward(request, response);
 		
 	}
@@ -56,17 +55,15 @@ public class TransferenciasClienteServlet extends HttpServlet {
 		
 		NegocioCuenta negocioCuenta = new NegocioCuenta();
 		
-		// Obtener parámetros del formulario
 		String cbuOrigen = request.getParameter("cbuOrigen");
         String cbuDestino = request.getParameter("cbuDestino");
         String montoStr = request.getParameter("monto");
         
  
-        // Validar inputs básicos
         if (cbuOrigen == null || cbuDestino == null || montoStr == null) {
             request.setAttribute("error", "Datos incompletos");
             cargarDatosVista(request, cbuDestino);
-            request.getRequestDispatcher("Formularios/ModoCliente/Transferencias.jsp").forward(request, response);
+            request.getRequestDispatcher("Formularios/ModoCliente/Transferencias/Transferencias.jsp").forward(request, response);
             return;
         }
 
@@ -74,41 +71,37 @@ public class TransferenciasClienteServlet extends HttpServlet {
         try {
             monto = new BigDecimal(montoStr);
         } catch (NumberFormatException e) {
-            request.setAttribute("error", "Monto inválido");
+            request.setAttribute("error", "Monto invalido");
             cargarDatosVista(request, cbuDestino);
-            request.getRequestDispatcher("Formularios/ModoCliente/Transferencias.jsp").forward(request, response);
+            request.getRequestDispatcher("Formularios/ModoCliente/Transferencias/Transferencias.jsp").forward(request, response);
             return;
         }
 
 
-        // Obtener cuenta origen
         Cuenta cuentaOrigen = negocioCuenta.obtenerCuentaCBU(cbuOrigen);
         
         if (cuentaOrigen == null){
-            request.setAttribute("error", "Cuenta de origen inválida");
+            request.setAttribute("error", "Cuenta de origen invalida");
             cargarDatosVista(request, cbuDestino);
-            request.getRequestDispatcher("Formularios/ModoCliente/Transferencias.jsp").forward(request, response);
+            request.getRequestDispatcher("Formularios/ModoCliente/Transferencias/Transferencias.jsp").forward(request, response);
             return;
         }
 
-        // Verificar saldo suficiente
         if (cuentaOrigen.getSaldoCuenta().compareTo(monto) < 0) {
             request.setAttribute("error", "Saldo insuficiente");
             cargarDatosVista(request, cbuDestino);
-            request.getRequestDispatcher("Formularios/ModoCliente/Transferencias.jsp").forward(request, response);
+            request.getRequestDispatcher("Formularios/ModoCliente/Transferencias/Transferencias.jsp").forward(request, response);
             return;
         }
 
-        // Obtener cuenta destino por CBU
         Cuenta cuentaDestino = negocioCuenta.obtenerCuentaCBU(cbuDestino);
         if (cuentaDestino == null){
-            request.setAttribute("error", "Cuenta de destino inválida");
+            request.setAttribute("error", "Cuenta de destino invalida");
             cargarDatosVista(request, cbuDestino);
-            request.getRequestDispatcher("Formularios/ModoCliente/Transferencias.jsp").forward(request, response);
+            request.getRequestDispatcher("Formularios/ModoCliente/Transferencias/Transferencias.jsp").forward(request, response);
             return;
         }
 
-        // Ejecutar transferencia
         boolean exito = negocioCuenta.realizarTransferencia(cuentaOrigen.getCbuCuenta(), cuentaDestino.getCbuCuenta(), monto);
         if (exito) {
         	NegocioMovimientos negocioMov = new NegocioMovimientos();
@@ -125,7 +118,7 @@ public class TransferenciasClienteServlet extends HttpServlet {
         
         
         cargarDatosVista(request, cbuDestino);
-        request.getRequestDispatcher("Formularios/ModoCliente/Transferencias.jsp").forward(request, response);
+        request.getRequestDispatcher("Formularios/ModoCliente/Transferencias/Transferencias.jsp").forward(request, response);
     }
 		
 	
@@ -145,7 +138,7 @@ public class TransferenciasClienteServlet extends HttpServlet {
 	    request.setAttribute("descTipoCuenta", descTipoCuenta);
 
 	    HttpSession session = request.getSession();
-	    String usuario = (String) session.getAttribute("nombreUsuario");
+	    String usuario = (String) session.getAttribute("ClienteLogueado");
 	    Cliente clienteLogueado = negocioCliente.obtenerCliente(usuario);
 	    ArrayList<Cuenta> cuentasCliente = negocioCuenta.cuentasXCliente(clienteLogueado.getIdCliente());
 	    request.setAttribute("cuentasCliente", cuentasCliente);

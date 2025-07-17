@@ -1,0 +1,74 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #ffffff 0%, #ffe6eb 100%);
+    color: black;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-custom {
+    background-color: #ec0000;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-custom .nav-link, 
+.navbar-custom .navbar-brand, 
+.navbar-custom .dropdown-toggle,
+.navbar-custom .navbar-text {
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.navbar-custom .btn {
+    padding: 6px 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid white;
+    background-color: white;
+    color: #ec0000;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.navbar-custom .btn:hover {
+    background-color: #ec0000;
+    color: white;
+    border-color: white;
+}
+
+
+.btn {
+    padding: 10px 20px;
+    border: 2px solid #ec0000;
+    background-color: white;
+    text-decoration: none;
+    color: #ec0000;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: #ec0000;
+    color: white;
+}
+
+.main-content h2, h2.text-center.text-danger {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 36px;
+    color: #ec0000;
+    margin-bottom: 30px;
+}
+
+.table-responsive.d-flex.justify-content-center {
+    max-width: 900px;
+    margin: 0 auto;
+}

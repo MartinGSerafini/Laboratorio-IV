@@ -27,9 +27,8 @@ public class NuevoPrestamoServlet extends HttpServlet {
 		
 		String accion = request.getParameter("accion");
 				
-			// --- Lógica para obtener el cliente y sus cuentas ---
 			HttpSession session = request.getSession();
-			String nombreUsuario = (String) session.getAttribute("nombreUsuario");
+			String nombreUsuario = (String) session.getAttribute("ClienteLogueado");
 			
 			NegocioCliente negocioCliente = new NegocioCliente();
 			int idCliente = negocioCliente.obtenerIdClientePorUsuario(nombreUsuario);
@@ -43,10 +42,8 @@ public class NuevoPrestamoServlet extends HttpServlet {
 		if ("seleccionarPrestamo".equals(accion)) {
 
 			
-			// --- Lógica para calcular y pasar las cuotas al JSP ---
-            double montoPrestamo = Double.parseDouble(request.getParameter("monto")); // Obtener el monto del préstamo seleccionado 
-            // Mapa para almacenar las cuotas y sus valores
-            LinkedHashMap<Integer, Double> cuotasDisponibles = new LinkedHashMap<>(); //clave: nro de cuotas, valor: monto de cada cuota
+            double montoPrestamo = Double.parseDouble(request.getParameter("monto")); 
+            LinkedHashMap<Integer, Double> cuotasDisponibles = new LinkedHashMap<>();
 
             cuotasDisponibles.put(4, montoPrestamo / 4);  
             cuotasDisponibles.put(6, montoPrestamo / 6);  

@@ -19,10 +19,6 @@ public class IngresoClienteServlet extends HttpServlet {
     public IngresoClienteServlet() {
         super();
     }
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    String usuario = request.getParameter("usuario");
@@ -34,8 +30,8 @@ public class IngresoClienteServlet extends HttpServlet {
 
 	        if (valido) {
 	        	HttpSession session = request.getSession();
-	            session.setAttribute("nombreUsuario", usuario);
-	            response.sendRedirect("Formularios/ModoCliente/MenuInicioCliente.jsp");
+	            session.setAttribute("ClienteLogueado", usuario);
+	            response.sendRedirect("Formularios/ModoCliente/Menu/MenuInicioCliente.jsp");
 	        } else {
 	            request.setAttribute("LoginError", true);
 	            RequestDispatcher rd = request.getRequestDispatcher("Formularios/Login/IngresoCliente.jsp");
