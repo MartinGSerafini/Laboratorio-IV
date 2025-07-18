@@ -47,6 +47,8 @@
     </div>
 </nav>
 
+
+
 <div class="main-content">
     <h2>Prestamos disponibles</h2>
     <div class="button-grid">
@@ -87,12 +89,15 @@
             if (cuotas != null) {
                 NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("es", "AR"));
                 for (Map.Entry<Integer, Double> entry : cuotas.entrySet()) {
-                    int numeroCuotas = entry.getKey();
-                    double valorCuota = entry.getValue();
-                }
-            }
-        %>
-    </div>
+                	 int numeroCuotas = entry.getKey();
+                     double valorCuota = entry.getValue();
+         %>
+                     <a href="#" class="btn" onclick="mostrarCuentas()">Pagar en <%= numeroCuotas %> cuotas de <%= formatter.format(valorCuota) %></a>
+         <%
+                 }
+             }
+         %>
+      </div>
 </div>
 
 <!-- Cuentas Disponibles -->

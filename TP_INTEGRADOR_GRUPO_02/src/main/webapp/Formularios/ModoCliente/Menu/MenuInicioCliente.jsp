@@ -46,7 +46,7 @@
     	<a href="${pageContext.request.contextPath}/InfoPersonalClienteServlet" class="btn big-btn">INFORMACION PERSONAL</a>
         <a href="${pageContext.request.contextPath}/CuentasClienteServlet" class="btn big-btn">CUENTAS</a>
         <a href="${pageContext.request.contextPath}/TransferenciasClienteServlet" class="btn big-btn">TRASFERIR DINERO</a>
-        <a href="${pageContext.request.contextPath}/NuevoPrestamoServlet" class="btn big-btn">NUEVO PRESTAMO</a>
+        <a href="${pageContext.request.contextPath}/Formularios/ModoCliente/Prestamos/NuevoPrestamo.jsp" class="btn big-btn">NUEVO PRESTAMO</a>
         <a href="${pageContext.request.contextPath}/TransferenciasClienteServlet" class="btn big-btn">PAGAR PRESTAMOS</a>
     </div>
 </div>
