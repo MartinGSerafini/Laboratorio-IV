@@ -1,6 +1,8 @@
 package controladorCliente;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -58,10 +60,31 @@ public class NuevoPrestamoServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		NegocioMovimientos negocioMovimientos = new NegocioMovimientos();
-		
-		
-		
+		String accion = request.getParameter("accion");
+		if ("aceptar".equals(accion)){
+			
+			//datos traidos del fromulario
+			String numeroCuenta = request.getParameter("cuentaSeleccionada");
+			BigDecimal montoPrestamo = new BigDecimal(request.getParameter("montoPrestamo"));
+			int cuotas = Integer.parseInt(request.getParameter("cuotasSeleccionadas"));
+			BigDecimal montoPorCuota = new BigDecimal(request.getParameter("montoCuotaSeleccionada"));
+			Date fechaActual = new Date(System.currentTimeMillis());
+			
+			//obtener id del cliente logueado
+			HttpSession session = request.getSession();
+			String nombreUsuario = (String) session.getAttribute("ClienteLogueado");
+			
+			NegocioCliente negocioCliente = new NegocioCliente();
+			int idCliente = negocioCliente.obtenerIdClientePorUsuario(nombreUsuario);
+			
+			//obtener cuenta meidante id
+			//armar la entidad prestamo
+			//registrar prestamo
+			//registrar movimiento
+			 
+			//mostrar mensaje de éxito
+			
+		}
 		doGet(request, response);
 	}
 

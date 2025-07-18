@@ -48,7 +48,7 @@
 </nav>
 
 
-
+<!-- prestamos disponibles -->
 <div class="main-content">
     <h2>Prestamos disponibles</h2>
     <div class="button-grid">
@@ -76,7 +76,7 @@
     </div>
 </div>
 
-
+<!-- cuotas disponibles -->
 <div class="main-content" id="cuotasSection" 
     <% if (request.getAttribute("cuotasDisponibles") == null) { %>
         style="display: none;"
@@ -158,11 +158,71 @@
     }
 </script>
 
-
+<!--  
 <div class="main-content">
         <a href="#" class="btn">Aceptar</a>
         <a href="#" class="btn">Cancelar</a>
 </div>
+-->
+
+<div class="main-content">
+	<form id="datosPrestamo" action="${pageContext.request.contextPath}/NuevoPrestamoServlet" method="post">
+	    <input type="hidden" name="accion" value="Aceptar">
+	    <input type="hidden" name="cuentaSeleccionada" id="cuentaSeleccionada">
+	    <input type="hidden" name="montoPrestamo" value="${monto}">
+	    <input type="hidden" name="cuotasSeleccionadas" id="cuotasSeleccionadas">
+	    <input type="hidden" name="montoCuotaSeleccionada" id="montoCuotaSeleccionada">
+	    
+	    <button type="button" class="btn" onclick="abrirModalConfirmacion()" >Aceptar</button>
+	    <a href="${pageContext.request.contextPath}/MenuClienteServlet" class="btn">Cancelar</a>
+	</form>
+</div>
+
+<!-- Modal Confirmación -->
+<div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="modalConfirmacionLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="modalErrorLabel">Confirmar Prestamo</h5>
+      </div>
+      <div class="modal-body">
+			¿Desea confirmar la solicitud del préstmao?
+      </div>
+      <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        	<button type="button" class="btn btn-danger" onclick="confirmarPrestamo()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Éxito -->
+<div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="modalExitoLabel">Éxito</h5>
+      </div>
+      <div class="modal-body">
+			Prestamo solicitado con éxito.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="document.getElementById('formReset').submit();">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Script para manejar el modal de confirmacion -->
+<script>
+    function abrirModalConfirmacion() {
+        document.getElementById("modalConfirmacion").style.display = "block";
+    }
+
+    function confrimarPrestamo() {
+        document.getElementById("datosPrestamo").submit();
+    }
+</script>
 
 
 <!-- Bootstrap Bundle -->
