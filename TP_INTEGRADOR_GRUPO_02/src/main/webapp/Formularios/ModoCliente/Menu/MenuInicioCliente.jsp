@@ -47,7 +47,7 @@
         <a href="${pageContext.request.contextPath}/CuentasClienteServlet" class="btn big-btn">CUENTAS</a>
         <a href="${pageContext.request.contextPath}/TransferenciasClienteServlet" class="btn big-btn">TRASFERIR DINERO</a>
         <a href="${pageContext.request.contextPath}/NuevoPrestamoServlet" class="btn big-btn">NUEVO PRESTAMO</a>
-        <a href="${pageContext.request.contextPath}/TransferenciasClienteServlet" class="btn big-btn">PAGAR PRESTAMOS</a>
+        <a href="${pageContext.request.contextPath}/NuevoPrestamoServlet" class="btn big-btn">PAGAR PRESTAMOS</a>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
