@@ -1,95 +1,74 @@
 body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #ffffff 0%, #ffe6eb 100%);
-            color: black;
-            margin: 0;
-            padding: 0;
-        }
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #ffffff 0%, #ffe6eb 100%);
+    color: black;
+    margin: 0;
+    padding: 0;
+}
 
-        .navbar {
-            background-color: #ec0000;
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-            font-size: 18px;
-        }
+.navbar-custom {
+    background-color: #ec0000;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-        .menu-toggle {
-            cursor: pointer;
-            font-size: 28px;
-            color: white;
-        }
+.navbar-custom .nav-link, 
+.navbar-custom .navbar-brand, 
+.navbar-custom .dropdown-toggle,
+.navbar-custom .navbar-text {
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
 
-        .user-info {
-            font-size: 18px;
-            font-weight: 600;
-            color: white;
-        }
+.navbar-custom .btn {
+    padding: 6px 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid white;
+    background-color: white;
+    color: #ec0000;
+    border-radius: 6px;
+    transition: 0.3s;
+}
 
-        .sidebar {
-            position: absolute;
-            top: 60px;
-            left: 10px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 15px;
-            display: none;
-            z-index: 1;
-        }
+.navbar-custom .btn:hover {
+    background-color: #ec0000;
+    color: white;
+    border-color: white;
+}
 
-        .sidebar a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: #ec0000;
-            font-weight: 600;
-            font-size: 16px;
-        }
 
-        .sidebar a:hover {
-            background-color: #f2f2f2;
-        }
+.btn {
+    padding: 10px 20px;
+    border: 2px solid #ec0000;
+    background-color: white;
+    text-decoration: none;
+    color: #ec0000;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
 
-        .main-content {
-            text-align: center;
-            padding: 60px 20px;
-        }
+.btn:hover {
+    background-color: #ec0000;
+    color: white;
+}
 
-        .main-content h2 {
-            font-size: 36px;
-            color: #ec0000;
-            margin-bottom: 30px;
-        }
+.main-content h2, h2.text-center.text-danger {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 36px;
+    color: #ec0000;
+    margin-bottom: 30px;
+}
 
-        .button-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 200px);
-            gap: 30px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-
-        .btn {
-            padding: 25px 30px;
-            border: 2px solid #ec0000;
-            background-color: white;
-            text-decoration: none;
-            color: #ec0000;
-            font-weight: 600;
-            font-size: 20px;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #ec0000;
-            color: white;
-        }
-        .btn:focus, .btn:active {
-            background-color: #ec0000; 
-            color: white;
-            outline: none;
-        }
-        
+.table-responsive.d-flex.justify-content-center {
+    max-width: 900px;
+    margin: 0 auto;
+}

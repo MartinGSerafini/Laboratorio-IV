@@ -1,17 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List" %>
-<%@ page import="entidades.Cuenta" %>
+<%@ page import="java.util.List, entidades.Cuenta, java.text.NumberFormat, java.util.Locale" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Nuevo Préstamo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ModoClienteCSS/Prestamos/Prestamos.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ModoClienteCSS/Prestamos/Prestamos.css" />
 </head>
-
 <body>
 <nav class="navbar navbar-expand-lg navbar-custom px-4">
     <div class="container-fluid">
@@ -34,18 +31,19 @@
     </div>
 </nav>
 
-
-<!-- prestamos disponibles -->
 <div class="main-content">
-    <h2>Solicitar un préstamo</h2>
-    <form action="${pageContext.request.contextPath}/NuevoPrestamoServlet" method="get" class="d-flex flex-column align-items-center">
-        <input type="hidden" name="accion" value="seleccionarPrestamo">
+    <h2 class="text-center text-danger mb-4">Solicitar un préstamo</h2>
+    <form id="formPrestamo" action="${pageContext.request.contextPath}/NuevoPrestamoServlet" method="post" class="d-flex flex-column align-items-center">
+        <input type="hidden" name="accion" value="Aceptar" />
+        <input type="hidden" name="cuentaSeleccionada" id="cuentaSeleccionada" />
+        <input type="hidden" name="cuotasSeleccionadas" id="cuotasSeleccionadas" />
+        <input type="hidden" name="montoCuotaSeleccionada" id="montoCuotaSeleccionada" />
+        <input type="hidden" name="montoPrestamo" id="montoPrestamo" value="" />
 
         <div class="d-flex gap-3 mb-3">
-            <!-- Select de montos -->
             <div>
                 <label for="monto" class="form-label">Monto:</label>
-                <select class="form-select" name="monto" id="monto" required onchange="habilitarCuotas()">
+                <select class="form-select" name="monto" id="monto" required>
                     <option value="" disabled selected>Seleccioná un monto</option>
                     <option value="80000">$80.000</option>
                     <option value="90000">$90.000</option>
@@ -54,216 +52,169 @@
                 </select>
             </div>
 
-            <!-- Select de cuotas -->
             <div>
-                <label for="cuota" class="form-label">Cuotas:</label>
-                <select class="form-select" name="cuota" id="cuota" required disabled onchange="mostrarValorCuota()">
-                
+                <label for="cuotas" class="form-label">Cuotas:</label>
+                <select class="form-select" id="cuotas" required disabled>
                     <option value="" disabled selected>Seleccioná un plan</option>
-                    <option value="4">4 cuotas</option>
-                    <option value="6">6 cuotas</option>
-                    <option value="8">8 cuotas</option>
-                    <option value="12">12 cuotas</option>
+                    <option value="4">4 cuotas (5%)</option>
+                    <option value="6">6 cuotas (7%)</option>
+                    <option value="8">8 cuotas (10%)</option>
+                    <option value="12">12 cuotas (15%)</option>
                 </select>
-                <small id="valorCuotaTexto" class="text-muted mt-1 d-block"></small>
             </div>
         </div>
-
-        <button type="submit" class="btn btn-primary">Solicitar préstamo</button>
     </form>
 </div>
 
+<div class="container mt-5" id="cuentasSection">
+    <div class="text-center mb-4 fw-semibold fs-5">
+        <small id="valorCuotaTexto" class="d-block text-dark"></small>
+    </div>
 
-<div class="container mt-5" id="cuentasSection"
-     style="<%= request.getAttribute("cuentas") == null ? "display: none;" : "" %>">
-
-
-<!-- cuotas disponibles -->
-<div class="main-content" id="cuotasSection" 
-    <% if (request.getAttribute("cuotasDisponibles") == null) { %>
-        style="display: none;"
-    <% } %>
->
-    <h2>Cuotas disponibles para el préstamo </h2>
-    <div class="button-grid">
-        <% 
-            LinkedHashMap<Integer, Double> cuotas = (LinkedHashMap<Integer, Double>) request.getAttribute("cuotasDisponibles");
-            if (cuotas != null) {
-                NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("es", "AR"));
-                for (Map.Entry<Integer, Double> entry : cuotas.entrySet()) {
-                	 int numeroCuotas = entry.getKey();
-                     double valorCuota = entry.getValue();
-         %>
-                     <a href="#" class="btn" onclick="mostrarCuentas()">Pagar en <%= numeroCuotas %> cuotas de <%= formatter.format(valorCuota) %></a>
-         <%
-                 }
-             }
-         %>
-      </div>
-</div>
-
-<!-- Cuentas Disponibles -->
-<div class="container mt-5" id="cuentasSection" style="display: none;">
-
-    <h3 class="text-center mb-4 text-danger">Cuenta a seleccionar</h3>
+    <h3 class="text-center mb-4 text-danger">Seleccione la cuenta para recibir el préstamo</h3>
     <div class="table-responsive d-flex justify-content-center">
         <table class="table table-striped table-bordered text-center w-auto">
             <thead class="table-light">
-            <tr>
-                <th>Nro Cuenta</th><th>Tipo</th>
-                <th>CBU</th><th>Saldo</th><th></th>
-            </tr>
+                <tr>
+                    <th>Nro Cuenta</th>
+                    <th>Tipo</th>
+                    <th>CBU</th>
+                    <th>Saldo</th>
+                    <th>Seleccionar</th>
+                </tr>
             </thead>
             <tbody>
-            <%
+                <%
                 List<Cuenta> listaCuentas = (List<Cuenta>) request.getAttribute("cuentas");
                 if (listaCuentas != null && !listaCuentas.isEmpty()) {
+                    NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("es", "AR"));
                     for (Cuenta c : listaCuentas) {
-            %>
+                %>
                 <tr>
                     <td><%= c.getNumeroCuenta() %></td>
                     <td><%= c.getTipoCuentaCuenta() %></td>
                     <td><%= c.getCbuCuenta() %></td>
-                    <td>$<%= c.getSaldoCuenta() %></td>
-                    <td><button class="btn btn-success btn-sm">Usar</button></td>
+                    <td><%= formatter.format(c.getSaldoCuenta()) %></td>
+                    <td>
+                        <button type="button" class="btn btn-success btn-sm" id="btn-<%= c.getNumeroCuenta() %>" onclick="seleccionarCuenta('<%= c.getNumeroCuenta() %>')">Usar</button>
+                    </td>
                 </tr>
-            <%
+                <%
                     }
                 } else {
-            %>
+                %>
                 <tr>
                     <td colspan="5">No se encontraron cuentas para mostrar.</td>
                 </tr>
-            <%
+                <%
                 }
-            %>
+                %>
             </tbody>
         </table>
     </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <button type="button" class="btn btn-primary" id="btnSeleccionar" disabled onclick="enviarFormulario()">Solicitar préstamo</button>
+    </div>
 </div>
 
-<!-- JavaScript -->
 <script>
-function habilitarCuotas() {
+document.addEventListener("DOMContentLoaded", function () {
     const montoSelect = document.getElementById("monto");
-    const cuotasSelect = document.getElementById("cuota");
+    const cuotasSelect = document.getElementById("cuotas");
+    const btnSeleccionar = document.getElementById("btnSeleccionar");
     const valorCuotaTexto = document.getElementById("valorCuotaTexto");
+    const cuentaSeleccionadaInput = document.getElementById("cuentaSeleccionada");
 
-    if (montoSelect.value) {
+    let cuentaActual = null;
+
+    function actualizarBoton() {
+        const monto = montoSelect.value;
+        const cuotas = cuotasSelect.value;
+        const cuenta = cuentaSeleccionadaInput.value;
+        btnSeleccionar.disabled = !(monto && cuotas && cuenta);
+    }
+
+    montoSelect.addEventListener("change", function () {
         cuotasSelect.disabled = false;
-    } else {
-        cuotasSelect.disabled = true;
         cuotasSelect.value = "";
         valorCuotaTexto.textContent = "";
-    }
-}
+        cuentaSeleccionadaInput.value = "";
+        btnSeleccionar.disabled = true;
+        if(cuentaActual){
+            const prevBtn = document.getElementById("btn-" + cuentaActual);
+            if(prevBtn){
+                prevBtn.classList.remove("btn-danger");
+                prevBtn.classList.add("btn-success");
+            }
+            cuentaActual = null;
+        }
+    });
 
-function mostrarValorCuota() {
-    const montoSelect = document.getElementById("monto");
-    const cuotasSelect = document.getElementById("cuota");
-    const valorCuotaTexto = document.getElementById("valorCuotaTexto");
+    cuotasSelect.addEventListener("change", function () {
+        const monto = parseFloat(montoSelect.value);
+        const cuotas = parseInt(cuotasSelect.value);
 
-    const monto = parseFloat(montoSelect.value);
-    const cuotas = parseInt(cuotasSelect.value);
+        if (!isNaN(monto) && !isNaN(cuotas)) {
+            let recargo = 0;
+            switch (cuotas) {
+                case 4: recargo = 0.05; break;
+                case 6: recargo = 0.07; break;
+                case 8: recargo = 0.10; break;
+                case 12: recargo = 0.15; break;
+            }
 
-    console.log("Monto:", monto, "Cuotas:", cuotas);
+            const totalConRecargo = monto * (1 + recargo);
+            const valorCuota = totalConRecargo / cuotas;
 
-    if (!isNaN(monto) && !isNaN(cuotas) && cuotas > 0) {
-        const valorCuota = monto / cuotas;
-        console.log("Valor cuota calculado:", valorCuota);
-
-        let valorCuotaFormateado = "";
-
-        try {
-            valorCuotaFormateado = valorCuota.toLocaleString("es-AR", {
+            const texto = `Total a devolver: ${totalConRecargo.toLocaleString("es-AR", {
                 style: "currency",
-                currency: "ARS",
-                minimumFractionDigits: 2
-            });
-        } catch (e) {
-            console.error("Error al formatear con toLocaleString:", e);
-            valorCuotaFormateado = "$" + valorCuota.toFixed(2).replace(".", ",");
+                currency: "ARS"
+            })}.<br>` +
+            `Serán ${cuotas} cuotas de ${valorCuota.toLocaleString("es-AR", {
+                style: "currency",
+                currency: "ARS"
+            })} cada una.`;
+
+            valorCuotaTexto.innerHTML = texto;
+
+            document.getElementById("montoPrestamo").value = totalConRecargo.toFixed(2);
+            document.getElementById("cuotasSeleccionadas").value = cuotas;
+            document.getElementById("montoCuotaSeleccionada").value = valorCuota.toFixed(2);
+
+            actualizarBoton();
+        } else {
+            valorCuotaTexto.textContent = "";
+            btnSeleccionar.disabled = true;
+        }
+    });
+
+    window.seleccionarCuenta = function(numeroCuenta) {
+        if (cuentaActual) {
+            const prevBtn = document.getElementById("btn-" + cuentaActual);
+            if (prevBtn) {
+                prevBtn.classList.remove("btn-danger");
+                prevBtn.classList.add("btn-success");
+            }
         }
 
-        valorCuotaTexto.textContent = `Valor cuota fija mensual: ${valorCuotaFormateado}`;
-        console.log("Texto actualizado a:", valorCuotaTexto.textContent);
-    } else {
-        valorCuotaTexto.textContent = "";
-        console.log("No se pudo calcular la cuota.");
-    }
-}
+        const botonNuevo = document.getElementById("btn-" + numeroCuenta);
+        if (botonNuevo) {
+            botonNuevo.classList.remove("btn-success");
+            botonNuevo.classList.add("btn-danger");
+        }
 
+        cuentaSeleccionadaInput.value = numeroCuenta;
+        cuentaActual = numeroCuenta;
+        actualizarBoton();
+    };
+
+    window.enviarFormulario = function() {
+        document.getElementById("formPrestamo").submit();
+    };
+});
 </script>
 
-
-<!--  
-<div class="main-content">
-        <a href="#" class="btn">Aceptar</a>
-        <a href="#" class="btn">Cancelar</a>
-</div>
--->
-
-<div class="main-content">
-	<form id="datosPrestamo" action="${pageContext.request.contextPath}/NuevoPrestamoServlet" method="post">
-	    <input type="hidden" name="accion" value="Aceptar">
-	    <input type="hidden" name="cuentaSeleccionada" id="cuentaSeleccionada">
-	    <input type="hidden" name="montoPrestamo" value="${monto}">
-	    <input type="hidden" name="cuotasSeleccionadas" id="cuotasSeleccionadas">
-	    <input type="hidden" name="montoCuotaSeleccionada" id="montoCuotaSeleccionada">
-	    
-	    <button type="button" class="btn" onclick="abrirModalConfirmacion()" >Aceptar</button>
-	    <a href="${pageContext.request.contextPath}/MenuClienteServlet" class="btn">Cancelar</a>
-	</form>
-</div>
-
-<!-- Modal Confirmación -->
-<div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="modalConfirmacionLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="modalErrorLabel">Confirmar Prestamo</h5>
-      </div>
-      <div class="modal-body">
-			¿Desea confirmar la solicitud del préstmao?
-      </div>
-      <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        	<button type="button" class="btn btn-danger" onclick="confirmarPrestamo()">Aceptar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Éxito -->
-<div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header bg-success text-white">
-        <h5 class="modal-title" id="modalExitoLabel">Éxito</h5>
-      </div>
-      <div class="modal-body">
-			Prestamo solicitado con éxito.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="document.getElementById('formReset').submit();">Aceptar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Script para manejar el modal de confirmacion -->
-<script>
-    function abrirModalConfirmacion() {
-        document.getElementById("modalConfirmacion").style.display = "block";
-    }
-
-    function confrimarPrestamo() {
-        document.getElementById("datosPrestamo").submit();
-    }
-</script>
-
-
-<!-- Bootstrap Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
