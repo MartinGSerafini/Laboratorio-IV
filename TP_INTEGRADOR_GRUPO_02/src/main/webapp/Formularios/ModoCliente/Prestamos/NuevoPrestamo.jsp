@@ -8,6 +8,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ModoClienteCSS/Prestamos/Prestamos.css" />
+    <style>
+        .btn-seleccionado {
+            background-color: #dc3545 !important;
+            color: white !important;
+            border-color: #dc3545 !important;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-custom px-4">
@@ -87,16 +94,15 @@
                 <%
                 List<Cuenta> listaCuentas = (List<Cuenta>) request.getAttribute("cuentas");
                 if (listaCuentas != null && !listaCuentas.isEmpty()) {
-                    NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("es", "AR"));
                     for (Cuenta c : listaCuentas) {
                 %>
                 <tr>
                     <td><%= c.getNumeroCuenta() %></td>
                     <td><%= c.getTipoCuentaCuenta() %></td>
                     <td><%= c.getCbuCuenta() %></td>
-                    <td><%= formatter.format(c.getSaldoCuenta()) %></td>
+                    <td><%= String.format("%.2f", c.getSaldoCuenta()) %></td>
                     <td>
-                        <button type="button" class="btn btn-success btn-sm" id="btn-<%= c.getNumeroCuenta() %>" onclick="seleccionarCuenta('<%= c.getNumeroCuenta() %>')">Usar</button>
+                        <button type="button" class="btn btn-success btn-sm" onclick="seleccionarCuenta(this, '<%= c.getNumeroCuenta() %>')">Usar</button>
                     </td>
                 </tr>
                 <%
@@ -126,28 +132,27 @@ document.addEventListener("DOMContentLoaded", function () {
     const valorCuotaTexto = document.getElementById("valorCuotaTexto");
     const cuentaSeleccionadaInput = document.getElementById("cuentaSeleccionada");
 
-    let cuentaActual = null;
+    let botonSeleccionado = null;
+
+    function formatearNumero(valor) {
+        return valor.toFixed(2);
+    }
 
     function actualizarBoton() {
-        const monto = montoSelect.value;
-        const cuotas = cuotasSelect.value;
-        const cuenta = cuentaSeleccionadaInput.value;
-        btnSeleccionar.disabled = !(monto && cuotas && cuenta);
+        btnSeleccionar.disabled = !(montoSelect.value && cuotasSelect.value && cuentaSeleccionadaInput.value);
     }
 
     montoSelect.addEventListener("change", function () {
         cuotasSelect.disabled = false;
         cuotasSelect.value = "";
-        valorCuotaTexto.textContent = "";
+        valorCuotaTexto.innerHTML = "";
         cuentaSeleccionadaInput.value = "";
         btnSeleccionar.disabled = true;
-        if(cuentaActual){
-            const prevBtn = document.getElementById("btn-" + cuentaActual);
-            if(prevBtn){
-                prevBtn.classList.remove("btn-danger");
-                prevBtn.classList.add("btn-success");
-            }
-            cuentaActual = null;
+
+        if (botonSeleccionado) {
+            botonSeleccionado.classList.remove("btn-seleccionado", "btn-danger");
+            botonSeleccionado.classList.add("btn-success");
+            botonSeleccionado = null;
         }
     });
 
@@ -167,16 +172,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const totalConRecargo = monto * (1 + recargo);
             const valorCuota = totalConRecargo / cuotas;
 
-            const texto = `Total a devolver: ${totalConRecargo.toLocaleString("es-AR", {
-                style: "currency",
-                currency: "ARS"
-            })}.<br>` +
-            `Serán ${cuotas} cuotas de ${valorCuota.toLocaleString("es-AR", {
-                style: "currency",
-                currency: "ARS"
-            })} cada una.`;
+            valorCuotaTexto.innerHTML = "Total a devolver: " + formatearNumero(totalConRecargo) + ".<br>" +
+            "Serán " + cuotas + " cuotas de " + formatearNumero(valorCuota) + " cada una.";
 
-            valorCuotaTexto.innerHTML = texto;
 
             document.getElementById("montoPrestamo").value = totalConRecargo.toFixed(2);
             document.getElementById("cuotasSeleccionadas").value = cuotas;
@@ -189,23 +187,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    window.seleccionarCuenta = function(numeroCuenta) {
-        if (cuentaActual) {
-            const prevBtn = document.getElementById("btn-" + cuentaActual);
-            if (prevBtn) {
-                prevBtn.classList.remove("btn-danger");
-                prevBtn.classList.add("btn-success");
-            }
+    window.seleccionarCuenta = function(boton, numeroCuenta) {
+        if (botonSeleccionado) {
+            botonSeleccionado.classList.remove("btn-seleccionado", "btn-danger");
+            botonSeleccionado.classList.add("btn-success");
         }
 
-        const botonNuevo = document.getElementById("btn-" + numeroCuenta);
-        if (botonNuevo) {
-            botonNuevo.classList.remove("btn-success");
-            botonNuevo.classList.add("btn-danger");
-        }
+        boton.classList.remove("btn-success");
+        boton.classList.add("btn-seleccionado");
+        boton.classList.add("btn-danger");
 
         cuentaSeleccionadaInput.value = numeroCuenta;
-        cuentaActual = numeroCuenta;
         actualizarBoton();
     };
 

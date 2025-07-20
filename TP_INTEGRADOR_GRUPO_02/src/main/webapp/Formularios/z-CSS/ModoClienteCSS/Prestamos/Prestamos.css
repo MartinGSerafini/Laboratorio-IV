@@ -72,3 +72,8 @@ body {
     max-width: 900px;
     margin: 0 auto;
 }
+.btn-seleccionado {
+            background-color: #dc3545 !important;
+            color: white !important;
+            border-color: #dc3545 !important;
+}
