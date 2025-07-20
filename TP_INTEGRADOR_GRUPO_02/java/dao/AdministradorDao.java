@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 public class AdministradorDao {
 	
 	public boolean validarLogin(String usuario, String contrasena) {
-		String sql = "SELECT * FROM administrador WHERE usuario_admin = ? AND contraseña_admin = ?";
+		String sql = "SELECT * FROM administrador WHERE usuario_admin = ? AND contrasena_admin = ?";
         try (Connection con = Conexion.getConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
 

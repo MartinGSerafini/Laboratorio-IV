@@ -46,13 +46,13 @@
     	<a href="${pageContext.request.contextPath}/InfoPersonalClienteServlet" class="btn big-btn">INFORMACION PERSONAL</a>
         <a href="${pageContext.request.contextPath}/CuentasClienteServlet" class="btn big-btn">CUENTAS</a>
         <a href="${pageContext.request.contextPath}/TransferenciasClienteServlet" class="btn big-btn">TRASFERIR DINERO</a>
-<<<<<<< HEAD
+
         <a href="${pageContext.request.contextPath}/NuevoPrestamoServlet" class="btn big-btn">NUEVO PRESTAMO</a>
         <a href="${pageContext.request.contextPath}/NuevoPrestamoServlet" class="btn big-btn">PAGAR PRESTAMOS</a>
-=======
+
         <a href="${pageContext.request.contextPath}/Formularios/ModoCliente/Prestamos/NuevoPrestamo.jsp" class="btn big-btn">NUEVO PRESTAMO</a>
         <a href="${pageContext.request.contextPath}/TransferenciasClienteServlet" class="btn big-btn">PAGAR PRESTAMOS</a>
->>>>>>> cc1268e0acfdc50d2fd244afd3810990570441c5
+
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

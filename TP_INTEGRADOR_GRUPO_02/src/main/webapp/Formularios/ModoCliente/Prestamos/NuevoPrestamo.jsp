@@ -73,10 +73,11 @@
     </form>
 </div>
 
-<<<<<<< HEAD
+
 <div class="container mt-5" id="cuentasSection"
      style="<%= request.getAttribute("cuentas") == null ? "display: none;" : "" %>">
-=======
+
+
 <!-- cuotas disponibles -->
 <div class="main-content" id="cuotasSection" 
     <% if (request.getAttribute("cuotasDisponibles") == null) { %>
@@ -103,7 +104,7 @@
 
 <!-- Cuentas Disponibles -->
 <div class="container mt-5" id="cuentasSection" style="display: none;">
->>>>>>> cc1268e0acfdc50d2fd244afd3810990570441c5
+
     <h3 class="text-center mb-4 text-danger">Cuenta a seleccionar</h3>
     <div class="table-responsive d-flex justify-content-center">
         <table class="table table-striped table-bordered text-center w-auto">
@@ -194,8 +195,7 @@ function mostrarValorCuota() {
 
 </script>
 
-<<<<<<< HEAD
-=======
+
 <!--  
 <div class="main-content">
         <a href="#" class="btn">Aceptar</a>
@@ -264,7 +264,6 @@ function mostrarValorCuota() {
 
 
 <!-- Bootstrap Bundle -->
->>>>>>> cc1268e0acfdc50d2fd244afd3810990570441c5
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

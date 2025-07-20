@@ -1,12 +1,9 @@
 package controladorCliente;
 
 import java.io.IOException;
-<<<<<<< HEAD
-=======
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.LinkedHashMap;
->>>>>>> cc1268e0acfdc50d2fd244afd3810990570441c5
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -34,10 +31,10 @@ public class NuevoPrestamoServlet extends HttpServlet {
             return;
         }
 
-<<<<<<< HEAD
+
         NegocioCliente negocioCliente = new NegocioCliente();
         int idCliente = negocioCliente.obtenerIdClientePorUsuario(nombreUsuario);
-=======
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String accion = request.getParameter("accion");
@@ -67,7 +64,7 @@ public class NuevoPrestamoServlet extends HttpServlet {
 		}
 		doGet(request, response);
 	}
->>>>>>> cc1268e0acfdc50d2fd244afd3810990570441c5
+
 
         NegocioCuenta negocioCuenta = new NegocioCuenta();
         List<Cuenta> cuentas = negocioCuenta.obtenerCuentasPorCliente(idCliente);
