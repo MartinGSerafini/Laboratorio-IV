@@ -34,6 +34,8 @@
     </div>
 </nav>
 
+
+<!-- prestamos disponibles -->
 <div class="main-content">
     <h2>Solicitar un préstamo</h2>
     <form action="${pageContext.request.contextPath}/NuevoPrestamoServlet" method="get" class="d-flex flex-column align-items-center">
@@ -71,8 +73,37 @@
     </form>
 </div>
 
+<<<<<<< HEAD
 <div class="container mt-5" id="cuentasSection"
      style="<%= request.getAttribute("cuentas") == null ? "display: none;" : "" %>">
+=======
+<!-- cuotas disponibles -->
+<div class="main-content" id="cuotasSection" 
+    <% if (request.getAttribute("cuotasDisponibles") == null) { %>
+        style="display: none;"
+    <% } %>
+>
+    <h2>Cuotas disponibles para el préstamo </h2>
+    <div class="button-grid">
+        <% 
+            LinkedHashMap<Integer, Double> cuotas = (LinkedHashMap<Integer, Double>) request.getAttribute("cuotasDisponibles");
+            if (cuotas != null) {
+                NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("es", "AR"));
+                for (Map.Entry<Integer, Double> entry : cuotas.entrySet()) {
+                	 int numeroCuotas = entry.getKey();
+                     double valorCuota = entry.getValue();
+         %>
+                     <a href="#" class="btn" onclick="mostrarCuentas()">Pagar en <%= numeroCuotas %> cuotas de <%= formatter.format(valorCuota) %></a>
+         <%
+                 }
+             }
+         %>
+      </div>
+</div>
+
+<!-- Cuentas Disponibles -->
+<div class="container mt-5" id="cuentasSection" style="display: none;">
+>>>>>>> cc1268e0acfdc50d2fd244afd3810990570441c5
     <h3 class="text-center mb-4 text-danger">Cuenta a seleccionar</h3>
     <div class="table-responsive d-flex justify-content-center">
         <table class="table table-striped table-bordered text-center w-auto">
@@ -163,6 +194,77 @@ function mostrarValorCuota() {
 
 </script>
 
+<<<<<<< HEAD
+=======
+<!--  
+<div class="main-content">
+        <a href="#" class="btn">Aceptar</a>
+        <a href="#" class="btn">Cancelar</a>
+</div>
+-->
+
+<div class="main-content">
+	<form id="datosPrestamo" action="${pageContext.request.contextPath}/NuevoPrestamoServlet" method="post">
+	    <input type="hidden" name="accion" value="Aceptar">
+	    <input type="hidden" name="cuentaSeleccionada" id="cuentaSeleccionada">
+	    <input type="hidden" name="montoPrestamo" value="${monto}">
+	    <input type="hidden" name="cuotasSeleccionadas" id="cuotasSeleccionadas">
+	    <input type="hidden" name="montoCuotaSeleccionada" id="montoCuotaSeleccionada">
+	    
+	    <button type="button" class="btn" onclick="abrirModalConfirmacion()" >Aceptar</button>
+	    <a href="${pageContext.request.contextPath}/MenuClienteServlet" class="btn">Cancelar</a>
+	</form>
+</div>
+
+<!-- Modal Confirmación -->
+<div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="modalConfirmacionLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="modalErrorLabel">Confirmar Prestamo</h5>
+      </div>
+      <div class="modal-body">
+			¿Desea confirmar la solicitud del préstmao?
+      </div>
+      <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        	<button type="button" class="btn btn-danger" onclick="confirmarPrestamo()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Éxito -->
+<div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="modalExitoLabel">Éxito</h5>
+      </div>
+      <div class="modal-body">
+			Prestamo solicitado con éxito.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="document.getElementById('formReset').submit();">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Script para manejar el modal de confirmacion -->
+<script>
+    function abrirModalConfirmacion() {
+        document.getElementById("modalConfirmacion").style.display = "block";
+    }
+
+    function confrimarPrestamo() {
+        document.getElementById("datosPrestamo").submit();
+    }
+</script>
+
+
+<!-- Bootstrap Bundle -->
+>>>>>>> cc1268e0acfdc50d2fd244afd3810990570441c5
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

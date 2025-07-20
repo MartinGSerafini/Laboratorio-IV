@@ -1,6 +1,12 @@
 package controladorCliente;
 
 import java.io.IOException;
+<<<<<<< HEAD
+=======
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.util.LinkedHashMap;
+>>>>>>> cc1268e0acfdc50d2fd244afd3810990570441c5
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -28,8 +34,40 @@ public class NuevoPrestamoServlet extends HttpServlet {
             return;
         }
 
+<<<<<<< HEAD
         NegocioCliente negocioCliente = new NegocioCliente();
         int idCliente = negocioCliente.obtenerIdClientePorUsuario(nombreUsuario);
+=======
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String accion = request.getParameter("accion");
+		if ("aceptar".equals(accion)){
+			
+			//datos traidos del fromulario
+			String numeroCuenta = request.getParameter("cuentaSeleccionada");
+			BigDecimal montoPrestamo = new BigDecimal(request.getParameter("montoPrestamo"));
+			int cuotas = Integer.parseInt(request.getParameter("cuotasSeleccionadas"));
+			BigDecimal montoPorCuota = new BigDecimal(request.getParameter("montoCuotaSeleccionada"));
+			Date fechaActual = new Date(System.currentTimeMillis());
+			
+			//obtener id del cliente logueado
+			HttpSession session = request.getSession();
+			String nombreUsuario = (String) session.getAttribute("ClienteLogueado");
+			
+			NegocioCliente negocioCliente = new NegocioCliente();
+			int idCliente = negocioCliente.obtenerIdClientePorUsuario(nombreUsuario);
+			
+			//obtener cuenta meidante id
+			//armar la entidad prestamo
+			//registrar prestamo
+			//registrar movimiento
+			 
+			//mostrar mensaje de éxito
+			
+		}
+		doGet(request, response);
+	}
+>>>>>>> cc1268e0acfdc50d2fd244afd3810990570441c5
 
         NegocioCuenta negocioCuenta = new NegocioCuenta();
         List<Cuenta> cuentas = negocioCuenta.obtenerCuentasPorCliente(idCliente);
