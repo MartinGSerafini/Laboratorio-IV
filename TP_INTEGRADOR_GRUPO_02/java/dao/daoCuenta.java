@@ -36,7 +36,7 @@ public class daoCuenta {
 		        return false;
 		    }
 		
-	}
+	} 
 	
 	public ArrayList<Cuenta> obtenerCuentas(){
 		String sql = "SELECT c.*, tc.descripcion_tipocuenta FROM Cuenta c INNER JOIN tipocuenta tc ON c.idTipoCuenta_cuenta = tc.idTipoCuenta WHERE c.estado_cuentas = 1";
@@ -150,22 +150,38 @@ public class daoCuenta {
 	        }
 	    }
 	 
-	 public boolean existeCBU(String cbu, String id) {
-	        String sql = "SELECT COUNT(*) FROM cuenta WHERE cbu_cuenta = ? AND id_cuenta = ?";
-	        try (Connection conn = Conexion.getConexion();
-	             PreparedStatement ps = conn.prepareStatement(sql)) {
-	            ps.setString(1, cbu);
-	            ps.setString(2, id);
-	            try (ResultSet rs = ps.executeQuery()) {
-	                if (rs.next()) {
-	                    return rs.getInt(1) > 0;
-	                }
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	        return false;
-	    }
+	 public boolean existeCBU(String cbu) {
+		    String sql = "SELECT COUNT(*) FROM cuenta WHERE cbu_cuenta = ?";
+		    try (Connection conn = Conexion.getConexion();
+		         PreparedStatement ps = conn.prepareStatement(sql)) {
+		        ps.setString(1, cbu);
+		        try (ResultSet rs = ps.executeQuery()) {
+		            if (rs.next()) {
+		                return rs.getInt(1) > 0;
+		            }
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    return false;
+		}
+
+	 public boolean existeNumeroCuenta(String numeroCuenta) {
+		    String sql = "SELECT COUNT(*) FROM Cuenta WHERE numero_cuenta = ?";
+		    try (Connection conn = Conexion.getConexion();
+		         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+		        ps.setString(1, numeroCuenta);
+		        ResultSet rs = ps.executeQuery();
+		        if (rs.next()) {
+		            return rs.getInt(1) > 0;
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    return false;
+		}
+	 
 	 
 	 public int contarCuentasXClientes(int cliente) {
 		 String sql = "SELECT COUNT(*) FROM cuenta WHERE idCliente_cuenta=?";
@@ -346,5 +362,10 @@ public class daoCuenta {
 		 
 		 
 	 }
+	 
+	 
+	 
+	 
+	 
 
 }

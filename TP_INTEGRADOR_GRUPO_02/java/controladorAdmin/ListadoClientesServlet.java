@@ -12,14 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import entidades.Cliente;
+import entidades.Localidad;
 import entidades.Nacionalidad;
 import entidades.Provincia;
-import entidades.Localidad;
-
 import negocio.NegocioCliente;
+import negocio.NegocioLocalidad;
 import negocio.NegocioNacionalidad;
 import negocio.NegocioProvincia;
-import negocio.NegocioLocalidad;
 
 
 @WebServlet("/ListadoClientesServlet")
@@ -27,7 +26,7 @@ public class ListadoClientesServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        NegocioCliente negocio = new NegocioCliente();
+       NegocioCliente negocio = new NegocioCliente();
 
         ArrayList<String> columnas = negocio.obtenerColumnasClientes();
         request.setAttribute("columnas", columnas);
@@ -51,10 +50,29 @@ public class ListadoClientesServlet extends HttpServlet {
         ArrayList<Cliente> listaClientes;
 
         if (busqueda != null && filtro != null && !busqueda.isEmpty() && !filtro.isEmpty()) {
+
+            // Mapeo para transformar la busqueda de ID a NOMBRE
+            switch (filtro) {
+            case "provincia_cliente":
+                filtro = "nombre_provincia";
+                break;
+            case "localidad_cliente":
+                filtro = "nombre_localidad";
+                break;
+            case "nacionalidad_cliente":
+                filtro = "nombre_nacionalidad";
+                break;
+            case "fechaNac_cliente":
+                filtro = "fechaNac_cliente";
+                break;
+        }
+
+
             listaClientes = negocio.obtenerClientesPorFiltro(filtro, busqueda);
         } else {
             listaClientes = negocio.ObtenerListadoClientes();
         }
+
         // Paginacion
         int registrosPorPagina = 10;
         int paginaActual = 1;

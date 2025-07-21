@@ -145,12 +145,35 @@ public class daoCliente {
 	
 	 public ArrayList<Cliente> obtenerClientesPorFiltro(String columna, String valor) {
 	        ArrayList<Cliente> listaFiltrada = new ArrayList<>();
-	        String sql = "SELECT c.*, p.nombre_provincia, l.nombre_localidad, n.nombre_nacionalidad " +
-	                     "FROM cliente c " +
-	                     "INNER JOIN provincia p ON c.provincia_cliente = p.id_provincia " +
-	                     "INNER JOIN localidad l ON c.localidad_cliente = l.id_localidad " +
-	                     "INNER JOIN nacionalidad n ON c.nacionalidad_cliente = n.id_nacionalidad " +
-	                     "WHERE c." + columna + " LIKE ? AND c.estado_cliente = 1";
+	        
+	        String sqlBase = "SELECT c.*, p.nombre_provincia, l.nombre_localidad, n.nombre_nacionalidad " +
+			                 "FROM cliente c " +
+			                 "INNER JOIN provincia p ON c.provincia_cliente = p.id_provincia " +
+			                 "INNER JOIN localidad l ON c.localidad_cliente = l.id_localidad " +
+			                 "INNER JOIN nacionalidad n ON c.nacionalidad_cliente = n.id_nacionalidad ";
+		
+			String whereClause;
+			switch (columna) {
+		    case "nombre_provincia":
+		        whereClause = "WHERE p.nombre_provincia LIKE ? AND c.estado_cliente = 1";
+		        break;
+		    case "nombre_localidad":
+		        whereClause = "WHERE l.nombre_localidad LIKE ? AND c.estado_cliente = 1";
+		        break;
+		    case "nombre_nacionalidad":
+		        whereClause = "WHERE n.nombre_nacionalidad LIKE ? AND c.estado_cliente = 1";
+		        break;
+		    case "fechaNac_cliente":
+		        whereClause = "WHERE DATE_FORMAT(c.fechaNac_cliente, '%Y-%m-%d') LIKE ? AND c.estado_cliente = 1";
+		        break;
+
+		    default:
+		        whereClause = "WHERE c." + columna + " LIKE ? AND c.estado_cliente = 1";
+		        break;
+		}
+			
+		
+			String sql = sqlBase + whereClause;
 
 	        try (Connection conn = Conexion.getConexion();
 	             PreparedStatement ps = conn.prepareStatement(sql)) {

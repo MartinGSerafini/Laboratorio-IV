@@ -202,7 +202,7 @@ public class NegocioCliente implements servicioABML<Cliente>{
 	}
 	}
 	
-	return errores.length() > 0 ? errores.toString() : null;
+	return errores.length() > 0 ? errores.toString().replace("\n", "<br>") : null;
 	}
 
 	public Cliente obtenerCliente(String usuario) {

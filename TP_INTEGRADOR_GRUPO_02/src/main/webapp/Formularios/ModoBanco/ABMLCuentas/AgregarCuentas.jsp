@@ -125,7 +125,7 @@
         <h5 class="modal-title" id="modalErrorLabel">Error</h5>
       </div>
       <div class="modal-body">
-        Hubo un problema al crear la cuenta.
+        <%= request.getAttribute("errorDetalle") != null ? request.getAttribute("errorDetalle") : "Hubo un problema al crear la cuenta." %>
       </div>
       <div class="modal-footer">
        <button type="button" class="btn btn-danger" onclick="location.href='${pageContext.request.contextPath}/AgregarCuentaServlet'">Cerrar</button>

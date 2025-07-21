@@ -432,12 +432,15 @@
         	});
 
         } else {
-          alert("❌ " + resp.mensaje);
-        }
+        	  const mensajeFormateado = resp.mensaje.replace(/<br\s*\/?>/gi, "\n");
+        	  alert("❌ " + mensajeFormateado);
+        	}
+
       })
       .catch(err => {
         console.error("Error en fetch:", err);
-        alert("❌ Error al intentar guardar los cambios: " + err.message);
+        const mensajeFormateado = err.message.replace(/<br\s*\/?>/gi, "\n");
+        alert("❌ Error al intentar guardar los cambios: " + mensajeFormateado);
       });
 
       // Ocultar modal
