@@ -197,6 +197,19 @@ public class daoPrestamo {
 
 	    return idGenerado;
 	}
-
+	public ArrayList<Prestamo> obtenerPrestamosActivosPorCliente(int idCliente) {
+	    String sql = "SELECT * FROM prestamo WHERE idCliente_pres = ? AND estado_prestamo = TRUE ORDER BY fechaSolicitud_pres DESC";
+	    ArrayList<Prestamo> lista = new ArrayList<>();
+	    try (Connection conn = Conexion.getConexion();
+	         PreparedStatement ps = conn.prepareStatement(sql)) {
+	        ps.setInt(1, idCliente);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            cargar(lista, rs);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return lista;
+	}
 
 }

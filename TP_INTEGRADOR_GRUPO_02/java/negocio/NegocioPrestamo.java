@@ -57,18 +57,7 @@ public class NegocioPrestamo {
 	    return daoPrestamo.insertarPrestamoYObtenerId(idCliente, idCuenta, importeSolicitado, importeTotal, plazoMeses, montoCuota, fechaSolicitud);
 	}
 	public void insertarCuotas(int idPrestamo, int cantidadCuotas, BigDecimal montoCuota, Date fechaInicio) {
-        for (int i = 1; i <= cantidadCuotas; i++) {
-            Date fechaVencimiento = calcularFechaVencimiento(fechaInicio, i);
-            Cuota cuota = new Cuota();
-            cuota.setIdPrestamoCuota(idPrestamo);
-            cuota.setNumeroCuota(i);
-            cuota.setImporteCuota(montoCuota);
-            cuota.setFechaVencCuota(fechaVencimiento);
-            cuota.setEstadoCuota(1); 
-            cuota.setFechaPagoCuota(null);
-
-            daoCuota.registrarCuota(cuota);
-        }
+        daoCuota.insertarCuotas(idPrestamo, cantidadCuotas, montoCuota, fechaInicio);
     }
 	private Date calcularFechaVencimiento(Date fechaInicio, int mesesSumar) {
         java.util.Calendar cal = java.util.Calendar.getInstance();
@@ -76,4 +65,7 @@ public class NegocioPrestamo {
         cal.add(java.util.Calendar.MONTH, mesesSumar);
         return new Date(cal.getTimeInMillis());
     }
+	public ArrayList<Prestamo> obtenerPrestamosPendientesPorCliente(int idCliente) {
+	    return daoPrestamo.obtenerPrestamosActivosPorCliente(idCliente);
+	}
 }
