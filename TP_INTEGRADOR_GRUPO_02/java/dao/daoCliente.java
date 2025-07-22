@@ -27,7 +27,7 @@ public class daoCliente {
 		        ps.setString(4, cliente.getApellidoCliente());
 		        ps.setString(5, cliente.getSexoCliente());
 		        ps.setInt(6, cliente.getNacionalidadCliente());
-		        ps.setDate(7, cliente.getFechaNacCliente()); // java.sql.Date
+		        ps.setDate(7, cliente.getFechaNacCliente()); 
 		        ps.setString(8, cliente.getDireccionCliente());
 		        ps.setInt(9, cliente.getLocalidadCliente());
 		        ps.setInt(10, cliente.getProvinciaCliente());

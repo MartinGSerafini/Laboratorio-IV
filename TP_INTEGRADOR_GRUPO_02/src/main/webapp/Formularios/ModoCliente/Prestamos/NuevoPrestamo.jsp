@@ -61,7 +61,7 @@
 
             <div>
                 <label for="cuotas" class="form-label">Cuotas:</label>
-                <select class="form-select" id="cuotas" required disabled>
+                <select class="form-select" id="cuotas" name="cuotasSeleccionadas" required disabled>
                     <option value="" disabled selected>Seleccioná un plan</option>
                     <option value="4">4 cuotas (5%)</option>
                     <option value="6">6 cuotas (7%)</option>
@@ -102,7 +102,7 @@
                     <td><%= c.getCbuCuenta() %></td>
                     <td><%= String.format("%.2f", c.getSaldoCuenta()) %></td>
                     <td>
-                        <button type="button" class="btn btn-success btn-sm" onclick="seleccionarCuenta(this, '<%= c.getNumeroCuenta() %>')">Usar</button>
+                        <button type="button" class="btn btn-success btn-sm" onclick="seleccionarCuenta(this, '<%= c.getIdCuenta() %>')">Usar</button>
                     </td>
                 </tr>
                 <%
@@ -125,7 +125,7 @@
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+	document.addEventListener("DOMContentLoaded", function () {
     const montoSelect = document.getElementById("monto");
     const cuotasSelect = document.getElementById("cuotas");
     const btnSeleccionar = document.getElementById("btnSeleccionar");
@@ -177,8 +177,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             document.getElementById("montoPrestamo").value = totalConRecargo.toFixed(2);
-            document.getElementById("cuotasSeleccionadas").value = cuotas;
             document.getElementById("montoCuotaSeleccionada").value = valorCuota.toFixed(2);
+            document.getElementById('cuotasSeleccionadas').value = document.getElementById('cuotas').value;
 
             actualizarBoton();
         } else {

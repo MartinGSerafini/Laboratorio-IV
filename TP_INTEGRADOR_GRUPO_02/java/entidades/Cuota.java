@@ -6,18 +6,16 @@ import java.util.Date;
 public class Cuota {
 
     private int idCuota;
-    private String idPrestamoCuota;
+    private int idPrestamoCuota;
     private int numeroCuota;
     private BigDecimal importeCuota;
     private Date fechaVencCuota;
     private Date fechaPagoCuota;
     private int estadoCuota;
 
-    // Constructor vacío
     public Cuota() {}
 
-    // Constructor completo
-    public Cuota(int idCuota, String idPrestamoCuota, int numeroCuota, BigDecimal importeCuota,
+    public Cuota(int idCuota, int idPrestamoCuota, int numeroCuota, BigDecimal importeCuota,
                  Date fechaVencCuota, Date fechaPagoCuota, int estadoCuota) {
         this.idCuota = idCuota;
         this.idPrestamoCuota = idPrestamoCuota;
@@ -28,7 +26,6 @@ public class Cuota {
         this.estadoCuota = estadoCuota;
     }
 
-    // Getters y Setters
 
     public int getIdCuota() {
         return idCuota;
@@ -38,13 +35,14 @@ public class Cuota {
         this.idCuota = idCuota;
     }
 
-    public String getIdPrestamoCuota() {
+    public int getIdPrestamoCuota() {
         return idPrestamoCuota;
     }
 
-    public void setIdPrestamoCuota(String idPrestamoCuota) {
+    public void setIdPrestamoCuota(int idPrestamoCuota) {
         this.idPrestamoCuota = idPrestamoCuota;
     }
+
 
     public int getNumeroCuota() {
         return numeroCuota;

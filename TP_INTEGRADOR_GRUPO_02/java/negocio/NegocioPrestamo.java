@@ -1,14 +1,19 @@
 package negocio;
 
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.ArrayList;
 
+import dao.DaoCuota;
 import dao.daoPrestamo;
+import entidades.Cuota;
 import entidades.EstadoPrestamo;
 import entidades.Prestamo;
 
 public class NegocioPrestamo {
-	daoPrestamo daoPrestamo = new daoPrestamo();
-
+    daoPrestamo daoPrestamo = new daoPrestamo();
+    DaoCuota daoCuota = new DaoCuota();
+    
 	public ArrayList<Prestamo> listarPrestamos() {
 		return daoPrestamo.obtenerTodos();
 	}
@@ -45,7 +50,30 @@ public class NegocioPrestamo {
 		return false;
 	}
 	
-	public boolean registrarPrestamo(Prestamo prestamo) {
-		return daoPrestamo.registrarPrestamo(prestamo);
+	public int registrarPrestamo(Prestamo prestamo) {
+	    return daoPrestamo.registrarPrestamo(prestamo);
 	}
+	public int insertarPrestamo(int idCliente, int idCuenta, BigDecimal importeSolicitado, BigDecimal importeTotal, int plazoMeses, BigDecimal montoCuota, Date fechaSolicitud) {
+	    return daoPrestamo.insertarPrestamoYObtenerId(idCliente, idCuenta, importeSolicitado, importeTotal, plazoMeses, montoCuota, fechaSolicitud);
+	}
+	public void insertarCuotas(int idPrestamo, int cantidadCuotas, BigDecimal montoCuota, Date fechaInicio) {
+        for (int i = 1; i <= cantidadCuotas; i++) {
+            Date fechaVencimiento = calcularFechaVencimiento(fechaInicio, i);
+            Cuota cuota = new Cuota();
+            cuota.setIdPrestamoCuota(idPrestamo);
+            cuota.setNumeroCuota(i);
+            cuota.setImporteCuota(montoCuota);
+            cuota.setFechaVencCuota(fechaVencimiento);
+            cuota.setEstadoCuota(1); 
+            cuota.setFechaPagoCuota(null);
+
+            daoCuota.registrarCuota(cuota);
+        }
+    }
+	private Date calcularFechaVencimiento(Date fechaInicio, int mesesSumar) {
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        cal.setTime(fechaInicio);
+        cal.add(java.util.Calendar.MONTH, mesesSumar);
+        return new Date(cal.getTimeInMillis());
+    }
 }

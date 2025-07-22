@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 import entidades.Prestamo;
 import entidades.EstadoPrestamo;
@@ -132,35 +133,70 @@ public class daoPrestamo {
         return columnas;
     }
 	
-	public boolean registrarPrestamo(Prestamo prestamo) {
+	public int registrarPrestamo(Prestamo prestamo) {
 	    String sql = "INSERT INTO PRESTAMO (" +
 	                 "idCliente_pres, fechaSolicitud_pres, importeSolicitado_pres, " +
 	                 "importeTotal_pres, plazoMeses_pres, montoCuota_pres, estado_pres, idCuentaDeposito_pres) " +
 	                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 	    try (Connection conn = Conexion.getConexion();
-	         PreparedStatement ps = conn.prepareStatement(sql)) {
+	         PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
 	        ps.setInt(1, prestamo.getIdClientePres());
-	        ps.setDate(2, prestamo.getFechaSolicitudPres()); 
+	        ps.setDate(2, prestamo.getFechaSolicitudPres());
 	        ps.setBigDecimal(3, prestamo.getImporteSolicitadoPres());
 	        ps.setBigDecimal(4, prestamo.getImporteTotalPres());
 	        ps.setInt(5, prestamo.getPlazoMesesPres());
 	        ps.setBigDecimal(6, prestamo.getMontoCuotaPres());
-	        ps.setInt(7, prestamo.getEstadoPres().getId()); 
+	        ps.setInt(7, prestamo.getEstadoPres().getId());
 	        ps.setString(8, prestamo.getIdCuentaDepositoPres());
 
 	        int filasAfectadas = ps.executeUpdate();
-	        return filasAfectadas > 0;
+
+	        if (filasAfectadas > 0) {
+	            ResultSet generatedKeys = ps.getGeneratedKeys();
+	            if (generatedKeys.next()) {
+	                return generatedKeys.getInt(1);
+	            }
+	        }
 
 	    } catch (SQLException e) {
 	        e.printStackTrace();
-	        return false;
 	    }
+
+	    return -1;
 	}
+	public int insertarPrestamoYObtenerId(int idCliente, int idCuenta, BigDecimal importeSolicitado, BigDecimal importeTotal, int plazoMeses, BigDecimal montoCuota, Date fechaSolicitud) {
+	    int idGenerado = 0;
+	    String sql = "INSERT INTO prestamo (idCliente_pres, idCuentaDeposito_pres, importeSolicitado_pres, importeTotal_pres, plazoMeses_pres, montoCuota_pres, fechaSolicitud_pres, estado_pres, estado_prestamo) VALUES (?, ?, ?, ?, ?, ?, ?, 3, TRUE)";
 
+	    try (Connection conn = Conexion.getConexion();
+	         PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-	
+	        ps.setInt(1, idCliente);
+	        ps.setInt(2, idCuenta);
+	        ps.setBigDecimal(3, importeSolicitado);
+	        ps.setBigDecimal(4, importeTotal);
+	        ps.setInt(5, plazoMeses);
+	        ps.setBigDecimal(6, montoCuota);
+	        ps.setDate(7, new java.sql.Date(fechaSolicitud.getTime()));
+
+	        int filas = ps.executeUpdate();
+
+	        if (filas > 0) {
+	            try (ResultSet rs = ps.getGeneratedKeys()) {
+	                if (rs.next()) {
+	                    idGenerado = rs.getInt(1);
+	                }
+	            }
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return idGenerado;
+	}
 
 
 }

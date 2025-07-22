@@ -225,7 +225,7 @@ public class daoCuenta {
 	 public List<Cuenta> obtenerCuentasPorCliente(int idCliente) {
 		    List<Cuenta> cuentas = new ArrayList<>();
 
-		    String query = "SELECT c.Numero_Cuenta, c.CBU_Cuenta, c.Saldo_Cuenta, t.Descripcion_TipoCuenta " +
+		    String query = "SELECT  c.id_cuenta, c.Numero_Cuenta, c.CBU_Cuenta, c.Saldo_Cuenta, t.Descripcion_TipoCuenta " +
 		                   "FROM Cuenta c " +
 		                   "INNER JOIN TipoCuenta t ON c.IdTipoCuenta_Cuenta = t.IdTipoCuenta " +
 		                   "WHERE c.IdCliente_Cuenta = ?";
@@ -238,6 +238,8 @@ public class daoCuenta {
 		        ResultSet rs = ps.executeQuery();
 		        while (rs.next()) {
 		            Cuenta c = new Cuenta();
+		            
+		            c.setIdCuenta(String.valueOf(rs.getInt("id_cuenta")));
 		            c.setNumeroCuenta(rs.getString("Numero_Cuenta"));
 		            c.setCbuCuenta(rs.getString("CBU_Cuenta"));
 		            c.setSaldoCuenta(rs.getBigDecimal("Saldo_Cuenta"));
@@ -318,9 +320,7 @@ public class daoCuenta {
 			}
 	 
 	 
-	 public boolean realizarTransferencia(String cbuOrigen, String cbuDestino, BigDecimal monto) {
-		 
-		 
+	 public boolean realizarTransferencia(String cbuOrigen, String cbuDestino, BigDecimal monto) {		 
 		 String sql1 = "UPDATE Cuenta SET saldo_cuenta = saldo_cuenta - ? WHERE cbu_cuenta = ?";
 		 String sql2 = "UPDATE Cuenta SET saldo_cuenta = saldo_cuenta + ? WHERE cbu_cuenta = ?";
 		 
@@ -360,12 +360,22 @@ public class daoCuenta {
 		        return false;
 		    }
 		 
-		 
-	 }
-	 
-	 
-	 
-	 
-	 
+	 } 
+	 public int obtenerIdCuentaPorNumero(String numeroCuenta) {
+		    int idCuenta = 0;
+		    String sql = "SELECT idCuenta FROM cuenta WHERE numeroCuenta = ?";
+		    try (Connection conn = Conexion.getConexion();
+		         PreparedStatement ps = conn.prepareStatement(sql)) {
+		        ps.setString(1, numeroCuenta);
+		        try (ResultSet rs = ps.executeQuery()) {
+		            if (rs.next()) {
+		                idCuenta = rs.getInt("idCuenta");
+		            }
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		    return idCuenta;
+		}
 
 }

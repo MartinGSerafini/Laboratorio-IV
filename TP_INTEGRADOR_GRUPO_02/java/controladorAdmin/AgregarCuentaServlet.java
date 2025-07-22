@@ -42,7 +42,6 @@ public class AgregarCuentaServlet extends HttpServlet {
 	        request.setAttribute("listaTipos", listaTipos);
 
 	        if ("agregarCuenta".equals(accion)) {
-	            // Obtener parámetros
 	            String dniCliente = request.getParameter("dniCliente");
 	            String tipoCuentaStr = request.getParameter("tipo_Cuenta");
 	            String nroCuenta = request.getParameter("nroCuenta");
