@@ -125,7 +125,7 @@
 </div>
 
 <script>
-	document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     const montoSelect = document.getElementById("monto");
     const cuotasSelect = document.getElementById("cuotas");
     const btnSeleccionar = document.getElementById("btnSeleccionar");
@@ -173,12 +173,11 @@
             const valorCuota = totalConRecargo / cuotas;
 
             valorCuotaTexto.innerHTML = "Total a devolver: " + formatearNumero(totalConRecargo) + ".<br>" +
-            "Serán " + cuotas + " cuotas de " + formatearNumero(valorCuota) + " cada una.";
-
+                "Serán " + cuotas + " cuotas de " + formatearNumero(valorCuota) + " cada una.";
 
             document.getElementById("montoPrestamo").value = totalConRecargo.toFixed(2);
             document.getElementById("montoCuotaSeleccionada").value = valorCuota.toFixed(2);
-            document.getElementById('cuotasSeleccionadas').value = document.getElementById('cuotas').value;
+            document.getElementById("cuotasSeleccionadas").value = cuotas;
 
             actualizarBoton();
         } else {
@@ -194,10 +193,11 @@
         }
 
         boton.classList.remove("btn-success");
-        boton.classList.add("btn-seleccionado");
-        boton.classList.add("btn-danger");
+        boton.classList.add("btn-seleccionado", "btn-danger");
 
+        botonSeleccionado = boton;
         cuentaSeleccionadaInput.value = numeroCuenta;
+
         actualizarBoton();
     };
 
@@ -211,21 +211,21 @@
     String msg = (String) request.getAttribute("mensaje");
     if ("exito".equals(msg)) {
 %>
-    <script>
-        window.onload = function() {
-            let modal = new bootstrap.Modal(document.getElementById('modalExito'));
-            modal.show();
-        };
-    </script>
+<script>
+    window.onload = function() {
+        let modal = new bootstrap.Modal(document.getElementById('modalExito'));
+        modal.show();
+    };
+</script>
 <%
     } else if ("error".equals(msg)) {
 %>
-    <script>
-        window.onload = function() {
-            let modal = new bootstrap.Modal(document.getElementById('modalError'));
-            modal.show();
-        };
-    </script>
+<script>
+    window.onload = function() {
+        let modal = new bootstrap.Modal(document.getElementById('modalError'));
+        modal.show();
+    };
+</script>
 <% } %>
 
 <!-- Modal Éxito -->
@@ -236,9 +236,10 @@
         <h5 class="modal-title" id="modalExitoLabel">Éxito</h5>
       </div>
       <div class="modal-body">
-		Prestamo solicitado correctamente. 
+        Prestamo solicitado correctamente. 
       </div>
       <div class="modal-footer">
+        <form id="formReset" action="${pageContext.request.contextPath}/NuevoPrestamoServlet" method="get"></form>
         <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="document.getElementById('formReset').submit();">Aceptar</button>
       </div>
     </div>
@@ -253,7 +254,7 @@
         <h5 class="modal-title" id="modalErrorLabel">Error</h5>
       </div>
       <div class="modal-body">
-		Error al registrar el préstamo solicitado. 
+        Error al registrar el préstamo solicitado. 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
