@@ -56,43 +56,106 @@ public class DaoCuota {
     }
     
     public ArrayList<Cuota> obtenerCuotasPorPrestamo(int idPrestamo) {
-    	String sql = "SELECT * FROM cuota WHERE idPrestamo_cuota = ? AND estado_cuota = 3";
-    	ArrayList<Cuota> lista = new ArrayList<Cuota>();
-    	try (Connection conn = Conexion.getConexion();
+        String sql = "SELECT * FROM cuota WHERE idPrestamo_cuota = ? AND estado_cuota = 3";
+        ArrayList<Cuota> lista = new ArrayList<>();
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+
+            pst.setInt(1, idPrestamo); 
+            ResultSet rs = pst.executeQuery();
+
+            while(rs.next()) {
+                Cuota cuota = new Cuota();
+                cuota.setIdCuota(rs.getInt("id_cuota"));
+                cuota.setIdPrestamoCuota(rs.getInt("idPrestamo_cuota"));
+                cuota.setNumeroCuota(rs.getInt("numero_cuota"));
+                cuota.setImporteCuota(rs.getBigDecimal("importe_cuota"));
+                cuota.setFechaVencCuota(rs.getDate("fechaVenc_cuota"));
+                cuota.setFechaPagoCuota(rs.getDate("fechaPago_cuota"));
+                cuota.setEstadoCuota(rs.getInt("estado_cuota"));
+                lista.add(cuota);
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+    public ArrayList<Cuota> obtenerCuotasPendientesPorPrestamo(int idPrestamo) {
+    	ArrayList<Cuota> cuotas = new ArrayList<>();
+        String sql = "SELECT * FROM Cuotas WHERE idPrestamo = ? AND estado = 'pendiente' ORDER BY numeroCuota";
+        try (Connection conn = Conexion.getConexion();
 				Statement st = conn.createStatement();) {
 			    ResultSet rs = st.executeQuery(sql);
 			    
-			while(rs.next()) {	
-				Cuota cuota = new Cuota();
-				cuota.setIdCuota(rs.getInt("id_cuota"));
-				cuota.setIdPrestamoCuota(rs.getInt("idPrestamo_cuota"));
-				cuota.setNumeroCuota(rs.getInt("numero_cuota"));
-				cuota.setImporteCuota(rs.getBigDecimal("importe_cuota"));
-				cuota.setFechaVencCuota(rs.getDate("fechaVenc_cuota"));
-				cuota.setFechaPagoCuota(rs.getDate("fechaPago_cuota"));
-				cuota.setEstadoCuota(rs.getInt("estado_cuota"));
-				lista.add(cuota);
-			}
-			conn.close();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}finally {}
-    	return lista;
+			while(rs.next()) {
+                Cuota cuota = new Cuota();
+                cuota.setIdCuota(rs.getInt("idCuota"));
+                cuota.setIdPrestamoCuota(rs.getInt("idPrestamo"));
+                cuota.setNumeroCuota(rs.getInt("numeroCuota"));
+                cuota.setImporteCuota(rs.getBigDecimal("importeCuota"));
+                cuota.setFechaVencCuota(rs.getDate("fechaVencimiento"));
+                cuota.setEstadoCuota(rs.getInt("estado_cuota"));
+                cuotas.add(cuota);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cuotas;
     }
 
-    public boolean pagarPrestamoCompleto(int idPrestamo) {
-    	String sql = "UPDATE cuota SET estado_cuota = 1 WHERE idPrestamo_cuota = ?";
-        
+    public Cuota obtenerCuotaPorId(int idCuota) {
+        Cuota cuota = null;
+        String sql = "SELECT * FROM Cuotas WHERE idCuota = ?";
         try (Connection conn = Conexion.getConexion();
-       	    PreparedStatement ps = conn.prepareStatement(sql)) {
-        	
-        	ps.setInt(1, idPrestamo);
-       	    int filas = ps.executeUpdate();
-       	    return filas > 0;
-       	    
-       	} catch (Exception e) {
-       	    e.printStackTrace();
-       	    return false;
-       	}
+				Statement st = conn.createStatement();) {
+			    ResultSet rs = st.executeQuery(sql);
+			    
+			while(rs.next()) {
+                cuota = new Cuota();
+                cuota.setIdCuota(rs.getInt("idCuota"));
+                cuota.setIdPrestamoCuota(rs.getInt("idPrestamo"));
+                cuota.setNumeroCuota(rs.getInt("numeroCuota"));
+                cuota.setImporteCuota(rs.getBigDecimal("importeCuota"));
+                cuota.setFechaVencCuota(rs.getDate("fechaVencimiento"));
+                cuota.setEstadoCuota(rs.getInt("estado_cuota"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cuota;
+    }
+
+    public boolean marcarCuotaComoPagada(int idCuota) {
+        String sql = "UPDATE cuota SET estado = 'pagada' WHERE idCuota = ?";
+        boolean resultado = false;
+
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, idCuota);
+            int filasAfectadas = ps.executeUpdate();
+            resultado = filasAfectadas > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return resultado;
+    }
+
+
+    public boolean pagarPrestamoCompleto(int idPrestamo) {
+        String sql = "UPDATE Cuotas SET estado = 'pagada' WHERE idPrestamo = ?";
+        try (Connection conn = Conexion.getConexion();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idPrestamo);
+            int filas = ps.executeUpdate();
+            return filas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

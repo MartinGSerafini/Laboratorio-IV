@@ -59,17 +59,15 @@ public class NegocioPrestamo {
 	public void insertarCuotas(int idPrestamo, int cantidadCuotas, BigDecimal montoCuota, Date fechaInicio) {
         daoCuota.insertarCuotas(idPrestamo, cantidadCuotas, montoCuota, fechaInicio);
     }
-	private Date calcularFechaVencimiento(Date fechaInicio, int mesesSumar) {
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        cal.setTime(fechaInicio);
-        cal.add(java.util.Calendar.MONTH, mesesSumar);
-        return new Date(cal.getTimeInMillis());
-    }
 	public ArrayList<Prestamo> obtenerPrestamosPendientesPorCliente(int idCliente) {
 	    return daoPrestamo.obtenerPrestamosActivosPorCliente(idCliente);
 	}
 	
 	public boolean pagarPrestamoCompleto(int idPrestamo) {
 		return daoPrestamo.pagarPrestamoCompleto(idPrestamo);
+	}
+
+	public BigDecimal obtenerImporteTotalPrestamo(int idPrestamo) {
+	    return daoPrestamo.obtenerImporteTotalPrestamo(idPrestamo);
 	}
 }

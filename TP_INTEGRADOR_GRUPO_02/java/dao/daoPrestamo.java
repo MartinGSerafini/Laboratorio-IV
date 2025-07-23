@@ -225,5 +225,25 @@ public class daoPrestamo {
        	    return false;
        	}
     }
+
+    public BigDecimal obtenerImporteTotalPrestamo(int idPrestamo) {
+        BigDecimal importeTotal = BigDecimal.ZERO;
+        String sql = "SELECT importe_total_pres FROM prestamos WHERE id_prestamo = ?";
+        
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+             
+             ps.setInt(1, idPrestamo);
+             ResultSet rs = ps.executeQuery();
+             
+             if (rs.next()) {
+                 importeTotal = rs.getBigDecimal("importe_total_pres");
+             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return importeTotal;
+    }
+
 }
 
