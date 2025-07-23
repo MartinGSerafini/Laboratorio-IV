@@ -89,6 +89,8 @@ public class PagarPrestamoServlet extends HttpServlet {
 
         if ("mostrarTotal".equals(accion)) {
             String[] cuotasSeleccionadas = request.getParameterValues("cuotasSeleccionadas");
+            String cuentaSeleccionada = request.getParameter("cuentaSeleccionada");
+
             if (cuotasSeleccionadas != null && idPrestamoStr != null) {
                 BigDecimal total = BigDecimal.ZERO;
                 for (String idCuotaStr : cuotasSeleccionadas) {
@@ -96,8 +98,10 @@ public class PagarPrestamoServlet extends HttpServlet {
                     Cuota cuota = negocioCuota.obtenerCuotaPorId(idCuota);
                     total = total.add(cuota.getImporteCuota());
                 }
+
                 request.setAttribute("totalAPagar", total);
                 request.setAttribute("cuotasSeleccionadasMarcadas", cuotasSeleccionadas);
+                request.setAttribute("cuentaSeleccionadaMarcada", cuentaSeleccionada);
 
                 int idPrestamo = Integer.parseInt(idPrestamoStr);
                 List<Cuota> cuotas = negocioCuota.obtenerCuotasPendientesPorPrestamo(idPrestamo);
@@ -105,6 +109,7 @@ public class PagarPrestamoServlet extends HttpServlet {
                 request.setAttribute("idPrestamoSeleccionado", idPrestamo);
             }
         }
+
 
         if ("verCuotas".equals(accion) || "pagarCuotas".equals(accion) || "cuotas".equals(request.getParameter("tipoPago"))) {
             if (idPrestamoStr != null) {

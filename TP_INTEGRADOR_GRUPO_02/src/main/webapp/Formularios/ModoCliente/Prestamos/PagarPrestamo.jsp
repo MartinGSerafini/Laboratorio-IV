@@ -85,6 +85,7 @@
     Integer idPrestamoSeleccionado = (Integer) request.getAttribute("idPrestamoSeleccionado");
     java.math.BigDecimal totalAPagar = (java.math.BigDecimal) request.getAttribute("totalAPagar");
     String[] seleccionadas = (String[]) request.getAttribute("cuotasSeleccionadasMarcadas");
+    String cuentaSeleccionada = (String) request.getAttribute("cuentaSeleccionadaMarcada");
 
     if (cuotas != null && !cuotas.isEmpty() && idPrestamoSeleccionado != null) {
 %>
@@ -161,13 +162,14 @@
                 java.util.List<entidades.Cuenta> cuentas = (java.util.List<entidades.Cuenta>) request.getAttribute("cuentas");
                 if (cuentas != null && !cuentas.isEmpty()) {
                     for (entidades.Cuenta cuenta : cuentas) {
+                        boolean seleccionada = cuentaSeleccionada != null && cuentaSeleccionada.equals(String.valueOf(cuenta.getIdCuenta()));
             %>
                 <tr>
                     <td><%= cuenta.getNumeroCuenta() %></td>
                     <td><%= cuenta.getTipoCuentaCuenta() %></td>
                     <td>$<%= cuenta.getSaldoCuenta() %></td>
                     <td>
-                        <input type="radio" name="cuentaSeleccionada" value="<%= cuenta.getIdCuenta() %>" required>
+                        <input type="radio" name="cuentaSeleccionada" value="<%= cuenta.getIdCuenta() %>" <%= seleccionada ? "checked" : "" %>>
                     </td>
                 </tr>
             <%
@@ -181,8 +183,21 @@
             </tbody>
         </table>
 
+        <%
+            boolean mostrarBoton = (seleccionadas != null && seleccionadas.length > 0 && cuentaSeleccionada != null);
+        %>
         <div class="text-center mt-4 mb-5">
-            <button type="submit" class="btn btn-danger btn-lg">Confirmar Pago de Cuotas</button>
+            <%
+                if (mostrarBoton) {
+            %>
+                <button type="submit" class="btn btn-danger btn-lg" name="tipoPago" value="cuotas">Confirmar Pago de Cuotas</button>
+            <%
+                } else {
+            %>
+                <button type="submit" class="btn btn-danger btn-lg" disabled>Seleccione al menos una cuota y una cuenta</button>
+            <%
+                }
+            %>
         </div>
     </form>
 </div>
