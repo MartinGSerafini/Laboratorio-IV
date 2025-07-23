@@ -44,14 +44,23 @@ public class PagarPrestamoServlet extends HttpServlet {
         if(request.getParameter("prestamoId")!= null && request.getParameter("cuentaSeleccionada")!= null) {
         	int prestamoSeleccionado = Integer.parseInt(request.getParameter("prestamoId"));
         	int cuentaSeleccionada = Integer.parseInt(request.getParameter("cuentaSeleccionada"));
+        	
         	System.out.println("PRESTAMO SELECCIONADO: " + prestamoSeleccionado);
         	System.out.println("CUENTA SELECCIONADA: " + cuentaSeleccionada);
-        	// FALTA VALIDAR QUE EL SALDO DE LA CUENTA SEA SUFICIENTE
-        	if(negocioPrestamo.pagarPrestamoCompleto(prestamoSeleccionado) && negocioCuota.pagarPrestamoCompleto(prestamoSeleccionado)) {
-        		// ARREGLAR ESTA PARTE
-        		System.out.println("PRESTAMO PAGADO CON EXITO");
+        	
+        	// Validar que el saldo de la cuenta sea suficiente
+        	String importe = request.getParameter("importeAPagar");
+        	if(negocioCuenta.validarSaldoSuficiente(importe, cuentaSeleccionada)) {
+        		System.out.println("SALDO SUFICIENTE");
+        		if(negocioPrestamo.pagarPrestamoCompleto(prestamoSeleccionado) && negocioCuota.pagarPrestamoCompleto(prestamoSeleccionado)) {
+        			System.out.println("PRESTAMO PAGADO CON EXITO");
+        		}
+        		// FALTA DESCONTAR PLATA DE LA CUENTA
+            	if(negocioCuenta.descontarPlata(importe, idCliente, cuentaSeleccionada)) {
+            		System.out.println("PLATA DESCONTADA");
+            	}
         	}
-        	// FALTA DESCONTAR PLATA DE LA CUENTA
+        		
         }
 
         request.getRequestDispatcher("/Formularios/ModoCliente/Prestamos/PagarPrestamo.jsp").forward(request, response);

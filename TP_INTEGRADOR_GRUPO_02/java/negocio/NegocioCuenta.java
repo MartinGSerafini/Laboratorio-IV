@@ -157,11 +157,27 @@ public class NegocioCuenta implements servicioABML<Cuenta>{
 		return errores.length() > 0 ? errores.toString() : null;
 		}
 			
-		public ArrayList<Cuenta> cuentasXCliente(String idCliente){
-			int id = Integer.parseInt(idCliente);
-			return daoCuenta.cuentasXCliente(id);
+	public ArrayList<Cuenta> cuentasXCliente(String idCliente){
+		int id = Integer.parseInt(idCliente);
+		return daoCuenta.cuentasXCliente(id);
+	}
+	
+	public int obtenerIdCuentaPorNumero(String numeroCuenta) {
+	    return daoCuenta.obtenerIdCuentaPorNumero(numeroCuenta);
+	}
+	
+	public boolean validarSaldoSuficiente(String importe, int idCuenta) {
+		Cuenta cuenta = daoCuenta.obtenerCuentaXId(idCuenta);
+		BigDecimal importeAPagar = new BigDecimal(importe);
+		if(cuenta.getSaldoCuenta().compareTo(importeAPagar) > 0) {
+			return true;
 		}
-		public int obtenerIdCuentaPorNumero(String numeroCuenta) {
-		    return daoCuenta.obtenerIdCuentaPorNumero(numeroCuenta);
-		}
+		return false;
+	}
+	
+	public boolean descontarPlata(String importe, int idCliente, int idCuenta) {
+		BigDecimal importeTotal = new BigDecimal(importe);
+		 return daoCuenta.descontarPlata(importeTotal, idCliente, idCuenta);
+	}
+		
 	}

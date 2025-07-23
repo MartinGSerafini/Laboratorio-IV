@@ -182,7 +182,6 @@ public class daoCuenta {
 		    return false;
 		}
 	 
-	 
 	 public int contarCuentasXClientes(int cliente) {
 		 String sql = "SELECT COUNT(*) FROM cuenta WHERE idCliente_cuenta=?";
 		 int cantCuentas = 0;
@@ -254,8 +253,6 @@ public class daoCuenta {
 
 		    return cuentas;
 		}
-
-	 
 	 
 	 public ArrayList<Cuenta> cuentasXCliente(int idCliente){
 		 String sql = "SELECT c.*, tc.descripcion_tipocuenta FROM Cuenta c INNER JOIN tipocuenta tc ON c.idTipoCuenta_cuenta = tc.idTipoCuenta WHERE idCliente_cuenta = ? AND c.estado_cuentas = 1";
@@ -287,7 +284,6 @@ public class daoCuenta {
 			return lista;
 	 }
 
-	 
 	 public Cuenta obtenerCuentaCBU(String cbu){
 			String sql = "SELECT c.*, tc.descripcion_tipocuenta FROM Cuenta c INNER JOIN tipocuenta tc ON c.idTipoCuenta_cuenta = tc.idTipoCuenta WHERE c.estado_cuentas = 1 AND c.cbu_cuenta = ?";
 			Cuenta cuenta = new Cuenta();
@@ -318,7 +314,6 @@ public class daoCuenta {
 				}finally {}
 				return cuenta;
 			}
-	 
 	 
 	 public boolean realizarTransferencia(String cbuOrigen, String cbuDestino, BigDecimal monto) {		 
 		 String sql1 = "UPDATE Cuenta SET saldo_cuenta = saldo_cuenta - ? WHERE cbu_cuenta = ?";
@@ -378,4 +373,49 @@ public class daoCuenta {
 		    return idCuenta;
 		}
 
+	 public Cuenta obtenerCuentaXId(int id) {
+		 String sql = "SELECT c.*, tc.descripcion_tipocuenta FROM Cuenta c INNER JOIN tipocuenta tc ON c.idTipoCuenta_cuenta = tc.idTipoCuenta WHERE id_cuenta = ? AND c.estado_cuentas = 1";
+		 Cuenta cuenta = new Cuenta();
+		 try (Connection conn = Conexion.getConexion();
+			PreparedStatement ps = conn.prepareStatement(sql)) {
+	        		ps.setInt(1,id);
+	        		
+	        		try(ResultSet rs = ps.executeQuery()){
+	        			if (rs.next()) {
+	        				cuenta.setIdCuenta(rs.getString("id_cuenta"));
+	        				cuenta.setIdClienteCuenta(rs.getInt("idCliente_cuenta"));
+	        				cuenta.setIdTipoCuentaCuenta(rs.getInt("idTipoCuenta_cuenta"));
+	        				cuenta.setFechaCreacionCuenta(rs.getDate("fechaCreacion_cuenta"));
+	        				cuenta.setNumeroCuenta(rs.getString("numero_cuenta"));
+	        				cuenta.setCbuCuenta(rs.getString("cbu_cuenta"));
+	        				cuenta.setSaldoCuenta(rs.getBigDecimal("saldo_cuenta"));
+	        				cuenta.setTipoCuentaCuenta(rs.getString("descripcion_tipocuenta"));
+	        				
+	        		   }
+	        		}
+	        		conn.close();
+	        		
+	        	 }catch(Exception e) {
+					e.printStackTrace();
+				}finally {}
+				return cuenta;
+	 }
+	 
+	 public boolean descontarPlata(BigDecimal importe, int idCliente, int idCuenta){
+		 String sql = "UPDATE cuenta SET saldo_cuenta = saldo_cuenta - ? WHERE idCliente_cuenta = ? AND id_cuenta = ?";
+	        
+	        try (Connection conn = Conexion.getConexion();
+	       	    PreparedStatement ps = conn.prepareStatement(sql)) {
+	        	
+	        	ps.setBigDecimal(1, importe);
+	        	ps.setInt(2, idCliente);
+	        	ps.setInt(3, idCuenta);
+	       	    int filas = ps.executeUpdate();
+	       	    return filas > 0;
+	       	    
+	       	} catch (Exception e) {
+	       	    e.printStackTrace();
+	       	    return false;
+	       	}
+	 }
 }

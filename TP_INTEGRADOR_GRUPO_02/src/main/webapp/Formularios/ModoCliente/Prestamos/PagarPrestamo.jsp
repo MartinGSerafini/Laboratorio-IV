@@ -70,7 +70,7 @@
                     <td><%= prestamo.getPlazoMesesPres() %></td>
                     <td>$<%= prestamo.getMontoCuotaPres() %></td>
                     <td><%= prestamo.getIdCuentaDepositoPres() %></td>
-                    <td><input type="radio" name="prestamoSeleccionado" value="<%= prestamo.getIdPrestamo() %>" onchange="activarOpciones(<%= prestamo.getIdPrestamo() %>)"/></td>
+                    <td><input type="radio" name="prestamoSeleccionado" value="<%= prestamo.getIdPrestamo() %>" onchange="activarOpciones(<%= prestamo.getIdPrestamo() %>,<%= prestamo.getImporteTotalPres()%>)"/></td>
                 </tr>
             <%
                     }
@@ -152,6 +152,7 @@
         </div>
         <div class="modal-footer">
           <input type="hidden" name="prestamoId" id="inputPrestamoId">
+          <input type="hidden" name="importeAPagar" id="inputImporteAPagar">
           <input type="hidden" name="tipoPago" id="inputTipoPago">
           <input type="hidden" name="cuotasSeleccionadas" id="inputCuotasSeleccionadas">
           <button type="submit" class="btn btn-primary">Confirmar Pago</button>
@@ -164,9 +165,11 @@
 
 <script>
 let prestamoSeleccionado = null;
+let importeAPagar = null;
 
-function activarOpciones(idPrestamo) {
+function activarOpciones(idPrestamo, importeTotal) {
     prestamoSeleccionado = idPrestamo;
+    importeAPagar = importeTotal;
     document.getElementById("accionesPago").style.display = "block";
     document.getElementById("cuotasContainer").style.display = "none";
 }
@@ -199,6 +202,7 @@ function abrirModalCuentas(tipo) {
     if (!prestamoSeleccionado) return;
 
     document.getElementById("inputPrestamoId").value = prestamoSeleccionado;
+    document.getElementById("inputImporteAPagar").value = importeAPagar;
     document.getElementById("inputTipoPago").value = tipo;
 
     if (tipo === "cuotas") {
