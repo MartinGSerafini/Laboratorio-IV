@@ -122,6 +122,50 @@ INSERT INTO `cuenta` VALUES (1,1,2,'2022-10-23','001-0001-01','123000000001',199
 UNLOCK TABLES;
 
 --
+-- Table structure for table `prestamo`
+--
+
+DROP TABLE IF EXISTS `prestamo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `prestamo` (
+  `id_prestamo` int(11) NOT NULL AUTO_INCREMENT,
+  `idCliente_pres` int(11) DEFAULT NULL,
+  `fechaSolicitud_pres` date DEFAULT NULL,
+  `importeSolicitado_pres` decimal(12,2) DEFAULT NULL,
+  `importeTotal_pres` decimal(12,2) DEFAULT NULL,
+  `plazoMeses_pres` int(11) DEFAULT NULL,
+  `montoCuota_pres` decimal(12,2) DEFAULT NULL,
+  `estado_pres` int(11) DEFAULT NULL,
+  `idCuentaDeposito_pres` int(11) DEFAULT NULL,
+  `estado_prestamo` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`id_prestamo`),
+  KEY `fk_estado_idx` (`estado_pres`),
+  KEY `fk_idCuentaDeposito_idx` (`idCuentaDeposito_pres`),
+  KEY `fk_idClienPress_idx` (`idCliente_pres`),
+  CONSTRAINT `fk_estado` FOREIGN KEY (`estado_pres`) REFERENCES `estadoprestamos` (`id_estadoPrestamos`),
+  CONSTRAINT `fk_idClienPress` FOREIGN KEY (`idCliente_pres`) REFERENCES `cliente` (`id_cliente`),
+  CONSTRAINT `fk_idCuentaDeposito` FOREIGN KEY (`idCuentaDeposito_pres`) REFERENCES `cuenta` (`id_cuenta`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `prestamo`
+--
+
+LOCK TABLES `prestamo` WRITE;
+/*!40000 ALTER TABLE `prestamo` DISABLE KEYS */;
+-- BORRAR DATOS ACTUALES
+
+-- INSERT CORREGIDO
+INSERT INTO prestamo (id_prestamo, idCliente_pres, fechaSolicitud_pres, importeSolicitado_pres, importeTotal_pres, plazoMeses_pres, montoCuota_pres, estado_pres, idCuentaDeposito_pres, estado_prestamo)
+VALUES 
+(1,  2, '2023-01-28', 80000.00, 85600.00, 6, 14266.67, 1, 5, 1),(2, 15, '2023-04-11', 80000.00, 92000.00, 12, 7666.67, 1, 30, 1),(3, 14, '2023-01-10', 120000.00, 138000.00, 12, 11500.00, 1, 27, 1),(4,  8, '2023-03-26', 100000.00, 107000.00, 6, 17833.33, 1, 17, 1),(5,  1, '2023-02-10', 80000.00, 92000.00, 12, 7666.67, 1, 3, 1),(6,  4, '2023-02-14', 80000.00, 92000.00, 12, 7666.67, 1, 10, 1),(7,  7, '2023-06-26', 120000.00, 128400.00, 6, 21400.00, 1, 16, 1),(8,  6, '2023-06-28', 80000.00, 85600.00, 6, 14266.67, 1, 13, 1),(9, 10, '2023-04-03', 90000.00, 96300.00, 6, 16050.00, 1, 19, 1),(10,11, '2023-02-10', 100000.00, 107000.00, 6, 17833.33, 1, 23, 1),(11, 1, '2025-07-22', 100000.00, 110000.00, 8, 13750.00, 1, 1, 1), (12, 1, '2025-07-22', 100000.00, 110000.00, 8, 13750.00, 2, 1, 1); 
+/*!40000 ALTER TABLE `prestamo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
 -- Table structure for table `cuota`
 --
 
@@ -150,7 +194,7 @@ CREATE TABLE `cuota` (
 
 LOCK TABLES `cuota` WRITE;
 /*!40000 ALTER TABLE `cuota` DISABLE KEYS */;
-INSERT INTO `cuota` VALUES 
+INSERT INTO `cuota`(idPrestamo_cuota, numero_cuota, importe_cuota, fechaVenc_cuota, fechaPago_cuota, estado_cuota) VALUES 
 (1,1,16000.00,'2023-02-27','2023-02-27',1),
 (1,2,16000.00,'2023-03-29','2023-03-29',1),
 (1,3,16000.00,'2023-04-28','2023-04-28',1),
@@ -390,50 +434,6 @@ INSERT INTO `nacionalidad` VALUES (1,'Afganistán'),(2,'Albania'),(3,'Alemania')
 UNLOCK TABLES;
 
 --
--- Table structure for table `prestamo`
---
-
-DROP TABLE IF EXISTS `prestamo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `prestamo` (
-  `id_prestamo` int(11) NOT NULL AUTO_INCREMENT,
-  `idCliente_pres` int(11) DEFAULT NULL,
-  `fechaSolicitud_pres` date DEFAULT NULL,
-  `importeSolicitado_pres` decimal(12,2) DEFAULT NULL,
-  `importeTotal_pres` decimal(12,2) DEFAULT NULL,
-  `plazoMeses_pres` int(11) DEFAULT NULL,
-  `montoCuota_pres` decimal(12,2) DEFAULT NULL,
-  `estado_pres` int(11) DEFAULT NULL,
-  `idCuentaDeposito_pres` int(11) DEFAULT NULL,
-  `estado_prestamo` tinyint(1) DEFAULT '1',
-  PRIMARY KEY (`id_prestamo`),
-  KEY `fk_estado_idx` (`estado_pres`),
-  KEY `fk_idCuentaDeposito_idx` (`idCuentaDeposito_pres`),
-  KEY `fk_idClienPress_idx` (`idCliente_pres`),
-  CONSTRAINT `fk_estado` FOREIGN KEY (`estado_pres`) REFERENCES `estadoprestamos` (`id_estadoPrestamos`),
-  CONSTRAINT `fk_idClienPress` FOREIGN KEY (`idCliente_pres`) REFERENCES `cliente` (`id_cliente`),
-  CONSTRAINT `fk_idCuentaDeposito` FOREIGN KEY (`idCuentaDeposito_pres`) REFERENCES `cuenta` (`id_cuenta`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `prestamo`
---
-
-LOCK TABLES `prestamo` WRITE;
-/*!40000 ALTER TABLE `prestamo` DISABLE KEYS */;
-INSERT INTO `prestamo` VALUES -- BORRAR DATOS ACTUALES
-DELETE FROM prestamo;
-
--- INSERT CORREGIDO
-INSERT INTO prestamo (id_prestamo, idCliente_pres, fechaSolicitud_pres, importeSolicitado_pres, importeTotal_pres, plazoMeses_pres, montoCuota_pres, estado_pres, idCuentaDeposito_pres, estado_prestamo)
-VALUES 
-(1,  2, '2023-01-28', 80000.00, 85600.00, 6, 14266.67, 1, 5, 1),(2, 15, '2023-04-11', 80000.00, 92000.00, 12, 7666.67, 1, 30, 1),(3, 14, '2023-01-10', 120000.00, 138000.00, 12, 11500.00, 1, 27, 1),(4,  8, '2023-03-26', 100000.00, 107000.00, 6, 17833.33, 1, 17, 1),(5,  1, '2023-02-10', 80000.00, 92000.00, 12, 7666.67, 1, 3, 1),(6,  4, '2023-02-14', 80000.00, 92000.00, 12, 7666.67, 1, 10, 1),(7,  7, '2023-06-26', 120000.00, 128400.00, 6, 21400.00, 1, 16, 1),(8,  6, '2023-06-28', 80000.00, 85600.00, 6, 14266.67, 1, 13, 1),(9, 10, '2023-04-03', 90000.00, 96300.00, 6, 16050.00, 1, 19, 1),(10,11, '2023-02-10', 100000.00, 107000.00, 6, 17833.33, 1, 23, 1),(11, 1, '2025-07-22', 100000.00, 110000.00, 8, 13750.00, 1, 1, 1), (12, 1, '2025-07-22', 100000.00, 110000.00, 8, 13750.00, 2, 1, 1); 
-/*!40000 ALTER TABLE `prestamo` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `provincia`
 --
 
@@ -516,3 +516,31 @@ UNLOCK TABLES;
 
 -- Dump completed on 2025-07-22 19:12:36
 
+
+
+use bdbancobg2;
+
+DELIMITER //
+CREATE TRIGGER TR_setear_saldo_cuenta_nueva
+BEFORE INSERT ON cuenta
+FOR EACH ROW
+BEGIN
+	IF new.estado_cuentas = TRUE THEN
+	SET new.saldo_cuenta = 10000;
+    END IF;
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER TR_agregar_saldo_prestamo
+AFTER UPDATE ON prestamo
+FOR EACH ROW
+BEGIN
+	IF new.estado_pres = 1 AND old.estado_pres != 1 THEN
+	UPDATE cuenta SET saldo_cuenta = saldo_cuenta + new.importeSolicitado_pres
+    WHERE id_cuenta = new.idCuentaDeposito_pres;
+    END IF;
+END;
+//
+DELIMITER ;
