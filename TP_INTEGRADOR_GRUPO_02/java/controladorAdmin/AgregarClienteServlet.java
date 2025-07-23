@@ -32,18 +32,14 @@ public class AgregarClienteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//-------Nacionalidad------------
 		NacionalidadDao nacionalidadDao = new NacionalidadDao();
 	    ArrayList<Nacionalidad> listaNacionalidades = nacionalidadDao.obtenerNacionalidades();
 	    request.setAttribute("nacionalidades", listaNacionalidades);
 
-	   
-	   //-------Provincia------------
 	    ProvinciaDao provinciaDao = new ProvinciaDao();
 	    List<Provincia> listaProvincias = provinciaDao.obtenerProvincias();
 	    request.setAttribute("provincias", listaProvincias);
 	
-	    //-------Localidad------------
 		RequestDispatcher rd = request.getRequestDispatcher("/Formularios/ModoBanco/ABMLClientes/AgregarClientes.jsp");
 		rd.forward(request, response); 
 	}
@@ -55,8 +51,7 @@ public class AgregarClienteServlet extends HttpServlet {
 		daoCliente daoCliente = new daoCliente();
 		int idCliente = daoCliente.obtenerUltimoId() + 1;
 		String idClienteStr = String.valueOf(idCliente);
-		
-	    // Cargar nacionalidades y provincias siempre que vuelvas al JSP	
+			
 	    NacionalidadDao nacionalidadDao = new NacionalidadDao();
 	    ProvinciaDao provinciaDao = new ProvinciaDao();
 
@@ -81,7 +76,6 @@ public class AgregarClienteServlet extends HttpServlet {
 	            }
 	        }
 
-	        // Volver al formulario con provincias, nacionalidades y localidades cargadas
 	        request.getRequestDispatcher("/Formularios/ModoBanco/ABMLClientes/AgregarClientes.jsp").forward(request, response);
 	        return;
 	    }
@@ -106,10 +100,7 @@ public class AgregarClienteServlet extends HttpServlet {
 
 	            java.sql.Date fechaNac = java.sql.Date.valueOf(fechaNacStr);
 
-	            //instanciar NegocioCliente
 	            NegocioCliente servicio = new NegocioCliente();
-	           
-	            //validar cliente y obtener errores
 	            String ErroresValidacion = servicio.validarYVerificarCliente(idClienteStr, usuario, contrasena, dni, cuil,
 	                    nombre, apellido, sexo, nacionalidad, fechaNacStr, direccion,
 	                    localidad, provincia, correo, telefono);
@@ -121,7 +112,6 @@ public class AgregarClienteServlet extends HttpServlet {
 	            	
 	            	request.setAttribute("errores", errores);
 	            	
-	            	// Mantener los valores ingresados en el formulario después del error
 	                request.setAttribute("usuario", usuario);
 	                request.setAttribute("contrasena", contrasena);
 	                request.setAttribute("dni", dni); 
@@ -137,7 +127,6 @@ public class AgregarClienteServlet extends HttpServlet {
 	                request.setAttribute("correo", correo);
 	                request.setAttribute("telefono", telefono);
 
-	                // Si hay una provincia seleccionada, recargar las localidades
 	                if (provincia > 0) {
 	                    LocalidadDao localidadDao = new LocalidadDao();
 	                    List<Localidad> localidadesCargadas = localidadDao.obtenerLocalidadesPorProvincia(provincia);
@@ -148,7 +137,6 @@ public class AgregarClienteServlet extends HttpServlet {
 	                return; 
 	            }
 	            
-	          //si no hay errores, procede con el alta
 	            Cliente cliente = new Cliente(dni, cuil, nombre, apellido, sexo,
                         nacionalidad, fechaNac, direccion, localidad,
                         provincia, correo, telefono, usuario, contrasena);
@@ -171,7 +159,6 @@ public class AgregarClienteServlet extends HttpServlet {
 	    
 	    // Acción: Limpiar form
 	    if ("resetFormulario".equals(accion)) {
-	        // Evitás cargar datos anteriores y reenviás limpio
 	        NacionalidadDao nacionalidadDao2 = new NacionalidadDao();
 	        ProvinciaDao provinciaDao2 = new ProvinciaDao();
 

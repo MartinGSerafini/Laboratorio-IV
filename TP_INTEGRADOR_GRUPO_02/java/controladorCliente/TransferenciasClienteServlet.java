@@ -76,6 +76,13 @@ public class TransferenciasClienteServlet extends HttpServlet {
             request.getRequestDispatcher("Formularios/ModoCliente/Transferencias/Transferencias.jsp").forward(request, response);
             return;
         }
+        
+        if (monto.compareTo(BigDecimal.ZERO) <= 0) {
+            request.setAttribute("error", "El monto debe ser mayor a cero");
+            cargarDatosVista(request, cbuDestino);
+            request.getRequestDispatcher("Formularios/ModoCliente/Transferencias/Transferencias.jsp").forward(request, response);
+            return;
+        }
 
 
         Cuenta cuentaOrigen = negocioCuenta.obtenerCuentaCBU(cbuOrigen);

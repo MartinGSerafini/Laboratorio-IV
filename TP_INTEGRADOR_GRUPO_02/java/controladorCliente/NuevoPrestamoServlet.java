@@ -74,13 +74,13 @@ public class NuevoPrestamoServlet extends HttpServlet {
 
                 if (idPrestamoGenerado > 0) {
                     negocioPrestamo.insertarCuotas(idPrestamoGenerado, cuotas, montoCuota, fechaActual);
-                    request.setAttribute("mensajeExito", "Préstamo solicitado correctamente.");
+                    request.setAttribute("mensaje", "exito");
                 } else {
-                    request.setAttribute("mensajeError", "Error al registrar el préstamo.");
+                    request.setAttribute("mensaje", "error");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                request.setAttribute("mensajeError", "Ocurrió un error inesperado: " + e.getMessage());
+                request.setAttribute("mensajeError", "Ocurriï¿½ un error inesperado: " + e.getMessage());
             }
             doGet(request, response);
         }
