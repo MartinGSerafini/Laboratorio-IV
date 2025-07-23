@@ -31,11 +31,14 @@ public class AutorizacionPrestamosServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Prestamo> listado = new ArrayList<Prestamo>();
-		if(request.getParameter("autorizar") != null) {
+		
+		String accion = request.getParameter("accion");
+		
+		if("autorizar".equals(accion)) {
 			negocioPrestamo.modificarEstadoPrestamo("1", request.getParameter("idPrestamo"));
 		}
 		
-		if(request.getParameter("rechazar") != null) {
+		if("rechazar".equals(accion)) {
 			negocioPrestamo.modificarEstadoPrestamo("2", request.getParameter("idPrestamo"));
 		}
 		

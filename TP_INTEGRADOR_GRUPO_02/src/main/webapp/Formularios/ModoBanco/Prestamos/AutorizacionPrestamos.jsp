@@ -115,10 +115,11 @@
             		if(p.getEstadoPres().getId()==3){
             			%>
             			<td>
-            			<form method="get" action="${pageContext.request.contextPath}/AutorizacionPrestamosServlet">
+            		<form id="formPrestamo" method="get" action="${pageContext.request.contextPath}/AutorizacionPrestamosServlet">
             			<input type="hidden" name="idPrestamo" value="<%= p.getIdPrestamo() %>">
-                        <button type="submit" name="autorizar" class="btn btn-warning btn-sm">Autorizar</button>
-                        <button type="submit" name="rechazar" class="btn btn-danger btn-sm">Rechazar</button>
+                        <input type="hidden" name="accion" id="accionSeleccionada">
+    					<button type="button" class="btn btn-warning btn-sm" onclick="mostrarModalConfirmar('autorizar')">Autorizar</button>
+    					<button type="button" class="btn btn-danger btn-sm" onclick="mostrarModalConfirmar('rechazar')">Rechazar</button>
                     </form>
                     </td>
             		<%}else{%>
@@ -145,8 +146,30 @@
     </nav>
 </div>
 
-
 <script>
+
+let accionActual = '';
+
+function mostrarModalConfirmar(accion) {
+    accionActual = accion;
+    const modalBody = document.querySelector('#confirmarEleccionModal .modal-body');
+    if (accion === 'autorizar') {
+        modalBody.textContent = '¿Está seguro que desea autorizar este préstamo?';
+    } else if (accion === 'rechazar') {
+        modalBody.textContent = '¿Está seguro que desea rechazar este préstamo?';
+    }
+
+    let modal = new bootstrap.Modal(document.getElementById('confirmarEleccionModal'));
+    modal.show();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('confirmarEleccion').addEventListener('click', function () {
+        document.getElementById('accionSeleccionada').value = accionActual;
+        document.getElementById('formPrestamo').submit();
+    });
+});
+
 function mostrarOpciones() {
     const filtro = document.getElementById("filtro").value;
     const estados = document.getElementById("estados");
@@ -176,9 +199,7 @@ function mostrarOpciones() {
     	}
     }
 }
-</script>
 
-<script>
 function validarIngresoBusqueda(){
 	const filtro = document.getElementById("filtro").value;
 	const busqueda = document.getElementById("busqueda").value;
@@ -194,11 +215,9 @@ function validarIngresoBusqueda(){
 	}
 	return true;
 }
-</script>
 
-<script>
 window.onload = function() {
-    mostrarOpciones(); // Ejecuta esto automáticamente al abrir la página
+    mostrarOpciones();
     
     <% if (request.getAttribute("errores") != null) { %>
         let modal = new bootstrap.Modal(document.getElementById('modalErrorDatoInvalido'));
@@ -207,9 +226,7 @@ window.onload = function() {
     	validarIngresoBusqueda();
    <% }%>
 };
-</script>
 
-<script>
 function quitarFiltro() {
     const filtro = document.getElementById("filtro");
     const txtBusqueda = document.getElementById("busqueda");
@@ -222,6 +239,8 @@ function quitarFiltro() {
     estados.style.display = "none";
     quitarFiltro.style.display = "none";
 }
+
+
 </script>
 
 <div class="modal fade" id="modalErrorDatoInvalido" tabindex="-1" aria-labelledby="modalError" aria-hidden="true">
@@ -262,6 +281,25 @@ function quitarFiltro() {
     </div>
   </div>
  </div>
+ 
+ <!-- Modal Confirmar -->
+    <div class="modal fade" id="confirmarEleccionModal" tabindex="-1" aria-labelledby="confirmarEleccionLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-warning">
+            <h5 class="modal-title">Confirmar Elección</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+          
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning" id="confirmarEleccion">Aceptar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 <!-- Bootstrap Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
