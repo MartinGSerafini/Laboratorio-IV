@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ModoClienteCSS/Prestamos/Prestamos.css">
-    
+
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
@@ -24,20 +24,20 @@
             <div class="dropdown me-3">
                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
                     ☰
-                </button>      
+                </button>
                 <ul class="dropdown-menu">
-           			 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/InfoPersonalClienteServlet">Informacion Personal</a></li>
-           			 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/CuentasClienteServlet">Cuentas</a></li>
-           			 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/TransferenciasClienteServlet">Transferir Dinero</a></li>
-           			 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/NuevoPrestamoServlet">Nuevo Prestamo</a></li>
-           			 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/PagarPrestamoServlet">Pagar Prestamo</a></li>
-					 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/Formularios/Login/InicioUsuario.jsp">Cerrar Sesion</a></li>
-				</ul>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/InfoPersonalClienteServlet">Información Personal</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/CuentasClienteServlet">Cuentas</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/TransferenciasClienteServlet">Transferir Dinero</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/NuevoPrestamoServlet">Nuevo Préstamo</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/PagarPrestamoServlet">Pagar Préstamo</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/Formularios/Login/InicioUsuario.jsp">Cerrar Sesión</a></li>
+                </ul>
             </div>
         </div>
         <span class="navbar-text text-white">
-        <%= session.getAttribute("ClienteLogueado") != null ? session.getAttribute("ClienteLogueado") : "INVITADO" %>
-      </span>
+            <%= session.getAttribute("ClienteLogueado") != null ? session.getAttribute("ClienteLogueado") : "INVITADO" %>
+        </span>
     </div>
 </nav>
 
@@ -48,18 +48,38 @@
         <table class="table table-bordered w-auto text-center">
             <thead class="table-light">
                 <tr>
-                    <th>ID</th><th>Total</th><th>Restante</th><th>Seleccionar</th>
+                    <th>Fecha Solicitud</th>
+                    <th>Importe Solicitado</th>
+                    <th>Importe Total</th>
+                    <th>Plazo de Pago</th>
+                    <th>Monto Cuota</th>
+                    <th>Cuenta Depósito</th>
+                    <th>Seleccionar</th>
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="prestamo" items="${prestamos}">
-                    <tr>
-                        <td>${prestamo.id}</td>
-                        <td>$${prestamo.importeTotal}</td>
-                        <td>$${prestamo.importeRestante}</td>
-                        <td><input type="radio" name="prestamoSeleccionado" value="${prestamo.id}" onchange="activarOpciones(${prestamo.id})"/></td>
-                    </tr>
-                </c:forEach>
+            <%
+                java.util.List<entidades.Prestamo> prestamos = (java.util.List<entidades.Prestamo>) request.getAttribute("prestamos");
+                if (prestamos != null) {
+                    for (entidades.Prestamo prestamo : prestamos) {
+            %>
+                <tr>
+                    <td><%= new java.text.SimpleDateFormat("dd/MM/yyyy").format(prestamo.getFechaSolicitudPres()) %></td>
+                    <td>$<%= prestamo.getImporteSolicitadoPres() %></td>
+                    <td>$<%= prestamo.getImporteTotalPres() %></td>
+                    <td><%= prestamo.getPlazoMesesPres() %></td>
+                    <td>$<%= prestamo.getMontoCuotaPres() %></td>
+                    <td><%= prestamo.getIdCuentaDepositoPres() %></td>
+                    <td><input type="radio" name="prestamoSeleccionado" value="<%= prestamo.getIdPrestamo() %>" onchange="activarOpciones(<%= prestamo.getIdPrestamo() %>)"/></td>
+                </tr>
+            <%
+                    }
+                } else {
+            %>
+                <tr><td colspan="8">No hay préstamos para mostrar</td></tr>
+            <%
+                }
+            %>
             </tbody>
         </table>
     </div>
@@ -102,14 +122,25 @@
                 <tr><th>Número</th><th>Tipo</th><th>Saldo</th><th>Seleccionar</th></tr>
               </thead>
               <tbody>
-                <c:forEach var="cuenta" items="${cuentas}">
-                  <tr>
-                    <td>${cuenta.numero}</td>
-                    <td>${cuenta.tipo}</td>
-                    <td>$${cuenta.saldo}</td>
-                    <td><input type="radio" name="cuentaSeleccionada" value="${cuenta.id}" required/></td>
-                  </tr>
-                </c:forEach>
+              <%
+                java.util.List<entidades.Cuenta> cuentas = (java.util.List<entidades.Cuenta>) request.getAttribute("cuentas");
+                if (cuentas != null) {
+                    for (entidades.Cuenta cuenta : cuentas) {
+              %>
+                <tr>
+                    <td><%= cuenta.getNumeroCuenta() %></td>
+					<td><%= cuenta.getTipoCuentaCuenta() %></td>
+					<td>$<%= cuenta.getSaldoCuenta() %></td>
+				<td><input type="radio" name="cuentaSeleccionada" value="<%= cuenta.getIdCuenta() %>" required/></td>
+                </tr>
+              <%
+                    }
+                } else {
+              %>
+                <tr><td colspan="4">No hay cuentas para mostrar</td></tr>
+              <%
+                }
+              %>
               </tbody>
             </table>
           </div>
@@ -125,6 +156,7 @@
     </div>
   </div>
 </div>
+
 <script>
 let prestamoSeleccionado = null;
 
@@ -136,6 +168,7 @@ function activarOpciones(idPrestamo) {
 
 function cargarCuotas() {
     if (!prestamoSeleccionado) return;
+    // Aquí deberías cargar las cuotas reales desde el backend o un servlet
     const cuotas = [
         { numero: 1, importe: 5000, vencimiento: "2025-08-01" },
         { numero: 2, importe: 5000, vencimiento: "2025-09-01" }
