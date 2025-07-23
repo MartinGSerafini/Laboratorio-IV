@@ -44,4 +44,8 @@ public class NegocioCuota {
     public ArrayList<Cuota> obtenerCuotasPorPrestamo(int idPrestamo){
     	return daoCuota.obtenerCuotasPorPrestamo(idPrestamo);
     }
+    
+    public boolean pagarPrestamoCompleto(int idPrestamo) {
+    	return daoCuota.pagarPrestamoCompleto(idPrestamo);
+    }
 }

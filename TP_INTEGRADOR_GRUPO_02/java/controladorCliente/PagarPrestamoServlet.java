@@ -9,6 +9,7 @@ import java.util.List;
 import negocio.NegocioPrestamo;
 import negocio.NegocioCliente;
 import negocio.NegocioCuenta;
+import negocio.NegocioCuota;
 import entidades.Prestamo;
 import entidades.Cuenta;
 
@@ -18,6 +19,7 @@ public class PagarPrestamoServlet extends HttpServlet {
 
     private NegocioPrestamo negocioPrestamo = new NegocioPrestamo();
     private NegocioCuenta negocioCuenta = new NegocioCuenta();
+    private NegocioCuota negocioCuota = new NegocioCuota();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,6 +39,20 @@ public class PagarPrestamoServlet extends HttpServlet {
 
         request.setAttribute("prestamos", prestamos);
         request.setAttribute("cuentas", cuentas);
+        
+        // PAGAR PRESTAMO COMPLETO
+        if(request.getParameter("prestamoId")!= null && request.getParameter("cuentaSeleccionada")!= null) {
+        	int prestamoSeleccionado = Integer.parseInt(request.getParameter("prestamoId"));
+        	int cuentaSeleccionada = Integer.parseInt(request.getParameter("cuentaSeleccionada"));
+        	System.out.println("PRESTAMO SELECCIONADO: " + prestamoSeleccionado);
+        	System.out.println("CUENTA SELECCIONADA: " + cuentaSeleccionada);
+        	// FALTA VALIDAR QUE EL SALDO DE LA CUENTA SEA SUFICIENTE
+        	if(negocioPrestamo.pagarPrestamoCompleto(prestamoSeleccionado) && negocioCuota.pagarPrestamoCompleto(prestamoSeleccionado)) {
+        		// ARREGLAR ESTA PARTE
+        		System.out.println("PRESTAMO PAGADO CON EXITO");
+        	}
+        	// FALTA DESCONTAR PLATA DE LA CUENTA
+        }
 
         request.getRequestDispatcher("/Formularios/ModoCliente/Prestamos/PagarPrestamo.jsp").forward(request, response);
     }

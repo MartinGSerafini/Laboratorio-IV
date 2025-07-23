@@ -56,7 +56,7 @@ public class DaoCuota {
     }
     
     public ArrayList<Cuota> obtenerCuotasPorPrestamo(int idPrestamo) {
-    	String sql = "SELECT * FROM cuota WHERE idPrestamo_cuota = ?";
+    	String sql = "SELECT * FROM cuota WHERE idPrestamo_cuota = ? AND estado_cuota = 3";
     	ArrayList<Cuota> lista = new ArrayList<Cuota>();
     	try (Connection conn = Conexion.getConexion();
 				Statement st = conn.createStatement();) {
@@ -80,4 +80,19 @@ public class DaoCuota {
     	return lista;
     }
 
+    public boolean pagarPrestamoCompleto(int idPrestamo) {
+    	String sql = "UPDATE cuota SET estado_cuota = 1 WHERE idPrestamo_cuota = ?";
+        
+        try (Connection conn = Conexion.getConexion();
+       	    PreparedStatement ps = conn.prepareStatement(sql)) {
+        	
+        	ps.setInt(1, idPrestamo);
+       	    int filas = ps.executeUpdate();
+       	    return filas > 0;
+       	    
+       	} catch (Exception e) {
+       	    e.printStackTrace();
+       	    return false;
+       	}
+    }
 }

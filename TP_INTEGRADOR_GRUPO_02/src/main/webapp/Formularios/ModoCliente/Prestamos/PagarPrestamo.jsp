@@ -91,6 +91,8 @@
     <button class="btn" onclick="cargarCuotas()">Pagar Cuotas</button>
 </div>
 
+
+<!--  CUOTAS -->
 <div class="container mt-5" id="cuotasContainer" style="display: none;">
     <h4 class="text-center text-danger">3. Seleccione cuotas</h4>
     <div class="table-responsive d-flex justify-content-center">
@@ -108,10 +110,13 @@
     </div>
 </div>
 
+
+
+
 <div class="modal fade" id="modalCuentas" tabindex="-1">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
-      <form method="post" action="ConfirmarPagoCuotaServlet">
+      <form method="get" action="${pageContext.request.contextPath}/PagarPrestamoServlet">
         <div class="modal-header">
           <h5 class="modal-title">Seleccione la cuenta para pagar</h5>
         </div>
