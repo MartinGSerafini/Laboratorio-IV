@@ -2,6 +2,7 @@ package negocio;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import entidades.Cuota;
@@ -38,5 +39,13 @@ public class NegocioCuota {
         }
 
         return exito;
+    }
+    
+    public ArrayList<Cuota> obtenerCuotasPorPrestamo(int idPrestamo){
+    	return daoCuota.obtenerCuotasPorPrestamo(idPrestamo);
+    }
+    
+    public boolean pagarPrestamoCompleto(int idPrestamo) {
+    	return daoCuota.pagarPrestamoCompleto(idPrestamo);
     }
 }

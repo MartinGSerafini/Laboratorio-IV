@@ -209,5 +209,21 @@ public class daoPrestamo {
         }
         return lista;
     }
+
+    public boolean pagarPrestamoCompleto(int idPrestamo) {
+        String sql = "UPDATE prestamo SET estado_prestamo = 0 WHERE id_prestamo = ?";
+        
+        try (Connection conn = Conexion.getConexion();
+       	    PreparedStatement ps = conn.prepareStatement(sql)) {
+        	
+        	ps.setInt(1, idPrestamo);
+       	    int filas = ps.executeUpdate();
+       	    return filas > 0;
+       	    
+       	} catch (Exception e) {
+       	    e.printStackTrace();
+       	    return false;
+       	}
+    }
 }
 

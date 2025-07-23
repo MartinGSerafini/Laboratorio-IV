@@ -2,8 +2,11 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -51,5 +54,45 @@ public class DaoCuota {
         calendar.add(Calendar.MONTH, mesesASumar);
         return new Date(calendar.getTimeInMillis());
     }
+    
+    public ArrayList<Cuota> obtenerCuotasPorPrestamo(int idPrestamo) {
+    	String sql = "SELECT * FROM cuota WHERE idPrestamo_cuota = ? AND estado_cuota = 3";
+    	ArrayList<Cuota> lista = new ArrayList<Cuota>();
+    	try (Connection conn = Conexion.getConexion();
+				Statement st = conn.createStatement();) {
+			    ResultSet rs = st.executeQuery(sql);
+			    
+			while(rs.next()) {	
+				Cuota cuota = new Cuota();
+				cuota.setIdCuota(rs.getInt("id_cuota"));
+				cuota.setIdPrestamoCuota(rs.getInt("idPrestamo_cuota"));
+				cuota.setNumeroCuota(rs.getInt("numero_cuota"));
+				cuota.setImporteCuota(rs.getBigDecimal("importe_cuota"));
+				cuota.setFechaVencCuota(rs.getDate("fechaVenc_cuota"));
+				cuota.setFechaPagoCuota(rs.getDate("fechaPago_cuota"));
+				cuota.setEstadoCuota(rs.getInt("estado_cuota"));
+				lista.add(cuota);
+			}
+			conn.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {}
+    	return lista;
+    }
 
+    public boolean pagarPrestamoCompleto(int idPrestamo) {
+    	String sql = "UPDATE cuota SET estado_cuota = 1 WHERE idPrestamo_cuota = ?";
+        
+        try (Connection conn = Conexion.getConexion();
+       	    PreparedStatement ps = conn.prepareStatement(sql)) {
+        	
+        	ps.setInt(1, idPrestamo);
+       	    int filas = ps.executeUpdate();
+       	    return filas > 0;
+       	    
+       	} catch (Exception e) {
+       	    e.printStackTrace();
+       	    return false;
+       	}
+    }
 }

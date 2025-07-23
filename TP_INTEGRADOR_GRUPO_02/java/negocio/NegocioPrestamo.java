@@ -68,4 +68,8 @@ public class NegocioPrestamo {
 	public ArrayList<Prestamo> obtenerPrestamosPendientesPorCliente(int idCliente) {
 	    return daoPrestamo.obtenerPrestamosActivosPorCliente(idCliente);
 	}
+	
+	public boolean pagarPrestamoCompleto(int idPrestamo) {
+		return daoPrestamo.pagarPrestamoCompleto(idPrestamo);
+	}
 }
