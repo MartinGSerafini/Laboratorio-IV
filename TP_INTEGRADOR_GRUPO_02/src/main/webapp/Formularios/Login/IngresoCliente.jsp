@@ -8,13 +8,13 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="../z-CSS/LoginCSS/IngresoCliente.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/LoginCSS/IngresoCliente.css">
 </head>
 
 <body>
 
 <div class="login-card text-center position-relative">
-  <a href="InicioUsuario.jsp" class="back-arrow">
+  <a href="${pageContext.request.contextPath}/Formularios/Login/InicioUsuario.jsp" class="back-arrow">
   	<i class="bi bi-arrow-left"></i> Volver
   </a>
   <div class="admin-box">Cliente</div>
@@ -39,9 +39,6 @@
       <button type="submit" name="Aceptar" class="btn btn-custom btn-lg">Aceptar</button>
     </div>
 
-    <div class="text-center mt-4">
-      <a href="registro.jsp" class="link-custom d-block">¿Necesitas ayuda?</a>
-    </div>
   </form>
 </div>
 
