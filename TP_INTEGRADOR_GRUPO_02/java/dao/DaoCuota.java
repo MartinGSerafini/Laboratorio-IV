@@ -2,8 +2,11 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -50,6 +53,31 @@ public class DaoCuota {
         calendar.setTime(fechaInicio);
         calendar.add(Calendar.MONTH, mesesASumar);
         return new Date(calendar.getTimeInMillis());
+    }
+    
+    public ArrayList<Cuota> obtenerCuotasPorPrestamo(int idPrestamo) {
+    	String sql = "SELECT * FROM cuota WHERE idPrestamo_cuota = ?";
+    	ArrayList<Cuota> lista = new ArrayList<Cuota>();
+    	try (Connection conn = Conexion.getConexion();
+				Statement st = conn.createStatement();) {
+			    ResultSet rs = st.executeQuery(sql);
+			    
+			while(rs.next()) {	
+				Cuota cuota = new Cuota();
+				cuota.setIdCuota(rs.getInt("id_cuota"));
+				cuota.setIdPrestamoCuota(rs.getInt("idPrestamo_cuota"));
+				cuota.setNumeroCuota(rs.getInt("numero_cuota"));
+				cuota.setImporteCuota(rs.getBigDecimal("importe_cuota"));
+				cuota.setFechaVencCuota(rs.getDate("fechaVenc_cuota"));
+				cuota.setFechaPagoCuota(rs.getDate("fechaPago_cuota"));
+				cuota.setEstadoCuota(rs.getInt("estado_cuota"));
+				lista.add(cuota);
+			}
+			conn.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {}
+    	return lista;
     }
 
 }
