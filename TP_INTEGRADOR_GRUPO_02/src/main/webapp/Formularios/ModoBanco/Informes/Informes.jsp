@@ -40,7 +40,7 @@
   <div class="d-flex justify-content-center flex-wrap gap-3 mb-5">
     <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#modalInformeN1">Informe N°1</button>
     <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#modalInformeN2">Informe N°2</button>
-    <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#modalInformeN3">Reporte N°1</button>
+    <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#modalInformeN3">Reporte N°3</button>
   </div>
 </div>
 

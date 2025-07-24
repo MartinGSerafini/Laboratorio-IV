@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Formularios/z-CSS/ModoBancoCSS/ABMLCuentasCSS/ListarCuentas.css">
 </head>
 <body>
-  <!-- Barra de Navegación -->
+
   <nav class="navbar navbar-expand-lg navbar-custom px-4">
     <div class="container-fluid">
         <div class="d-flex align-items-center">
@@ -89,7 +89,7 @@
   int totalPaginas = (request.getAttribute("totalPaginas") != null) ? (Integer)request.getAttribute("totalPaginas") : 1;
 %>
 
-  <!-- Tabla -->
+
 <div class="table-responsive">
   <table class="table table-striped table-bordered text-center">
     <thead class="table-dark">
@@ -225,7 +225,6 @@
     toggleBotones(fila, true);
   }
 
-  // Variables globales para manejar datos y fila en edición
   let datosAEnviar = null;
   let filaEnEdicion = null;
 
@@ -245,7 +244,6 @@
 
       if (input) valor = input.value.trim();
       else if (select) {
-        // En select puede estar un option seleccionado
         if (select.options) valor = select.options[select.selectedIndex].value;
         else valor = select.value.trim();
       }
@@ -254,7 +252,6 @@
       datosAEnviar.append(campo, valor);
     });
 
-    // Mostrar modal para confirmar modificación
     const modalModificar = new bootstrap.Modal(document.getElementById('confirmarModificarModal'));
     modalModificar.show();
   }
@@ -304,7 +301,6 @@
 	  }
 	})
 
-    // Ocultar modal
     const modalEl = document.getElementById('confirmarModificarModal');
     const modalInstance = bootstrap.Modal.getInstance(modalEl);
     modalInstance.hide();
@@ -328,7 +324,6 @@
     });
   }
 
-// Modal eliminar: asignar idCliente al input hidden
 const modalEliminar = document.getElementById('confirmarEliminarModal');
 modalEliminar.addEventListener('show.bs.modal', function (event) {
   const boton = event.relatedTarget;

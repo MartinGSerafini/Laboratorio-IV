@@ -1,6 +1,7 @@
 package controladorAdmin;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import entidades.EstadoPrestamo;
 import entidades.Prestamo;
+import negocio.NegocioMovimientos;
 import negocio.NegocioPrestamo;
 
 
@@ -20,6 +22,7 @@ public class AutorizacionPrestamosServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	NegocioPrestamo negocioPrestamo = new NegocioPrestamo();
+	NegocioMovimientos negocioMovimientos = new NegocioMovimientos();
     
     public AutorizacionPrestamosServlet() {
         super();
@@ -33,6 +36,10 @@ public class AutorizacionPrestamosServlet extends HttpServlet {
 		
 		if("autorizar".equals(accion)) {
 			negocioPrestamo.modificarEstadoPrestamo("1", request.getParameter("idPrestamo"));
+			String importe = request.getParameter("idImporteSolicitado");
+			BigDecimal importeSolicitado = new BigDecimal(importe);
+			int idCuenta = Integer.parseInt(request.getParameter("idCuentaDeposito"));
+			negocioMovimientos.registrarMovimiento(idCuenta, importeSolicitado, 2, "Préstamo aprobado");
 		}
 		
 		if("rechazar".equals(accion)) {
