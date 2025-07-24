@@ -33,6 +33,19 @@
 </nav>
 
 <div class="container mt-5">
+
+    <%-- Mostrar mensajes de error o éxito --%>
+    <%
+        String error = (String) request.getAttribute("error");
+        String mensaje = (String) request.getAttribute("mensaje");
+    %>
+    <% if (error != null) { %>
+        <div class="alert alert-danger text-center"><%= error %></div>
+    <% } %>
+    <% if (mensaje != null) { %>
+        <div class="alert alert-success text-center"><%= mensaje %></div>
+    <% } %>
+
     <h2 class="text-center text-danger">1. Seleccione un préstamo para pagar</h2>
 
     <table class="table table-bordered w-auto text-center mx-auto">
@@ -59,7 +72,8 @@
                 <td>$<%= prestamo.getImporteTotalPres() %></td>
                 <td><%= prestamo.getPlazoMesesPres() %></td>
                 <td>$<%= prestamo.getMontoCuotaPres() %></td>
-                <td><%= prestamo.getIdCuentaDepositoPres() %></td>
+                <td><%= prestamo.getNumeroCuentaDeposito() %></td>
+
                 <td>
                     <form method="get" action="${pageContext.request.contextPath}/PagarPrestamoServlet" style="margin:0;">
                         <input type="hidden" name="accion" value="verCuotas">
@@ -78,7 +92,6 @@
         %>
         </tbody>
     </table>
-</div>
 
 <%
     java.util.List<entidades.Cuota> cuotas = (java.util.List<entidades.Cuota>) request.getAttribute("cuotas");
@@ -89,13 +102,13 @@
 
     if (cuotas != null && !cuotas.isEmpty() && idPrestamoSeleccionado != null) {
 %>
-<div class="container mt-5">
-    <h3 class="text-danger text-center">2. Seleccione las cuotas que desea pagar</h3>
+    <h3 class="text-danger text-center mt-5">2. Seleccione las cuotas que desea pagar</h3>
 
     <form method="get" action="${pageContext.request.contextPath}/PagarPrestamoServlet">
-        <input type="hidden" name="accion" value="pagarCuotas">
+
         <input type="hidden" name="idPrestamo" value="<%= idPrestamoSeleccionado %>">
 
+        <%-- Mostrar total si existe --%>
         <%
             if (totalAPagar != null) {
         %>
@@ -142,10 +155,6 @@
             </tbody>
         </table>
 
-        <div class="text-center mt-2">
-            <button type="submit" name="accion" value="mostrarTotal" class="btn btn-outline-secondary">Mostrar Total</button>
-        </div>
-
         <h3 class="text-danger text-center mt-5">3. Seleccione la cuenta para el pago</h3>
 
         <table class="table table-bordered w-auto text-center mx-auto">
@@ -183,25 +192,16 @@
             </tbody>
         </table>
 
-        <%
-            boolean mostrarBoton = (seleccionadas != null && seleccionadas.length > 0 && cuentaSeleccionada != null);
-        %>
         <div class="text-center mt-4 mb-5">
-            <%
-                if (mostrarBoton) {
-            %>
-                <button type="submit" class="btn btn-danger btn-lg" name="tipoPago" value="cuotas">Confirmar Pago de Cuotas</button>
-            <%
-                } else {
-            %>
-                <button type="submit" class="btn btn-danger btn-lg" disabled>Seleccione al menos una cuota y una cuenta</button>
-            <%
-                }
-            %>
+            <button type="submit" class="btn btn-danger btn-lg" name="tipoPago" value="cuotas">
+                Confirmar Pago de Cuotas
+            </button>
         </div>
+
     </form>
-</div>
 <% } %>
+
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

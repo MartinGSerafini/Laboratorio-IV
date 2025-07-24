@@ -3,6 +3,7 @@ package entidades;
 public class Prestamo {
     private String idPrestamo;
     private int idClientePres;
+    private String numeroCuentaDeposito;
     private java.sql.Date fechaSolicitudPres;
     private java.math.BigDecimal importeSolicitadoPres;
     private java.math.BigDecimal importeTotalPres;
@@ -10,6 +11,7 @@ public class Prestamo {
     private java.math.BigDecimal montoCuotaPres;
     private EstadoPrestamo estadoPres;
     private String idCuentaDepositoPres;
+    
 
     public Prestamo() {}
 
@@ -29,7 +31,15 @@ public class Prestamo {
     public void setIdClientePres(int idClientePres) {
         this.idClientePres = idClientePres;
     }
+    
+    public String getNumeroCuentaDeposito() {
+        return numeroCuentaDeposito;
+    }
 
+    public void setNumeroCuentaDeposito(String numeroCuentaDeposito) {
+        this.numeroCuentaDeposito = numeroCuentaDeposito;
+    }
+    
     public java.sql.Date getFechaSolicitudPres() {
         return fechaSolicitudPres;
     }

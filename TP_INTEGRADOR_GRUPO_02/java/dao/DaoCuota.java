@@ -108,28 +108,33 @@ public class DaoCuota {
 
     public Cuota obtenerCuotaPorId(int idCuota) {
         Cuota cuota = null;
-        String sql = "SELECT * FROM Cuotas WHERE idCuota = ?";
+        String sql = "SELECT * FROM cuota WHERE id_cuota = ?";
+
         try (Connection conn = Conexion.getConexion();
-				Statement st = conn.createStatement();) {
-			    ResultSet rs = st.executeQuery(sql);
-			    
-			while(rs.next()) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, idCuota);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
                 cuota = new Cuota();
-                cuota.setIdCuota(rs.getInt("idCuota"));
-                cuota.setIdPrestamoCuota(rs.getInt("idPrestamo"));
-                cuota.setNumeroCuota(rs.getInt("numeroCuota"));
-                cuota.setImporteCuota(rs.getBigDecimal("importeCuota"));
-                cuota.setFechaVencCuota(rs.getDate("fechaVencimiento"));
+                cuota.setIdCuota(rs.getInt("id_cuota"));
+                cuota.setIdPrestamoCuota(rs.getInt("idPrestamo_cuota"));
+                cuota.setNumeroCuota(rs.getInt("numero_cuota"));
+                cuota.setImporteCuota(rs.getBigDecimal("importe_cuota"));
+                cuota.setFechaVencCuota(rs.getDate("fechaVenc_cuota"));
                 cuota.setEstadoCuota(rs.getInt("estado_cuota"));
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return cuota;
     }
 
     public boolean marcarCuotaComoPagada(int idCuota) {
-        String sql = "UPDATE cuota SET estado = 'pagada' WHERE idCuota = ?";
+        String sql = "UPDATE cuota SET estado_cuota = 1, fechaPago_cuota = CURDATE() WHERE id_cuota = ?";
         boolean resultado = false;
 
         try (Connection conn = Conexion.getConexion();
@@ -145,6 +150,7 @@ public class DaoCuota {
 
         return resultado;
     }
+
 
     public boolean pagarPrestamoCompleto(int idPrestamo) {
         String sql = "UPDATE Cuotas SET estado = 'pagada' WHERE idPrestamo = ?";
