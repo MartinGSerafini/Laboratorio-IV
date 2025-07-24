@@ -29,6 +29,7 @@ public class PagarPrestamoServlet extends HttpServlet {
         String nombreUsuario = (String) session.getAttribute("ClienteLogueado");
 
         if (nombreUsuario == null) {
+            System.out.println("No hay usuario logueado. Redirigiendo a Login.jsp");
             response.sendRedirect(request.getContextPath() + "/Login.jsp");
             return;
         }
@@ -36,91 +37,99 @@ public class PagarPrestamoServlet extends HttpServlet {
         NegocioCliente negocioCliente = new NegocioCliente();
         int idCliente = negocioCliente.obtenerIdClientePorUsuario(nombreUsuario);
 
-        List<Prestamo> prestamos = negocioPrestamo.obtenerPrestamosPendientesPorCliente(idCliente);
-        List<Cuenta> cuentas = negocioCuenta.obtenerCuentasPorCliente(idCliente);
-        request.setAttribute("prestamos", prestamos);
-        request.setAttribute("cuentas", cuentas);
+        System.out.println("Usuario logueado: " + nombreUsuario + ", idCliente: " + idCliente);
 
+        String tipoPago = request.getParameter("tipoPago");
         String accion = request.getParameter("accion");
-        String idPrestamoStr = request.getParameter("idPrestamo");
 
-        if (request.getParameter("pagarCompleto") != null) {
-            int prestamoId = Integer.parseInt(request.getParameter("prestamoId"));
-            int cuentaId = Integer.parseInt(request.getParameter("cuentaSeleccionada"));
-            BigDecimal importeTotal = negocioPrestamo.obtenerImporteTotalPrestamo(prestamoId);
-
-            if (negocioCuenta.validarSaldoSuficiente(importeTotal.toPlainString(), cuentaId)) {
-                negocioPrestamo.pagarPrestamoCompleto(prestamoId);
-                negocioCuota.pagarPrestamoCompleto(prestamoId);
-                negocioCuenta.descontarPlata(importeTotal.toPlainString(), idCliente, cuentaId);
-                request.setAttribute("mensaje", "Préstamo pagado completamente.");
-            } else {
-                request.setAttribute("error", "Saldo insuficiente para pago completo.");
-            }
-        }
-
-        if ("cuotas".equals(request.getParameter("tipoPago"))) {
-            String[] cuotasSeleccionadas = request.getParameterValues("cuotasSeleccionadas");
-            String idCuentaStr = request.getParameter("cuentaSeleccionada");
-
-            if (cuotasSeleccionadas != null && idPrestamoStr != null && idCuentaStr != null) {
-                int idPrestamo = Integer.parseInt(idPrestamoStr);
-                int cuentaId = Integer.parseInt(idCuentaStr);
-
-                BigDecimal total = BigDecimal.ZERO;
-                for (String idCuotaStr : cuotasSeleccionadas) {
-                    int idCuota = Integer.parseInt(idCuotaStr);
-                    Cuota cuota = negocioCuota.obtenerCuotaPorId(idCuota);
-                    total = total.add(cuota.getImporteCuota());
-                }
-
-                if (negocioCuenta.validarSaldoSuficiente(total.toPlainString(), cuentaId)) {
-                    for (String idCuotaStr : cuotasSeleccionadas) {
-                        int idCuota = Integer.parseInt(idCuotaStr);
-                        negocioCuota.marcarCuotaComoPagada(idCuota);
-                    }
-                    negocioCuenta.descontarPlata(total.toPlainString(), idCliente, cuentaId);
-                    request.setAttribute("mensaje", "Cuotas pagadas correctamente.");
-                } else {
-                    request.setAttribute("error", "Saldo insuficiente para pago de cuotas.");
-                }
-            }
-        }
-
-        if ("mostrarTotal".equals(accion)) {
+        if ("cuotas".equals(tipoPago)) {
             String[] cuotasSeleccionadas = request.getParameterValues("cuotasSeleccionadas");
             String cuentaSeleccionada = request.getParameter("cuentaSeleccionada");
+            String idPrestamoStr = request.getParameter("idPrestamo");
 
-            if (cuotasSeleccionadas != null && idPrestamoStr != null) {
+            System.out.println("Proceso pago cuotas:");
+            System.out.println("Cuotas seleccionadas: " + (cuotasSeleccionadas != null ? String.join(",", cuotasSeleccionadas) : "null"));
+            System.out.println("Cuenta seleccionada: " + cuentaSeleccionada);
+            System.out.println("idPrestamo: " + idPrestamoStr);
+
+            if (cuotasSeleccionadas == null || cuotasSeleccionadas.length == 0) {
+                request.setAttribute("error", "Debe seleccionar al menos una cuota para pagar.");
+                System.out.println("Error: no se seleccionaron cuotas");
+            } else if (cuentaSeleccionada == null || cuentaSeleccionada.isEmpty()) {
+                request.setAttribute("error", "Debe seleccionar una cuenta para realizar el pago.");
+                System.out.println("Error: no se seleccionï¿½ cuenta");
+            } else if (idPrestamoStr == null || idPrestamoStr.isEmpty()) {
+                request.setAttribute("error", "No se pudo identificar el prï¿½stamo.");
+                System.out.println("Error: no se pudo obtener idPrestamo");
+            } else {
+                int idPrestamo = Integer.parseInt(idPrestamoStr);
+                int idCuenta = Integer.parseInt(cuentaSeleccionada);
                 BigDecimal total = BigDecimal.ZERO;
+
                 for (String idCuotaStr : cuotasSeleccionadas) {
                     int idCuota = Integer.parseInt(idCuotaStr);
                     Cuota cuota = negocioCuota.obtenerCuotaPorId(idCuota);
-                    total = total.add(cuota.getImporteCuota());
+                    if (cuota != null) {
+                        System.out.println("Cuota id " + idCuota + " importe: " + cuota.getImporteCuota());
+                        total = total.add(cuota.getImporteCuota());
+                    } else {
+                        System.err.println("No se encontrï¿½ la cuota con id: " + idCuota);
+                    }
+                }
+
+                System.out.println("Total a pagar: " + total.toPlainString());
+
+                if (negocioCuenta.validarSaldoSuficiente(total.toPlainString(), idCuenta)) {
+                    System.out.println("Saldo suficiente, procediendo a descontar y marcar cuotas...");
+                    for (String idCuotaStr : cuotasSeleccionadas) {
+                        int idCuota = Integer.parseInt(idCuotaStr);
+                        boolean marcado = negocioCuota.marcarCuotaComoPagada(idCuota);
+                        System.out.println("Marcar cuota " + idCuota + " como pagada: " + marcado);
+                    }
+                    boolean descontado = negocioCuenta.descontarPlata(total.toPlainString(), idCliente, idCuenta);
+                    System.out.println("Resultado de descontar plata: " + descontado);
+
+                    if (descontado) {
+                       List<Cuota> cuotasPendientes = negocioCuota.obtenerCuotasPendientesPorPrestamo(idPrestamo);
+                        if (cuotasPendientes == null || cuotasPendientes.isEmpty()) {
+                            boolean actualizado = negocioPrestamo.actualizarEstadoPrestamo(idPrestamo, false);
+                            System.out.println("Prï¿½stamo " + idPrestamo + " actualizado a pagado: " + actualizado);
+                        }
+
+                        request.setAttribute("mensaje", "Cuotas pagadas correctamente.");
+                    } else {
+                        request.setAttribute("error", "No se pudo descontar el monto de la cuenta.");
+                    }
+                } else {
+                    request.setAttribute("error", "Saldo insuficiente en la cuenta seleccionada para realizar el pago.");
+                    System.out.println("Error: saldo insuficiente en cuenta " + idCuenta);
                 }
 
                 request.setAttribute("totalAPagar", total);
                 request.setAttribute("cuotasSeleccionadasMarcadas", cuotasSeleccionadas);
                 request.setAttribute("cuentaSeleccionadaMarcada", cuentaSeleccionada);
-
-                int idPrestamo = Integer.parseInt(idPrestamoStr);
-                List<Cuota> cuotas = negocioCuota.obtenerCuotasPendientesPorPrestamo(idPrestamo);
-                request.setAttribute("cuotas", cuotas);
                 request.setAttribute("idPrestamoSeleccionado", idPrestamo);
             }
-        }
-
-
-        if ("verCuotas".equals(accion) || "pagarCuotas".equals(accion) || "cuotas".equals(request.getParameter("tipoPago"))) {
+        } else if ("verCuotas".equals(accion)) {
+            String idPrestamoStr = request.getParameter("idPrestamo");
             if (idPrestamoStr != null) {
                 int idPrestamo = Integer.parseInt(idPrestamoStr);
                 List<Cuota> cuotas = negocioCuota.obtenerCuotasPendientesPorPrestamo(idPrestamo);
                 request.setAttribute("cuotas", cuotas);
                 request.setAttribute("idPrestamoSeleccionado", idPrestamo);
+                System.out.println("Mostrando cuotas pendientes para prï¿½stamo " + idPrestamo);
             }
+        }
+
+        List<Prestamo> prestamos = negocioPrestamo.obtenerPrestamosPendientesPorCliente(idCliente);
+        List<Cuenta> cuentas = negocioCuenta.obtenerCuentasPorCliente(idCliente);
+        request.setAttribute("prestamos", prestamos);
+        request.setAttribute("cuentas", cuentas);
+
+        if (request.getAttribute("cuotas") == null) {
+            request.setAttribute("cuotas", null);
         }
 
         request.getRequestDispatcher("/Formularios/ModoCliente/Prestamos/PagarPrestamo.jsp").forward(request, response);
     }
 }
-

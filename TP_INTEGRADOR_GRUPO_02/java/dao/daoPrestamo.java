@@ -193,38 +193,52 @@ public class daoPrestamo {
         return idGenerado;
     }
 
-    public ArrayList<Prestamo> obtenerPrestamosActivosPorCliente(int idCliente) {
-        String sql = "SELECT * FROM prestamo WHERE idCliente_pres = ? AND estado_pres = 1 AND estado_prestamo = 1 ORDER BY fechaSolicitud_pres DESC";
+    public ArrayList<Prestamo> obtenerPrestamosConNumeroCuentaPorCliente(int idCliente) {
+        String sql = "SELECT p.*, c.Numero_Cuenta FROM prestamo p " +
+                     "JOIN cuenta c ON p.idCuentaDeposito_pres = c.id_cuenta " +
+                     "WHERE p.idCliente_pres = ? AND p.estado_pres = 1 AND p.estado_prestamo = 1 " +
+                     "ORDER BY p.fechaSolicitud_pres DESC";
         ArrayList<Prestamo> lista = new ArrayList<>();
         try (Connection conn = Conexion.getConexion();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, idCliente);
             try (ResultSet rs = ps.executeQuery()) {
-                cargar(lista, rs);
+                while (rs.next()) {
+                    Prestamo p = new Prestamo();
+                    p.setIdPrestamo(rs.getString("id_prestamo"));
+                    p.setIdClientePres(rs.getInt("idCliente_pres"));
+                    p.setFechaSolicitudPres(rs.getDate("fechaSolicitud_pres"));
+                    p.setImporteSolicitadoPres(rs.getBigDecimal("importeSolicitado_pres"));
+                    p.setImporteTotalPres(rs.getBigDecimal("importeTotal_pres"));
+                    p.setPlazoMesesPres(rs.getInt("plazoMeses_pres"));
+                    p.setMontoCuotaPres(rs.getBigDecimal("montoCuota_pres"));
+                    p.setIdCuentaDepositoPres(rs.getString("idCuentaDeposito_pres"));
+                    p.setNumeroCuentaDeposito(rs.getString("Numero_Cuenta"));
+                    lista.add(p);
+                }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return lista;
     }
 
-    public boolean pagarPrestamoCompleto(int idPrestamo) {
-        String sql = "UPDATE prestamo SET estado_prestamo = 0 WHERE id_prestamo = ?";
-        
+
+    public boolean actualizarEstadoPrestamo(int idPrestamo, boolean estado) {
+        String sql = "UPDATE prestamo SET estado_prestamo = ? WHERE id_prestamo = ?";
         try (Connection conn = Conexion.getConexion();
-       	    PreparedStatement ps = conn.prepareStatement(sql)) {
-        	
-        	ps.setInt(1, idPrestamo);
-       	    int filas = ps.executeUpdate();
-       	    return filas > 0;
-       	    
-       	} catch (Exception e) {
-       	    e.printStackTrace();
-       	    return false;
-       	}
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setBoolean(1, estado);
+            ps.setInt(2, idPrestamo);
+            int filas = ps.executeUpdate();
+            return filas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
+
 
     public BigDecimal obtenerImporteTotalPrestamo(int idPrestamo) {
         BigDecimal importeTotal = BigDecimal.ZERO;
@@ -246,4 +260,3 @@ public class daoPrestamo {
     }
 
 }
-

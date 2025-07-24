@@ -403,20 +403,40 @@ public class daoCuenta {
 	 }
 	 
 	 public boolean descontarPlata(BigDecimal importe, int idCliente, int idCuenta){
-		 String sql = "UPDATE cuenta SET saldo_cuenta = saldo_cuenta - ? WHERE idCliente_cuenta = ? AND id_cuenta = ?";
-	        
-	        try (Connection conn = Conexion.getConexion();
-	       	    PreparedStatement ps = conn.prepareStatement(sql)) {
-	        	
-	        	ps.setBigDecimal(1, importe);
-	        	ps.setInt(2, idCliente);
-	        	ps.setInt(3, idCuenta);
-	       	    int filas = ps.executeUpdate();
-	       	    return filas > 0;
-	       	    
-	       	} catch (Exception e) {
-	       	    e.printStackTrace();
-	       	    return false;
-	       	}
-	 }
+		    String sqlSelect = "SELECT saldo_cuenta FROM cuenta WHERE idCliente_cuenta = ? AND id_cuenta = ?";
+		    String sqlUpdate = "UPDATE cuenta SET saldo_cuenta = saldo_cuenta - ? WHERE idCliente_cuenta = ? AND id_cuenta = ? AND saldo_cuenta >= ?";
+
+		    try (Connection conn = Conexion.getConexion();
+		         PreparedStatement psSelect = conn.prepareStatement(sqlSelect);
+		         PreparedStatement psUpdate = conn.prepareStatement(sqlUpdate)) {
+
+		        psSelect.setInt(1, idCliente);
+		        psSelect.setInt(2, idCuenta);
+		        ResultSet rs = psSelect.executeQuery();
+
+		        if (rs.next()) {
+		            BigDecimal saldoActual = rs.getBigDecimal("saldo_cuenta");
+		            if (saldoActual.compareTo(importe) >= 0) {
+		                psUpdate.setBigDecimal(1, importe);
+		                psUpdate.setInt(2, idCliente);
+		                psUpdate.setInt(3, idCuenta);
+		                psUpdate.setBigDecimal(4, importe);
+
+		                int filas = psUpdate.executeUpdate();
+		                return filas > 0;
+		            } else {
+		                System.out.println("Saldo insuficiente para descontar " + importe + " en cuenta " + idCuenta);
+		                return false;
+		            }
+		        } else {
+		            System.out.println("Cuenta no encontrada para cliente " + idCliente + " y cuenta " + idCuenta);
+		            return false;
+		        }
+
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        return false;
+		    }
+		}
+
 }

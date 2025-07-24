@@ -63,11 +63,11 @@ public class NegocioPrestamo {
     }
 	
 	public ArrayList<Prestamo> obtenerPrestamosPendientesPorCliente(int idCliente) {
-	    return daoPrestamo.obtenerPrestamosActivosPorCliente(idCliente);
+	    return daoPrestamo.obtenerPrestamosConNumeroCuentaPorCliente(idCliente);
 	}
 	
-	public boolean pagarPrestamoCompleto(int idPrestamo) {
-		return daoPrestamo.pagarPrestamoCompleto(idPrestamo);
+	public boolean actualizarEstadoPrestamo(int idPrestamo, boolean estado) {
+	    return daoPrestamo.actualizarEstadoPrestamo(idPrestamo, estado);
 	}
 
 	public BigDecimal obtenerImporteTotalPrestamo(int idPrestamo) {
