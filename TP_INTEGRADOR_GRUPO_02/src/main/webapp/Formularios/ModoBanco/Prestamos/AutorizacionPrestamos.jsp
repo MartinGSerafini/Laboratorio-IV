@@ -111,6 +111,8 @@
             			<td>
             		<form id="formPrestamo" method="get" action="${pageContext.request.contextPath}/AutorizacionPrestamosServlet">
             			<input type="hidden" name="idPrestamo" value="<%= p.getIdPrestamo() %>">
+            			<input type="hidden" name="idCuentaDeposito" value="<%=p.getIdCuentaDepositoPres() %>">
+            			<input type="hidden" name="idImporteSolicitado" value="<%=p.getImporteSolicitadoPres()%>">
                         <input type="hidden" name="accion" id="accionSeleccionada">
     					<button type="button" class="btn btn-warning btn-sm" onclick="mostrarModalConfirmar('autorizar')">Autorizar</button>
     					<button type="button" class="btn btn-danger btn-sm" onclick="mostrarModalConfirmar('rechazar')">Rechazar</button>
