@@ -17,6 +17,7 @@ import entidades.TipoCuenta;
 import excepciones.ClienteNoEncontradoExc;
 import negocio.NegocioCliente;
 import negocio.NegocioCuenta;
+import negocio.NegocioTipoCuenta;
 
 @WebServlet("/AgregarCuentaServlet")
 public class AgregarCuentaServlet extends HttpServlet {
@@ -37,8 +38,8 @@ public class AgregarCuentaServlet extends HttpServlet {
 	    try {
 	        String accion = request.getParameter("accion");
 
-	        DaoTipoCuenta daoTipoCuenta = new DaoTipoCuenta();
-	        ArrayList<TipoCuenta> listaTipos = daoTipoCuenta.obtenerListaTipos();
+	        NegocioTipoCuenta negocioTipoCuenta = new NegocioTipoCuenta();
+	        ArrayList<TipoCuenta> listaTipos = negocioTipoCuenta.obtenerListaTipos();
 	        request.setAttribute("listaTipos", listaTipos);
 
 	        if ("agregarCuenta".equals(accion)) {

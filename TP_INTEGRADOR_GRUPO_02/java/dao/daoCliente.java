@@ -271,7 +271,7 @@ public class daoCliente {
 	    
 	    public int obtenerIdCliente(String dni) {
 	    	
-	    	String sql = "SELECT id_cliente FROM cliente WHERE dni_cliente = ?";
+	    	String sql = "SELECT id_cliente FROM cliente WHERE dni_cliente = ? AND estado_cliente != 0";
 	    	int id = 0;
 	    	
 	    	try (Connection conn = Conexion.getConexion();

@@ -194,7 +194,7 @@ public class daoPrestamo {
     }
 
     public ArrayList<Prestamo> obtenerPrestamosActivosPorCliente(int idCliente) {
-        String sql = "SELECT * FROM prestamo WHERE idCliente_pres = ? AND estado_prestamo = 1 ORDER BY fechaSolicitud_pres DESC";
+        String sql = "SELECT * FROM prestamo WHERE idCliente_pres = ? AND estado_pres = 1 AND estado_prestamo = 1 ORDER BY fechaSolicitud_pres DESC";
         ArrayList<Prestamo> lista = new ArrayList<>();
         try (Connection conn = Conexion.getConexion();
              PreparedStatement ps = conn.prepareStatement(sql)) {
