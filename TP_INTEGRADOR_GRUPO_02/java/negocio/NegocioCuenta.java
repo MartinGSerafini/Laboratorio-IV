@@ -35,20 +35,16 @@ public class NegocioCuenta implements servicioABML<Cuenta>{
 
 	@Override
 	public boolean baja(String id) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
-
 	@Override
 	public boolean lectura(String id) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public List<Cuenta> listarTodos() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

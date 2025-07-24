@@ -10,6 +10,7 @@ public class NegocioLocalidad {
     public List<Localidad> obtenerLocalidadesPorProvincia(int idProvincia) {
         return dao.obtenerLocalidadesPorProvincia(idProvincia);
     }
+    
     public List<Localidad> obtenerTodasLasLocalidades() {
         return dao.obtenerTodasLasLocalidades();
     }

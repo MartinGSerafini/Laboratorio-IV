@@ -359,7 +359,6 @@
       toggleBotones(fila, true);
     }
 
-    // Variables globales para manejar datos y fila en edición
     let datosAEnviar = null;
     let filaEnEdicion = null;
 
@@ -379,7 +378,6 @@
 
         if (input) valor = input.value.trim();
         else if (select) {
-          // En select puede estar un option seleccionado
           if (select.options) valor = select.options[select.selectedIndex].value;
           else valor = select.value.trim();
         }
@@ -388,7 +386,6 @@
         datosAEnviar.append(campo, valor);
       });
 
-      // Mostrar modal para confirmar modificación
       const modalModificar = new bootstrap.Modal(document.getElementById('confirmarModificarModal'));
       modalModificar.show();
     }
@@ -443,7 +440,6 @@
         alert("❌ Error al intentar guardar los cambios: " + mensajeFormateado);
       });
 
-      // Ocultar modal
       const modalEl = document.getElementById('confirmarModificarModal');
       const modalInstance = bootstrap.Modal.getInstance(modalEl);
       modalInstance.hide();
@@ -467,7 +463,6 @@
       });
     }
 
-    // Modal eliminar: asignar idCliente al input hidden
     const modalEliminar = document.getElementById('confirmarEliminarModal');
     modalEliminar.addEventListener('show.bs.modal', function (event) {
       const boton = event.relatedTarget;

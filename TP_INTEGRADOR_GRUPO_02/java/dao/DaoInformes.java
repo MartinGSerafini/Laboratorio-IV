@@ -41,9 +41,7 @@ public class DaoInformes {
 	    return lista;
 	}
 		
-	
-	
-		public ArrayList<GeneroClientes> obtenerCantidadGenero() {
+	public ArrayList<GeneroClientes> obtenerCantidadGenero() {
 	    ArrayList<GeneroClientes> lista = new ArrayList<>();
 
 	    String sql = "SELECT sexo_cliente, COUNT(*) AS cantidad " +
@@ -67,8 +65,7 @@ public class DaoInformes {
 	    return lista;
 	}
 	
-		
-		 public ArrayList<MovimientoReporte> obtenerMovimientosPorFecha(Date fechaInicio, Date fechaFin) {
+	public ArrayList<MovimientoReporte> obtenerMovimientosPorFecha(Date fechaInicio, Date fechaFin) {
 		        ArrayList<MovimientoReporte> lista = new ArrayList<>();
 		        String sql = "SELECT id_mov, idCuenta_mov, fecha_mov, detalle_mov, importe_mov, idTipoMov_mov, idCuentaDestino_mov " +
 		                     "FROM Movimiento " +
@@ -77,8 +74,7 @@ public class DaoInformes {
 
 		        try (Connection conn = Conexion.getConexion();
 		             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-		            // Pasamos fechas como java.sql.Date
+		        	
 		            ps.setDate(1, new java.sql.Date(fechaInicio.getTime()));
 		            ps.setDate(2, new java.sql.Date(fechaFin.getTime()));
 
@@ -92,7 +88,6 @@ public class DaoInformes {
 		                    movimiento.setImporteMov(rs.getBigDecimal("importe_mov"));
 		                    movimiento.setIdTipoMov(rs.getInt("idTipoMov_mov"));
 		                    
-		                    // idCuentaDestino_mov puede ser null, chequeamos antes
 		                    int idCuentaDestino = rs.getInt("idCuentaDestino_mov");
 		                    if (rs.wasNull()) {
 		                        movimiento.setIdCuentaDestino(null);
@@ -105,18 +100,8 @@ public class DaoInformes {
 		            }
 		        } catch (Exception e) {
 		            e.printStackTrace();
-		            // Manejo de excepciones según convenga
 		        }
 		        return lista;
 		    }
 		
-	
-		
-
-		
-		
-		
-	
-	
-			
 }

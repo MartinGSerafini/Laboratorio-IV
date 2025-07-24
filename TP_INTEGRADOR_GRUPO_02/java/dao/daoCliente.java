@@ -127,7 +127,6 @@ public class daoCliente {
         return columnas;
     }
 
-	
 	public List<String> obtenerColumnasTablaClientes() {
 	        List<String> columnas = new ArrayList<>();
 	        try (Connection con = Conexion.getConexion()) {
@@ -211,34 +210,31 @@ public class daoCliente {
 	        return listaFiltrada;
 	    }
 
-	 	public Cliente obtenerClienteXid(int id) {
-	 		String sql = "SELECT nombre_cliente, apellido_cliente FROM cliente WHERE id_cliente = ?";
-			Cliente cliente = new Cliente();
-			
-			try (Connection conn = Conexion.getConexion();
-					
-					PreparedStatement ps = conn.prepareStatement(sql)) {
-	        		ps.setInt(1,id);
-	        		
-	        		try(ResultSet rs = ps.executeQuery()){
-	        			
-	        			if (rs.next()) {
-	    					
-	        				cliente.setNombreCliente(rs.getString("nombre_cliente"));
-	        				cliente.setApellidoCliente(rs.getString("apellido_cliente"));
-	        				
-	        		   }
-	        		}
-	        		conn.close();
-	        		
-	        	 }catch(Exception e) {
-					e.printStackTrace();
-				}finally {}
-				return cliente;
-	 	}
-	 
-	 
-	 
+	 public Cliente obtenerClienteXid(int id) {
+	 	String sql = "SELECT nombre_cliente, apellido_cliente FROM cliente WHERE id_cliente = ?";
+		Cliente cliente = new Cliente();
+		
+		try (Connection conn = Conexion.getConexion();
+				
+				PreparedStatement ps = conn.prepareStatement(sql)) {
+	       		ps.setInt(1,id);
+	       		
+	       		try(ResultSet rs = ps.executeQuery()){
+	       			
+	       			if (rs.next()) {
+	   					
+	       				cliente.setNombreCliente(rs.getString("nombre_cliente"));
+	       				cliente.setApellidoCliente(rs.getString("apellido_cliente"));
+	       				
+	       		   }
+	       		}
+	       		conn.close();
+	       		
+	       	 }catch(Exception e) {
+				e.printStackTrace();
+			}finally {}
+			return cliente;
+	 }
 	 
 	    public ArrayList<String> obtenerColumnasClientes() {
 	        ArrayList<String> columnas = new ArrayList<>();
@@ -482,9 +478,6 @@ public class daoCliente {
 	        	rs.next();
 	            ultimoId = rs.getInt("ultimo_id");
 	        	
-	            /*if (rs.next()) {
-	                ultimoId = rs.getInt("ultimo_id");
-	            }*/
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }

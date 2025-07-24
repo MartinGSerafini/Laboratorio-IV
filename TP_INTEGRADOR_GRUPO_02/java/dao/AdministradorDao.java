@@ -15,7 +15,7 @@ public class AdministradorDao {
             ps.setString(2, contrasena);
 
             ResultSet rs = ps.executeQuery();
-            return rs.next(); //
+            return rs.next();
 
         } catch (Exception e) {
             e.printStackTrace();

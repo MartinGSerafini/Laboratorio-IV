@@ -62,7 +62,7 @@ public class AgregarCuentaServlet extends HttpServlet {
 	            }
 
 	            int idTipo = Integer.parseInt(tipoCuentaStr);
-	            String fechaStr = new java.sql.Date(System.currentTimeMillis()).toString(); // formato SQL date
+	            String fechaStr = new java.sql.Date(System.currentTimeMillis()).toString();
 	            BigDecimal saldoFicticio = BigDecimal.ZERO;
 
 	            NegocioCuenta negCuenta = new NegocioCuenta();

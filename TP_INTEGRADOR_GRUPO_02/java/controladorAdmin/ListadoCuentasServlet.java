@@ -34,7 +34,7 @@ public class ListadoCuentasServlet extends HttpServlet {
             listaCuentas = negocio.ObtenerListadoCuentas();
         }
 
-        // Paginaci�n
+        // Paginacion
         int registrosPorPagina = 10;
         int paginaActual = 1;
         if (request.getParameter("pagina") != null) {

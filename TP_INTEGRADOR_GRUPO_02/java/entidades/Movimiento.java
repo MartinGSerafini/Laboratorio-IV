@@ -11,10 +11,8 @@ public class Movimiento {
     private String idCuentaDestinoMov;
     private String cbuCuentaDestino;
 
-    // Constructor por defecto
     public Movimiento() {}
 
-    // Getters y Setters
     public String getIdMov() {
         return idMov;
     }

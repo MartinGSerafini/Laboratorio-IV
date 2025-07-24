@@ -10,7 +10,6 @@ import entidades.Nacionalidad;
 
 public class NacionalidadDao {
 
-	//------obtener todas las nacionalidades de la bd----
     public ArrayList<Nacionalidad> obtenerNacionalidades() {
         ArrayList<Nacionalidad> nacionalidades = new ArrayList<>();
         String sql = "SELECT id_nacionalidad, nombre_nacionalidad FROM nacionalidad";

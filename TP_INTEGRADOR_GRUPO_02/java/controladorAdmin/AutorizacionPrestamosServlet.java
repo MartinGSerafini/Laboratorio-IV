@@ -20,10 +20,7 @@ public class AutorizacionPrestamosServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	NegocioPrestamo negocioPrestamo = new NegocioPrestamo();
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    
     public AutorizacionPrestamosServlet() {
         super();
     }

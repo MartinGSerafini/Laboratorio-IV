@@ -37,7 +37,6 @@ public class DaoMovimientos {
 	    }
 	}
 	
-	//funcion genérica, sirve para registrar cualquier tipo de movimiento
 	public boolean registrarMovimiento(int idCuenta, BigDecimal importe, int idTipoMovimiento, String detalle) {
 	    String sql = "INSERT INTO MOVIMIENTO (idCuenta_mov, fecha_mov, detalle_mov, importe_mov, idTipoMov_mov) " +
 	                 "VALUES (?, CURRENT_DATE, ?, ?, ?)";
@@ -51,9 +50,6 @@ public class DaoMovimientos {
 	        ps.setInt(4, idTipoMovimiento); 
 
 	        int filasAfectadas = ps.executeUpdate();
-	        
-			        if(filasAfectadas > 0) {System.out.println("Movimiento de préstamo registrado correctamente.");} 
-			        else {System.out.println("No se pudo registrar el movimiento de préstamo.");}
 	        
 	        return filasAfectadas > 0;
 

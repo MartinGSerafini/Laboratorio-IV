@@ -356,6 +356,7 @@ public class daoCuenta {
 		    }
 		 
 	 } 
+	 
 	 public int obtenerIdCuentaPorNumero(String numeroCuenta) {
 		    int idCuenta = 0;
 		    String sql = "SELECT idCuenta FROM cuenta WHERE numeroCuenta = ?";

@@ -21,8 +21,8 @@ public class Cliente {
     private String nombreLocalidad;
     private String nombreNacionalidad;
     public Cliente() {}
-
-    // Constructor completo
+    
+    
     public Cliente(int dniCliente, String cuilCliente, String nombreCliente, String apellidoCliente,
             String sexoCliente, int nacionalidadCliente, java.sql.Date fechaNacCliente,
             String direccionCliente,  int localidadCliente, int provinciaCliente,
@@ -43,7 +43,6 @@ public class Cliente {
         this.contrasenaCliente = contrasenaCliente;
     }
 
-    // Getters y Setters
 
     public String getIdCliente() {
         return idCliente;

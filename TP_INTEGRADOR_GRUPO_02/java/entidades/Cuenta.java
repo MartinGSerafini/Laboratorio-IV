@@ -14,10 +14,8 @@ public class Cuenta {
     private BigDecimal saldoCuenta;
     private String tipoCuentaCuenta;
 
-    // Constructor vacío
     public Cuenta() {}
 
-    // Constructor completo
     public Cuenta(String idCuenta, int idClienteCuenta, int idTipoCuentaCuenta, String tipoCuentaCuenta, Date fechaCreacionCuenta,
                   String numeroCuenta, String cbuCuenta, BigDecimal saldoCuenta) {
         this.idCuenta = idCuenta;
@@ -30,7 +28,7 @@ public class Cuenta {
         this.tipoCuentaCuenta = tipoCuentaCuenta;
     }
 
-    //constructor sin tipoCuentaCuenta (borar despues) 
+    //constructor sin tipoCuentaCuenta
     public Cuenta(String idCuenta, int idClienteCuenta, int idTipoCuentaCuenta, Date fechaCreacionCuenta,
                   String numeroCuenta, String cbuCuenta, BigDecimal saldoCuenta) {
         this.idCuenta = idCuenta;
@@ -40,11 +38,9 @@ public class Cuenta {
         this.numeroCuenta = numeroCuenta;
         this.cbuCuenta = cbuCuenta;
         this.saldoCuenta = saldoCuenta;
-        
         this.tipoCuentaCuenta = "Desconocido"; 
     }
     
-    // Getters y Setters
 
     public String getIdCuenta() {
         return idCuenta;

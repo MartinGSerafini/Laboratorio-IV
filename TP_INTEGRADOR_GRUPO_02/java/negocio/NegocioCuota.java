@@ -56,6 +56,7 @@ public class NegocioCuota {
     public boolean pagarPrestamoCompleto(int idPrestamo) {
         return true;
     }
+    
     public ArrayList<Cuota> obtenerCuotasPendientesPorPrestamo(int idPrestamo) {
         return daoCuota.obtenerCuotasPorPrestamo(idPrestamo);
     }

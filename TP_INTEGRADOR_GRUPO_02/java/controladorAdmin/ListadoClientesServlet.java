@@ -50,8 +50,7 @@ public class ListadoClientesServlet extends HttpServlet {
         ArrayList<Cliente> listaClientes;
 
         if (busqueda != null && filtro != null && !busqueda.isEmpty() && !filtro.isEmpty()) {
-
-            // Mapeo para transformar la busqueda de ID a NOMBRE
+        	
             switch (filtro) {
             case "provincia_cliente":
                 filtro = "nombre_provincia";

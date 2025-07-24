@@ -42,7 +42,6 @@ public class NegocioCliente implements servicioABML<Cliente>{
 	}
 
 	public List<Cliente> listarTodos() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -123,7 +122,6 @@ public class NegocioCliente implements servicioABML<Cliente>{
 	
 	StringBuilder errores = new StringBuilder();
 	
-	// Validar campos String
 	if (usuario == null || usuario.trim().isEmpty()) {
 	errores.append("El usuario es obligatorio.\n");
 	}
@@ -155,7 +153,6 @@ public class NegocioCliente implements servicioABML<Cliente>{
 	errores.append("El telefono es obligatorio.\n");
 	}
 	
-	// Validar campos num�ricos
 	if (dni <= 0) {
 	errores.append("El DNI es obligatorio y debe ser un numero valido.\n");
 	}
@@ -169,9 +166,7 @@ public class NegocioCliente implements servicioABML<Cliente>{
 	errores.append("Debe seleccionar una provincia valida.\n");
 	}
 	
-	// Validar formatos espec�ficos
 	
-	// Validar fecha
 	if (fechaNacStr != null && !fechaNacStr.trim().isEmpty()) {
 	try {
 	java.sql.Date.valueOf(fechaNacStr);
@@ -180,7 +175,6 @@ public class NegocioCliente implements servicioABML<Cliente>{
 	}
 	}
 	
-	// Validar longitud DNI y CUIL solo si no hay errores anteriores en esos campos
 	if (dni > 0 && !String.valueOf(dni).matches("\\d{8}")) {
 	errores.append("El DNI debe tener exactamente 8 digitos.\n");
 	}
@@ -188,8 +182,6 @@ public class NegocioCliente implements servicioABML<Cliente>{
 	    errores.append("El CUIL debe tener el formato XX-XXXXXXXX-X (11 dígitos con guiones).\n");
 	}
 
-	
-	// Validar unicidad solo si no hay errores con esos campos
 	if (errores.length() == 0) {
 	if (daoCliente.existeDni(dni, idCliente)) {
 	errores.append("El DNI ya está registrado para otro cliente.\n");

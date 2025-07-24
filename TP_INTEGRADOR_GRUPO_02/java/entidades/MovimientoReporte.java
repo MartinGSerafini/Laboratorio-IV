@@ -10,12 +10,11 @@ public class MovimientoReporte {
     private String detalleMov;
     private BigDecimal importeMov;
     private int idTipoMov;
-    private Integer idCuentaDestino; // Puede ser null si no aplica
+    private Integer idCuentaDestino;
 
     public MovimientoReporte() {
     }
 
-    // Getters y Setters
     public int getIdMov() {
         return idMov;
     }

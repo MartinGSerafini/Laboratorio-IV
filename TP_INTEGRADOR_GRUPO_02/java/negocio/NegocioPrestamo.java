@@ -53,12 +53,15 @@ public class NegocioPrestamo {
 	public int registrarPrestamo(Prestamo prestamo) {
 	    return daoPrestamo.registrarPrestamo(prestamo);
 	}
+	
 	public int insertarPrestamo(int idCliente, int idCuenta, BigDecimal importeSolicitado, BigDecimal importeTotal, int plazoMeses, BigDecimal montoCuota, Date fechaSolicitud) {
 	    return daoPrestamo.insertarPrestamoYObtenerId(idCliente, idCuenta, importeSolicitado, importeTotal, plazoMeses, montoCuota, fechaSolicitud);
 	}
+	
 	public void insertarCuotas(int idPrestamo, int cantidadCuotas, BigDecimal montoCuota, Date fechaInicio) {
         daoCuota.insertarCuotas(idPrestamo, cantidadCuotas, montoCuota, fechaInicio);
     }
+	
 	public ArrayList<Prestamo> obtenerPrestamosPendientesPorCliente(int idCliente) {
 	    return daoPrestamo.obtenerPrestamosActivosPorCliente(idCliente);
 	}

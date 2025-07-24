@@ -23,7 +23,7 @@ public class LocalidadDao {
 	                Localidad l = new Localidad();
 	                l.setId(rs.getInt("id_localidad"));
 	                l.setLocalidad(rs.getString("nombre_localidad"));
-	                l.setId_pcia(id_provincia); // opcional
+	                l.setId_pcia(id_provincia);
 	                localidades.add(l);
 	            }
 	        }
@@ -32,6 +32,7 @@ public class LocalidadDao {
 	    }
 	    return localidades;
 	}
+	
 	public List<Localidad> obtenerTodasLasLocalidades() {
 	    List<Localidad> localidades = new ArrayList<>();
 	    String sql = "SELECT id_localidad, nombre_localidad, id_provincia FROM localidad";

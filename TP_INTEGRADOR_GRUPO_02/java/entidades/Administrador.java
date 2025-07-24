@@ -6,17 +6,14 @@ public class Administrador {
     private String usuarioAdmin;
     private String contrasenaAdmin;
 
-    // Constructor vacío
     public Administrador() {}
 
-    // Constructor completo
     public Administrador(String idAdmin, String usuarioAdmin, String contrasenaAdmin) {
         this.idAdmin = idAdmin;
         this.usuarioAdmin = usuarioAdmin;
         this.contrasenaAdmin = contrasenaAdmin;
     }
-
-    // Getters y Setters
+    
 
     public String getIdAdmin() {
         return idAdmin;

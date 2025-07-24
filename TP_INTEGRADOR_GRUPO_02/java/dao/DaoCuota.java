@@ -33,6 +33,7 @@ public class DaoCuota {
             return false;
         }
     }
+    
     public void insertarCuotas(int idPrestamo, int cantidadCuotas, BigDecimal montoCuota, Date fechaInicio) {
         for (int i = 1; i <= cantidadCuotas; i++) {
             Date fechaVencimiento = calcularFechaVencimiento(fechaInicio, i);
@@ -144,7 +145,6 @@ public class DaoCuota {
 
         return resultado;
     }
-
 
     public boolean pagarPrestamoCompleto(int idPrestamo) {
         String sql = "UPDATE Cuotas SET estado = 'pagada' WHERE idPrestamo = ?";

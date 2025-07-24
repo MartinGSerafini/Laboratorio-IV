@@ -17,8 +17,7 @@ import negocio.NegocioCliente;
 public class ModificarClienteServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private NegocioCliente negocioCliente = new NegocioCliente();
-
-    // Método para escapar cadenas en JSON
+    
     private String jsonEscape(String s) {
         if (s == null) return "";
         return s.replace("\\", "\\\\")

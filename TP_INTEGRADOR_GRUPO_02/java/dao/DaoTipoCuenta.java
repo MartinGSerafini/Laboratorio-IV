@@ -16,7 +16,6 @@ public class DaoTipoCuenta {
 		String sql = "SELECT * FROM tipocuenta";
 		ArrayList<TipoCuenta>lista = new ArrayList<TipoCuenta>(); 
 		
-		
 		try (Connection conn = Conexion.getConexion();
 				
 				Statement st = conn.createStatement();){
@@ -36,10 +35,8 @@ public class DaoTipoCuenta {
 		        e.printStackTrace();
 		    }
 		
-		return lista;   	
-		 
+		return lista;
 	}
-	
 	
 	public String obtenerTipoXid(int id) {
 		
@@ -64,9 +61,6 @@ public class DaoTipoCuenta {
 				e.printStackTrace();
 			}finally {}
 			return desc;
-		
 	}
-	
-	
 	
 }

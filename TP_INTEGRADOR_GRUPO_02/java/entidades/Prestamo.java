@@ -11,10 +11,9 @@ public class Prestamo {
     private EstadoPrestamo estadoPres;
     private String idCuentaDepositoPres;
 
-    // Constructor por defecto
     public Prestamo() {}
 
-    // Getters y Setters
+
     public String getIdPrestamo() {
         return idPrestamo;
     }
