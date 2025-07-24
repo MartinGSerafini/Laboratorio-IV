@@ -1,43 +1,23 @@
-@@ -1,32 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" output="TP_INTEGRADOR_GRUPO_02/src/main/webapp/WEB-INF/classes" path="java"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v8.0">
 		<attributes>
 
-			<attribute name="module" value="true"/>
-
-
-
-
 			<attribute name="owner.project.facets" value="#system#;jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/PROGRAMAS/Java-JDK/lib/jrt-fs.jar"/>
-	<classpathentry kind="lib" path="D:/PROGRAMAS/mysql-connector-java-6.0.3/mysql-connector-java-6.0.3-bin.jar">
-
-
-
-
+	<classpathentry kind="lib" path="C:/Program Files/Java/jdk-21/lib/jrt-fs.jar">
 
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Usuario.NICO/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.41/tomcat-embed-core-10.1.41.jar" sourcepath="C:/Users/Usuario.NICO/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.41/tomcat-embed-core-10.1.41-sources.jar">
-
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="maven.groupId" value="org.apache.tomcat.embed"/>
-			<attribute name="maven.artifactId" value="tomcat-embed-core"/>
-			<attribute name="maven.version" value="10.1.41"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="D:/PROGRAMAS/TomCat/lib/servlet-api.jar">
+	<classpathentry kind="lib" path="C:/Users/Pilar/Documents/SoftwareFacultad/mysql_connector/mysql-connector-java-5.1.47/mysql-connector-java-5.1.47/mysql-connector-java-5.1.47.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/servlet-api.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="https://docs.oracle.com/javaee/7/api/"/>
-
 		</attributes>
-	</classpathentry>
+		</classpathentry>
 	<classpathentry kind="output" path="bin"/>
+</classpath>

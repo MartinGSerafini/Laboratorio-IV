@@ -193,16 +193,11 @@ public class daoPrestamo {
         return idGenerado;
     }
 
-<<<<<<< HEAD
     public ArrayList<Prestamo> obtenerPrestamosConNumeroCuentaPorCliente(int idCliente) {
         String sql = "SELECT p.*, c.Numero_Cuenta FROM prestamo p " +
                      "JOIN cuenta c ON p.idCuentaDeposito_pres = c.id_cuenta " +
                      "WHERE p.idCliente_pres = ? AND p.estado_pres = 1 AND p.estado_prestamo = 1 " +
                      "ORDER BY p.fechaSolicitud_pres DESC";
-=======
-    public ArrayList<Prestamo> obtenerPrestamosActivosPorCliente(int idCliente) {
-        String sql = "SELECT * FROM prestamo WHERE idCliente_pres = ? AND estado_pres = 1 AND estado_prestamo = 1 ORDER BY fechaSolicitud_pres DESC";
->>>>>>> 877a4f55e6a0149194009cf7ee92525bdbdd365c
         ArrayList<Prestamo> lista = new ArrayList<>();
         try (Connection conn = Conexion.getConexion();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -223,6 +218,7 @@ public class daoPrestamo {
                     lista.add(p);
                 }
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -242,6 +238,7 @@ public class daoPrestamo {
             e.printStackTrace();
             return false;
         }
+
     }
 
 
