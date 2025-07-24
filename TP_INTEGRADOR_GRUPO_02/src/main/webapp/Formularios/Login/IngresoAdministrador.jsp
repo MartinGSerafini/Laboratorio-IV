@@ -15,7 +15,7 @@
 <body>
 
 <div class="login-card text-center position-relative">
-  <a href="InicioUsuario.jsp" class="back-arrow">
+  <a href="${pageContext.request.contextPath}/Formularios/Login/InicioUsuario.jsp" class="back-arrow">
   	<i class="bi bi-arrow-left"></i> Volver
   </a>
   <div class="admin-box">Administrador</div>

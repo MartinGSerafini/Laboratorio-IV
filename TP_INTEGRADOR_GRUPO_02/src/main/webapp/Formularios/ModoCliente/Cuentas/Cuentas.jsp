@@ -44,22 +44,23 @@
 <div class="container mt-5">
     <h2 class="text-center text-danger mb-4">Cuentas</h2>
     
-    <%
-    ArrayList<Cuenta> lista = null;
-    lista = (ArrayList<Cuenta>) request.getAttribute("ListaCuentas");
-    %>
+    <% ArrayList<Cuenta> lista = null;
+    lista = (ArrayList<Cuenta>) request.getAttribute("ListaCuentas"); %>
     
     <div class="table-responsive d-flex justify-content-center">
         <table class="table table-striped table-bordered text-center w-auto">
             <thead class="table-dark">
                 <tr>
-                    <th>Nro Cuenta</th><th>Tipo</th><th>CBU</th><th>Saldo</th><th>Fecha de Creacion</th>
+                    <th>Nro Cuenta</th>
+                    <th>Tipo</th>
+                    <th>CBU</th>
+                    <th>Saldo</th>
+                    <th>Fecha de Creacion</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-            <%
-            if(lista != null){
+            <% if(lista != null){
             	for(Cuenta c : lista){%>
             		<tr>
                     	<td><%=c.getNumeroCuenta() %></td>
@@ -76,13 +77,14 @@
                     	</td>
                 	</tr>
             	<%}
-            }
-            %>
+            } %>
                 
             </tbody>
         </table>
     </div>
 </div>
+
+
 <!-- MODAL HISTORIAL DE CUENTA -->
 <div class="modal fade" id="modalHistorialCuenta" tabindex="-1" aria-labelledby="modalHistorialCuentaLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
@@ -94,7 +96,12 @@
           <table class="table table-striped table-bordered text-center" style="min-width: 1200px; width: 100%;">
             <thead class="table-dark">
               <tr>
-                <th>ID</th><th>Fecha</th><th>Tipo de Movimiento</th><th>Cuenta Origen</th><th>Cuenta Destino</th><th>Importe</th>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Tipo de Movimiento</th>
+                <th>Cuenta Origen</th>
+                <th>Cuenta Destino</th>
+                <th>Importe</th>
        			<th>Detalle</th>
               </tr>
             </thead>

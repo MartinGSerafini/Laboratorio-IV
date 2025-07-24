@@ -117,7 +117,6 @@
   <div class="modal-dialog modal-md modal-dialog-centered">
     <div class="modal-content">
       <form action="${pageContext.request.contextPath}/TransferenciasClienteServlet" method="post">
-	      <!-- Pasar info de cuentas origen y destino al POST -->
 	      <input type="hidden" name="cbuDestino" id="inputCbuDestino">
 	      <input type="hidden" name="cbuOrigen" id="inputCbuOrigen">
 	      
@@ -127,7 +126,7 @@
 	      </div>
 	      <div class="modal-body">
 	
-	        <!-- MIS CUENTAS - TRANSFERIR DESDE -->
+	
 	        <div class="mb-3">
 	          <label for="selectCuentaOrigen" class="form-label fw-bold">Transferir desde:</label>
 	          <select class="form-select" id="selectCuentaOrigen" name="cuentaOrigen">
@@ -156,7 +155,6 @@
 	          <label class="form-label fw-bold">Dinero disponible:</label>
 	          <p class="dinero-disponible">$ <span id="dineroDisponible">--</span></p>
 	        </div>
-				<!-- JavaScript para cargar el dinero disponible sin tener que recargar el servlet -->
 			<script>
 			  document.addEventListener('DOMContentLoaded', function () {
 			    const select = document.getElementById('selectCuentaOrigen');
@@ -201,7 +199,7 @@
   </div>
 </div>
 
-<!-- JavaScript para pasar el CBUs al modal-->
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('modalTransferir');
@@ -210,7 +208,7 @@
     const select = document.getElementById('selectCuentaOrigen');
     const saldoSpan = document.getElementById('dineroDisponible');
 
-    // Capturar el CBU destino al abrir el modal
+
     const botones = document.querySelectorAll('[data-bs-target="#modalTransferir"]');
     botones.forEach(btn => {
       btn.addEventListener('click', function () {
@@ -219,7 +217,7 @@
       });
     });
 
-    // Al cambiar la cuenta origen, actualizar saldo y CBU origen
+
     function actualizarDatosOrigen() {
       const selectedOption = select.options[select.selectedIndex];
       const saldo = selectedOption.getAttribute('data-saldo');
@@ -231,7 +229,7 @@
 
     select.addEventListener('change', actualizarDatosOrigen);
 
-    // Cargar saldo/CBU si ya hay algo seleccionado
+
     if (select.selectedIndex > 0) {
       actualizarDatosOrigen();
     }

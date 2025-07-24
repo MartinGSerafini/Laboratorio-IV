@@ -35,38 +35,29 @@
     </div>
 </nav>
   
-  
-<!-- CONTENIDO -->
 
 <div class="container mt-5">
     <h3 class="text-center mb-4 text-danger">Prestamos solicitados</h3>
 
     <!-- Busqueda y Filtros -->
-    <%
-		String filtroSeleccionado = request.getParameter("filtro") != null ? request.getParameter("filtro") : "0";
-	%>
+    <% String filtroSeleccionado = request.getParameter("filtro") != null ? request.getParameter("filtro") : "0"; %>
     <form class="d-flex justify-content-center mb-4" method="get" action="${pageContext.request.contextPath}/AutorizacionPrestamosServlet">
         <input type="text" name="busqueda" id="busqueda" class="form-control w-25 me-2" placeholder="Buscar...">
         <select name="filtro" id="filtro" class="form-select w-25 me-2" onchange="mostrarOpciones()">
         	<option value="0" <%= filtroSeleccionado.equals("0") ? "selected" : "" %>>Seleccione un filtro</option>
-        	<%
-    		ArrayList<String> listaFiltros = (ArrayList<String>) request.getAttribute("ListaFiltros");
+        	<% ArrayList<String> listaFiltros = (ArrayList<String>) request.getAttribute("ListaFiltros");
         	if(listaFiltros != null){
-        		for(String f : listaFiltros){
-        		%>
-        			<option value="<%=f %>" <%= f.equals(filtroSeleccionado) ? "selected" : "" %>>
-        			<%= f.replace("_pres", "").replace("tamo", "").replaceAll("([a-z])([A-Z])", "$1 $2").toUpperCase()
-        			%>
+        		for(String f : listaFiltros){ %>
+        			<option value="<%=f %>" <%= f.equals(filtroSeleccionado) ? "selected" : "" %> >
+        			<%= f.replace("_pres", "").replace("tamo", "").replaceAll("([a-z])([A-Z])", "$1 $2").toUpperCase() %>
         </option>
         		<%}
-        	}
-        	%>
+        	} %>
 		</select>
     	<div id="estados" name="filtroEstados" class="me-2" style="display: none;">
     	<select name="estadoSeleccionado" class="form-select">
         	<option value="0" selected>Seleccione estado</option>
-        	<%
-        	ArrayList<EstadoPrestamo> listaEstados = (ArrayList<EstadoPrestamo>) request.getAttribute("ListaEstados");
+        	<% ArrayList<EstadoPrestamo> listaEstados = (ArrayList<EstadoPrestamo>) request.getAttribute("ListaEstados");
         	if(listaEstados != null){
             	for(EstadoPrestamo e : listaEstados){ %>
                 	<option value="<%=e.getId()%>"><%=e.getDescripcion()%></option>
@@ -79,8 +70,7 @@
     	</div>
     	</form>
     
-<%
-	ArrayList<Prestamo> lista = null;
+<% ArrayList<Prestamo> lista = null;
 	if(request.getAttribute("ListaPrestamos") !=null){
 		  lista = (ArrayList<Prestamo>) request.getAttribute("ListaPrestamos");
 	}
@@ -89,13 +79,19 @@
     int totalPaginas = (request.getAttribute("totalPaginas") != null) ? (Integer)request.getAttribute("totalPaginas") : 1;
 %>
 
-    <!-- Tabla de Prestamo -->
+
     <div class="table-responsive d-flex justify-content-center">
         <table class="table table-striped table-bordered text-center w-auto">
             <thead class="table-dark">
                 <tr>
-                    <th>ID Cuenta</th><th>ID Cliente</th><th>Fecha</th><th>Importe a pagar</th><th>Prestamo solicitado</th>
-                    <th>Plazo de pago en meses</th><th>Monto mensual</th><th>Estado</th>
+                    <th>ID Cuenta</th>
+                    <th>ID Cliente</th>
+                    <th>Fecha</th>
+                    <th>Importe a pagar</th>
+                    <th>Prestamo solicitado</th>
+                    <th>Plazo de pago en meses</th>
+                    <th>Monto mensual</th>
+                    <th>Estado</th>
                 </tr>
             </thead>
             <tbody>
@@ -111,9 +107,7 @@
             		<td>$<%=p.getImporteSolicitadoPres()%></td>
             		<td><%=p.getPlazoMesesPres() %></td>
             		<td>$<%=p.getMontoCuotaPres() %></td>
-            		<%
-            		if(p.getEstadoPres().getId()==3){
-            			%>
+            		<% if(p.getEstadoPres().getId()==3){ %>
             			<td>
             		<form id="formPrestamo" method="get" action="${pageContext.request.contextPath}/AutorizacionPrestamosServlet">
             			<input type="hidden" name="idPrestamo" value="<%= p.getIdPrestamo() %>">
@@ -124,12 +118,10 @@
                     </td>
             		<%}else{%>
             			<td><%=p.getEstadoPres().getDescripcion() %></td>
-            		<%}
-            		%>
+            		<%} %>
             		</tr>
             	<% }
-            }
-            %>
+            } %>
             </tbody>
         </table>
     </div>
@@ -137,11 +129,11 @@
     <!-- Paginación -->
         <nav class="d-flex justify-content-center mt-4">
       <ul class="pagination">
-        <li class="page-item <%= (paginaActual == 1) ? "disabled" : "" %>"><a class="page-link" href="ListadoClientesServlet?pagina=<%= paginaActual - 1 %>">Anterior</a></li>
+        <li class="page-item <%= (paginaActual == 1) ? "disabled" : "" %>"><a class="page-link" href="AutorizacionPrestamosServlet?pagina=<%= paginaActual - 1 %>">Anterior</a></li>
         <% for(int i = 1; i <= totalPaginas; i++) { %>
-          <li class="page-item <%= (i == paginaActual) ? "active" : "" %>"><a class="page-link" href="ListadoClientesServlet?pagina=<%= i %>"><%= i %></a></li>
+          <li class="page-item <%= (i == paginaActual) ? "active" : "" %>"><a class="page-link" href="AutorizacionPrestamosServlet?pagina=<%= i %>"><%= i %></a></li>
         <% } %>
-        <li class="page-item <%= (paginaActual == totalPaginas) ? "disabled" : "" %>"><a class="page-link" href="ListadoClientesServlet?pagina=<%= paginaActual + 1 %>">Siguiente</a></li>
+        <li class="page-item <%= (paginaActual == totalPaginas) ? "disabled" : "" %>"><a class="page-link" href="AutorizacionPrestamosServlet?pagina=<%= paginaActual + 1 %>">Siguiente</a></li>
       </ul>
     </nav>
 </div>
