@@ -42,7 +42,7 @@ public class DaoCuota {
             cuota.setNumeroCuota(i);
             cuota.setImporteCuota(montoCuota);
             cuota.setFechaVencCuota(fechaVencimiento);
-            cuota.setEstadoCuota(1); 
+            cuota.setEstadoCuota(3); 
             cuota.setFechaPagoCuota(null);
 
             registrarCuota(cuota);

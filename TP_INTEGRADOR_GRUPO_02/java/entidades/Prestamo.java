@@ -96,4 +96,3 @@ public class Prestamo {
         this.idCuentaDepositoPres = idCuentaDepositoPres;
     }
 }
-

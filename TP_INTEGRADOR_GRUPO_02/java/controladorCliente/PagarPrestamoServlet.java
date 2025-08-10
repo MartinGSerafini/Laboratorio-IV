@@ -57,9 +57,15 @@ public class PagarPrestamoServlet extends HttpServlet {
                 System.out.println("Error: no se seleccionaron cuotas");
             } else if (cuentaSeleccionada == null || cuentaSeleccionada.isEmpty()) {
                 request.setAttribute("error", "Debe seleccionar una cuenta para realizar el pago.");
-                System.out.println("Error: no se seleccion� cuenta");
+
+                System.out.println("Error: no se seleccionï¿½ cuenta");
             } else if (idPrestamoStr == null || idPrestamoStr.isEmpty()) {
-                request.setAttribute("error", "No se pudo identificar el pr�stamo.");
+                request.setAttribute("error", "No se pudo identificar el prï¿½stamo.");
+
+                System.out.println("Error: no se seleccionó cuenta");
+            } else if (idPrestamoStr == null || idPrestamoStr.isEmpty()) {
+                request.setAttribute("error", "No se pudo identificar el préstamo.");
+
                 System.out.println("Error: no se pudo obtener idPrestamo");
             } else {
                 int idPrestamo = Integer.parseInt(idPrestamoStr);
@@ -73,7 +79,9 @@ public class PagarPrestamoServlet extends HttpServlet {
                         System.out.println("Cuota id " + idCuota + " importe: " + cuota.getImporteCuota());
                         total = total.add(cuota.getImporteCuota());
                     } else {
-                        System.err.println("No se encontr� la cuota con id: " + idCuota);
+
+                        System.err.println("No se encontró la cuota con id: " + idCuota);
+
                     }
                 }
 
@@ -93,7 +101,9 @@ public class PagarPrestamoServlet extends HttpServlet {
                        List<Cuota> cuotasPendientes = negocioCuota.obtenerCuotasPendientesPorPrestamo(idPrestamo);
                         if (cuotasPendientes == null || cuotasPendientes.isEmpty()) {
                             boolean actualizado = negocioPrestamo.actualizarEstadoPrestamo(idPrestamo, false);
-                            System.out.println("Pr�stamo " + idPrestamo + " actualizado a pagado: " + actualizado);
+
+                            System.out.println("Préstamo " + idPrestamo + " actualizado a pagado: " + actualizado);
+
                         }
 
                         request.setAttribute("mensaje", "Cuotas pagadas correctamente.");
@@ -117,7 +127,9 @@ public class PagarPrestamoServlet extends HttpServlet {
                 List<Cuota> cuotas = negocioCuota.obtenerCuotasPendientesPorPrestamo(idPrestamo);
                 request.setAttribute("cuotas", cuotas);
                 request.setAttribute("idPrestamoSeleccionado", idPrestamo);
-                System.out.println("Mostrando cuotas pendientes para pr�stamo " + idPrestamo);
+
+                System.out.println("Mostrando cuotas pendientes para préstamo " + idPrestamo);
+
             }
         }
 
@@ -132,4 +144,6 @@ public class PagarPrestamoServlet extends HttpServlet {
 
         request.getRequestDispatcher("/Formularios/ModoCliente/Prestamos/PagarPrestamo.jsp").forward(request, response);
     }
+
 }
+

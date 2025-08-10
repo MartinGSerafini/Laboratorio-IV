@@ -218,7 +218,6 @@ public class daoPrestamo {
                     lista.add(p);
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -238,7 +237,6 @@ public class daoPrestamo {
             e.printStackTrace();
             return false;
         }
-
     }
 
 
@@ -262,4 +260,3 @@ public class daoPrestamo {
     }
 
 }
-
